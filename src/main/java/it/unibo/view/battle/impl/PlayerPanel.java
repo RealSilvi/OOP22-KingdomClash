@@ -1,9 +1,12 @@
-package it.unibo.view.battle;
+package it.unibo.view.battle.impl;
+
+import it.unibo.view.battle.api.BattleGuiPanels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
 
-public class PlayerPanel extends JPanel {
+public class PlayerPanel extends JPanel implements BattleGuiPanels {
 
     private final Image backgroundImage;
 
@@ -17,15 +20,22 @@ public class PlayerPanel extends JPanel {
         this.setPreferredSize(new Dimension((int)(screenSize.getWidth()), (int)(screenSize.getHeight() * 0.2)));
     }
 
-    /**
-     * @param g the <code>Graphics</code> object to protect
-     *          The method is overwritten to start the panel with a background image
-     */
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         // Draw the background image.
         g.drawImage(backgroundImage, 0, 0, this);
+    }
+
+    @Override
+    public void restart() {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

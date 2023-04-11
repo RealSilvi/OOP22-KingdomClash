@@ -1,5 +1,7 @@
 package it.unibo.view.battle;
 
+import it.unibo.view.battle.impl.*;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -17,9 +19,7 @@ public final class BattleGui  extends JFrame {
     private final JPanel infoPanel;
     private final JPanel buttonsPanel;
 
-    /**
-     * Builds a new CGUI.
-     */
+
     public BattleGui() {
         this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,8 +41,8 @@ public final class BattleGui  extends JFrame {
 
         mainPanel.add(topPanel,BorderLayout.NORTH);
         mainPanel.add(playerPanel,BorderLayout.SOUTH);
-        mainPanel.add(infoPanel,BorderLayout.EAST);
-        mainPanel.add(buttonsPanel,BorderLayout.WEST);
+        mainPanel.add(infoPanel,BorderLayout.WEST);
+        mainPanel.add(buttonsPanel,BorderLayout.EAST);
         mainPanel.add(fieldPanel,BorderLayout.CENTER);
 
 

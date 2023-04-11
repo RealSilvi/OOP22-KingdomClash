@@ -1,9 +1,12 @@
-package it.unibo.view.battle;
+package it.unibo.view.battle.impl;
+
+import it.unibo.view.battle.api.BattleGuiPanels;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
 
-public class FieldPanel extends JPanel {
+public class FieldPanel extends JPanel implements BattleGuiPanels {
 
     private final Image backgroundImage;
 
@@ -27,5 +30,15 @@ public class FieldPanel extends JPanel {
 
         // Draw the background image.
         g.drawImage(backgroundImage, 0, 0, this);
+    }
+
+    @Override
+    public void restart() {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }
