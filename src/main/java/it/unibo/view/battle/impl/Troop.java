@@ -26,7 +26,7 @@ public enum Troop {
     private final boolean defense;
     private final int level;
 
-    private Troop(int id, String url, boolean defense, int level) {
+    Troop(int id, String url, boolean defense, int level) {
         this.id = id;
         this.url = url;
         this.defense = defense;
