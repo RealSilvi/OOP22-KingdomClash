@@ -9,12 +9,11 @@ public interface BattleGuiPanels extends Observer {
      * @param g the <code>Graphics</code> object to protect
      *      *          The method is overwritten to start the panel with a background image
      */
-    void paintComponent(Graphics g);
+     void paintComponent(Graphics g);
 
     /**
      * This method initialises the panel
      */
     void restart();
-
 
 }
