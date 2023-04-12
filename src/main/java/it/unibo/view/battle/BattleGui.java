@@ -1,16 +1,13 @@
 package it.unibo.view.battle;
 
+import it.unibo.view.battle.api.PanelDimensions;
 import it.unibo.view.battle.impl.*;
 
 import java.awt.*;
 
 import javax.swing.*;
 
-public final class BattleGui  extends JFrame {
-
-    private final double WIDTH_PERC = 0.;
-    private final double HEIGHT_PERC = 0.3;
-    private final Dimension screenSize;
+public final class BattleGui extends JFrame {
 
     //private final JPanel MenuPanel;
     private final JPanel fieldPanel;
@@ -21,7 +18,6 @@ public final class BattleGui  extends JFrame {
 
 
     public BattleGui() {
-        this.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         final JPanel mainPanel = new JPanel(new BorderLayout());
@@ -29,11 +25,11 @@ public final class BattleGui  extends JFrame {
         final JPanel topPanel = new JPanel(new BorderLayout());
 
         //this.menuPanel = new MenuPanel();
-        this.botPanel = new BotPanel(this.screenSize);
-        this.playerPanel = new PlayerPanel(this.screenSize);
-        this.infoPanel = new InfoPanel(this.screenSize);
-        this.buttonsPanel = new ButtonsPanel(this.screenSize);
-        this.fieldPanel = new FieldPanel(this.screenSize);
+        this.botPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
+        this.playerPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
+        this.infoPanel = new InfoPanelImpl(PanelDimensions.getSidePanel());
+        this.buttonsPanel = new ButtonsPanelImpl(PanelDimensions.getSidePanel());
+        this.fieldPanel = new FieldPanelImpl(PanelDimensions.getFieldPanel());
 
         //topPanel.add(menuPanel, BorderLayout.NORTH);
         topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);

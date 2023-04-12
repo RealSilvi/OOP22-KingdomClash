@@ -1,6 +1,6 @@
 package it.unibo.view.battle.impl;
 
-import it.unibo.view.battle.api.BattleGuiPanels;
+import it.unibo.view.battle.api.PlayerPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,28 +8,26 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
-public class PlayerPanel extends JPanel implements BattleGuiPanels {
+public class PlayerPanelImpl extends JPanel implements PlayerPanel {
 
     private final static int NUMBER_OF_SLOTS = 5;
-    private final static double PANEL_VERTICAL_SCALE = 0.2;
     private final static double BUTTON_SCALE = 0.12;
 
-    private final  int PREFERRED_WIDTH;
-    private final  int PREFERRED_HEIGHT;
+    private final Dimension preferredSize;
     private final Image backgroundImage;
-
 
     private List<TroopButton> slots;
 
-    public PlayerPanel(final Dimension screenSize) {
-        this.PREFERRED_WIDTH= (int) screenSize.getWidth();
-        this.PREFERRED_HEIGHT = (int) (screenSize.getHeight() * PANEL_VERTICAL_SCALE);
+
+    public PlayerPanelImpl(final Dimension preferredSize) {
+        this.preferredSize=preferredSize;
+
         //questo path poi va preso dal model?
         this.backgroundImage = new ImageIcon(
                 "src/main/resources/it/unibo/icons/battle/battleUpDown.png"
         ).getImage();
         this.setOpaque(false);
-        this.setPreferredSize(new Dimension(this.getPreferredWidth(), this.getPreferredHeight()));
+        this.setPreferredSize(preferredSize);
 
         this.restart();
     }
@@ -59,8 +57,8 @@ public class PlayerPanel extends JPanel implements BattleGuiPanels {
         this.slots
                 .forEach(
                         x -> x.setPreferredSize(new Dimension(
-                                (int)(this.PREFERRED_WIDTH * BUTTON_SCALE),
-                                (int)(this.PREFERRED_WIDTH * BUTTON_SCALE))));
+                                (int)(this.preferredSize.getWidth() * BUTTON_SCALE),
+                                (int)(this.preferredSize.getWidth() * BUTTON_SCALE))));
     }
 
     @Override
@@ -80,18 +78,12 @@ public class PlayerPanel extends JPanel implements BattleGuiPanels {
         this.slots.forEach(x -> x.setEnabled(x.getSelectable()));
     }
 
-    public int getPreferredWidth() {
-        return this.PREFERRED_WIDTH;
-    }
-
-    public int getPreferredHeight() {
-        return this.PREFERRED_HEIGHT;
-    }
-
+    @Override
     public void disableAllSlots(){
         this.slots.forEach(x -> x.setEnabled(false));
     }
 
+    @Override
     public void setActionListenersSlot(ActionListener actionListener){
         this.slots.forEach(x -> x.addActionListener(actionListener));
     }

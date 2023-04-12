@@ -1,23 +1,24 @@
 package it.unibo.view.battle.impl;
 
-import it.unibo.view.battle.api.BattleGuiPanels;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Observable;
 
-public class FieldPanel extends JPanel implements BattleGuiPanels {
+public class InfoPanelImpl extends JPanel {
 
+    private final Dimension preferredSize;
     private final Image backgroundImage;
 
-    public FieldPanel(Dimension screenSize) {
+    public InfoPanelImpl(Dimension preferredSize) {
+        this.preferredSize=preferredSize;
+
         this.backgroundImage = new ImageIcon(
-                "src/main/resources/it/unibo/icons/battle/battleCenter.png"
+                "src/main/resources/it/unibo/icons/battle/battleSide.png"
         ).getImage();
 
         this.setOpaque(false);
 
-        //this.setPreferredSize(new Dimension((int)(screenSize.getWidth() * 0.6), (int)(screenSize.getHeight() * 0.6)));
+        this.setPreferredSize(preferredSize);
     }
 
     /**
@@ -32,12 +33,12 @@ public class FieldPanel extends JPanel implements BattleGuiPanels {
         g.drawImage(backgroundImage, 0, 0, this);
     }
 
-    @Override
+
     public void restart() {
 
     }
 
-    @Override
+
     public void update(Observable o, Object arg) {
 
     }
