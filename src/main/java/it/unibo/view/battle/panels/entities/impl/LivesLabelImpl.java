@@ -1,24 +1,29 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import it.unibo.view.battle.panels.entities.api.LivesLabel;
+import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+
 import javax.swing.*;
 
-public class LivesLabelImpl extends JLabel implements it.unibo.view.battle.panels.entities.api.LivesLabel {
+public class LivesLabelImpl extends JLabel implements LivesLabel {
 
     private boolean stillAlive;
 
     public LivesLabelImpl() {
         this.stillAlive=true;
-        this.setText("vita");//ci srara l immagine della vita
+        this.setText("vita");//ci sara l immagine della vita morta
+        this.setIcon(ImageIconEntitiesManager.getLiveImage(true));
     }
 
-    public LivesLabelImpl(Boolean status){
+    public LivesLabelImpl(final Boolean status){
         this();
         if(!status) this.changeStatus();
     }
 
     @Override
     public void changeStatus(){
-        this.stillAlive=false;
+        this.stillAlive=!this.stillAlive;
+        this.setIcon(ImageIconEntitiesManager.getLiveImage(this.stillAlive));
         this.setText("morte");//ci sara l immagine della vita morta
     }
 
