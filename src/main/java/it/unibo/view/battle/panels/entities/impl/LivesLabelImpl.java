@@ -10,9 +10,9 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     private boolean stillAlive;
 
     public LivesLabelImpl() {
+        super(ImageIconEntitiesManager.getImageLive(true));
         this.stillAlive=true;
         this.setText("vita");//ci sara l immagine della vita morta
-        this.setIcon(ImageIconEntitiesManager.getImageLive(true));
     }
 
     public LivesLabelImpl(final Boolean status){

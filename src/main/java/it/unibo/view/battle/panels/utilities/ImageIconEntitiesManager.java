@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public interface ImageIconEntitiesManager {
 
-    String AXE_URL = "something/somthingElse.png";
+    String AXE_URL = "something/somethingElse.png";
 
      static ImageIcon getImageFromTroop(final Troop troop, final boolean alive){
         return null;
@@ -19,6 +19,10 @@ public interface ImageIconEntitiesManager {
      static ImageIcon getImageLive(final boolean alive){
         return null;
     }
+
+    static ImageIcon getImageDefaultBackground(){
+         return null;
+    };
 
     static Troop getTroopFromImage(Icon icon){ return null;}
 

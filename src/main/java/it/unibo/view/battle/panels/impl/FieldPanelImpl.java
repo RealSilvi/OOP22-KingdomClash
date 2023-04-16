@@ -1,6 +1,8 @@
 package it.unibo.view.battle.panels.impl;
 
 import it.unibo.view.battle.Troop;
+import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
+import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,20 +10,18 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class FieldPanelImpl extends JPanel {
+public class FieldPanelImpl extends JPanel implements it.unibo.view.battle.panels.api.FieldPanel {
 
     private final Dimension preferredSize;
     private final Image backgroundImage;
 
-    private List<Optional<JLabel>> botArmy;
-    private List<Optional<JLabel>> playerArmy;
+    private List<TroopLabelImpl> army;
 
     public FieldPanelImpl(Dimension preferredSize) {
         this.preferredSize=preferredSize;
-        this.setLayout(new GridLayout(3,10));
+        this.setLayout(new GridLayout(2,10));
 
-        this.botArmy=new ArrayList<>();
-        this.playerArmy=new ArrayList<>();
+        this.army=new ArrayList<>();
 
 
         this.backgroundImage = new ImageIcon(
@@ -41,16 +41,21 @@ public class FieldPanelImpl extends JPanel {
     }
 
 
-    public void restart(final List<Optional<Troop>> botField, final List<Optional<Troop>> playerField) {
-        this.playerArmy=new ArrayList<>();
-        this.botArmy=new ArrayList<>();
-        IntStream.iterate(0,x -> ++x).limit(10).forEach( x-> {
-            if(botField.get(x).isEmpty()){
-                botArmy.add(Optional.empty());
+    @Override
+    public void redraw(final List<Optional<Troop>> field) {
+        this.army=new ArrayList<>();
+        IntStream.iterate(0,x -> ++x).limit(field.size()).forEach( x-> {
+            if(field.get(x).isEmpty()){
+                army.add(new TroopLabelImpl());
             }else{
-                botArmy.add(Optional.of(new JLabel()));
+                army.add(new TroopLabelImpl(ImageIconEntitiesManager.getImageFromTroop(
+                        field.get(x).get(),
+                        true
+                )));
             }
         });
 
+        this.army.forEach(this::add);
     }
+
 }
