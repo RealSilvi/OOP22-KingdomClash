@@ -64,7 +64,7 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update() {
         setRandomSlots();
         this.disableSelectedSlots();
     }

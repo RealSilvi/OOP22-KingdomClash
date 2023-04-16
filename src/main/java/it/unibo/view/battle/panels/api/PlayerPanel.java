@@ -17,10 +17,8 @@ public interface PlayerPanel {
 
     /**
      * Display new Random TroopButtons and block those which are already chosen.
-     * @param o
-     * @param arg
      */
-    void update(Observable o, Object arg);
+    void update();
 
     /**
      * Disable all the buttons.
