@@ -2,26 +2,24 @@ package it.unibo.view.battle.panels.entities.impl;
 
 import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
+import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class TroopButtonImpl extends JButton implements TroopButton {
 
-    private Troop troop;
     private Boolean selectable;
 
-    public TroopButtonImpl() {
-        super();
-        this.troop = Troop.getRandomTroop();
+    public TroopButtonImpl(final Troop troop) {
+        this.setIcon(ImageIconEntitiesManager.getImageFromTroop(troop,true));
         this.selectable =true;
         this.setOpaque(false);
     }
 
     @Override
     public void changeTroop(){
-        this.troop = Troop.getRandomTroop();
-        this.setIcon(new ImageIcon(this.troop.getUrl()));
+        this.setIcon(ImageIconEntitiesManager.getImageRandomTroop());
     }
 
     @Override
@@ -32,8 +30,9 @@ public class TroopButtonImpl extends JButton implements TroopButton {
 
     @Override
     public Troop getTroop() {
-        return this.troop;
+        return ImageIconEntitiesManager.getTroopFromImage(this.getIcon());
     }
+
 
     @Override
     public Boolean getSelectable() {

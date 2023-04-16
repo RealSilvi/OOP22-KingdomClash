@@ -10,10 +10,16 @@ public interface ImageIconEntitiesManager {
 
      static ImageIcon getImageFromTroop(final Troop troop, final boolean alive){
         return null;
-    };
+    }
 
-     static ImageIcon getLiveImage(final boolean alive){
+     static ImageIcon getImageRandomTroop(){
+         return null;
+     }
+
+     static ImageIcon getImageLive(final boolean alive){
         return null;
     }
+
+    static Troop getTroopFromImage(Icon icon){ return null;}
 
 }

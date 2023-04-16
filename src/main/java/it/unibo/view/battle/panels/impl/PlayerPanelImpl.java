@@ -46,7 +46,7 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
         this.slots = new ArrayList<>();
 
         for(int i=0; i<NUMBER_OF_SLOTS; i++){
-            this.slots.add(new TroopButtonImpl());
+            this.slots.add(new TroopButtonImpl(null));
         }
 
         this.slots.forEach(this::add);

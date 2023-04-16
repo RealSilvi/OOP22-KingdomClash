@@ -6,7 +6,7 @@ package it.unibo.view.battle.panels.entities.api;
 public interface LivesLabel {
 
     /**
-     * Display that the player had lose ore gain a point life;
+     * Display that the player had lose ore gain a point life.
      */
     void changeStatus();
 

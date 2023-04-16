@@ -12,7 +12,7 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     public LivesLabelImpl() {
         this.stillAlive=true;
         this.setText("vita");//ci sara l immagine della vita morta
-        this.setIcon(ImageIconEntitiesManager.getLiveImage(true));
+        this.setIcon(ImageIconEntitiesManager.getImageLive(true));
     }
 
     public LivesLabelImpl(final Boolean status){
@@ -23,7 +23,7 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     @Override
     public void changeStatus(){
         this.stillAlive=!this.stillAlive;
-        this.setIcon(ImageIconEntitiesManager.getLiveImage(this.stillAlive));
+        this.setIcon(ImageIconEntitiesManager.getImageLive(this.stillAlive));
         this.setText("morte");//ci sara l immagine della vita morta
     }
 
