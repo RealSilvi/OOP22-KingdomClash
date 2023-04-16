@@ -1,11 +1,14 @@
 package it.unibo.view.battle.panels.impl;
 
+import it.unibo.view.battle.Troop;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class InfoPanelImpl extends JPanel {
+public class InfoPanelImpl extends JPanel implements it.unibo.view.battle.panels.api.InfoPanel {
 
     private final int NUMBER_OF_TROOPS = 8;
 
@@ -18,7 +21,6 @@ public class InfoPanelImpl extends JPanel {
         this.table=new ArrayList<>();
         this.setLayout(new GridLayout(NUMBER_OF_TROOPS,3));
 
-
         this.preferredSize=preferredSize;
 
         this.backgroundImage = new ImageIcon(
@@ -30,10 +32,6 @@ public class InfoPanelImpl extends JPanel {
         this.setPreferredSize(preferredSize);
     }
 
-    /**
-     * @param g the <code>Graphics</code> object to protect
-     *          The method is overwritten to start the panel with a background image
-     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -43,7 +41,8 @@ public class InfoPanelImpl extends JPanel {
     }
 
 
-    public void drowTable() {
+    @Override
+    public void drawTable(Map<Troop, Boolean> powerTable) {
 
     }
 }
