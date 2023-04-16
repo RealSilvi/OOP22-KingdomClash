@@ -1,4 +1,4 @@
-package it.unibo.view.battle.impl;
+package it.unibo.view.battle;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -67,4 +67,5 @@ public enum Troop {
                 ", level=" + this.getLevel() +
                 '}';
     }
+
 }

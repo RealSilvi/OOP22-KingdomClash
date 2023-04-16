@@ -1,4 +1,4 @@
-package it.unibo.view.battle.api;
+package it.unibo.view.battle.panels.utilities;
 
 import java.awt.*;
 

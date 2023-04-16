@@ -1,15 +1,24 @@
-package it.unibo.view.battle.impl;
+package it.unibo.view.battle.panels.impl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Observable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoPanelImpl extends JPanel {
+
+    private final int NUMBER_OF_TROOPS = 8;
 
     private final Dimension preferredSize;
     private final Image backgroundImage;
 
+    private final List<JLabel> table;
+
     public InfoPanelImpl(Dimension preferredSize) {
+        this.table=new ArrayList<>();
+        this.setLayout(new GridLayout(NUMBER_OF_TROOPS,3));
+
+
         this.preferredSize=preferredSize;
 
         this.backgroundImage = new ImageIcon(
@@ -34,12 +43,7 @@ public class InfoPanelImpl extends JPanel {
     }
 
 
-    public void restart() {
-
-    }
-
-
-    public void update(Observable o, Object arg) {
+    public void drowTable() {
 
     }
 }

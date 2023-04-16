@@ -1,6 +1,8 @@
-package it.unibo.view.battle.impl;
+package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.api.PlayerPanel;
+import it.unibo.view.battle.panels.api.PlayerPanel;
+import it.unibo.view.battle.panels.entities.api.TroopButton;
+import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +18,7 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
     private final Dimension preferredSize;
     private final Image backgroundImage;
 
-    private List<TroopButton> slots;
+    private List<TroopButtonImpl> slots;
 
 
     public PlayerPanelImpl(final Dimension preferredSize) {
@@ -44,7 +46,7 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
         this.slots = new ArrayList<>();
 
         for(int i=0; i<NUMBER_OF_SLOTS; i++){
-            this.slots.add(new TroopButton());
+            this.slots.add(new TroopButtonImpl());
         }
 
         this.slots.forEach(this::add);

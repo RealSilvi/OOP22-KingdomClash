@@ -1,7 +1,10 @@
 package it.unibo.view.battle;
 
-import it.unibo.view.battle.api.PanelDimensions;
-import it.unibo.view.battle.impl.*;
+import it.unibo.view.battle.panels.impl.ButtonsPanelImpl;
+import it.unibo.view.battle.panels.impl.FieldPanelImpl;
+import it.unibo.view.battle.panels.impl.InfoPanelImpl;
+import it.unibo.view.battle.panels.impl.PlayerPanelImpl;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import java.awt.*;
 

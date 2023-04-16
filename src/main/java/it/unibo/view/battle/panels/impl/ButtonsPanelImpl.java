@@ -1,6 +1,8 @@
-package it.unibo.view.battle.impl;
+package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.api.ButtonsPanel;
+import it.unibo.view.battle.panels.api.ButtonsPanel;
+import it.unibo.view.battle.panels.entities.api.LivesLabel;
+import it.unibo.view.battle.panels.entities.impl.LivesLabelImpl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +17,8 @@ public class ButtonsPanelImpl extends JPanel implements ButtonsPanel {
 
     private final JButton spin;
     private final JButton pass;
-    private  ArrayList<LivesLabel> botLives;
-    private  ArrayList<LivesLabel> playerLives;
+    private  ArrayList<LivesLabelImpl> botLives;
+    private  ArrayList<LivesLabelImpl> playerLives;
 
     private final int numberOfLives = 8;
     
@@ -44,8 +46,8 @@ public class ButtonsPanelImpl extends JPanel implements ButtonsPanel {
         this.playerLives = new ArrayList<>();
 
         for(int i = 0; i< numberOfLives; i++){
-            this.botLives.add(new LivesLabel());
-            this.playerLives.add(new LivesLabel());
+            this.botLives.add(new LivesLabelImpl(true));
+            this.playerLives.add(new LivesLabelImpl(true));
         }
 
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));

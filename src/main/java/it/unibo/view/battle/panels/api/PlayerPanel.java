@@ -1,4 +1,4 @@
-package it.unibo.view.battle.api;
+package it.unibo.view.battle.panels.api;
 
 import java.awt.event.ActionListener;
 import java.util.Observable;
