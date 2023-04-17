@@ -3,6 +3,7 @@ package it.unibo.view.battle.panels.impl;
 import it.unibo.view.battle.panels.api.PlayerPanel;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
+import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
 
         //questo path poi va preso dal model?
         this.backgroundImage = new ImageIcon(
-                "src/main/resources/it/unibo/icons/battle/battleUpDown.png"
+                ImageIconEntitiesManager.BACKGROUND_PLAYERS_URL
         ).getImage();
         this.setOpaque(false);
         this.setPreferredSize(preferredSize);

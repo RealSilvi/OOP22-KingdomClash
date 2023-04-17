@@ -5,30 +5,28 @@ import java.util.Random;
 
 public enum Troop {
 
-    AXE(0," ",false,1),
+    AXE(0,false,1),
 
-    SWORD(1," ",false,1),
+    SWORD(1,false,1),
 
-    CATAPULT(2," ",false,1),
+    CATAPULT(2,false,1),
 
-    ARROW(3," ",false,1),
+    ARROW(3,false,1),
 
-    SHIELD(4," ",true,1),
+    SHIELD(4,true,1),
 
-    HELMET(5," ",true,1),
+    HELMET(5,true,1),
 
-    TOWER(6," ",true,1),
+    TOWER(6,true,1),
 
-    DODGE(7," ",true,1);
+    DODGE(7,true,1);
 
     private final int id;
-    private final String url;
     private final boolean defense;
     private final int level;
 
-    Troop(int id, String url, boolean defense, int level) {
+    Troop(int id, boolean defense, int level) {
         this.id = id;
-        this.url = url;
         this.defense = defense;
         this.level=level;
     }
@@ -44,10 +42,6 @@ public enum Troop {
 
     public int getId() {
         return this.id;
-    }
-
-    public String getUrl() {
-        return this.url;
     }
 
     public boolean isDefense() {
@@ -73,7 +67,6 @@ public enum Troop {
     public String toString() {
         return "Troop{" +
                 "id=" + this.getId() +
-                ", url='" + this.getUrl() + '\'' +
                 ", defense=" + this.isDefense() +
                 ", level=" + this.getLevel() +
                 '}';

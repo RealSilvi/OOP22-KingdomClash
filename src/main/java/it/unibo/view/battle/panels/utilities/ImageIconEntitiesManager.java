@@ -20,8 +20,11 @@ public interface ImageIconEntitiesManager {
 
     String LIFE_URL = "something/somethingElse.png";
     String DEATH_URL = "something/somethingElse.png";
-    String BACKGROUND_FIELD_URL = "something/somethingElse.png";
-    String BACKGROUND_PLAYERS_URL = "something/somethingElse.png";
+    String BACKGROUND_FIELD_URL = "src/main/resources/it/unibo/icons/battle/FieldBackground.png";
+    String BACKGROUND_FREE_SPOT_URL = "src/main/resources/it/unibo/icons/battle/FreeSpotBackground.png";
+    String BACKGROUND_PLAYERS_URL = "src/main/resources/it/unibo/icons/battle/PlayerBackground.png";
+    String BACKGROUND_SIDE_URL = "src/main/resources/it/unibo/icons/battle/SideBackground.png";
+
 
      static ImageIcon getImageFromTroop(final Troop troop, final boolean alive){
         return null;

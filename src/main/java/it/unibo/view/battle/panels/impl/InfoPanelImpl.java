@@ -1,6 +1,7 @@
 package it.unibo.view.battle.panels.impl;
 
 import it.unibo.view.battle.Troop;
+import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class InfoPanelImpl extends JPanel implements it.unibo.view.battle.panels
         this.preferredSize=preferredSize;
 
         this.backgroundImage = new ImageIcon(
-                "src/main/resources/it/unibo/icons/battle/battleSide.png"
+                ImageIconEntitiesManager.BACKGROUND_SIDE_URL
         ).getImage();
 
         this.setOpaque(false);
