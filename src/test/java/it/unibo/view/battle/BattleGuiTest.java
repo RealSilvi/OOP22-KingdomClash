@@ -1,10 +1,19 @@
 package it.unibo.view.battle;
 
+import javax.swing.*;
+
 class BattleGuiTest {
     public BattleGuiTest() {
     }
 
     public static void main(String[] args) {
-        new BattleGuiImpl();
+
+        JFrame battleFrame = new JFrame();
+        battleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        battleFrame.getContentPane().add(new BattlePanelImpl());
+
+        battleFrame.setVisible(true);
+        battleFrame.pack();
     }
 }

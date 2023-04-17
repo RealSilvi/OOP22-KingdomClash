@@ -1,10 +1,7 @@
 package it.unibo.view.battle;
 
-import it.unibo.view.battle.panels.impl.ButtonsPanelImpl;
-import it.unibo.view.battle.panels.impl.FieldPanelImpl;
-import it.unibo.view.battle.panels.impl.InfoPanelImpl;
-import it.unibo.view.battle.panels.impl.PlayerPanelImpl;
-import it.unibo.view.battle.panels.utilities.PanelDimensions;
+import it.unibo.view.battle.panels.impl.*;
+import it.unibo.view.battle.panels.utilities.*;
 
 import java.awt.*;
 import java.util.List;
@@ -13,7 +10,7 @@ import java.util.Optional;
 
 import javax.swing.*;
 
-public final class BattleGuiImpl extends JFrame implements BattleGui {
+public final class BattlePanelImpl extends Panel implements BattlePanel {
 
     private final static int GAP = 3;
 
@@ -24,11 +21,9 @@ public final class BattleGuiImpl extends JFrame implements BattleGui {
     private final InfoPanelImpl infoPanel;
     private final ButtonsPanelImpl buttonsPanel;
 
-    public BattleGuiImpl() {
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        final JPanel mainPanel = new JPanel(new BorderLayout(GAP,GAP));
-        mainPanel.setBackground(Color.darkGray);
+    public BattlePanelImpl() {
+        this.setLayout(new BorderLayout(GAP,GAP));
+        this.setBackground(Color.darkGray);
 
         final JPanel topPanel = new JPanel(new BorderLayout(GAP,GAP));
 
@@ -43,16 +38,11 @@ public final class BattleGuiImpl extends JFrame implements BattleGui {
         topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);
         topPanel.add(botPanel, BorderLayout.SOUTH);
 
-        mainPanel.add(topPanel,BorderLayout.NORTH);
-        mainPanel.add(playerPanel,BorderLayout.SOUTH);
-        mainPanel.add(infoPanel,BorderLayout.WEST);
-        mainPanel.add(buttonsPanel,BorderLayout.EAST);
-        mainPanel.add(fieldPanel,BorderLayout.CENTER);
-
-
-        this.getContentPane().add(mainPanel);
-        this.setVisible(true);
-        this.pack();
+        this.add(topPanel,BorderLayout.NORTH);
+        this.add(playerPanel,BorderLayout.SOUTH);
+        this.add(infoPanel,BorderLayout.WEST);
+        this.add(buttonsPanel,BorderLayout.EAST);
+        this.add(fieldPanel,BorderLayout.CENTER);
     }
 
     @Override
@@ -83,6 +73,46 @@ public final class BattleGuiImpl extends JFrame implements BattleGui {
     @Override
     public void updateField(final List<Optional<Troop>> field) {
         this.fieldPanel.redraw(field);
+    }
+
+    @Override
+    public void disableBotSlots() {
+        this.botPanel.disableAllSlots();
+    }
+
+    @Override
+    public void enableBotSlots() {
+        this.botPanel.enableAllSlots();
+    }
+
+    @Override
+    public void disablePlayerSlots() {
+        this.playerPanel.disableAllSlots();
+    }
+
+    @Override
+    public void enablePlayerSlots() {
+        this.playerPanel.enableAllSlots();
+    }
+
+    @Override
+    public void disableSpinButton() {
+        this.buttonsPanel.disableSpinButton();
+    }
+
+    @Override
+    public void enableSpinButton() {
+        this.buttonsPanel.enableSpinButton();
+    }
+
+    @Override
+    public void disablePassButton() {
+        this.buttonsPanel.disablePassButton();
+    }
+
+    @Override
+    public void enablePassButton() {
+        this.buttonsPanel.enablePassButton();
     }
 
 }

@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
+import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.api.PlayerPanel;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
@@ -25,10 +26,8 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
     public PlayerPanelImpl(final Dimension preferredSize) {
         this.preferredSize=preferredSize;
 
-        //questo path poi va preso dal model?
         this.backgroundImage = new ImageIcon(
-                ImageIconEntitiesManager.BACKGROUND_PLAYERS_URL
-        ).getImage();
+                ImageIconEntitiesManager.BACKGROUND_PLAYERS_URL).getImage();
         this.setOpaque(false);
         this.setPreferredSize(preferredSize);
 
@@ -47,7 +46,7 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
         this.slots = new ArrayList<>();
 
         for(int i=0; i<NUMBER_OF_SLOTS; i++){
-            this.slots.add(new TroopButtonImpl(null));
+            this.slots.add(new TroopButtonImpl(Troop.getRandomTroop()));
         }
 
         this.slots.forEach(this::add);
@@ -84,6 +83,11 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
     @Override
     public void disableAllSlots(){
         this.slots.forEach(x -> x.setEnabled(false));
+    }
+
+    @Override
+    public void enableAllSlots(){
+        this.slots.stream().filter(TroopButtonImpl::getSelectable).forEach(x -> x.setEnabled(true));
     }
 
     @Override

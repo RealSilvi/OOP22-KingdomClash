@@ -1,7 +1,6 @@
 package it.unibo.view.battle.panels.api;
 
 import java.awt.event.ActionListener;
-import java.util.Observable;
 
 /**
  * This interface show how to use southPanel and northPanel of the Gui.
@@ -24,6 +23,11 @@ public interface PlayerPanel {
      * Disable all the buttons.
      */
     void disableAllSlots();
+
+    /**
+     * Enable all the buttons.
+     */
+    void enableAllSlots();
 
     /**
      *

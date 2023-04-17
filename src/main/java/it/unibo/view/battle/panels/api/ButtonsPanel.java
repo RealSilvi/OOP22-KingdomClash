@@ -17,22 +17,22 @@ public interface ButtonsPanel {
     /**
      * Disable the passButton.
      */
-    void setDisablePassButton();
+    void disablePassButton();
 
     /**
      * Enable the passButton.
      */
-    void setEnablePassButton();
+    void enablePassButton();
 
     /**
      * Disable the SpinButton.
      */
-    void setDisableSpinButton();
+    void disableSpinButton();
 
     /**
      * Enable the SpinButton.
      */
-    void setEnableSpinButton();
+    void enableSpinButton();
 
     /**
      * Display that the player has lost a live.

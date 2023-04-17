@@ -74,22 +74,22 @@ public class ButtonsPanelImpl extends JPanel implements ButtonsPanel {
     }
     
     @Override
-    public void setDisablePassButton(){
+    public void disablePassButton(){
         this.pass.setEnabled(false);
     }
 
     @Override
-    public void setEnablePassButton(){
+    public void enablePassButton(){
         this.pass.setEnabled(true);
     }
 
     @Override
-    public void setDisableSpinButton(){
+    public void disableSpinButton(){
         this.spin.setEnabled(false);
     }
 
     @Override
-    public void setEnableSpinButton(){
+    public void enableSpinButton(){
         this.spin.setEnabled(true);
     }
 
