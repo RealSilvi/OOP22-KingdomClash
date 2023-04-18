@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.entities.api;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 public interface ButtonsPanel {
@@ -14,4 +15,6 @@ public interface ButtonsPanel {
     void setActionListenerPass(ActionListener actionListener);
 
     void setActionListenerSpin(ActionListener actionListener);
+
+    JPanel getPanel();
 }

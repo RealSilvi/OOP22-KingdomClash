@@ -3,7 +3,6 @@ package it.unibo.view.battle.panels.impl;
 import it.unibo.view.battle.panels.api.ComandPanel;
 import it.unibo.view.battle.panels.entities.impl.ButtonsPanelImpl;
 import it.unibo.view.battle.panels.entities.impl.LifePanelImpl;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,19 +10,15 @@ import java.awt.event.ActionListener;
 
 public class CommandPanelImpl extends JPanel implements ComandPanel {
 
-    private final Dimension preferredDimension;
-
     private final LifePanelImpl playerLivesPanel;
     private final LifePanelImpl botLivesPanel;
     private final ButtonsPanelImpl buttonsPanel;
 
-    private final int numberOfLives = 8;
     
-    public CommandPanelImpl(Dimension preferredDimension /*numberOfLives*/) {
+    public CommandPanelImpl(final Dimension preferredDimension, final int numberOfLives) {
         this.botLivesPanel=new LifePanelImpl(numberOfLives);
         this.playerLivesPanel= new LifePanelImpl(numberOfLives);
         this.buttonsPanel= new ButtonsPanelImpl();
-        this.preferredDimension=preferredDimension;
 
         this.setPreferredSize(preferredDimension);
 
@@ -37,7 +32,7 @@ public class CommandPanelImpl extends JPanel implements ComandPanel {
 
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         this.add(botLivesPanel);
-        this.add(buttonsPanel);
+        this.add(buttonsPanel.getPanel());
         this.add(playerLivesPanel);
 
     }

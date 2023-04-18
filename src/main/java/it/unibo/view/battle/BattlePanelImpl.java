@@ -31,7 +31,7 @@ public final class BattlePanelImpl extends Panel implements BattlePanel {
         this.botPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
         this.playerPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
         this.infoPanel = new InfoPanelImpl(PanelDimensions.getSidePanel());
-        this.buttonsPanel = new CommandPanelImpl(PanelDimensions.getSidePanel());
+        this.buttonsPanel = new CommandPanelImpl(PanelDimensions.getSidePanel() , 8);
         this.fieldPanel = new FieldPanelImpl(PanelDimensions.getFieldPanel());
 
         //topPanel.add(menuPanel, BorderLayout.NORTH);
