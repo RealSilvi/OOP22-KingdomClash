@@ -24,6 +24,8 @@ public interface ImageIconEntitiesManager {
     String BACKGROUND_FREE_SPOT_URL = "src/main/resources/it/unibo/icons/battle/FreeSpotBackground.png";
     String BACKGROUND_PLAYERS_URL = "src/main/resources/it/unibo/icons/battle/PlayerBackground.png";
     String BACKGROUND_SIDE_URL = "src/main/resources/it/unibo/icons/battle/SideBackground.png";
+    String BACKGROUND_LIFE_URL = "src/main/resources/it/unibo/icons/battle/LifeBackground.png";
+    String BACKGROUND_BUTTONS_URL = "src/main/resources/it/unibo/icons/battle/ButtonsBackground.png";
 
 
      static ImageIcon getImageFromTroop(final Troop troop, final boolean alive){

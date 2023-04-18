@@ -25,8 +25,7 @@ public class FieldPanelImpl extends JPanel implements it.unibo.view.battle.panel
 
 
         this.backgroundImage = new ImageIcon(
-                ImageIconEntitiesManager.BACKGROUND_FIELD_URL
-        ).getImage();
+                ImageIconEntitiesManager.BACKGROUND_FIELD_URL).getImage();
 
         this.setOpaque(false);
 

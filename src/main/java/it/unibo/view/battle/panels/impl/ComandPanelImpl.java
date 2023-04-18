@@ -1,15 +1,16 @@
 package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.panels.api.ButtonsPanel;
+import it.unibo.view.battle.panels.api.ComandPanel;
 import it.unibo.view.battle.panels.entities.api.LivesLabel;
 import it.unibo.view.battle.panels.entities.impl.LivesLabelImpl;
+import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class ButtonsPanelImpl extends JPanel implements ButtonsPanel {
+public class ComandPanelImpl extends JPanel implements ComandPanel {
     
     private final static double BUTTON_HORIZONTAL_SCALE=0.1;
 
@@ -22,7 +23,7 @@ public class ButtonsPanelImpl extends JPanel implements ButtonsPanel {
 
     private final int numberOfLives = 8;
     
-    public ButtonsPanelImpl(Dimension preferredDimension /*numberOfLives*/) {
+    public ComandPanelImpl(Dimension preferredDimension /*numberOfLives*/) {
         
         this.preferredDimension=preferredDimension;
         this.spin=new JButton("SPIN");
@@ -38,9 +39,35 @@ public class ButtonsPanelImpl extends JPanel implements ButtonsPanel {
 
     @Override
     public void restart() {
-        JPanel topPanel=new JPanel();
-        JPanel centerPanel=new JPanel();
-        JPanel bottomPanel=new JPanel();
+        JPanel topPanel=new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Image backgroundImage =new ImageIcon(
+                        ImageIconEntitiesManager.BACKGROUND_LIFE_URL).getImage();
+                g.drawImage(backgroundImage, 0, 0, null);
+            }
+        };
+        JPanel centerPanel=new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Image backgroundImage =new ImageIcon(
+                        ImageIconEntitiesManager.BACKGROUND_BUTTONS_URL).getImage();
+                g.drawImage(backgroundImage, 0, 0, null);
+            }
+        };
+        JPanel bottomPanel=new JPanel(){
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Image backgroundImage =new ImageIcon(
+                        ImageIconEntitiesManager.BACKGROUND_LIFE_URL).getImage();
+                g.drawImage(backgroundImage, 0, 0, null);
+            }
+        };
+
+
 
         this.botLives = new ArrayList<>();
         this.playerLives = new ArrayList<>();

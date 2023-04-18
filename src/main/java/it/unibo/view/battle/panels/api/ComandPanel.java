@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
  * <br>
  * Show how to use the spinButton, the passButton and the lives of the Players.
  */
-public interface ButtonsPanel {
+public interface ComandPanel {
 
     /**
      * Restart the panel.
