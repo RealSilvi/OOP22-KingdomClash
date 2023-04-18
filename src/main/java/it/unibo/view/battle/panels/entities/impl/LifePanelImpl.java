@@ -1,25 +1,23 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import it.unibo.view.battle.panels.entities.api.LifePanel;
 import it.unibo.view.battle.panels.entities.api.LivesLabel;
 import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class LifePanelImpl extends JPanel implements it.unibo.view.battle.panels.entities.api.LifePanel {
+public class LifePanelImpl implements LifePanel {
 
+    private final JPanel mainPanel;
     private ArrayList<LivesLabelImpl> lives;
 
-    private final Image backgroundImage;
-    private final int nrOfLifes;
+    private final int nrOfLives;
 
-    public LifePanelImpl(int nrOfLifes) {
-        this.nrOfLifes=nrOfLifes;
-        this.backgroundImage =new ImageIcon(
-                ImageIconEntitiesManager.BACKGROUND_LIFE_URL).getImage();
-        this.setOpaque(false);
+    public LifePanelImpl(int nrOfLives) {
+        this.mainPanel=new DrawPanel(ImageIconEntitiesManager.BACKGROUND_LIFE_URL);
+        this.nrOfLives =nrOfLives;
 
         this.restart();
 
@@ -29,20 +27,13 @@ public class LifePanelImpl extends JPanel implements it.unibo.view.battle.panels
     public void restart(){
         this.lives=new ArrayList<>();
 
-        IntStream.range(0,this.nrOfLifes).forEach(
+        IntStream.range(0,this.nrOfLives).forEach(
                 i -> lives.add(new LivesLabelImpl(true))
         );
 
-        this.lives.forEach(this::add);
+        this.lives.forEach(this.mainPanel::add);
 
     }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(backgroundImage, 0, 0, null);
-    }
-
 
     @Override
     public void decreaseLife(){
@@ -50,6 +41,11 @@ public class LifePanelImpl extends JPanel implements it.unibo.view.battle.panels
                 .filter(LivesLabelImpl::isStillAlive)
                 .findFirst()
                 .ifPresent(LivesLabel ::changeStatus);
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this.mainPanel;
     }
 
 }

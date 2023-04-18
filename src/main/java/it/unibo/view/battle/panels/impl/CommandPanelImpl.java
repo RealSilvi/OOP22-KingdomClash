@@ -31,9 +31,9 @@ public class CommandPanelImpl extends JPanel implements ComandPanel {
     public void restart() {
 
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        this.add(botLivesPanel);
+        this.add(botLivesPanel.getPanel());
         this.add(buttonsPanel.getPanel());
-        this.add(playerLivesPanel);
+        this.add(playerLivesPanel.getPanel());
 
     }
 
