@@ -11,7 +11,7 @@ class BattleGuiTest {
         JFrame battleFrame = new JFrame();
         battleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        battleFrame.getContentPane().add(new BattlePanelImpl());
+        battleFrame.getContentPane().add(new BattlePanelImpl().getPanel());
 
         battleFrame.setVisible(true);
         battleFrame.pack();

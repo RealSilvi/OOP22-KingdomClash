@@ -1,5 +1,6 @@
 package it.unibo.view.battle;
 
+import it.unibo.view.battle.panels.entities.impl.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
 import it.unibo.view.battle.panels.utilities.*;
 
@@ -10,9 +11,11 @@ import java.util.Optional;
 
 import javax.swing.*;
 
-public final class BattlePanelImpl extends JPanel implements BattlePanel {
+public final class BattlePanelImpl implements BattlePanel {
 
     private final static int GAP = 3;
+
+    private final JPanel mainPanel;
 
     //private final JPanel MenuPanel;
     private final FieldPanelImpl fieldPanel;
@@ -22,8 +25,8 @@ public final class BattlePanelImpl extends JPanel implements BattlePanel {
     private final CommandPanelImpl buttonsPanel;
 
     public BattlePanelImpl() {
-        this.setLayout(new BorderLayout(GAP,GAP));
-        this.setBackground(Color.darkGray);
+        this.mainPanel= new DrawPanel(Color.darkGray);
+        this.mainPanel.setLayout(new BorderLayout(GAP,GAP));
 
         final JPanel topPanel = new JPanel(new BorderLayout(GAP,GAP));
 
@@ -38,11 +41,11 @@ public final class BattlePanelImpl extends JPanel implements BattlePanel {
         topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);
         topPanel.add(botPanel.getPanel(), BorderLayout.SOUTH);
 
-        this.add(topPanel,BorderLayout.NORTH);
-        this.add(playerPanel.getPanel(),BorderLayout.SOUTH);
-        this.add(infoPanel.getPanel(),BorderLayout.WEST);
-        this.add(buttonsPanel.getPanel(),BorderLayout.EAST);
-        this.add(fieldPanel.getPanel(),BorderLayout.CENTER);
+        this.mainPanel.add(topPanel,BorderLayout.NORTH);
+        this.mainPanel.add(playerPanel.getPanel(),BorderLayout.SOUTH);
+        this.mainPanel.add(infoPanel.getPanel(),BorderLayout.WEST);
+        this.mainPanel.add(buttonsPanel.getPanel(),BorderLayout.EAST);
+        this.mainPanel.add(fieldPanel.getPanel(),BorderLayout.CENTER);
     }
 
     @Override
@@ -113,6 +116,11 @@ public final class BattlePanelImpl extends JPanel implements BattlePanel {
     @Override
     public void enablePassButton() {
         this.buttonsPanel.enablePassButton();
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this.mainPanel;
     }
 
 }

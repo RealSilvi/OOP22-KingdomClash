@@ -1,5 +1,6 @@
 package it.unibo.view.battle;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -82,4 +83,6 @@ public interface BattlePanel {
      * Enable the pass
      */
     void enablePassButton();
+
+    JPanel getPanel();
 }
