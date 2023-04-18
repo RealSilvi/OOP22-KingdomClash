@@ -19,7 +19,7 @@ public final class BattlePanelImpl extends Panel implements BattlePanel {
     private final PlayerPanelImpl botPanel;
     private final PlayerPanelImpl playerPanel;
     private final InfoPanelImpl infoPanel;
-    private final ComandPanelImpl buttonsPanel;
+    private final CommandPanelImpl buttonsPanel;
 
     public BattlePanelImpl() {
         this.setLayout(new BorderLayout(GAP,GAP));
@@ -31,7 +31,7 @@ public final class BattlePanelImpl extends Panel implements BattlePanel {
         this.botPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
         this.playerPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
         this.infoPanel = new InfoPanelImpl(PanelDimensions.getSidePanel());
-        this.buttonsPanel = new ComandPanelImpl(PanelDimensions.getSidePanel());
+        this.buttonsPanel = new CommandPanelImpl(PanelDimensions.getSidePanel());
         this.fieldPanel = new FieldPanelImpl(PanelDimensions.getFieldPanel());
 
         //topPanel.add(menuPanel, BorderLayout.NORTH);
