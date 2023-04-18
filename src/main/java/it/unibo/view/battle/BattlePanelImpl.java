@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import javax.swing.*;
 
-public final class BattlePanelImpl extends Panel implements BattlePanel {
+public final class BattlePanelImpl extends JPanel implements BattlePanel {
 
     private final static int GAP = 3;
 
@@ -42,7 +42,7 @@ public final class BattlePanelImpl extends Panel implements BattlePanel {
         this.add(playerPanel,BorderLayout.SOUTH);
         this.add(infoPanel,BorderLayout.WEST);
         this.add(buttonsPanel.getPanel(),BorderLayout.EAST);
-        this.add(fieldPanel,BorderLayout.CENTER);
+        this.add(fieldPanel.getPanel(),BorderLayout.CENTER);
     }
 
     @Override

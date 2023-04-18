@@ -2,6 +2,7 @@ package it.unibo.view.battle.panels.api;
 
 import it.unibo.view.battle.Troop;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +18,6 @@ public interface FieldPanel {
      *              The second half are player's troops.
      */
     void redraw(List<Optional<Troop>> field);
+
+    JPanel getPanel();
 }
