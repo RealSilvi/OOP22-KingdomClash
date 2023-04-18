@@ -36,10 +36,10 @@ public final class BattlePanelImpl extends JPanel implements BattlePanel {
 
         //topPanel.add(menuPanel, BorderLayout.NORTH);
         topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);
-        topPanel.add(botPanel, BorderLayout.SOUTH);
+        topPanel.add(botPanel.getPanel(), BorderLayout.SOUTH);
 
         this.add(topPanel,BorderLayout.NORTH);
-        this.add(playerPanel,BorderLayout.SOUTH);
+        this.add(playerPanel.getPanel(),BorderLayout.SOUTH);
         this.add(infoPanel.getPanel(),BorderLayout.WEST);
         this.add(buttonsPanel.getPanel(),BorderLayout.EAST);
         this.add(fieldPanel.getPanel(),BorderLayout.CENTER);

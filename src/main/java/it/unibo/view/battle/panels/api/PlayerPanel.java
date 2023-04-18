@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.api;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -34,4 +35,6 @@ public interface PlayerPanel {
      * @param actionListener gives instruction at all the TroopButtons.
      */
     void setActionListenersSlot(ActionListener actionListener);
+
+    JPanel getPanel();
 }

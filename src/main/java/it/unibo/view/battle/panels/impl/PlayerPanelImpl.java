@@ -3,6 +3,7 @@ package it.unibo.view.battle.panels.impl;
 import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.api.PlayerPanel;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
+import it.unibo.view.battle.panels.entities.impl.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
@@ -12,33 +13,19 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
-public class PlayerPanelImpl extends JPanel implements PlayerPanel {
+public class PlayerPanelImpl implements PlayerPanel {
 
     private final static int NUMBER_OF_SLOTS = 5;
     private final static double BUTTON_SCALE = 0.12;
 
-    private final Dimension preferredSize;
-    private final Image backgroundImage;
-
+    private final JPanel mainPanel;
     private List<TroopButtonImpl> slots;
 
-
     public PlayerPanelImpl(final Dimension preferredSize) {
-        this.preferredSize=preferredSize;
-
-        this.backgroundImage = new ImageIcon(
-                ImageIconEntitiesManager.BACKGROUND_PLAYERS_URL).getImage();
-        this.setOpaque(false);
-        this.setPreferredSize(preferredSize);
+        this.mainPanel=new DrawPanel(ImageIconEntitiesManager.BACKGROUND_PLAYERS_URL);
+        this.mainPanel.setPreferredSize(preferredSize);
 
         this.restart();
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        g.drawImage(backgroundImage, 0, 0, this);
     }
 
     @Override
@@ -49,7 +36,7 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
             this.slots.add(new TroopButtonImpl(Troop.getRandomTroop()));
         }
 
-        this.slots.forEach(this::add);
+        this.slots.forEach(this.mainPanel::add);
 
         this.setButtonsSize();
 
@@ -59,8 +46,8 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
         this.slots
                 .forEach(
                         x -> x.setPreferredSize(new Dimension(
-                                (int)(this.preferredSize.getWidth() * BUTTON_SCALE),
-                                (int)(this.preferredSize.getWidth() * BUTTON_SCALE))));
+                                (int)(this.mainPanel.getWidth() * BUTTON_SCALE),
+                                (int)(this.mainPanel.getWidth() * BUTTON_SCALE))));
     }
 
     @Override
@@ -93,5 +80,10 @@ public class PlayerPanelImpl extends JPanel implements PlayerPanel {
     @Override
     public void setActionListenersSlot(ActionListener actionListener){
         this.slots.forEach(x -> x.addActionListener(actionListener));
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this.mainPanel;
     }
 }
