@@ -2,13 +2,16 @@ package it.unibo.view.battle.panels.impl;
 
 import it.unibo.view.battle.panels.api.ComandPanel;
 import it.unibo.view.battle.panels.entities.impl.ButtonsPanelImpl;
+import it.unibo.view.battle.panels.entities.impl.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.LifePanelImpl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class CommandPanelImpl extends JPanel implements ComandPanel {
+public class CommandPanelImpl implements ComandPanel {
+
+    private final JPanel mainPanel;
 
     private final LifePanelImpl playerLivesPanel;
     private final LifePanelImpl botLivesPanel;
@@ -16,28 +19,24 @@ public class CommandPanelImpl extends JPanel implements ComandPanel {
 
     
     public CommandPanelImpl(final Dimension preferredDimension, final int numberOfLives) {
+        this.mainPanel= new DrawPanel();
         this.botLivesPanel=new LifePanelImpl(numberOfLives);
         this.playerLivesPanel= new LifePanelImpl(numberOfLives);
         this.buttonsPanel= new ButtonsPanelImpl();
 
-        this.setPreferredSize(preferredDimension);
-
-        this.setOpaque(false);
+        this.mainPanel.setPreferredSize(preferredDimension);
 
         this.restart();
     }
 
     @Override
     public void restart() {
-
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        this.add(botLivesPanel.getPanel());
-        this.add(buttonsPanel.getPanel());
-        this.add(playerLivesPanel.getPanel());
-
+        this.mainPanel.setLayout(new BoxLayout(this.mainPanel,BoxLayout.Y_AXIS));
+        this.mainPanel.add(botLivesPanel.getPanel());
+        this.mainPanel.add(buttonsPanel.getPanel());
+        this.mainPanel.add(playerLivesPanel.getPanel());
     }
 
-    
     @Override
     public void disablePassButton(){
         this.buttonsPanel.disablePassButton();
@@ -76,6 +75,11 @@ public class CommandPanelImpl extends JPanel implements ComandPanel {
     @Override
     public void setActionListenerSpin(ActionListener actionListener){
         this.buttonsPanel.setActionListenerSpin(actionListener);
+    }
+
+    @Override
+    public JPanel getPanel() {
+        return this.mainPanel;
     }
 
 }

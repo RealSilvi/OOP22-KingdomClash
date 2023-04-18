@@ -41,7 +41,7 @@ public final class BattlePanelImpl extends Panel implements BattlePanel {
         this.add(topPanel,BorderLayout.NORTH);
         this.add(playerPanel,BorderLayout.SOUTH);
         this.add(infoPanel,BorderLayout.WEST);
-        this.add(buttonsPanel,BorderLayout.EAST);
+        this.add(buttonsPanel.getPanel(),BorderLayout.EAST);
         this.add(fieldPanel,BorderLayout.CENTER);
     }
 

@@ -33,6 +33,15 @@ public class DrawPanel extends JPanel {
         this(new ImageIcon(backgroundUrl));
     }
 
+    public DrawPanel(Color color){
+        this.backgroundImage=null;
+        this.setBackground(color);
+    }
+
+    public DrawPanel(){
+        this(Color.white);
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

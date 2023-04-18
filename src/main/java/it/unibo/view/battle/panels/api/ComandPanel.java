@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.api;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -55,4 +56,6 @@ public interface ComandPanel {
      * @param actionListener gives instruction at the SpinButton.
      */
     void setActionListenerSpin(ActionListener actionListener);
+
+    JPanel getPanel();
 }
