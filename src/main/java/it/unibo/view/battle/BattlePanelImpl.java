@@ -30,7 +30,7 @@ public final class BattlePanelImpl extends JPanel implements BattlePanel {
         //this.menuPanel = new MenuPanel();
         this.botPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
         this.playerPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
-        this.infoPanel = new InfoPanelImpl(PanelDimensions.getSidePanel());
+        this.infoPanel = new InfoPanelImpl(PanelDimensions.getSidePanel(),8);
         this.buttonsPanel = new CommandPanelImpl(PanelDimensions.getSidePanel() , 8);
         this.fieldPanel = new FieldPanelImpl(PanelDimensions.getFieldPanel());
 
@@ -40,7 +40,7 @@ public final class BattlePanelImpl extends JPanel implements BattlePanel {
 
         this.add(topPanel,BorderLayout.NORTH);
         this.add(playerPanel,BorderLayout.SOUTH);
-        this.add(infoPanel,BorderLayout.WEST);
+        this.add(infoPanel.getPanel(),BorderLayout.WEST);
         this.add(buttonsPanel.getPanel(),BorderLayout.EAST);
         this.add(fieldPanel.getPanel(),BorderLayout.CENTER);
     }

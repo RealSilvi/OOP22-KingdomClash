@@ -2,6 +2,7 @@ package it.unibo.view.battle.panels.api;
 
 import it.unibo.view.battle.Troop;
 
+import javax.swing.*;
 import java.util.Map;
 
 /**
@@ -15,4 +16,6 @@ public interface InfoPanel {
      * @param powerTable Foreach troop there's a boolean value if the troopLV is high enough for this LV.
      */
     void drawTable(Map<Troop, Boolean> powerTable);
+
+    JPanel getPanel();
 }
