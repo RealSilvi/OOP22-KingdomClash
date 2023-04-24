@@ -91,6 +91,10 @@ public interface BaseModel {
      * @return a list of materials that the structures produces
      */
     public List<Resource> getBuildingProduction(int structureId);
+    /**
+     * @return an identifier for every existing building
+     */
+    public List<Integer> getBuildingIds();
     
     /**
      * Starts and stops the clock that keeps track of time passed
