@@ -1,6 +1,6 @@
 package it.unibo.model.base.exceptions;
 
-import it.unibo.model.data.Building;
+import it.unibo.model.base.basedata.Building;
 
 public class BuildingMaxedOutException extends BuildingException {
     public BuildingMaxedOutException() {

@@ -1,9 +1,10 @@
-package it.unibo.model.data;
+package it.unibo.model.base.basedata;
 
 import java.nio.file.Path;
 import java.util.List;
 
 import it.unibo.kingdomclash.util.Pair;
+import it.unibo.model.data.Resource;
 
 public class Building {
     public static final int MAXLEVEL = 3;
@@ -17,6 +18,21 @@ public class Building {
     private int buildingProgess;
     private Pair<Float, Float> structurePos;
     private List<Resource> productionAmount;
+
+    //The high parameter count is necessary to set all of the properties of the class
+    @SuppressWarnings("java:S107")
+    public Building(Path buildingOverlay, List<Path> buildingTextures, int level, float buildingTime,
+            boolean buildingStatus, int buildingProgess, Pair<Float, Float> structurePos,
+            List<Resource> productionAmount) {
+        this.buildingOverlay = buildingOverlay;
+        this.buildingTextures = buildingTextures;
+        this.level = level;
+        this.buildingTime = buildingTime;
+        this.buildingStatus = buildingStatus;
+        this.buildingProgess = buildingProgess;
+        this.structurePos = structurePos;
+        this.productionAmount = productionAmount;
+    }
 
     public Path getBuildingOverlay() {
         return buildingOverlay;
