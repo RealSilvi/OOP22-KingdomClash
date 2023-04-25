@@ -3,6 +3,7 @@ package it.unibo.model.base;
 import it.unibo.model.base.basedata.BuildingFactory.BuildingTypes;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
+import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.data.Resource;
 
@@ -23,8 +24,9 @@ public interface BaseModel {
      * @return integer that identifies the structure
      * @throws NotEnoughResourceException thrown when the player does not have enough resources to build this structure
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public int buildStructure(Point2D position, BuildingTypes type, int startingLevel, boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public int buildStructure(Point2D position, BuildingTypes type, int startingLevel, boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException, InvalidStructureReferenceException;
     /**
      * Tries to build a structure in a given position at a given level
      * @param position placing position of the structure
@@ -33,8 +35,9 @@ public interface BaseModel {
      * @return integer that identifies the structure
      * @throws NotEnoughResourceException thrown when the player does not have enough resources to build this structure
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public int buildStructure(Point2D position, BuildingTypes type, int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public int buildStructure(Point2D position, BuildingTypes type, int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException, InvalidStructureReferenceException;
     /**
      * Tries to build a structure in a given position
      * @param position placing position of the structure
@@ -51,46 +54,53 @@ public interface BaseModel {
      * @param cheatMode if true disables the resource cost and time wait
      * @throws NotEnoughResourceException thrown when the player does not have enough resources to upgrade this structure
      * @throws BuildingMaxedOutException thrown when the the provided building has already the maximum level allowed
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public void upgradeStructure(int structureId, boolean cheatMode) throws NotEnoughResourceException, BuildingMaxedOutException;
+    public void upgradeStructure(int structureId, boolean cheatMode) throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException;
     /**
      * If the structure exists, starts the upgrading progress
      * @param structureId an existing structure's identifier
      * @throws NotEnoughResourceException thrown when the player does not have enough resources to upgrade this structure
      * @throws BuildingMaxedOutException thrown when the the provided building has already the maximum level allowed
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public void upgradeStructure(int structureId) throws NotEnoughResourceException, BuildingMaxedOutException;
+    public void upgradeStructure(int structureId) throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException;
     /**
      * Tries to destroy a building, giving back part of the building resources spent
      * @param structureId an existing structure's identifier
      * @return a list of recovered resources
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public List<Resource> demolishStructure(int structureId);
+    public List<Resource> demolishStructure(int structureId) throws InvalidStructureReferenceException;
     /**
      * Tries to relocate an already existing structure to another location if possible
      * @param position the new position of the structure
      * @param structureId an existing structure's identifier
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public void relocateStructure(Point2D position, int structureId) throws InvalidBuildingPlacementException;
+    public void relocateStructure(Point2D position, int structureId) throws InvalidBuildingPlacementException, InvalidStructureReferenceException;
     /**
      * Gets the path of the texture that represents the current structure's status
      * @param structureId an existing structure's identifier
      * @return the texture's path
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public Path getStructureTexture(int structureId);
+    public Path getStructureTexture(int structureId) throws InvalidStructureReferenceException;
     /**
      * Given a structure's identifier, returns the progress in percentage of the current operation
      * @param structureId an existing structure's identifier
      * @return progress in percentage
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public int getBuildingProgress(int structureId);
+    public int getBuildingProgress(int structureId) throws InvalidStructureReferenceException;
     /**
      * Produces a list of materials that the structures produces
      * @param structureId an existing structure's identifier
      * @return a list of materials that the structures produces
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public List<Resource> getBuildingProduction(int structureId);
+    public List<Resource> getBuildingProduction(int structureId) throws InvalidStructureReferenceException;
     /**
      * @return an identifier for every existing building
      */
