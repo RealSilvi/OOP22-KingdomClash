@@ -1,7 +1,7 @@
 package it.unibo.model.base.basedata;
 
 /**
- * A very simple factory to simplify the creation of buildings
+ * A very simple factory to easily create standardized buildings
  */
 public interface BuildingFactory {
     public enum BuildingTypes {
