@@ -105,6 +105,18 @@ public interface BaseModel {
      * @return an identifier for every existing building
      */
     public List<Integer> getBuildingIds();
+
+    /**
+     * Returns the amount of the provided type of resources that the player has
+     * @param type the type of resource to query for
+     * @return the amount of the type of resource
+     */
+    public int getResourceCount(Resource.ResourceType type);
+    /**
+     * For every existing resource type, returns the amount that the player has in an unmodifiable list
+     * @return an unmodifiable list of resources
+     */
+    public List<Resource> getResourceCount();
     
     /**
      * Starts and stops the clock that keeps track of time passed
