@@ -52,7 +52,7 @@ public enum Troop {
         return this.level;
     }
 
-    public Troop getNullable(Troop troop){
+    public static Troop getNullable(Troop troop){
         return (troop.equals(Troop.AXE)) ? Troop.HELMET :
                 (troop.equals(Troop.SWORD)) ? Troop.DODGE :
                         (troop.equals(Troop.CATAPULT)) ? Troop.TOWER :

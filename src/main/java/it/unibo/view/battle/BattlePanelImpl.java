@@ -13,7 +13,7 @@ import javax.swing.*;
 
 public final class BattlePanelImpl implements BattlePanel {
 
-    private final static int GAP = 3;
+    private final static int BORDER_LAYOUT_GAP = 3;
 
     private final JPanel mainPanel;
 
@@ -25,10 +25,10 @@ public final class BattlePanelImpl implements BattlePanel {
     private final CommandPanelImpl buttonsPanel;
 
     public BattlePanelImpl() {
-        this.mainPanel= new DrawPanel(Color.darkGray);
-        this.mainPanel.setLayout(new BorderLayout(GAP,GAP));
+        this.mainPanel= new DrawPanel(Color.gray);
+        this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
-        final JPanel topPanel = new JPanel(new BorderLayout(GAP,GAP));
+        final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
         //this.menuPanel = new MenuPanel();
         this.botPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());

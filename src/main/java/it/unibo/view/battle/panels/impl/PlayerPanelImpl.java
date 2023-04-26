@@ -16,7 +16,9 @@ import java.util.List;
 public class PlayerPanelImpl implements PlayerPanel {
 
     private final static int NUMBER_OF_SLOTS = 5;
-    private final static double BUTTON_SCALE = 0.12;
+    private final static double BUTTON_SCALE = 0.95;
+
+    private final Dimension buttonsDimension;
 
     private final JPanel mainPanel;
     private List<TroopButtonImpl> slots;
@@ -24,6 +26,8 @@ public class PlayerPanelImpl implements PlayerPanel {
     public PlayerPanelImpl(final Dimension preferredSize) {
         this.mainPanel=new DrawPanel(ImageIconEntitiesManager.BACKGROUND_PLAYERS_URL);
         this.mainPanel.setPreferredSize(preferredSize);
+        this.buttonsDimension= new Dimension(
+                (int)(preferredSize.getHeight() * BUTTON_SCALE), (int)(preferredSize.getHeight() * BUTTON_SCALE));
 
         this.restart();
     }
@@ -37,7 +41,6 @@ public class PlayerPanelImpl implements PlayerPanel {
         }
 
         this.slots.forEach(this.mainPanel::add);
-
         this.setButtonsSize();
 
     }
@@ -45,9 +48,7 @@ public class PlayerPanelImpl implements PlayerPanel {
     private void setButtonsSize(){
         this.slots
                 .forEach(
-                        x -> x.setPreferredSize(new Dimension(
-                                (int)(this.mainPanel.getWidth() * BUTTON_SCALE),
-                                (int)(this.mainPanel.getWidth() * BUTTON_SCALE))));
+                        x -> x.setPreferredSize(this.buttonsDimension));
     }
 
     @Override

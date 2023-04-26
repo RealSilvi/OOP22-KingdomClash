@@ -28,8 +28,7 @@ public class LifePanelImpl implements LifePanel {
         this.lives=new ArrayList<>();
 
         IntStream.range(0,this.nrOfLives).forEach(
-                i -> lives.add(new LivesLabelImpl(true))
-        );
+                i -> lives.add(new LivesLabelImpl(true)));
 
         this.lives.forEach(this.mainPanel::add);
 

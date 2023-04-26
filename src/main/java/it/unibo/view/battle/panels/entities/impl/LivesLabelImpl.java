@@ -4,6 +4,7 @@ import it.unibo.view.battle.panels.entities.api.LivesLabel;
 import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LivesLabelImpl extends JLabel implements LivesLabel {
 
@@ -12,7 +13,10 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     public LivesLabelImpl() {
         super(ImageIconEntitiesManager.getImageLive(true));
         this.stillAlive=true;
-        this.setText("vita");//ci sara l immagine della vita morta
+        this.setBackground(Color.WHITE);
+        this.setOpaque(true);
+        this.setText("vita");//ci sara l immagine della vita morte
+
     }
 
     public LivesLabelImpl(final Boolean status){
