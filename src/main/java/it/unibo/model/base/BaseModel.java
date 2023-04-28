@@ -1,5 +1,6 @@
 package it.unibo.model.base;
 
+import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.basedata.BuildingFactory.BuildingTypes;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
@@ -118,6 +119,18 @@ public interface BaseModel {
      */
     public List<Resource> getResourceCount();
     
+    /**
+     * Registers an observer object that gets notified whenever a building state changes
+     * @param observer the object that needs to be registered
+     */
+    public void addBuildingStateChangedObserver(BuildingObserver observer);
+    /**
+     * Unregisters an observer that gets notified whenever a building state changes
+     * @param observer the object that needs to be unregistered
+     * @see {@link #addBuildingStateChangedObserver()}
+     */
+    public void removeBuildingStateChangedObserver(BuildingObserver observer);
+
     /**
      * Starts and stops the clock that keeps track of time passed
      * @param ticktime true to make time pass, false to stop time from passing
