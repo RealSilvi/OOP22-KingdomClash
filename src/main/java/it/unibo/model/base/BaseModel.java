@@ -6,6 +6,7 @@ import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
+import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 
 import java.awt.geom.Point2D;
@@ -141,4 +142,12 @@ public interface BaseModel {
      * @return true if time is passing, false if stopped
      */
     public boolean isClockTicking();
+
+    /**
+     * Returns the instance of GameData.
+     * Be careful! directly manipulating data inside of the returned object
+     * might result in uncontrolled behaviour, use it carefully!
+     * @return game data object that contains every information of the current game
+     */
+    public GameData obtainGameData();
 }
