@@ -1,11 +1,11 @@
 package it.unibo.model.base;
 
 import it.unibo.model.base.api.BuildingObserver;
-import it.unibo.model.base.basedata.BuildingFactory.BuildingTypes;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
+import it.unibo.model.base.internal.BuildingFactory.BuildingTypes;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 
