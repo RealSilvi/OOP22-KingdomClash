@@ -1,4 +1,6 @@
-package it.unibo.model.base.basedata;
+package it.unibo.model.base.internal;
+
+import it.unibo.model.base.basedata.Building;
 
 /**
  * A very simple factory to easily create standardized buildings
