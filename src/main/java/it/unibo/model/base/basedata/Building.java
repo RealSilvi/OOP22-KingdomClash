@@ -1,5 +1,6 @@
 package it.unibo.model.base.basedata;
 
+import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class Building {
     public static final int MAXLEVEL = 3;
 
     private Path buildingOverlay;                       /*Texture to use while building structure*/
-    private List<Path> buildingTextures;                /*1 texture for every level*/
+    private List<URL> buildingTextures;                /*1 texture for every level*/
 
     private int level;
     private float buildingTime;                         /*milliseconds*/
@@ -21,7 +22,7 @@ public class Building {
 
     //The high parameter count is necessary to set all of the properties of the class
     @SuppressWarnings("java:S107")
-    public Building(Path buildingOverlay, List<Path> buildingTextures, int level, float buildingTime,
+    public Building(Path buildingOverlay, List<URL> buildingTextures, int level, float buildingTime,
             boolean buildingStatus, int buildingProgess, Pair<Float, Float> structurePos,
             List<Resource> productionAmount) {
         this.buildingOverlay = buildingOverlay;
@@ -40,10 +41,10 @@ public class Building {
     public void setBuildingOverlay(Path buildingOverlay) {
         this.buildingOverlay = buildingOverlay;
     }
-    public List<Path> getBuildingTextures() {
+    public List<URL> getBuildingTextures() {
         return buildingTextures;
     }
-    public void setBuildingTextures(List<Path> buildingTextures) {
+    public void setBuildingTextures(List<URL> buildingTextures) {
         this.buildingTextures = buildingTextures;
     }
     public int getLevel() {
