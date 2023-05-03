@@ -8,18 +8,18 @@ import java.util.Map;
 public interface ImageIconEntitiesManager {
 
     Map<Troop,String> troopUrl = Map.of(
-            Troop.AXE,"something/somethingElse.png",
-            Troop.SWORD,"something/somethingElse.png",
-            Troop.CATAPULT,"something/somethingElse.png",
-            Troop.ARROW,"something/somethingElse.png",
-            Troop.SHIELD,"something/somethingElse.png",
-            Troop.HELMET,"something/somethingElse.png",
-            Troop.TOWER,"something/somethingElse.png",
-            Troop.DODGE,"something/somethingElse.png"
+            Troop.AXE,"src/main/resources/it/unibo/icons/battle/Axe.png",
+            Troop.SWORD,"src/main/resources/it/unibo/icons/battle/Sword.png",
+            Troop.CATAPULT,"src/main/resources/it/unibo/icons/battle/Hammer.png",
+            Troop.ARROW,"src/main/resources/it/unibo/icons/battle/Mace.png",
+            Troop.SHIELD,"src/main/resources/it/unibo/icons/battle/Shield01.png",
+            Troop.HELMET,"src/main/resources/it/unibo/icons/battle/Shield02.png",
+            Troop.TOWER,"src/main/resources/it/unibo/icons/battle/Shield03.png",
+            Troop.DODGE,"src/main/resources/it/unibo/icons/battle/Helmet.png"
     );
 
-    String LIFE_URL = "something/somethingElse.png";
-    String DEATH_URL = "something/somethingElse.png";
+    String LIFE_URL = "src/main/resources/it/unibo/icons/battle/Life.png";
+    String DEATH_URL = "src/main/resources/it/unibo/icons/battle/Death.png";
     String BACKGROUND_FIELD_URL = "src/main/resources/it/unibo/icons/battle/FieldBackground.png";
     String BACKGROUND_FREE_SPOT_URL = "src/main/resources/it/unibo/icons/battle/FreeSpotBackground.png";
     String BACKGROUND_PLAYERS_URL = "src/main/resources/it/unibo/icons/battle/PlayerBackground.png";
@@ -37,12 +37,12 @@ public interface ImageIconEntitiesManager {
      }
 
      static ImageIcon getImageLive(final boolean alive){
-        return null;
+        return (alive) ?  new ImageIcon(LIFE_URL) :  new ImageIcon(DEATH_URL) ;
     }
 
     static ImageIcon getImageDefaultBackground(){
          return null;
-    };
+    }
 
     static Troop getTroopFromImage(Icon icon){ return null;}
 
