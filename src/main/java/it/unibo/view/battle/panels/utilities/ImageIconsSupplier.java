@@ -8,12 +8,12 @@ import java.util.Map;
 
 public interface ImageIconsSupplier {
 
-    ImageIcon BACKGROUND_FIELD_URL = new ImageIcon("src/main/resources/it/unibo/icons/battle/FieldBackground.png");
-    ImageIcon BACKGROUND_FREE_SPOT_URL = new ImageIcon("src/main/resources/it/unibo/icons/battle/FreeSpotBackground.png");
-    ImageIcon BACKGROUND_PLAYERS_URL = new ImageIcon("src/main/resources/it/unibo/icons/battle/PlayerBackground.png");
-    ImageIcon BACKGROUND_SIDE_URL = new ImageIcon("src/main/resources/it/unibo/icons/battle/SideBackground.png");
-    ImageIcon BACKGROUND_LIFE_URL = new ImageIcon("src/main/resources/it/unibo/icons/battle/LifeBackground.png");
-    ImageIcon BACKGROUND_BUTTONS_URL = new ImageIcon("src/main/resources/it/unibo/icons/battle/ButtonsBackground.png");
+    ImageIcon BACKGROUND_FIELD = new ImageIcon("src/main/resources/it/unibo/icons/battle/FieldBackground.png");
+    ImageIcon BACKGROUND_FREE_SPOT = new ImageIcon("src/main/resources/it/unibo/icons/battle/FreeSpotBackground.png");
+    ImageIcon BACKGROUND_PLAYERS = new ImageIcon("src/main/resources/it/unibo/icons/battle/PlayerBackground.png");
+    ImageIcon BACKGROUND_SIDE = new ImageIcon("src/main/resources/it/unibo/icons/battle/SideBackground.png");
+    ImageIcon BACKGROUND_LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/LifeBackground.png");
+    ImageIcon BACKGROUND_BUTTONS = new ImageIcon("src/main/resources/it/unibo/icons/battle/ButtonsBackground.png");
 
     Map<Troop, List<String>> troopUrl = Map.of(
             Troop.AXE,
@@ -43,19 +43,13 @@ public interface ImageIconsSupplier {
 
     );
 
-    String LIFE_URL = "src/main/resources/it/unibo/icons/battle/Life.png";
-    String DEATH_URL = "src/main/resources/it/unibo/icons/battle/Death.png";
+    ImageIcon LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/Life.png");
+    ImageIcon DEATH = new ImageIcon("src/main/resources/it/unibo/icons/battle/Death.png");
 
 
     static ImageIcon getImageIconFromTroop(final Troop troop, final boolean selected){
         return (selected) ?
                 new ImageIcon(troopUrl.get(troop).iterator().next()) :
                 new ImageIcon(troopUrl.get(troop).get(troopUrl.get(troop).size()));
-    }
-
-    static ImageIcon getImageLive(final boolean alive){
-        return (alive) ?
-                new ImageIcon(LIFE_URL) :
-                new ImageIcon(DEATH_URL) ;
     }
 }

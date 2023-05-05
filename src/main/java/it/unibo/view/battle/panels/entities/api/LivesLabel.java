@@ -10,8 +10,4 @@ public interface LivesLabel {
      */
     void changeStatus();
 
-    /**
-     * @return the status of this point live.
-     */
-    boolean isStillAlive();
 }
