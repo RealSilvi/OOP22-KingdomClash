@@ -52,4 +52,10 @@ public interface ImageIconsSupplier {
                 new ImageIcon(troopUrl.get(troop).iterator().next()) :
                 new ImageIcon(troopUrl.get(troop).get(troopUrl.get(troop).size()));
     }
+
+    static ImageIcon getImageLive(final boolean alive){
+        return (alive) ?
+                LIFE :
+                DEATH ;
+    }
 }

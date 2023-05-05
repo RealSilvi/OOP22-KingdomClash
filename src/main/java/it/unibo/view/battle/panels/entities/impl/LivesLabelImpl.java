@@ -7,16 +7,23 @@ import javax.swing.*;
 
 public class LivesLabelImpl extends JLabel implements LivesLabel {
 
+    private boolean alive;
 
     public LivesLabelImpl() {
         super(ImageIconsSupplier.LIFE);
+        this.alive=true;
         this.setOpaque(true);
     }
 
 
     @Override
     public void changeStatus(){
-        this.setIcon(ImageIconsSupplier.DEATH);
+        this.alive=!this.alive;
+        this.setIcon(ImageIconsSupplier.getImageLive(this.alive));
     }
 
+    @Override
+    public boolean isAlive() {
+        return this.alive;
+    }
 }

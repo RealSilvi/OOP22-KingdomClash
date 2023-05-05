@@ -1,4 +1,4 @@
-package it.unibo.view.battle.panels.entities.impl;
+package it.unibo.view.battle.panels.entities;
 
 import javax.swing.*;
 import java.awt.*;

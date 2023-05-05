@@ -1,34 +1,38 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.api.LifePanel;
 import it.unibo.view.battle.panels.entities.api.LivesLabel;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class LifePanelImpl implements LifePanel {
 
+    private final static int rows=2;
+
     private final JPanel mainPanel;
     private ArrayList<LivesLabelImpl> lives;
 
-    private final int nrOfLives;
+    public LifePanelImpl(final int nrOfLives) {
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_LIFE);
 
-    public LifePanelImpl(int nrOfLives) {
-        this.mainPanel=new DrawPanel(ImageIconEntitiesManager.BACKGROUND_LIFE_URL);
-        this.nrOfLives =nrOfLives;
+        if(nrOfLives%rows == 0){
+            this.mainPanel.setLayout(new GridLayout(rows,nrOfLives /rows));
+        }else{
+            this.mainPanel.setLayout(new GridLayout(rows,(nrOfLives + nrOfLives%rows)/rows));
+        }
 
-        this.restart();
-
+        this.restart(nrOfLives);
     }
 
-    @Override
-    public void restart(){
+    private void restart(final int nrOfLives){
         this.lives=new ArrayList<>();
 
-        IntStream.range(0,this.nrOfLives).forEach(
-                i -> lives.add(new LivesLabelImpl(true)));
+        IntStream.range(0,nrOfLives).forEach(i -> lives.add(new LivesLabelImpl()));
 
         this.lives.forEach(this.mainPanel::add);
 
@@ -37,7 +41,7 @@ public class LifePanelImpl implements LifePanel {
     @Override
     public void decreaseLife(){
         this.lives.stream()
-                .filter(LivesLabelImpl::isStillAlive)
+                .filter(LivesLabelImpl::isAlive)
                 .findFirst()
                 .ifPresent(LivesLabel ::changeStatus);
     }
