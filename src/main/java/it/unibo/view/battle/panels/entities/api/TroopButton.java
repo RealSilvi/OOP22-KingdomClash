@@ -8,14 +8,9 @@ import it.unibo.view.battle.Troop;
 public interface TroopButton {
 
     /**
-     * Sets a Random Troop.
+     * Change the background image displaying the select status of the JButton.
      */
-    void changeTroop();
-
-    /**
-     * Change the status of the slot. It NOT disables it.
-     */
-    void changeSelectable();
+    void changeStatusImage();
 
     /**
      *
@@ -23,9 +18,5 @@ public interface TroopButton {
      */
     Troop getTroop();
 
-    /**
-     *
-     * @return the status of the slot.
-     */
-    Boolean getSelectable();
+
 }

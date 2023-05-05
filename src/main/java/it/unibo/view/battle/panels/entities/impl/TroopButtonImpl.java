@@ -2,48 +2,31 @@ package it.unibo.view.battle.panels.entities.impl;
 
 import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class TroopButtonImpl extends JButton implements TroopButton {
 
-    private Boolean selectable;
+    private final Troop troop;
+    private boolean status;
 
-    public TroopButtonImpl(final Troop troop) {
-        this.setIcon(ImageIconEntitiesManager.getImageFromTroop(troop,true));
-        this.selectable =true;
+    public TroopButtonImpl(final Troop troop, final boolean status) {
+        this.troop=troop;
+        this.status= status;
+
+        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop,status));
         this.setOpaque(false);
     }
 
     @Override
-    public void changeTroop(){
-        this.setIcon(ImageIconEntitiesManager.getImageRandomTroop());
-    }
-
-    @Override
-    public void changeSelectable(){
-        this.selectable =!this.selectable;
-        this.changeBorder();
+    public void changeStatusImage(){
+        this.status=!this.status;
+        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop,status));
     }
 
     @Override
     public Troop getTroop() {
-        return ImageIconEntitiesManager.getTroopFromImage(this.getIcon());
-    }
-
-
-    @Override
-    public Boolean getSelectable() {
-        return this.selectable;
-    }
-
-    private void changeBorder(){
-        if ((this.selectable)) {
-            this.setBorder(BorderFactory.createEmptyBorder());
-        } else {
-            this.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-        }
+        return this.troop;
     }
 }
