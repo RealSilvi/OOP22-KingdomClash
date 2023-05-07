@@ -1,16 +1,22 @@
 package it.unibo.model.data;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import it.unibo.model.base.basedata.Building;
 
 public class GameData {
     private String playerName;
-    private List<Resource> resources;
+    private Set<Resource> resources;
     private Map<UUID, Building> buildings;
 
+    public GameData() {
+        this.resources = new HashSet<>();
+        this.buildings = new HashMap<>();
+    }
     //TODO: Aggiungere dati per battle
     public String getPlayerName() {
         return playerName;
@@ -18,10 +24,10 @@ public class GameData {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-    public List<Resource> getResources() {
+    public Set<Resource> getResources() {
         return resources;
     }
-    public void setResources(List<Resource> resources) {
+    public void setResources(Set<Resource> resources) {
         this.resources = resources;
     }
     public Map<UUID, Building> getBuildings() {
