@@ -12,7 +12,6 @@ import it.unibo.model.data.Resource;
 import java.awt.geom.Point2D;
 import java.nio.file.Path;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 /**
@@ -73,7 +72,7 @@ public interface BaseModel {
     /**
      * Tries to destroy a building, giving back part of the building resources spent
      * @param structureId an existing structure's identifier
-     * @return a list of recovered resources
+     * @return a set of recovered resources
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
     public Set<Resource> demolishStructure(final UUID structureId) throws InvalidStructureReferenceException;
@@ -100,9 +99,9 @@ public interface BaseModel {
      */
     public int getBuildingProgress(final UUID structureId) throws InvalidStructureReferenceException;
     /**
-     * Produces a list of materials that the structures produces
+     * Produces a set of materials that the structures produces
      * @param structureId an existing structure's identifier
-     * @return a list of materials that the structures produces
+     * @return a set of materials that the structures produces
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
     public Set<Resource> getBuildingProduction(final UUID structureId) throws InvalidStructureReferenceException;
@@ -116,7 +115,7 @@ public interface BaseModel {
     /**
      * @return an identifier for every existing building
      */
-    public List<UUID> getBuildingIds();
+    public Set<UUID> getBuildingIds();
 
     /**
      * Returns the amount of the provided type of resources that the player has
@@ -125,10 +124,10 @@ public interface BaseModel {
      */
     public int getResourceCount(final Resource.ResourceType type);
     /**
-     * For every existing resource type, returns the amount that the player has in an unmodifiable list
-     * @return an unmodifiable list of resources
+     * For every existing resource type, returns the amount that the player has in an unmodifiable set
+     * @return an unmodifiable set of resources
      */
-    public List<Resource> getResourceCount();
+    public Set<Resource> getResourceCount();
     
     /**
      * Registers an observer object that gets notified whenever a building state changes
