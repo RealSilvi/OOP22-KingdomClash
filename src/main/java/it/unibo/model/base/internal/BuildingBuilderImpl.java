@@ -21,7 +21,7 @@ public class BuildingBuilderImpl implements BuildingBuilder {
         false,
         0,
         position,
-        type.getBaseProduction().stream().map(x->new Resource(x.getResource(), x.getAmount()*level)).collect(Collectors.toList()));
+        type.getBaseProduction().stream().map(x->new Resource(x.getResource(), x.getAmount()*level)).collect(Collectors.toSet()));
     }
 
     @Override

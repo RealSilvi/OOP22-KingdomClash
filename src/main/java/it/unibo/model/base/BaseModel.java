@@ -105,7 +105,7 @@ public interface BaseModel {
      * @return a list of materials that the structures produces
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public List<Resource> getBuildingProduction(final UUID structureId) throws InvalidStructureReferenceException;
+    public Set<Resource> getBuildingProduction(final UUID structureId) throws InvalidStructureReferenceException;
     /**
      * Checks if the current structure is being built and returns a boolean
      * @param structureId an existing structure's identifier

@@ -93,10 +93,8 @@ public class BaseModelImpl implements BaseModel {
         Building selectedBuilding = checkAndGetBuilding(structureId);
         Set<UUID> keys = gameData.getBuildings().keySet();
         for (UUID key : keys) {
-            if (gameData.getBuildings().get(key).getStructurePos().equals(position)) {
-                if (!structureId.equals(key)) {
-                    throw new InvalidBuildingPlacementException();
-                }
+            if (gameData.getBuildings().get(key).getStructurePos().equals(position) && !structureId.equals(key)) {
+                throw new InvalidBuildingPlacementException();
             }
         }
         selectedBuilding.setStructurePos(position);
@@ -112,15 +110,13 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public int getBuildingProgress(UUID structureId) throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBuildingProgress'");
+        return selectedBuilding.getBuildingProgess();
     }
 
     @Override
-    public List<Resource> getBuildingProduction(UUID structureId) throws InvalidStructureReferenceException {
+    public Set<Resource> getBuildingProduction(UUID structureId) throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBuildingProduction'");
+        return selectedBuilding.getProductionAmount();
     }
 
     @Override

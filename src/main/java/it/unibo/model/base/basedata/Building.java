@@ -3,6 +3,7 @@ package it.unibo.model.base.basedata;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
@@ -23,13 +24,13 @@ public class Building {
     private boolean beingBuilt;
     private int buildingProgess;
     private Point2D structurePos;
-    private List<Resource> productionAmount;
+    private Set<Resource> productionAmount;
 
     //The high parameter count is necessary to set all of the properties of the class
     @SuppressWarnings("java:S107")
     public Building(Optional<URL> buildingOverlay, List<URL> buildingTextures, BuildingTypes type, int level,
             float buildingTime, boolean beingBuilt, int buildingProgess, Point2D structurePos,
-            List<Resource> productionAmount) {
+            Set<Resource> productionAmount) {
         this.buildingOverlay = buildingOverlay;
         this.buildingTextures = buildingTextures;
         this.type = type;
@@ -89,10 +90,10 @@ public class Building {
     public void setStructurePos(Point2D structurePos) {
         this.structurePos = structurePos;
     }
-    public List<Resource> getProductionAmount() {
+    public Set<Resource> getProductionAmount() {
         return productionAmount;
     }
-    public void setProductionAmount(List<Resource> productionAmount) {
+    public void setProductionAmount(Set<Resource> productionAmount) {
         this.productionAmount = productionAmount;
     }   
 }
