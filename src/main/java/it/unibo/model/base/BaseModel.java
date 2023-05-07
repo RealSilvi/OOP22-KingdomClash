@@ -5,13 +5,15 @@ import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
-import it.unibo.model.base.internal.BuildingFactory.BuildingTypes;
+import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 
 import java.awt.geom.Point2D;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 /**
  * Interface for the base model, it has simple functions that allows other classes to interact
@@ -29,7 +31,7 @@ public interface BaseModel {
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException, InvalidStructureReferenceException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException;
     /**
      * Tries to build a structure in a given position at a given level
      * @param position placing position of the structure
@@ -40,7 +42,7 @@ public interface BaseModel {
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException, InvalidStructureReferenceException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException;
     /**
      * Tries to build a structure in a given position
      * @param position placing position of the structure
@@ -74,7 +76,7 @@ public interface BaseModel {
      * @return a list of recovered resources
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public List<Resource> demolishStructure(final UUID structureId) throws InvalidStructureReferenceException;
+    public Set<Resource> demolishStructure(final UUID structureId) throws InvalidStructureReferenceException;
     /**
      * Tries to relocate an already existing structure to another location if possible
      * @param position the new position of the structure
@@ -105,6 +107,13 @@ public interface BaseModel {
      */
     public List<Resource> getBuildingProduction(final UUID structureId) throws InvalidStructureReferenceException;
     /**
+     * Checks if the current structure is being built and returns a boolean
+     * @param structureId an existing structure's identifier
+     * @return true if the structure is currently being built
+     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
+     */
+    public boolean isBuildingBeingBuilt(UUID structureId) throws InvalidStructureReferenceException;
+    /**
      * @return an identifier for every existing building
      */
     public List<UUID> getBuildingIds();
@@ -132,6 +141,17 @@ public interface BaseModel {
      * @see {@link #addBuildingStateChangedObserver()}
      */
     public void removeBuildingStateChangedObserver(final BuildingObserver observer);
+    /**
+     * Registers an observer object that gets notified whenever a building generates resources
+     * @param observer the object that needs to be registered
+     */
+    public void addBuildingProductionObserver(final BuildingObserver observer);
+    /**
+     * Unregisters an observer that gets notified whenever a building generates resources
+     * @param observer the object that needs to be unregistered
+     * @see {@link #addBuildingProductionObservers()}
+     */
+    public void removeBuildingProductionObserver(final BuildingObserver observer);
 
     /**
      * Starts and stops the clock that keeps track of time passed
@@ -151,4 +171,10 @@ public interface BaseModel {
      * @return game data object that contains every information of the current game
      */
     public GameData obtainGameData();
+
+    public static Set<Resource> applyMultiplierToResources(Set<Resource> resource, int level) {
+        Set<Resource> alteredResource = new HashSet<>();
+        resource.forEach(singleCost->new Resource(singleCost.getResource(), singleCost.getAmount()*level));
+        return alteredResource;
+    }
 }
