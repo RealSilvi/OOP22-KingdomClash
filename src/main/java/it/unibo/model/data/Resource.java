@@ -6,9 +6,9 @@ public class Resource {
         WOOD
     }
     private ResourceType resource;
-    private float amount;
+    private int amount;
 
-    public Resource(ResourceType resource, float amount) {
+    public Resource(ResourceType resource, int amount) {
         this.resource = resource;
         this.amount = amount;
     }
@@ -22,10 +22,10 @@ public class Resource {
     public void setResource(ResourceType resource) {
         this.resource = resource;
     }
-    public float getAmount() {
+    public int getAmount() {
         return amount;
     }
-    public void setAmount(float amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 }

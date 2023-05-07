@@ -16,6 +16,7 @@ import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
 
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +33,7 @@ public class BaseModelImpl implements BaseModel {
     public BaseModelImpl(GameData gameData) {
         this.gameData = gameData;
     }
-
+    //TODO: Make sure to make return values unmodifiable
     @Override
     public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode)
             throws NotEnoughResourceException, InvalidBuildingPlacementException {
@@ -116,20 +117,18 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public Set<Resource> getBuildingProduction(UUID structureId) throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
-        return selectedBuilding.getProductionAmount();
+        return Collections.unmodifiableSet(selectedBuilding.getProductionAmount());
     }
 
     @Override
     public boolean isBuildingBeingBuilt(UUID structureId) throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isBuildingBeingBuilt'");
+        return selectedBuilding.isBeingBuilt();
     }
 
     @Override
-    public List<UUID> getBuildingIds() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBuildingIds'");
+    public Set<UUID> getBuildingIds() {
+        return Collections.unmodifiableSet(gameData.getBuildings().keySet());
     }
 
     @Override
@@ -139,7 +138,7 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public List<Resource> getResourceCount() {
+    public Set<Resource> getResourceCount() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getResourceCount'");
     }
