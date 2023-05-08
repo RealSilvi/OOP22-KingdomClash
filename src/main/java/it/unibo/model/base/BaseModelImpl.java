@@ -19,18 +19,22 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class BaseModelImpl  {
+import org.jetbrains.annotations.NotNull;
+
+public class BaseModelImpl implements BaseModel {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
     private GameData gameData;
 
-    public BaseModelImpl(GameData gameData) {
+    public BaseModelImpl(@NotNull GameData gameData) {
+        Objects.requireNonNull(gameData);
         this.gameData = gameData;
     }
     //TODO: Make sure to make return values unmodifiable
@@ -56,7 +60,7 @@ public class BaseModelImpl  {
             throws NotEnoughResourceException, InvalidBuildingPlacementException {
         return buildStructure(position, type, 0, false);
     }
-
+    //TODO: Aggiorna tutti gli stati della struttura mentre viene upgradeata
     @Override
     public void upgradeStructure(UUID structureId, boolean cheatMode)
             throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException {
@@ -133,14 +137,18 @@ public class BaseModelImpl  {
 
     @Override
     public int getResourceCount(ResourceType type) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getResourceCount'");
+        Optional<Resource> resourceCounter = gameData
+            .getResources()
+            .stream().filter(x->x.getResource().equals(type)).findFirst();
+        if (resourceCounter.isEmpty()) {
+            return Integer.valueOf(0);
+        }
+        return Integer.valueOf(resourceCounter.get().getAmount());
     }
 
     @Override
     public Set<Resource> getResourceCount() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getResourceCount'");
+        return Collections.unmodifiableSet(gameData.getResources());
     }
 
     @Override
@@ -206,6 +214,7 @@ public class BaseModelImpl  {
         }
         return storageResult;
     }
+
     //TODO: If possible, check if one ore more resources are missing and change the error message
     private Set<Resource> subtractResources(Set<Resource> resourceStorage, Set<Resource> resourceCost) throws NotEnoughResourceException{
         Set<Resource> updatedList = unsafeSubtraction(resourceStorage, resourceCost);
@@ -220,11 +229,16 @@ public class BaseModelImpl  {
         }
         throw new NotEnoughResourceException(missingResources);
     }
+
     private Building checkAndGetBuilding(UUID structureId) throws InvalidStructureReferenceException {
         Building selectedBuilding = gameData.getBuildings().get(structureId);
         if (selectedBuilding == null) {
             throw new InvalidStructureReferenceException(structureId);
         }
         return selectedBuilding;
+    }
+
+    private synchronized void produceStructureResources() {
+        
     }
 }
