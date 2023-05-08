@@ -1,7 +1,8 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.api.ButtonsPanel;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,7 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     private final JPanel mainPanel;
 
     public ButtonsPanelImpl() {
-        this.mainPanel = new DrawPanel(ImageIconEntitiesManager.BACKGROUND_BUTTONS_URL);
+        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_BUTTONS);
         this.spin = new JButton("SPIN");
         this.pass = new JButton("PASS");
 

@@ -2,8 +2,8 @@ package it.unibo.view.battle.panels.impl;
 
 import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.api.InfoPanel;
-import it.unibo.view.battle.panels.entities.impl.DrawPanel;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class InfoPanelImpl implements InfoPanel {
     private final List<JLabel> table;
 
     public InfoPanelImpl(Dimension preferredSize, final int nrOfTroops) {
-        this.mainPanel=new DrawPanel(ImageIconEntitiesManager.BACKGROUND_SIDE_URL);
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_SIDE);
         this.table=new ArrayList<>();
         
         this.mainPanel.setLayout(new GridLayout(nrOfTroops,3));
