@@ -173,7 +173,7 @@ public interface BaseModel {
 
     public static Set<Resource> applyMultiplierToResources(Set<Resource> resource, int level) {
         Set<Resource> alteredResource = new HashSet<>();
-        resource.forEach(singleCost->new Resource(singleCost.getResource(), singleCost.getAmount()*level));
+        resource.forEach(singleCost->alteredResource.add(new Resource(singleCost.getResource(), singleCost.getAmount()*(level == 0 ? 1 : level))));
         return alteredResource;
     }
 }

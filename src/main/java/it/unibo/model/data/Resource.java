@@ -28,4 +28,16 @@ public class Resource {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    @Override
+    public boolean equals(Object otherResource) {
+        if (otherResource == null) {
+            return false;
+        }
+        if ((getClass() == otherResource.getClass()) &&
+        (this.getResource() == ((Resource) otherResource).getResource())) {
+            return true;
+        }
+        return super.equals(otherResource);
+    }
 }
