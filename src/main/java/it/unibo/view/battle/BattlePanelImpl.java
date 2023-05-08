@@ -1,6 +1,6 @@
 package it.unibo.view.battle;
 
-import it.unibo.view.battle.panels.entities.impl.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
 import it.unibo.view.battle.panels.utilities.*;
 

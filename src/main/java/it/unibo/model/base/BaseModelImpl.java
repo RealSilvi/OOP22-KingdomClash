@@ -25,7 +25,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-public class BaseModelImpl implements BaseModel {
+public class BaseModelImpl  {
 
     Logger logger = Logger.getLogger(this.getClass().getName());
     private GameData gameData;

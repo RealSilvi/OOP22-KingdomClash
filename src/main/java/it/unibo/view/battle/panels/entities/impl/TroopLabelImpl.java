@@ -13,12 +13,12 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
     }
 
     public TroopLabelImpl() {
-        super(ImageIconsSupplier.BACKGROUND_FREE_SPOT_URL);
+        super(ImageIconsSupplier.BACKGROUND_FREE_SPOT);
     }
 
     @Override
     public void setEmpty(){
-        this.setIcon(ImageIconsSupplier.BACKGROUND_FREE_SPOT_URL);
+        this.setIcon(ImageIconsSupplier.BACKGROUND_FREE_SPOT);
     }
 
     @Override

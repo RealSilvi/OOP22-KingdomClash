@@ -2,9 +2,9 @@ package it.unibo.view.battle.panels.impl;
 
 import it.unibo.view.battle.panels.api.ComandPanel;
 import it.unibo.view.battle.panels.entities.impl.ButtonsPanelImpl;
-import it.unibo.view.battle.panels.entities.impl.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.LifePanelImpl;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class CommandPanelImpl implements ComandPanel {
 
     
     public CommandPanelImpl(final Dimension preferredDimension, final int numberOfLives) {
-        this.mainPanel= new DrawPanel(ImageIconEntitiesManager.BACKGROUND_SIDE_URL);
+        this.mainPanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_SIDE);
         this.botLivesPanel=new LifePanelImpl(numberOfLives);
         this.playerLivesPanel= new LifePanelImpl(numberOfLives);
         this.buttonsPanel= new ButtonsPanelImpl();

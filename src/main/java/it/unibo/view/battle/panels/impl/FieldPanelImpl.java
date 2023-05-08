@@ -2,9 +2,9 @@ package it.unibo.view.battle.panels.impl;
 
 import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.api.FieldPanel;
-import it.unibo.view.battle.panels.entities.impl.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class FieldPanelImpl implements FieldPanel{
     private List<TroopLabelImpl> army;
 
     public FieldPanelImpl(Dimension preferredSize) {
-        this.mainPanel=new DrawPanel(ImageIconEntitiesManager.BACKGROUND_FIELD_URL);
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FIELD);
         this.army=new ArrayList<>();
 
         this.mainPanel.setLayout(new GridLayout(2,10));
@@ -35,7 +35,7 @@ public class FieldPanelImpl implements FieldPanel{
             if(field.get(x).isEmpty()){
                 army.add(new TroopLabelImpl());
             }else{
-                army.add(new TroopLabelImpl(ImageIconEntitiesManager.getImageFromTroop(
+                army.add(new TroopLabelImpl(ImageIconsSupplier.getImageIconFromTroop(
                         field.get(x).get(),
                         true
                 )));

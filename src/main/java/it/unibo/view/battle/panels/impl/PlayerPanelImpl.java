@@ -3,15 +3,16 @@ package it.unibo.view.battle.panels.impl;
 import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.api.PlayerPanel;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
-import it.unibo.view.battle.panels.entities.impl.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
-import it.unibo.view.battle.panels.utilities.ImageIconEntitiesManager;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class PlayerPanelImpl implements PlayerPanel {
 
@@ -24,7 +25,7 @@ public class PlayerPanelImpl implements PlayerPanel {
     private List<TroopButtonImpl> slots;
 
     public PlayerPanelImpl(final Dimension preferredSize) {
-        this.mainPanel=new DrawPanel(ImageIconEntitiesManager.BACKGROUND_PLAYERS_URL);
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_PLAYERS);
         this.mainPanel.setPreferredSize(preferredSize);
         this.buttonsDimension= new Dimension(
                 (int)(preferredSize.getHeight() * BUTTON_SCALE), (int)(preferredSize.getHeight() * BUTTON_SCALE));
@@ -33,12 +34,10 @@ public class PlayerPanelImpl implements PlayerPanel {
     }
 
     @Override
-    public void restart() {
-        this.slots = new ArrayList<>();
+    public void restart(ArrayList<Troop> troops) {
 
-        for(int i=0; i<NUMBER_OF_SLOTS; i++){
-            this.slots.add(new TroopButtonImpl(Troop.getRandomTroop()));
-        }
+        this.slots = new ArrayList<>();
+        troops.forEach(x -> this.slots.add(new TroopButtonImpl(x,true)));
 
         this.slots.forEach(this.mainPanel::add);
         this.setButtonsSize();
@@ -52,16 +51,12 @@ public class PlayerPanelImpl implements PlayerPanel {
     }
 
     @Override
-    public void update() {
-        setRandomSlots();
-        this.disableSelectedSlots();
-    }
+    public void update(Map<Troop,Boolean> troops) {
+//chiedi con lafa che struttura ti passa cosi lo fai partire
+        IntStream.range(0,this.slots.size()).forEach(x -> {
 
-    private void setRandomSlots() {
-        this.slots
-                .stream()
-                .filter(TroopButton::getSelectable)
-                .forEach(TroopButton::changeTroop);
+        });
+        this.disableSelectedSlots();
     }
 
     private void disableSelectedSlots(){
@@ -69,12 +64,12 @@ public class PlayerPanelImpl implements PlayerPanel {
     }
 
     @Override
-    public void disableAllSlots(){
+    public void disableSlots(){
         this.slots.forEach(x -> x.setEnabled(false));
     }
 
     @Override
-    public void enableAllSlots(){
+    public void enableSlots(){
         this.slots.stream().filter(TroopButtonImpl::getSelectable).forEach(x -> x.setEnabled(true));
     }
 
