@@ -42,58 +42,58 @@ public class Building {
         this.productionAmount = productionAmount;
     }
 
-    public Optional<URL> getBuildingOverlay() {
+    public synchronized Optional<URL> getBuildingOverlay() {
         return buildingOverlay;
     }
-    public void setBuildingOverlay(Optional<URL> buildingOverlay) {
+    public synchronized void setBuildingOverlay(Optional<URL> buildingOverlay) {
         this.buildingOverlay = buildingOverlay;
     }
-    public List<URL> getBuildingTextures() {
+    public synchronized List<URL> getBuildingTextures() {
         return buildingTextures;
     }
-    public void setBuildingTextures(List<URL> buildingTextures) {
+    public synchronized void setBuildingTextures(List<URL> buildingTextures) {
         this.buildingTextures = buildingTextures;
     }
-    public BuildingTypes getType() {
+    public synchronized BuildingTypes getType() {
         return type;
     }
-    public void setType(BuildingTypes type) {
+    public synchronized void setType(BuildingTypes type) {
         this.type = type;
     }
-    public int getLevel() {
+    public synchronized int getLevel() {
         return level;
     }
-    public void setLevel(int level) {
+    public synchronized void setLevel(int level) {
         this.level = level;
     }
-    public float getBuildingTime() {
+    public synchronized float getBuildingTime() {
         return buildingTime;
     }
-    public void setBuildingTime(float buildingTime) {
+    public synchronized void setBuildingTime(float buildingTime) {
         this.buildingTime = buildingTime;
     }
-    public boolean isBeingBuilt() {
+    public synchronized boolean isBeingBuilt() {
         return beingBuilt;
     }
-    public void setBeingBuilt(boolean beingBuilt) {
+    public synchronized void setBeingBuilt(boolean beingBuilt) {
         this.beingBuilt = beingBuilt;
     }
-    public int getBuildingProgess() {
+    public synchronized int getBuildingProgess() {
         return buildingProgess;
     }
-    public void setBuildingProgess(int buildingProgess) {
+    public synchronized void setBuildingProgess(int buildingProgess) {
         this.buildingProgess = buildingProgess;
     }
-    public Point2D getStructurePos() {
+    public synchronized Point2D getStructurePos() {
         return structurePos;
     }
-    public void setStructurePos(Point2D structurePos) {
+    public synchronized void setStructurePos(Point2D structurePos) {
         this.structurePos = structurePos;
     }
-    public Set<Resource> getProductionAmount() {
+    public synchronized Set<Resource> getProductionAmount() {
         return productionAmount;
     }
-    public void setProductionAmount(Set<Resource> productionAmount) {
+    public synchronized void setProductionAmount(Set<Resource> productionAmount) {
         this.productionAmount = productionAmount;
     }   
 }
