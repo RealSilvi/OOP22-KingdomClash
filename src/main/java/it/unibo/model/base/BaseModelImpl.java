@@ -43,7 +43,10 @@ public class BaseModelImpl implements BaseModel {
             throws NotEnoughResourceException, InvalidBuildingPlacementException {
         BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
         Building newStructure = buildingBuilder.makeStandardBuilding(type, position, startingLevel);
-        gameData.setResources(subtractResources(gameData.getResources(), BaseModel.applyMultiplierToResources(newStructure.getType().getCost(), startingLevel)));
+        gameData.setResources(subtractResources(gameData.getResources(),
+            BaseModel
+            .applyMultiplierToResources(newStructure.getType().getCost(),
+                startingLevel)));
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
         return newStructureId;
@@ -215,7 +218,6 @@ public class BaseModelImpl implements BaseModel {
         return storageResult;
     }
 
-    //TODO: If possible, check if one ore more resources are missing and change the error message
     private Set<Resource> subtractResources(Set<Resource> resourceStorage, Set<Resource> resourceCost) throws NotEnoughResourceException{
         Set<Resource> updatedList = unsafeSubtraction(resourceStorage, resourceCost);
         Set<Resource> missingResources = new HashSet<>();

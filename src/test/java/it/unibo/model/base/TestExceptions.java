@@ -16,7 +16,7 @@ public class TestExceptions {
         try {
             throw new NotEnoughResourceException(resources);
         } catch (NotEnoughResourceException e) {
-            Assertions.assertArrayEquals("You still need 490.0 WHEAT 400.0 WOOD to build this!".split(" "),
+            Assertions.assertArrayEquals("You still need 490 WHEAT 400 WOOD to build this!".split(" "),
                 e.getMessage().split(" "));
         }
     }
