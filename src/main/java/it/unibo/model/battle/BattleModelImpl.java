@@ -2,16 +2,14 @@ package it.unibo.model.battle;
 
 import it.unibo.view.battle.Troop;
 
-import javax.swing.text.html.Option;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BattleModelImpl implements BattleModel{
 
     public static final int TOTAL_TROOPS = 10;
     public static final int PLAYER_TROOPS = 5;
     public static final int BOT_TROOPS = 5;
-    public static final int CORRISPONDED_TROOP = 0;
+    public static final int FIRST_TROOP = 0;
 
     //private final Map<Integer, Map<Troop, Boolean>> battleTroop = new HashMap<>();
     private List<Troop> playerTroop = new ArrayList<>();

@@ -14,13 +14,5 @@ public interface BattleModel {
      */
     void BattleSpin();
 
-    /**
-     * Change the status of the pressed button.
-     * @param key: the key represents the button pressed.
-     */
-
-    void ChoosenButton(Integer key);
-
-
 
 }
