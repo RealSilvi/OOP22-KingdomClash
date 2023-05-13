@@ -5,6 +5,7 @@ import it.unibo.view.battle.panels.api.FieldPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +19,17 @@ public class FieldPanelImpl implements FieldPanel{
 
     private final List<TroopLabelImpl> army;
 
-    public FieldPanelImpl(Dimension preferredSize, int nrOfSlots) {
+    public FieldPanelImpl(final int nrOfSlots) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FIELD);
         this.army=new ArrayList<>();
 
         this.mainPanel.setLayout(new GridLayout(2,nrOfSlots));
         IntStream.range(0,nrOfSlots*4).forEach(x->  this.army.add(new TroopLabelImpl()));
         this.army.forEach(this.mainPanel::add);
-        this.mainPanel.setPreferredSize(preferredSize);
+
+
+        this.mainPanel.setMinimumSize(PanelDimensions.getFieldPanel());
+        this.mainPanel.setMaximumSize(PanelDimensions.getFieldPanel());
     }
 
     @Override

@@ -23,6 +23,12 @@ public interface PanelDimensions {
     double MENU_WIDTH_SCALE = 1;
     double MENU_HEIGHT_SCALE = 0.1;
 
+    double SIDE_LIFE_WIDTH_SCALE = 1;
+    double SIDE_LIFE_HEIGHT_SCALE = 0.25;
+
+    double SIDE_BUTTONS_WIDTH_SCALE = 1;
+    double SIDE_BUTTONS_HEIGHT_SCALE = 0.5;
+
     /**
      * @return The preferred dimension of the CenterPanel.
      */
@@ -30,15 +36,6 @@ public interface PanelDimensions {
         return new Dimension(
                 (int) (SCREEN_SIZE.getWidth() * FIELD_WIDTH_SCALE) ,
                 (int)(SCREEN_SIZE.getHeight() * FIELD_HEIGHT_SCALE));
-    }
-
-    /**
-     * @return The preferred dimension of the EastPanel and WestPanel.
-     */
-    static Dimension getSidePanel() {
-        return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * SIDE_WIDTH_SCALE) ,
-                (int)(SCREEN_SIZE.getHeight() * SIDE_HEIGHT_SCALE));
     }
 
     /**
@@ -59,4 +56,30 @@ public interface PanelDimensions {
                 (int)(SCREEN_SIZE.getHeight() * PLAYERS_HEIGHT_SCALE));
     }
 
+    /**
+     * @return The preferred dimension of the EastPanel and WestPanel.
+     */
+    static Dimension getSidePanel() {
+        return new Dimension(
+                (int) (SCREEN_SIZE.getWidth() * SIDE_WIDTH_SCALE) ,
+                (int) (SCREEN_SIZE.getHeight() * SIDE_HEIGHT_SCALE));
+    }
+
+    /**
+     * @return The preferred dimension of the MiddlePanel of SidePanel.
+     */
+    static Dimension getSideButtonsPanel() {
+        return new Dimension(
+                (int) (getSideLifePanel().getWidth() * SIDE_BUTTONS_WIDTH_SCALE) ,
+                (int) (getSidePanel().getHeight() * SIDE_BUTTONS_HEIGHT_SCALE));
+    }
+
+    /**
+     * @return The preferred dimension of the TopPanel and BottomPanel of SidePanel.
+     */
+    static Dimension getSideLifePanel() {
+        return new Dimension(
+                (int) (getSidePanel().width * SIDE_LIFE_WIDTH_SCALE) ,
+                (int) (getSidePanel().height * SIDE_LIFE_HEIGHT_SCALE));
+    }
 }

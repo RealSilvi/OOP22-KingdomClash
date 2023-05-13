@@ -5,6 +5,7 @@ import it.unibo.view.battle.panels.api.PlayerPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,16 +23,19 @@ public class PlayerPanelImpl implements PlayerPanel {
     private final JPanel mainPanel;
     private final List<TroopButtonImpl> slots;
 
-    public PlayerPanelImpl(final Dimension preferredSize,Map<Integer,Troop> troops,Integer nrOfSlots) {
+    public PlayerPanelImpl(final Map<Integer,Troop> troops,final Integer nrOfSlots) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_PLAYERS);
         this.slots = new ArrayList<>();
         IntStream.range(0,nrOfSlots).forEach(x ->this.slots.add(new TroopButtonImpl(troops.get(x),true)));
         this.slots.forEach(this.mainPanel::add);
 
 
-        this.mainPanel.setPreferredSize(preferredSize);
+        this.mainPanel.setMinimumSize(PanelDimensions.getPlayersPanel());
+        this.mainPanel.setMaximumSize(PanelDimensions.getPlayersPanel());
+
         this.buttonsDimension= new Dimension(
-                (int)(preferredSize.getHeight() * BUTTON_SCALE), (int)(preferredSize.getHeight() * BUTTON_SCALE));
+                (int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE)
+                ,(int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE));
         this.setButtonsSize();
 
         this.update(troops);

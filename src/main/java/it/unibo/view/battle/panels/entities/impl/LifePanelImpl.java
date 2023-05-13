@@ -4,6 +4,7 @@ import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.api.LifePanel;
 import it.unibo.view.battle.panels.entities.api.LivesLabel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,9 @@ public class LifePanelImpl implements LifePanel {
 
     public LifePanelImpl(final int nrOfLives) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_LIFE);
+
+        this.mainPanel.setMinimumSize(PanelDimensions.getSideLifePanel());
+        this.mainPanel.setMaximumSize(PanelDimensions.getSideLifePanel());
 
         if(nrOfLives%rows == 0){
             this.mainPanel.setLayout(new GridLayout(rows,nrOfLives /rows));
