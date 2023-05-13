@@ -11,13 +11,15 @@ import java.util.Optional;
  */
 public interface FieldPanel {
 
+    void restart();
+
     /**
      *
-     * @param field Ordered list of troops to display.
-     *              The first field.size()/2 are bot's troops.
-     *              The second half are player's troops.
+     * @param playerTroops  Ordered list of troops to display.
+     *                      The first field.size()/2 are bot's troops.
+     *                      The second half are player's troops.
      */
-    void redraw(List<Optional<Troop>> field);
+    void redraw(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botPlayer);
 
     JPanel getPanel();
 }
