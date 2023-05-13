@@ -14,5 +14,11 @@ public interface BattleModel {
      */
     void BattleSpin();
 
+    /**
+     * Takes care about the fighting player vs bot. It lets troops
+     * fighting against each other, controlling the life of both entity.
+     */
+
+    void BattleCombat();
 
 }
