@@ -1,9 +1,6 @@
 package it.unibo.model.battle;
 
-import it.unibo.model.battle.entitydata.BotData;
-import it.unibo.model.battle.entitydata.BotDataImpl;
-import it.unibo.model.battle.entitydata.PlayerData;
-import it.unibo.model.battle.entitydata.PlayerDataImpl;
+import it.unibo.model.data.FightData;
 import it.unibo.view.battle.Troop;
 
 import java.util.*;
@@ -11,49 +8,51 @@ import java.util.*;
 public class BattleModelImpl implements BattleModel{
 
     public static final int FIRST_TROOP = 0;
-    private BotData botData = new BotDataImpl();
-    private PlayerData playerData = new PlayerDataImpl();
+    private Optional<FightData> fightData;
 
     int counted_round = 0;
     int botLife = 10;
     int playerLife = 10;
 
 
-    private void Initialize(){
-
+    public BattleModelImpl(Optional<FightData> fightData){
+        if(fightData.isPresent()){
+            this.fightData = fightData;
+        }
     }
 
     @Override
     public void BattlePass() {
 
-        playerData.setClickedToChosen();
+        fightData.get().getPlayerData().setClickedToChosen();
 
         //disablePassButton()
         //disablePlayerSlots()
         //spinBotFreeSlot()
 
-        if(playerData.getSelected().size() > 0) {
-            playerData.getSelected().forEach(x -> {
+        if(fightData.get().getPlayerData().getSelected().size() > 0) {
+            fightData.get().getPlayerData().getSelected().forEach(x -> {
 
-                if (!botData.isMatch(x)) {
-                    if (botData.getNotSelected().contains(Troop.getNullable(x))) {
-                        botData.AddBotTroop(botData.getKeyFromTroop(Troop.getNullable(x)));
+                if (!fightData.get().getBotData().isMatch(x)) {
+                    if (fightData.get().getBotData().getNotSelected().contains(Troop.getNullable(x))) {
+                        fightData.get().getBotData().AddBotTroop(fightData.get().getBotData().getKeyFromTroop(Troop.getNullable(x)));
                     } else {
-                        if (botData.getSelected().size() < BotDataImpl.BOT_TROOPS) {
-                            botData.AddBotTroop(botData.selectRandomTroop());
+                        if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                            fightData.get().getBotData().AddBotTroop(fightData.get().getBotData().selectRandomTroop());
                         }
                     }
                 }
-
             });
         }else{
-            if (botData.getSelected().size() < BotDataImpl.BOT_TROOPS) {
-                botData.AddBotTroop(botData.selectRandomTroop());
+            if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                fightData.get().getBotData().AddBotTroop(fightData.get().getBotData().selectRandomTroop());
             }
         }
 
         counted_round++;
         if(counted_round >= 3){
+            fightData.get().getBotData().setAllChosen();
+            fightData.get().getPlayerData().setAllChosen();
             counted_round = 0;
             BattleCombat();
         }
@@ -63,17 +62,18 @@ public class BattleModelImpl implements BattleModel{
     @Override
     public void BattleSpin() {
 
-        playerData.changeNotSelectedTroop();
+        fightData.get().getPlayerData().changeNotSelectedTroop();
 
         //disableSpinButton()
         //spinPlayerFreeSlot()
 
     }
 
-    private void BattleCombat(){
+    @Override
+    public void BattleCombat(){
 
-        List<Optional<Troop>> playerField = playerData.getOrderedField(botData);
-        List<Optional<Troop>> botField = botData.getOrderedField(playerData);
+        List<Optional<Troop>> playerField = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData());
+        List<Optional<Troop>> botField = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData());
 
         playerField.forEach(x -> {
 
