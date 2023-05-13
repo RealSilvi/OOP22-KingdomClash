@@ -89,11 +89,7 @@ public class BotDataImpl implements BotData{
     @Override
     public Boolean isMatch(Troop troop) {
 
-        if(getSelected().contains(Troop.getNullable(troop))){
-            return true;
-        }else{
-            return false;
-        }
+        return getSelected().contains(Troop.getNullable(troop));
 
     }
 
@@ -146,6 +142,13 @@ public class BotDataImpl implements BotData{
 
         //updateField(playerOptionalList, botOptionalList)
         return botOptionalList;
+    }
+
+    @Override
+    public void setAllChosen() {
+
+        this.botTroop.values().forEach(x -> x.setChosen(true));
+
     }
 
 
