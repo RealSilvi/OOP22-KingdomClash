@@ -1,7 +1,10 @@
 package it.unibo.view.battle.panels.api;
 
+import it.unibo.view.battle.Troop;
+
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 /**
  * This interface show how to use southPanel and northPanel of the Gui.
@@ -10,15 +13,11 @@ import java.awt.event.ActionListener;
  */
 public interface PlayerPanel {
 
-    /**
-     * Restart the panel.
-     */
-    void restart();
 
     /**
      * Display new Random TroopButtons and block those which are already chosen.
      */
-    void update();
+    void update(Map<Integer, Troop> troops);
 
     /**
      * Disable all the buttons.
