@@ -1,24 +1,30 @@
 package it.unibo.model.data;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import it.unibo.model.base.basedata.Building;
 /**
- * A simple data class to store all of the game's information
+ * A simple data class to store all the game's information
  */
 public class GameData {
     private String playerName;
     private Set<Resource> resources;
     private Map<UUID, Building> buildings;
 
+    private Optional<FightData> fightData;
+
     public GameData() {
         this.resources = new HashSet<>();
         this.buildings = new HashMap<>();
+        this.fightData = Optional.empty();
     }
+
+    public GameData(Set<Resource> resources, Map<UUID, Building> buildings, Optional<FightData> fightData){
+        this.resources = resources;
+        this.buildings = buildings;
+        this.fightData = fightData;
+    }
+
     //TODO: Add data for battle
     /**
      * Gets the player's name
@@ -63,4 +69,9 @@ public class GameData {
     public void setBuildings(Map<UUID, Building> buildings) {
         this.buildings = buildings;
     }
+
+    public Optional<FightData> getFightData(){ return fightData;}
+
+    public void setFightData(Optional<FightData> fightData){this.fightData = fightData;}
+
 }
