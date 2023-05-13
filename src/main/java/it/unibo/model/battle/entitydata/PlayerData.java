@@ -23,4 +23,6 @@ public interface PlayerData {
 
     public List<Optional<Troop>> getOrderedField(BotData botData);
 
+    public void setAllChosen();
+
 }

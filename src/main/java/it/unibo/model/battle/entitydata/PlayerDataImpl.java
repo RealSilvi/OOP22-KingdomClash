@@ -109,4 +109,11 @@ public class PlayerDataImpl implements PlayerData {
         return playerOptionalList;
     }
 
+    @Override
+    public void setAllChosen() {
+
+        this.playerTroop.values().forEach(x -> x.setChosen(true));
+
+    }
+
 }
