@@ -1,5 +1,8 @@
 package it.unibo.model.battle;
 
+import it.unibo.controller.battle.BattleController;
+import it.unibo.controller.battle.BattleControllerImpl;
+import it.unibo.controller.battle.Event;
 import it.unibo.model.data.FightData;
 import it.unibo.view.battle.Troop;
 
@@ -9,6 +12,7 @@ public class BattleModelImpl implements BattleModel{
 
     public static final int FIRST_TROOP = 0;
     private Optional<FightData> fightData;
+    private BattleController battleController;
 
     int counted_round = 0;
     int botLife = 10;
@@ -19,6 +23,7 @@ public class BattleModelImpl implements BattleModel{
         if(fightData.isPresent()){
             this.fightData = fightData;
         }
+        this.battleController = new BattleControllerImpl(fightData);
     }
 
     @Override
@@ -57,6 +62,8 @@ public class BattleModelImpl implements BattleModel{
             BattleCombat();
         }
 
+        this.battleController.notify(Event.PASS);
+
     }
 
     @Override
@@ -64,8 +71,7 @@ public class BattleModelImpl implements BattleModel{
 
         fightData.get().getPlayerData().changeNotSelectedTroop();
 
-        //disableSpinButton()
-        //spinPlayerFreeSlot()
+        this.battleController.notify(Event.SPIN);
 
     }
 
@@ -117,9 +123,7 @@ public class BattleModelImpl implements BattleModel{
 
         });
 
-    }
-
-    private void notifyController(){
+        this.battleController.notify(Event.COMBAT);
 
     }
 
