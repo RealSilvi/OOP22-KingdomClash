@@ -3,6 +3,7 @@ package it.unibo.controller.battle;
 import it.unibo.model.battle.BattleModel;
 import it.unibo.model.battle.BattleModelImpl;
 import it.unibo.model.data.FightData;
+import it.unibo.model.data.GameData;
 
 import java.util.*;
 
@@ -12,25 +13,25 @@ public class BattleControllerImpl implements  BattleController{
     private final BattleModel battleModel;
     private Optional<FightData> fightData;
 
-    public BattleControllerImpl(BattleModel battleModel, Optional<FightData> fightData){
+    public BattleControllerImpl(BattleModel battleModel, GameData gameData){
         this.specific_event = new HashMap<>();
         for(Event event : Event.values()){
             this.specific_event.put(event,new ArrayList<>());
         }
         this.battleModel = battleModel;
-        if(fightData.isPresent()){
-            this.fightData = fightData;
+        if(gameData.getFightData().isPresent()){
+            this.fightData = gameData.getFightData();
         }
     }
 
-    public BattleControllerImpl(Optional<FightData> fightData){
+    public BattleControllerImpl(GameData gameData){
         this.specific_event = new HashMap<>();
         for(Event event : Event.values()){
             this.specific_event.put(event,new ArrayList<>());
         }
-        this.battleModel = new BattleModelImpl(fightData);
-        if(fightData.isPresent()){
-            this.fightData = fightData;
+        this.battleModel = new BattleModelImpl(gameData);
+        if(gameData.getFightData().isPresent()){
+            this.fightData = gameData.getFightData();
         }
     }
 

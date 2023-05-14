@@ -12,9 +12,9 @@ public class FightData {
     private BotData botData;
     private PlayerData playerData;
 
-    public FightData() {
-        this.botData = new BotDataImpl();
-        this.playerData = new PlayerDataImpl();
+    public FightData(GameData gameData) {
+        this.botData = new BotDataImpl(gameData);
+        this.playerData = new PlayerDataImpl(gameData);
     }
 
     public void setPlayerData(PlayerData playerData){

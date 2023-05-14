@@ -4,6 +4,7 @@ import it.unibo.controller.battle.BattleController;
 import it.unibo.controller.battle.BattleControllerImpl;
 import it.unibo.controller.battle.Event;
 import it.unibo.model.data.FightData;
+import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
 
 import java.util.*;
@@ -19,11 +20,11 @@ public class BattleModelImpl implements BattleModel{
     int playerLife = 10;
 
 
-    public BattleModelImpl(Optional<FightData> fightData){
-        if(fightData.isPresent()){
-            this.fightData = fightData;
+    public BattleModelImpl(GameData gameData){
+        if(gameData.getFightData().isPresent()){
+            this.fightData = gameData.getFightData();
         }
-        this.battleController = new BattleControllerImpl(fightData);
+        this.battleController = new BattleControllerImpl(gameData);
     }
 
     @Override

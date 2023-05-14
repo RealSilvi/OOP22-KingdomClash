@@ -5,6 +5,7 @@ public enum Event {
     PASS,
     SPIN,
     COMBAT,
-    PRESS_BUTTON
+    PRESS_BOT_BUTTON,
+    PRESS_PLAYER_BUTTON
 
 }
