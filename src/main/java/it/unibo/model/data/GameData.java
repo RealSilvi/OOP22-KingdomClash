@@ -1,6 +1,8 @@
 package it.unibo.model.data;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import it.unibo.model.base.basedata.Building;
 /**
@@ -9,17 +11,17 @@ import it.unibo.model.base.basedata.Building;
 public class GameData {
     private String playerName;
     private Set<Resource> resources;
-    private Map<UUID, Building> buildings;
+    private ConcurrentMap<UUID, Building> buildings;
 
     private Optional<FightData> fightData;
 
     public GameData() {
         this.resources = new HashSet<>();
-        this.buildings = new HashMap<>();
+        this.buildings = new ConcurrentHashMap<>();
         this.fightData = Optional.empty();
     }
 
-    public GameData(Set<Resource> resources, Map<UUID, Building> buildings, Optional<FightData> fightData){
+    public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings, Optional<FightData> fightData){
         this.resources = resources;
         this.buildings = buildings;
         this.fightData = fightData;
@@ -58,7 +60,7 @@ public class GameData {
      * Gets the currently built buildings owned by the player
      * @return a map containing all the buildings and their corresponding identifier
      */
-    public Map<UUID, Building> getBuildings() {
+    public ConcurrentMap<UUID, Building> getBuildings() {
         return buildings;
     }
     /**
@@ -66,7 +68,7 @@ public class GameData {
      * @param buildings a map containing all buildings owned by the player and
      * their corresponding identifier
      */
-    public void setBuildings(Map<UUID, Building> buildings) {
+    public void setBuildings(ConcurrentMap<UUID, Building> buildings) {
         this.buildings = buildings;
     }
 
