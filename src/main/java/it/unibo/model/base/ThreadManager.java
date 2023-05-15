@@ -8,6 +8,10 @@ import it.unibo.model.base.basedata.Building;
 
 public interface ThreadManager {
     /**
+     * Time in milliseconds that the thread will wait for before doing another cycle
+     */
+    public static final int REFRESH_RATE_MS = 60;
+    /**
      * A simple enum to select only on a kind of thread
      */
     public enum ThreadSelector {
