@@ -8,12 +8,17 @@ import java.awt.*;
  */
 public class DrawPanel extends JPanel {
 
+    private static final int HGAP=20;
+    private static final int VGAP=10;
+
     private final Image backgroundImage;
 
     /**
      * @param backgroundImage The image to set as background.
      */
-    public DrawPanel(Image backgroundImage) {
+    public DrawPanel(final Image backgroundImage) {
+
+        this.setLayout(new FlowLayout(FlowLayout.CENTER,HGAP,VGAP));
         this.backgroundImage= backgroundImage;
     }
 
@@ -21,7 +26,7 @@ public class DrawPanel extends JPanel {
      *
      * @param backgroundImageIcon The ImageIcon to set as background.
      */
-    public DrawPanel(ImageIcon backgroundImageIcon){
+    public DrawPanel(final ImageIcon backgroundImageIcon){
         this(backgroundImageIcon.getImage());
     }
 
@@ -29,11 +34,11 @@ public class DrawPanel extends JPanel {
      *
      * @param backgroundUrl The url of the image to set as background.
      */
-    public DrawPanel(String backgroundUrl){
+    public DrawPanel(final String backgroundUrl){
         this(new ImageIcon(backgroundUrl));
     }
 
-    public DrawPanel(Color color){
+    public DrawPanel(final Color color){
         this.backgroundImage=null;
         this.setBackground(color);
     }
@@ -43,7 +48,7 @@ public class DrawPanel extends JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
         g.drawImage(this.backgroundImage, 0, 0, this);
     }

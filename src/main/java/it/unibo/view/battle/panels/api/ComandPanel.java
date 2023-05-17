@@ -10,10 +10,6 @@ import java.awt.event.ActionListener;
  */
 public interface ComandPanel {
 
-    /**
-     * Restart the panel.
-     */
-    void restart();
 
     /**
      * Disable the passButton.

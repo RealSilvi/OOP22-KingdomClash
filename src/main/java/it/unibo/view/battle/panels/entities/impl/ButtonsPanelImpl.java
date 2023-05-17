@@ -20,12 +20,11 @@ public class ButtonsPanelImpl implements ButtonsPanel {
         this.spin = new JButton("SPIN");
         this.pass = new JButton("PASS");
 
-        this.mainPanel.setLayout(new GridLayout());
+        this.mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
         this.mainPanel.add(pass);
         this.mainPanel.add(spin);
 
-        this.mainPanel.setMinimumSize(PanelDimensions.getSideButtonsPanel());
-        this.mainPanel.setMaximumSize(PanelDimensions.getSideButtonsPanel());
+        this.mainPanel.setPreferredSize(PanelDimensions.getSideButtonsPanel());
     }
 
 
@@ -54,13 +53,13 @@ public class ButtonsPanelImpl implements ButtonsPanel {
 
 
     @Override
-    public void setActionListenerPass(ActionListener actionListener){
+    public void setActionListenerPass(final ActionListener actionListener){
         this.pass.addActionListener(actionListener);
     }
 
 
     @Override
-    public void setActionListenerSpin(ActionListener actionListener){
+    public void setActionListenerSpin(final ActionListener actionListener){
         this.spin.addActionListener(actionListener);
     }
 
@@ -68,6 +67,5 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     public JPanel getPanel() {
         return this.mainPanel;
     }
-
 
 }

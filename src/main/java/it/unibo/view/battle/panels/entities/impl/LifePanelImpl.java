@@ -13,33 +13,22 @@ import java.util.stream.IntStream;
 
 public class LifePanelImpl implements LifePanel {
 
-    private final static int rows=2;
+    private final static double LABEL_SCALE=0.2;
+    private final static Dimension LABEL_DIMENSION= new Dimension(
+            (int)(PanelDimensions.getSideLifePanel().getHeight() * LABEL_SCALE),
+            (int)(PanelDimensions.getSideLifePanel().getHeight() * LABEL_SCALE));
 
     private final JPanel mainPanel;
-    private ArrayList<LivesLabelImpl> lives;
+    private final ArrayList<LivesLabelImpl> lives;
 
     public LifePanelImpl(final int nrOfLives) {
+        this.lives=new ArrayList<>();
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_LIFE);
 
-        this.mainPanel.setMinimumSize(PanelDimensions.getSideLifePanel());
-        this.mainPanel.setMaximumSize(PanelDimensions.getSideLifePanel());
+        this.mainPanel.setPreferredSize(PanelDimensions.getSideLifePanel());
 
-        if(nrOfLives%rows == 0){
-            this.mainPanel.setLayout(new GridLayout(rows,nrOfLives /rows));
-        }else{
-            this.mainPanel.setLayout(new GridLayout(rows,(nrOfLives + nrOfLives%rows)/rows));
-        }
-
-        this.restart(nrOfLives);
-    }
-
-    private void restart(final int nrOfLives){
-        this.lives=new ArrayList<>();
-
-        IntStream.range(0,nrOfLives).forEach(i -> lives.add(new LivesLabelImpl()));
-
+        IntStream.range(0,nrOfLives).forEach(i -> lives.add(new LivesLabelImpl(LABEL_DIMENSION)));
         this.lives.forEach(this.mainPanel::add);
-
     }
 
     @Override

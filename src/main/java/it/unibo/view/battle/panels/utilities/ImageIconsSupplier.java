@@ -3,6 +3,7 @@ package it.unibo.view.battle.panels.utilities;
 import it.unibo.view.battle.Troop;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,11 @@ public interface ImageIconsSupplier {
     ImageIcon LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/Life.png");
     ImageIcon DEATH = new ImageIcon("src/main/resources/it/unibo/icons/battle/Death.png");
 
+    static ImageIcon getImageIconFromTroop(final Troop troop, final boolean selected,Dimension size){
+        return new ImageIcon(getImageFromTroop(troop,selected,size));
+
+    }
+
 
     static ImageIcon getImageIconFromTroop(final Troop troop, final boolean selected){
         return (selected) ?
@@ -53,9 +59,22 @@ public interface ImageIconsSupplier {
                 new ImageIcon(troopUrl.get(troop).get(troopUrl.get(troop).size()));
     }
 
-    static ImageIcon getImageLive(final boolean alive){
+    static Image getImageFromTroop(final Troop troop, final boolean selected,Dimension size){
+        return getImageIconFromTroop(troop,selected).getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT);
+
+    }
+
+    static ImageIcon getImageIconLive(final boolean alive,final Dimension size){
+        return new ImageIcon(getImageLive(alive,size));
+    }
+
+    static ImageIcon getImageIconLive(final boolean alive){
         return (alive) ?
                 LIFE :
                 DEATH ;
+    }
+
+    static Image getImageLive(final boolean alive,final Dimension size){
+        return  getImageIconLive(alive).getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT);
     }
 }
