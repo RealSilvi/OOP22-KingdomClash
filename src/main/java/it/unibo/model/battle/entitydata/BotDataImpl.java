@@ -1,10 +1,6 @@
 package it.unibo.model.battle.entitydata;
 
-import it.unibo.controller.battle.BattleController;
-import it.unibo.controller.battle.BattleControllerImpl;
-import it.unibo.controller.battle.Event;
 import it.unibo.model.battle.CellsImpl;
-import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
 
@@ -15,27 +11,26 @@ public class BotDataImpl implements BotData{
     public static final int BOT_TROOPS = 5;
     public static final int TOTAL_TROOPS = 10;
     private Map<Integer, CellsImpl> botTroop = new HashMap<>();
-    private Optional<FightData> fightData;
-    private BattleController battleController;
 
     public BotDataImpl(GameData gameData){
         for(int i=0; i < BOT_TROOPS; i++){
             this.botTroop.put(i,new CellsImpl(Troop.getRandomTroop(),false,false));
         }
-        this.fightData = gameData.getFightData();
-        this.battleController = new BattleControllerImpl(gameData);
     }
 
     @Override
     public void AddBotTroop(Integer key) {
         this.botTroop.get(key).setClicked(true);
-        this.battleController.notify(Event.PRESS_BOT_BUTTON);
     }
 
     @Override
     public void RemoveBotTroop(Integer key) {
         this.botTroop.get(key).setClicked(false);
-        this.battleController.notify(Event.PRESS_BOT_BUTTON);
+    }
+
+    @Override
+    public CellsImpl getCells(Integer key) {
+        return this.botTroop.get(key);
     }
 
     @Override
@@ -72,13 +67,26 @@ public class BotDataImpl implements BotData{
     }
 
     @Override
-    public Map<Integer, CellsImpl> changeNotSelectedTroop() {
+    public Map<Integer, Troop> changeNotSelectedTroop() {
+        Map<Integer, Troop> troopChanged = new HashMap<>();
         for(int i=0; i < BOT_TROOPS; i++){
             if(!botTroop.get(i).getClicked()){
                 botTroop.get(i).setTroop(Troop.getRandomTroop());
+                troopChanged.put(i, botTroop.get(i).getTroop());
             }
         }
-        return botTroop;
+        return troopChanged;
+    }
+
+    @Override
+    public void setClickedToChosen() {
+
+        for(int i = 0; i < BOT_TROOPS; i++){
+            if(botTroop.get(i).getClicked()){
+                botTroop.get(i).setChosen(true);
+            }
+        }
+
     }
 
     @Override

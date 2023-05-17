@@ -24,6 +24,15 @@ public interface BotData {
     public void RemoveBotTroop(Integer key);
 
     /**
+     * take the key and return its status
+     * @param key the position which I need to get the status
+     * @return CellsImpl, it means all the information about that position
+     * (troop, clicked or not, chosen or not).
+     */
+
+    public CellsImpl getCells(Integer key);
+
+    /**
      * Selects only the clicked troops.
      * @return the selected troops. It means all the troops in the field.
      */
@@ -50,7 +59,13 @@ public interface BotData {
      * @return a Map of the troop with the current values (eventually modified) and the right position.
      */
 
-    public Map<Integer, CellsImpl> changeNotSelectedTroop();
+    public Map<Integer, Troop> changeNotSelectedTroop();
+
+    /**
+     * Blocks the clicked troops, setting them to chosen.
+     */
+
+    public void setClickedToChosen();
 
     /**
      * Selects a random troop between the not clicked troops.

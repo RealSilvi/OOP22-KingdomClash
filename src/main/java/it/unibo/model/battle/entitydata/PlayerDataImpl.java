@@ -1,10 +1,6 @@
 package it.unibo.model.battle.entitydata;
 
-import it.unibo.controller.battle.BattleController;
-import it.unibo.controller.battle.BattleControllerImpl;
-import it.unibo.controller.battle.Event;
 import it.unibo.model.battle.CellsImpl;
-import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
 
@@ -16,27 +12,26 @@ public class PlayerDataImpl implements PlayerData {
     public static final int TOTAL_TROOPS = 10;
 
     private Map<Integer, CellsImpl> playerTroop = new HashMap<>();
-    private Optional<FightData> fightData;
-    private BattleController battleController;
 
     public PlayerDataImpl(GameData gameData){
         for(int i=0; i < PLAYER_TROOPS; i++){
             this.playerTroop.put(i,new CellsImpl(Troop.getRandomTroop(),false,false));
         }
-        this.fightData = gameData.getFightData();
-        this.battleController = new BattleControllerImpl(gameData);
     }
 
     @Override
     public void AddPlayerTroop(Integer key) {
         this.playerTroop.get(key).setClicked(true);
-        this.battleController.notify(Event.PRESS_PLAYER_BUTTON);
     }
 
     @Override
     public void RemovePlayerTroop(Integer key) {
         this.playerTroop.get(key).setClicked(false);
-        this.battleController.notify(Event.PRESS_PLAYER_BUTTON);
+    }
+
+    @Override
+    public CellsImpl getCells(Integer key) {
+        return this.playerTroop.get(key);
     }
 
     @Override
@@ -62,13 +57,15 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     @Override
-    public Map<Integer, CellsImpl> changeNotSelectedTroop() {
+    public Map<Integer, Troop> changeNotSelectedTroop() {
+        Map<Integer, Troop> troopChanged = new HashMap<>();
         for(int i=0; i < PLAYER_TROOPS; i++){
             if(!playerTroop.get(i).getClicked()){
                 playerTroop.get(i).setTroop(Troop.getRandomTroop());
+                troopChanged.put(i, playerTroop.get(i).getTroop());
             }
         }
-        return playerTroop;
+        return troopChanged;
     }
 
     @Override
