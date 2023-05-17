@@ -2,8 +2,6 @@ package it.unibo.view.battle;
 
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
-import it.unibo.view.battle.panels.utilities.*;
-
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +12,9 @@ import javax.swing.*;
 public final class BattlePanelImpl implements BattlePanel {
 
     private final static int BORDER_LAYOUT_GAP = 3;
+    private final static int nrOfSlots=5;
+    private final static int nrOfTroops=8;
+    private final static int nrOfLives=8;
 
     private final JPanel mainPanel;
 
@@ -31,11 +32,11 @@ public final class BattlePanelImpl implements BattlePanel {
         final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
         //this.menuPanel = new MenuPanel();
-        this.botPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
-        this.playerPanel = new PlayerPanelImpl(PanelDimensions.getPlayersPanel());
-        this.infoPanel = new InfoPanelImpl(PanelDimensions.getSidePanel(),8);
-        this.buttonsPanel = new CommandPanelImpl(PanelDimensions.getSidePanel() , 8);
-        this.fieldPanel = new FieldPanelImpl(PanelDimensions.getFieldPanel());
+        this.botPanel = new PlayerPanelImpl(null,nrOfSlots);
+        this.playerPanel = new PlayerPanelImpl(null,nrOfSlots);
+        this.infoPanel = new InfoPanelImpl(nrOfTroops);
+        this.buttonsPanel = new CommandPanelImpl(nrOfLives);
+        this.fieldPanel = new FieldPanelImpl(nrOfSlots);
 
         //topPanel.add(menuPanel, BorderLayout.NORTH);
         topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);
@@ -59,13 +60,13 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     @Override
-    public void spinPlayerFreeSlot() {
-        this.playerPanel.update();
+    public void spinPlayerFreeSlot(Map<Integer,Troop> troops) {
+        this.playerPanel.update(troops);
     }
 
     @Override
-    public void spinBotFreeSlot() {
-        this.botPanel.update();
+    public void spinBotFreeSlot(Map<Integer,Troop> troops) {
+        this.botPanel.update(troops);
     }
 
     @Override
@@ -74,8 +75,8 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     @Override
-    public void updateField(final List<Optional<Troop>> field) {
-        this.fieldPanel.redraw(field);
+    public void updateField(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botPlayer) {
+        this.fieldPanel.redraw(playerTroops,botPlayer);
     }
 
     @Override

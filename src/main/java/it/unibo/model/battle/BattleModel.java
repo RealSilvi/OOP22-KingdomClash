@@ -15,12 +15,10 @@ public interface BattleModel {
     void BattleSpin();
 
     /**
-     * Change the status of the pressed button.
-     * @param key: the key represents the button pressed.
+     * Takes care about the fighting player vs bot. It lets troops
+     * fighting against each other, controlling the life of both entity.
      */
 
-    void ChoosenButton(Integer key);
-
-
+    void BattleCombat();
 
 }

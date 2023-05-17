@@ -3,6 +3,7 @@ package it.unibo.view.battle.panels.entities.impl;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.api.ButtonsPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,9 @@ public class ButtonsPanelImpl implements ButtonsPanel {
         this.mainPanel.setLayout(new GridLayout());
         this.mainPanel.add(pass);
         this.mainPanel.add(spin);
+
+        this.mainPanel.setMinimumSize(PanelDimensions.getSideButtonsPanel());
+        this.mainPanel.setMaximumSize(PanelDimensions.getSideButtonsPanel());
     }
 
 

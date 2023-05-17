@@ -1,146 +1,130 @@
 package it.unibo.model.battle;
 
+import it.unibo.controller.battle.BattleController;
+import it.unibo.controller.battle.BattleControllerImpl;
+import it.unibo.controller.battle.Event;
+import it.unibo.model.data.FightData;
+import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
 
-import javax.swing.text.html.Option;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class BattleModelImpl implements BattleModel{
 
-    public static final int TOTAL_TROOPS = 10;
-    public static final int PLAYER_TROOPS = 5;
-    public static final int BOT_TROOPS = 5;
-    public static final int CORRISPONDED_TROOP = 0;
-
-    //private final Map<Integer, Map<Troop, Boolean>> battleTroop = new HashMap<>();
-    private List<Troop> playerTroop = new ArrayList<>();
-    private List<Troop> botTroop = new ArrayList<>();
-
-    private List<Optional<Troop>> playerField = new ArrayList<>();
-    private List<Optional<Troop>> botField = new ArrayList<>();
+    public static final int FIRST_TROOP = 0;
+    private Optional<FightData> fightData;
+    private BattleController battleController;
 
     int counted_round = 0;
     int botLife = 10;
-
     int playerLife = 10;
 
 
-    private void Initialize(){
-        Map<Troop, Boolean> buttonTroop = new HashMap<>();
-        buttonTroop.put(Troop.getRandomTroop(),true);
-        int i;
-        for(i = 0; i < TOTAL_TROOPS; i++){
-            this.battleTroop.put(i,buttonTroop);
+    public BattleModelImpl(GameData gameData){
+        if(gameData.getFightData().isPresent()){
+            this.fightData = gameData.getFightData();
         }
+        this.battleController = new BattleControllerImpl(gameData);
     }
 
     @Override
     public void BattlePass() {
 
+        fightData.get().getPlayerData().setClickedToChosen();
 
+        //disablePassButton()
+        //disablePlayerSlots()
+        //spinBotFreeSlot()
+
+        if(fightData.get().getPlayerData().getSelected().size() > 0) {
+            fightData.get().getPlayerData().getSelected().forEach(x -> {
+
+                if (!fightData.get().getBotData().isMatch(x)) {
+                    if (fightData.get().getBotData().getNotSelected().contains(Troop.getNullable(x))) {
+                        fightData.get().getBotData().AddBotTroop(fightData.get().getBotData().getKeyFromTroop(Troop.getNullable(x)));
+                    } else {
+                        if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                            fightData.get().getBotData().AddBotTroop(fightData.get().getBotData().selectRandomTroop());
+                        }
+                    }
+                }
+            });
+        }else{
+            if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                fightData.get().getBotData().AddBotTroop(fightData.get().getBotData().selectRandomTroop());
+            }
+        }
+
+        counted_round++;
+        if(counted_round >= 3){
+            fightData.get().getBotData().setAllChosen();
+            fightData.get().getPlayerData().setAllChosen();
+            counted_round = 0;
+            BattleCombat();
+        }
+
+        this.battleController.notify(Event.PASS);
 
     }
 
     @Override
     public void BattleSpin() {
 
-        int i;
-        for(i = PLAYER_TROOPS; i < TOTAL_TROOPS; i++){
-            Troop troop = conteinedTroop(i);
-            if(this.battleTroop.get(i).get(troop)){
-                this.battleTroop.get(i).remove(troop);
-                this.battleTroop.get(i).put(Troop.getRandomTroop(),true);
-            }
-        }
+        fightData.get().getPlayerData().changeNotSelectedTroop();
 
-        //TODO notify the controller to disable SpinButton and change the troops.
+        this.battleController.notify(Event.SPIN);
 
     }
 
-    private void BattleCombat(){
+    @Override
+    public void BattleCombat(){
+
+        List<Optional<Troop>> playerField = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData());
+        List<Optional<Troop>> botField = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData());
 
         playerField.forEach(x -> {
 
-                if(botField.get(CORRISPONDED_TROOP).isPresent() && x.isPresent()){
-                    if(x.get().getLevel() > botField.get(CORRISPONDED_TROOP).get().getLevel()){
+                if(botField.get(FIRST_TROOP).isPresent() && x.isPresent()){
+                    if(x.get().getLevel() > botField.get(FIRST_TROOP).get().getLevel()){
                         if(!x.get().isDefense()){
-                            botLife--;
+                            if(botLife == 1){
+                                botLife--;
+                                //TODO player win
+                            }else{
+                                botLife--;
+                            }
                         }
-                    }else if(x.get().getLevel() < botField.get(CORRISPONDED_TROOP).get().getLevel()){
+                    }else if(x.get().getLevel() < botField.get(FIRST_TROOP).get().getLevel()){
                         if(x.get().isDefense()){
-                            playerLife--;
+                            if(playerLife == 1){
+                                playerLife--;
+                                //TODO bot win
+                            }else{
+                                playerLife--;
+                            }
                         }
                     }
-                }else if(botField.get(CORRISPONDED_TROOP).isEmpty() && x.isPresent() && (!x.get().isDefense())){
-                    botLife--;
-                }else if(x.isEmpty() && botField.get(CORRISPONDED_TROOP).isPresent() && (!botField.get(CORRISPONDED_TROOP).get().isDefense())){
-                    playerLife--;
+                }else if(botField.get(FIRST_TROOP).isEmpty() && x.isPresent() && (!x.get().isDefense())){
+                    if(botLife == 1){
+                        botLife--;
+                        //TODO player win
+                    }else{
+                        botLife--;
+                    }
+                }else if(x.isEmpty() && botField.get(FIRST_TROOP).isPresent() && (!botField.get(FIRST_TROOP).get().isDefense())){
+                    if(playerLife == 1){
+                        playerLife--;
+                        //TODO bot win
+                    }else{
+                        playerLife--;
+                    }
                 }
 
-                if(botField.get(CORRISPONDED_TROOP).isPresent()){
-                    botField.remove(CORRISPONDED_TROOP);
-                }
+                botField.remove(FIRST_TROOP);
 
         });
 
-        playerField = null;
-
-    }
-
-    private Troop conteinedTroop(Integer key){
-
-        int key_troop = 0;
-        Troop troop = getRightTroop(key_troop);
-
-        while(!this.battleTroop.get(key).containsKey(troop)) {
-            key_troop++;
-            troop = getRightTroop(key_troop);
-        }
-
-        return troop;
-    }
-
-    private void getOrderedField(){
-        List<Optional<Troop>> playerOptionalList = new ArrayList<>();
-        List<Optional<Troop>> botOptionalList = new ArrayList<>();
-        playerField = playerOptionalList;
-        botField = botOptionalList;
-        int difference_size;
-
-        for( int i=0; i<TOTAL_TROOPS; i++){
-            int a=i;
-            playerOptionalList.addAll(playerTroop.stream().filter(x -> x.getId()==a).map(Optional::of).toList());
-            botOptionalList.addAll(botTroop.stream()
-                    .filter(x ->
-                            x.equals(Troop.getNullable(
-                                        Arrays.stream(Troop.values())
-                                                .filter(z -> z.getId() == a)
-                                                .iterator()
-                                                .next()))
-                    )
-                    .map(Optional::of)
-                    .toList());
-
-            if(playerOptionalList.size() < botOptionalList.size()){
-                difference_size = botOptionalList.size() - playerOptionalList.size();
-                for(i = 0; i < difference_size; i++ ){
-                    playerOptionalList.add(Optional.empty());
-                }
-            } else if (playerOptionalList.size() > botOptionalList.size()) {
-                difference_size = playerOptionalList.size() - botOptionalList.size();
-                for(i = 0; i < difference_size; i++ ){
-                    botOptionalList.add(Optional.empty());
-                }
-            }
-
-        }
-
-        //updateField(playerOptionalList, botOptionalList)
-
-    }
-
-    private void notifyController(){
+        this.battleController.notify(Event.COMBAT);
 
     }
 

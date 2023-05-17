@@ -2,10 +2,10 @@ package it.unibo.view.battle.panels.impl;
 
 import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.api.PlayerPanel;
-import it.unibo.view.battle.panels.entities.api.TroopButton;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,32 +16,29 @@ import java.util.stream.IntStream;
 
 public class PlayerPanelImpl implements PlayerPanel {
 
-    private final static int NUMBER_OF_SLOTS = 5;
     private final static double BUTTON_SCALE = 0.95;
 
     private final Dimension buttonsDimension;
 
     private final JPanel mainPanel;
-    private List<TroopButtonImpl> slots;
+    private final List<TroopButtonImpl> slots;
 
-    public PlayerPanelImpl(final Dimension preferredSize) {
+    public PlayerPanelImpl(final Map<Integer,Troop> troops,final Integer nrOfSlots) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_PLAYERS);
-        this.mainPanel.setPreferredSize(preferredSize);
-        this.buttonsDimension= new Dimension(
-                (int)(preferredSize.getHeight() * BUTTON_SCALE), (int)(preferredSize.getHeight() * BUTTON_SCALE));
-
-        this.restart();
-    }
-
-    @Override
-    public void restart(ArrayList<Troop> troops) {
-
         this.slots = new ArrayList<>();
-        troops.forEach(x -> this.slots.add(new TroopButtonImpl(x,true)));
-
+        IntStream.range(0,nrOfSlots).forEach(x ->this.slots.add(new TroopButtonImpl(troops.get(x),true)));
         this.slots.forEach(this.mainPanel::add);
+
+
+        this.mainPanel.setMinimumSize(PanelDimensions.getPlayersPanel());
+        this.mainPanel.setMaximumSize(PanelDimensions.getPlayersPanel());
+
+        this.buttonsDimension= new Dimension(
+                (int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE)
+                ,(int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE));
         this.setButtonsSize();
 
+        this.update(troops);
     }
 
     private void setButtonsSize(){
@@ -51,26 +48,25 @@ public class PlayerPanelImpl implements PlayerPanel {
     }
 
     @Override
-    public void update(Map<Troop,Boolean> troops) {
-//chiedi con lafa che struttura ti passa cosi lo fai partire
+    public void update(Map<Integer,Troop> troops) {
         IntStream.range(0,this.slots.size()).forEach(x -> {
-
+            if(troops.containsKey(x)){
+                slots.get(x).setEnabled(true);
+                slots.set(x,new TroopButtonImpl(troops.get(x),true));
+            }else{
+                slots.get(x).setEnabled(false);
+            }
         });
-        this.disableSelectedSlots();
-    }
-
-    private void disableSelectedSlots(){
-        this.slots.forEach(x -> x.setEnabled(x.getSelectable()));
     }
 
     @Override
-    public void disableSlots(){
+    public void disableAllSlots(){
         this.slots.forEach(x -> x.setEnabled(false));
     }
 
     @Override
-    public void enableSlots(){
-        this.slots.stream().filter(TroopButtonImpl::getSelectable).forEach(x -> x.setEnabled(true));
+    public void enableAllSlots(){
+        this.slots.forEach(x -> x.setEnabled(true));
     }
 
     @Override

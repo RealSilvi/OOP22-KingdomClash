@@ -23,12 +23,12 @@ public interface BattlePanel {
     /**
      * Spin the player's slots.
      */
-    void spinPlayerFreeSlot();
+    void spinPlayerFreeSlot(Map<Integer,Troop> troops);
 
     /**
      * Spin the bot's slots.
      */
-    void spinBotFreeSlot();
+    void spinBotFreeSlot(Map<Integer,Troop> troops);
 
     /**
      * Display a power info table of the player.
@@ -38,11 +38,11 @@ public interface BattlePanel {
 
     /**
      * Display the new field with the troops on it.
-     * @param field Indicates if the spots on the field are free or there's a troop in it. <br>
+     * @param playerTroops Indicates if the spots on the field are free or there's a troop in it. <br>
      *              Note: The first half indicates the bot's field and the second half indicates the
      *              player's field.
      */
-    void updateField(final List<Optional<Troop>> field);
+    void updateField(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botPlayer);
 
     /**
      * Disable all the bot's slots

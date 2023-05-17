@@ -4,6 +4,7 @@ import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.api.InfoPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,12 +17,15 @@ public class InfoPanelImpl implements InfoPanel {
     private final JPanel mainPanel;
     private final List<JLabel> table;
 
-    public InfoPanelImpl(Dimension preferredSize, final int nrOfTroops) {
+    public InfoPanelImpl(final int nrOfTroops) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_SIDE);
         this.table=new ArrayList<>();
         
         this.mainPanel.setLayout(new GridLayout(nrOfTroops,3));
-        this.mainPanel.setPreferredSize(preferredSize);
+
+
+        this.mainPanel.setMinimumSize(PanelDimensions.getSidePanel());
+        this.mainPanel.setMaximumSize(PanelDimensions.getSidePanel());
     }
 
     @Override
