@@ -1,8 +1,8 @@
 package it.unibo.model.base;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentMap;
 
 import it.unibo.model.base.basedata.Building;
 
@@ -22,11 +22,7 @@ public interface ThreadManager {
         /**
          * Selects threads dedicated to generate resources for buildings
          */
-        PRODUCTION,
-        /**
-         * Selects all kind of threads
-         */
-        ALL
+        PRODUCTION
     }
     /**
      * Starts the threads dedicated to a kind of resource
@@ -63,12 +59,12 @@ public interface ThreadManager {
      * Registers a map of buildings to keep track of time
      * @param buildingMap the map of buildings to keep track of
      */
-    public void addBuildings(Map<UUID, Building> buildingMap);
+    public void addBuildings(ConcurrentMap<UUID, Building> buildingMap);
     /**
      * Unre a map of buildings to keep track of time
      * @param buildingMap the map of buildings to keep track of
      */
-    public void removeBuildings(Map<UUID, Building> buildingMap);
+    public void removeBuildings(ConcurrentMap<UUID, Building> buildingMap);
     /**
      * Unregisters a set of buildings with the corresponding ID
      * to keep track of time
