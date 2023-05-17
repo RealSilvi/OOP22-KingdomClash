@@ -1,6 +1,7 @@
 package it.unibo.model.base;
 
 import it.unibo.model.base.api.BuildingObserver;
+import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
@@ -12,13 +13,19 @@ import it.unibo.model.data.Resource;
 import java.awt.geom.Point2D;
 import java.nio.file.Path;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+
 /**
  * Interface for the base model, it has simple functions that allows other classes to interact
  * and inspect the game data
  */
 public interface BaseModel {
+    public enum OperationType {
+        SUBTRACTION,
+        ADDITION
+    }
     /**
      * Tries to build a structure in a given position at a given level
      * @param position placing position of the structure
@@ -128,7 +135,7 @@ public interface BaseModel {
      * @return an unmodifiable set of resources
      */
     public Set<Resource> getResourceCount();
-    
+
     /**
      * Registers an observer object that gets notified whenever a building state changes
      * @param observer the object that needs to be registered
@@ -170,7 +177,31 @@ public interface BaseModel {
      * @return game data object that contains every information of the current game
      */
     public GameData obtainGameData();
+    
+    /**
+     * Returns an unmodifiable map of Buildings
+     * @return an unmodifiable map of buildings
+     */
+    public Map<UUID, Building> getBuildingMap();
 
+    /**
+     * Safely dds or removes the given resources to the player's deposit
+     * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
+     */
+    public void applyResources(Set<Resource> resource) throws NotEnoughResourceException;
+    /**
+     * Safely dds or removes the given resources to the player's deposit
+     * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
+     * @param operation The type of operation that has to be applied to the resources
+     */
+    public void applyResources(Set<Resource> resource, OperationType operation) throws NotEnoughResourceException;
+
+    /**
+     * Applies the level multiplier given a set of resources and a level, returning a set with updated resources
+     * @param resource the set of resources that need to be worked on
+     * @param level an integer representing the level
+     * @return a set with updated resources given a level multiplier
+     */
     public static Set<Resource> applyMultiplierToResources(Set<Resource> resource, int level) {
         Set<Resource> alteredResource = new HashSet<>();
         resource.forEach(singleCost->alteredResource.add(new Resource(singleCost.getResource(), singleCost.getAmount()*(level == 0 ? 1 : level))));
