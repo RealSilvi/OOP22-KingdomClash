@@ -24,7 +24,7 @@ public class Building {
     private int level;
     private int buildingTime;                        /*milliseconds*/
     private boolean beingBuilt;
-    private int buildingProgess;
+    private int buildingProgress;
     private int productionProgress;
     private Point2D structurePos;
     private Set<Resource> productionAmount;
@@ -32,13 +32,13 @@ public class Building {
     //The high parameter count is necessary to set all of the properties of the class
     @SuppressWarnings("java:S107")
     public Building(BuildingTypes type, int level, int buildingTime,
-            boolean beingBuilt, int buildingProgess, int productionProgress, Point2D structurePos,
+            boolean beingBuilt, int buildingProgress, int productionProgress, Point2D structurePos,
             Set<Resource> productionAmount) {
         this.type = type;
         this.level = level;
         this.buildingTime = buildingTime;
         this.beingBuilt = beingBuilt;
-        this.buildingProgess = buildingProgess;
+        this.buildingProgress = buildingProgress;
         this.productionProgress = productionProgress;
         this.structurePos = structurePos;
         this.productionAmount = productionAmount;
@@ -103,15 +103,15 @@ public class Building {
      * Gets the building progress as a percentage
      * @return an integer that represents a percentage
      */
-    public synchronized int getBuildingProgess() {
-        return buildingProgess;
+    public synchronized int getBuildingProgress() {
+        return buildingProgress;
     }
     /**
      * Sets the building progress as a percentage
-     * @param buildingProgess an integer representing a percentage
+     * @param buildingProgress an integer representing a percentage
      */
-    public synchronized void setBuildingProgess(int buildingProgess) {
-        this.buildingProgess = buildingProgess;
+    public synchronized void setBuildingProgress(int buildingProgress) {
+        this.buildingProgress = buildingProgress;
     }
     /**
      * Returns the progress for creating a set of resources

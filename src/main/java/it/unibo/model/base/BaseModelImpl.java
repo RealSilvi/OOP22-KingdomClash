@@ -125,7 +125,7 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public int getBuildingProgress(UUID structureId) throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
-        return selectedBuilding.getBuildingProgess();
+        return selectedBuilding.getBuildingProgress();
     }
 
     @Override
