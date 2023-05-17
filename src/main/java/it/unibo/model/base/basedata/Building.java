@@ -23,6 +23,7 @@ public class Building {
     private BuildingTypes type;
     private int level;
     private int buildingTime;                        /*milliseconds*/
+    private int productionTime;
     private boolean beingBuilt;
     private int buildingProgress;
     private int productionProgress;
@@ -154,5 +155,19 @@ public class Building {
      */
     public synchronized void setProductionAmount(Set<Resource> productionAmount) {
         this.productionAmount = productionAmount;
-    }   
+    }
+    /**
+     * Returns in milliseconds the time that it takes to produce a set of resources
+     * @return time in milliseconds
+     */
+    public int getProductionTime() {
+        return productionTime;
+    }
+    /**
+     * Sets in milliseconds the time that it takes to produce a set of resources
+     * @param productionTime time in milliseconds
+     */
+    public void setProductionTime(int productionTime) {
+        this.productionTime = productionTime;
+    }
 }
