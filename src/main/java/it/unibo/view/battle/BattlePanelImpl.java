@@ -26,7 +26,7 @@ public final class BattlePanelImpl implements BattlePanel {
     private final CommandPanelImpl buttonsPanel;
 
     public BattlePanelImpl() {
-        this.mainPanel= new DrawPanel(Color.gray);
+        this.mainPanel= new DrawPanel(new Color(249,158,24));
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
         final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
@@ -60,12 +60,12 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     @Override
-    public void spinPlayerFreeSlot(Map<Integer,Troop> troops) {
+    public void spinPlayerFreeSlot(final Map<Integer,Troop> troops) {
         this.playerPanel.update(troops);
     }
 
     @Override
-    public void spinBotFreeSlot(Map<Integer,Troop> troops) {
+    public void spinBotFreeSlot(final Map<Integer,Troop> troops) {
         this.botPanel.update(troops);
     }
 

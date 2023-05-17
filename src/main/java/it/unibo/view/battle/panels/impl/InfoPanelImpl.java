@@ -23,13 +23,11 @@ public class InfoPanelImpl implements InfoPanel {
         
         this.mainPanel.setLayout(new GridLayout(nrOfTroops,3));
 
-
-        this.mainPanel.setMinimumSize(PanelDimensions.getSidePanel());
-        this.mainPanel.setMaximumSize(PanelDimensions.getSidePanel());
+        this.mainPanel.setPreferredSize(PanelDimensions.getSidePanel());
     }
 
     @Override
-    public void drawTable(Map<Troop, Boolean> powerTable) {
+    public void drawTable(final Map<Troop, Boolean> powerTable){
 
     }
 

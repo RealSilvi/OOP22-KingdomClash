@@ -15,6 +15,12 @@ import java.util.stream.IntStream;
 
 public class FieldPanelImpl implements FieldPanel{
 
+    private static final double LABEL_SCALE=0.1;
+    private static final Dimension LABEL_DIMENSION= new Dimension(
+            (int)(PanelDimensions.getFieldPanel().getHeight() * LABEL_SCALE),
+            (int)(PanelDimensions.getFieldPanel().getHeight() * LABEL_SCALE));
+    private static final int ROWS=2;
+
     private final JPanel mainPanel;
 
     private final List<TroopLabelImpl> army;
@@ -23,13 +29,11 @@ public class FieldPanelImpl implements FieldPanel{
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FIELD);
         this.army=new ArrayList<>();
 
-        this.mainPanel.setLayout(new GridLayout(2,nrOfSlots));
-        IntStream.range(0,nrOfSlots*4).forEach(x->  this.army.add(new TroopLabelImpl()));
+        this.mainPanel.setLayout(new GridLayout(ROWS,nrOfSlots));
+        IntStream.range(0,nrOfSlots*4).forEach(x->  this.army.add(new TroopLabelImpl(LABEL_DIMENSION)));
         this.army.forEach(this.mainPanel::add);
 
-
-        this.mainPanel.setMinimumSize(PanelDimensions.getFieldPanel());
-        this.mainPanel.setMaximumSize(PanelDimensions.getFieldPanel());
+        this.mainPanel.setPreferredSize(PanelDimensions.getFieldPanel());
     }
 
     @Override

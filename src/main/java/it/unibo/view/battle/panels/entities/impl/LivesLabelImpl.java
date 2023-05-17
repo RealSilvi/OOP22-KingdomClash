@@ -4,14 +4,21 @@ import it.unibo.view.battle.panels.entities.api.LivesLabel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LivesLabelImpl extends JLabel implements LivesLabel {
 
+    private final Dimension size;
     private boolean alive;
 
-    public LivesLabelImpl() {
-        super(ImageIconsSupplier.LIFE);
+    public LivesLabelImpl(final Dimension size) {
+        super(ImageIconsSupplier.getImageIconLive(true,size));
+
+        this.size=size;
         this.alive=true;
+
+        this.setPreferredSize(size);
+        this.setBorder(BorderFactory.createLineBorder(Color.white));
         this.setOpaque(true);
     }
 
@@ -19,7 +26,7 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     @Override
     public void changeStatus(){
         this.alive=!this.alive;
-        this.setIcon(ImageIconsSupplier.getImageLive(this.alive));
+        this.setIcon(ImageIconsSupplier.getImageIconLive(this.alive,this.size));
     }
 
     @Override

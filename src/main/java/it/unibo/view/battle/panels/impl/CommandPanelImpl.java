@@ -25,14 +25,8 @@ public class CommandPanelImpl implements ComandPanel {
         this.playerLivesPanel= new LifePanelImpl(numberOfLives);
         this.buttonsPanel= new ButtonsPanelImpl();
 
-        this.mainPanel.setMinimumSize(PanelDimensions.getSidePanel());
-        this.mainPanel.setMaximumSize(PanelDimensions.getSidePanel());
+        this.mainPanel.setPreferredSize(PanelDimensions.getSidePanel());
 
-        this.restart();
-    }
-
-    @Override
-    public void restart() {
         this.mainPanel.setLayout(new BoxLayout(this.mainPanel,BoxLayout.Y_AXIS));
         this.mainPanel.add(botLivesPanel.getPanel());
         this.mainPanel.add(buttonsPanel.getPanel());
@@ -70,12 +64,12 @@ public class CommandPanelImpl implements ComandPanel {
     }
     
     @Override
-    public void setActionListenerPass(ActionListener actionListener){
+    public void setActionListenerPass(final ActionListener actionListener){
         this.buttonsPanel.setActionListenerPass(actionListener);
     }
     
     @Override
-    public void setActionListenerSpin(ActionListener actionListener){
+    public void setActionListenerSpin(final ActionListener actionListener){
         this.buttonsPanel.setActionListenerSpin(actionListener);
     }
 
