@@ -53,6 +53,9 @@ public interface ImageIconsSupplier {
     ImageIcon CHECK = new ImageIcon("src/main/resources/it/unibo/icons/battle/Check.png");
     ImageIcon X = new ImageIcon("src/main/resources/it/unibo/icons/battle/X.png");
 
+    ImageIcon INDICATOR = new ImageIcon("src/main/resources/it/unibo/icons/battle/Indicator.png");
+    ImageIcon VS = new ImageIcon("src/main/resources/it/unibo/icons/battle/Vs.png");
+
     static ImageIcon getImageIconFromTroop(final Troop troop, final boolean selected,Dimension size){
         return new ImageIcon(getImageFromTroop(troop,selected,size));
 
@@ -97,6 +100,14 @@ public interface ImageIconsSupplier {
 
     static ImageIcon getImageIconCheck(Dimension size){
         return  new ImageIcon(CHECK.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageIconIndicator(Dimension size){
+        return  new ImageIcon(INDICATOR.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageIconVs(Dimension size){
+        return  new ImageIcon(VS.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
     }
 
 }

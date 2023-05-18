@@ -18,7 +18,6 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
         this.alive=true;
 
         this.setPreferredSize(size);
-        this.setBorder(BorderFactory.createLineBorder(Color.white));
         this.setOpaque(true);
     }
 
