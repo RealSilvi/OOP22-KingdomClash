@@ -224,9 +224,15 @@ public class BaseModelImpl implements BaseModel {
         return Collections.unmodifiableMap(unmodMap);
     }
 
-    private synchronized void notifyBuildingStateChanged() {
+    @Override
+    public void notifyBuildingStateChangedObservers(UUID building) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyBuildingStateChangedObservers'");
     }
-    private synchronized void notifyBuildingProduction() {
+    @Override
+    public void notifyBuildingProductionObservers(UUID building) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notifyBuildingProductionObservers'");
     }
 
     /**

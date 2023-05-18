@@ -155,9 +155,21 @@ public interface BaseModel {
     /**
      * Unregisters an observer that gets notified whenever a building generates resources
      * @param observer the object that needs to be unregistered
-     * @see {@link #addBuildingProductionObservers()}
+     * @see {@link #addBuildingProductionObserver()}
      */
     public void removeBuildingProductionObserver(final BuildingObserver observer);
+    /**
+     * Notifies all object registered to BuildingStateChangedObservers
+     * @param building the identifier of the building responsible for the event
+     * @see {@link #addBuildingStateChangedObserver()}
+     */
+    public void notifyBuildingStateChangedObservers(final UUID building);
+    /**
+     * Notifies all object registered to BuildingProductionObservers
+     * @param building the identifier of the building responsible for the event
+     * @see {@link #addBuildingProductionObserver()}
+     */
+    public void notifyBuildingProductionObservers(final UUID building);
 
     /**
      * Starts and stops the clock that keeps track of time passed
