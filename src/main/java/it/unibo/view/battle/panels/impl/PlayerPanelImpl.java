@@ -28,7 +28,9 @@ public class PlayerPanelImpl implements PlayerPanel {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getPlayersPanel());
         this.slots = new ArrayList<>();
         IntStream.range(0,nrOfSlots).forEach(x ->this.slots.add(new TroopButtonImpl(Troop.getRandomTroop(),true,BUTTON_DIMENSION)/*new TroopButtonImpl(troops.get(x),true)*/));
+
         this.slots.forEach(this.mainPanel::add);
+
     }
 
     @Override

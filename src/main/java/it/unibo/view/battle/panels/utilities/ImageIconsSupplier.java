@@ -9,32 +9,32 @@ import java.util.Map;
 
 public interface ImageIconsSupplier {
 
-    ImageIcon BACKGROUND_FILL_PATTERN = new ImageIcon("src/main/resources/it/unibo/icons/battle/BackgroundFumoNero.png");
+    ImageIcon BACKGROUND_FILL_PATTERN = new ImageIcon("src/main/resources/it/unibo/icons/battle/BackgroundCrackNero.png");
 
     Map<Troop, List<String>> troopUrl = Map.of(
             Troop.AXE,
-            List.of("src/main/resources/it/unibo/icons/battle/AxeBlack.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Axe.png",
                     "src/main/resources/it/unibo/icons/battle/AxeSelected.png"),
             Troop.SWORD,
-            List.of("src/main/resources/it/unibo/icons/battle/SwordBlack.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Sword.png",
                     "src/main/resources/it/unibo/icons/battle/SwordSelected.png"),
             Troop.CATAPULT,
-            List.of("src/main/resources/it/unibo/icons/battle/HammerBlack.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Hammer.png",
                     "src/main/resources/it/unibo/icons/battle/HammerSelected.png"),
             Troop.ARROW,
-            List.of("src/main/resources/it/unibo/icons/battle/MaceBlack.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Mace.png",
                     "src/main/resources/it/unibo/icons/battle/MaceSelected.png"),
             Troop.SHIELD,
-            List.of("src/main/resources/it/unibo/icons/battle/Shield01Black.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Shield01.png",
                     "src/main/resources/it/unibo/icons/battle/Shield01Selected.png"),
             Troop.HELMET,
-            List.of("src/main/resources/it/unibo/icons/battle/Shield02Black.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Shield02.png",
                     "src/main/resources/it/unibo/icons/battle/Shield02Selected.png"),
             Troop.TOWER,
-            List.of("src/main/resources/it/unibo/icons/battle/Shield03Black.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Shield03.png",
                     "src/main/resources/it/unibo/icons/battle/Shield03Selected.png"),
             Troop.DODGE,
-            List.of("src/main/resources/it/unibo/icons/battle/HelmetBlack.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Helmet.png",
                     "src/main/resources/it/unibo/icons/battle/HelmetSelected.png")
 
     );
@@ -44,6 +44,7 @@ public interface ImageIconsSupplier {
 
     ImageIcon PASS = new ImageIcon("src/main/resources/it/unibo/icons/battle/PassBlack.png");
     ImageIcon SPIN = new ImageIcon("src/main/resources/it/unibo/icons/battle/SpinBlack.png");
+    ImageIcon INFO = new ImageIcon("src/main/resources/it/unibo/icons/battle/Info.png");
 
     ImageIcon CHECK = new ImageIcon("src/main/resources/it/unibo/icons/battle/CheckBlack.png");
     ImageIcon X = new ImageIcon("src/main/resources/it/unibo/icons/battle/XBlack.png");
@@ -91,6 +92,9 @@ public interface ImageIconsSupplier {
 
     static ImageIcon getImageIconX(Dimension size){
         return  new ImageIcon(X.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+    static ImageIcon getImageIconInfo(Dimension size){
+        return  new ImageIcon(INFO.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
     }
 
     static ImageIcon getImageIconCheck(Dimension size){

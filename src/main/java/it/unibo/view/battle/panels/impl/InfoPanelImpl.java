@@ -24,12 +24,10 @@ public class InfoPanelImpl implements InfoPanel {
     private final List<JLabel> table;
 
     public InfoPanelImpl(final int nrOfTroops) {
-        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_SIDE);
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSidePanel());
         this.table=new ArrayList<>();
-        
-        this.mainPanel.setLayout(new GridLayout(nrOfTroops,3));
 
-        this.mainPanel.setPreferredSize(PanelDimensions.getSidePanel());
+        this.mainPanel.setLayout(new GridLayout(nrOfTroops,3));
 
         this.drawTable(Map.of(
                 Troop.AXE,true,
