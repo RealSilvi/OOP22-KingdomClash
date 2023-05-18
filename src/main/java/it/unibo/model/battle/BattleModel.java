@@ -1,5 +1,9 @@
 package it.unibo.model.battle;
 
+import it.unibo.view.battle.Troop;
+
+import java.util.Map;
+
 public interface BattleModel {
 
     /**
@@ -12,7 +16,7 @@ public interface BattleModel {
      * to make random troops appear between the choices of the player or bot.
      * The troops that change are only those that have not been selected.
      */
-    void BattleSpin();
+    Map<Integer, Troop> BattleSpin(Integer entity);
 
     /**
      * Takes care about the fighting player vs bot. It lets troops

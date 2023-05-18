@@ -1,8 +1,6 @@
 package it.unibo.model.battle;
 
-import it.unibo.controller.battle.BattleController;
 import it.unibo.controller.battle.BattleControllerImpl;
-import it.unibo.controller.battle.Event;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
@@ -12,8 +10,8 @@ import java.util.*;
 public class BattleModelImpl implements BattleModel{
 
     public static final int FIRST_TROOP = 0;
+    public static final int BOT = 0;
     private Optional<FightData> fightData;
-    private BattleController battleController;
 
     int counted_round = 0;
     int botLife = 10;
@@ -24,13 +22,13 @@ public class BattleModelImpl implements BattleModel{
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
-        this.battleController = new BattleControllerImpl(gameData);
     }
 
     @Override
     public void BattlePass() {
 
         fightData.get().getPlayerData().setClickedToChosen();
+        BattleSpin(BOT);
 
         //disablePassButton()
         //disablePlayerSlots()
@@ -61,18 +59,20 @@ public class BattleModelImpl implements BattleModel{
             fightData.get().getPlayerData().setAllChosen();
             counted_round = 0;
             BattleCombat();
+        }else{
+            fightData.get().getBotData().setClickedToChosen();
         }
 
-        this.battleController.notify(Event.PASS);
 
     }
 
     @Override
-    public void BattleSpin() {
-
-        fightData.get().getPlayerData().changeNotSelectedTroop();
-
-        this.battleController.notify(Event.SPIN);
+    public Map<Integer, Troop> BattleSpin(Integer entity) {
+        if(entity == BattleControllerImpl.PLAYER){
+            return fightData.get().getPlayerData().changeNotSelectedTroop();
+        }else{
+            return fightData.get().getBotData().changeNotSelectedTroop();
+        }
 
     }
 
@@ -123,8 +123,6 @@ public class BattleModelImpl implements BattleModel{
                 botField.remove(FIRST_TROOP);
 
         });
-
-        this.battleController.notify(Event.COMBAT);
 
     }
 
