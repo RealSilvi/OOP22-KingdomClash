@@ -47,11 +47,19 @@ public interface ImageIconsSupplier {
     ImageIcon LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/Life.png");
     ImageIcon DEATH = new ImageIcon("src/main/resources/it/unibo/icons/battle/Death.png");
 
+    ImageIcon PASS = new ImageIcon("src/main/resources/it/unibo/icons/battle/Pass.png");
+    ImageIcon SPIN = new ImageIcon("src/main/resources/it/unibo/icons/battle/Spin.png");
+
+    ImageIcon CHECK = new ImageIcon("src/main/resources/it/unibo/icons/battle/Check.png");
+    ImageIcon X = new ImageIcon("src/main/resources/it/unibo/icons/battle/X.png");
+
+    ImageIcon INDICATOR = new ImageIcon("src/main/resources/it/unibo/icons/battle/Indicator.png");
+    ImageIcon VS = new ImageIcon("src/main/resources/it/unibo/icons/battle/Vs.png");
+
     static ImageIcon getImageIconFromTroop(final Troop troop, final boolean selected,Dimension size){
         return new ImageIcon(getImageFromTroop(troop,selected,size));
 
     }
-
 
     static ImageIcon getImageIconFromTroop(final Troop troop, final boolean selected){
         return (selected) ?
@@ -77,4 +85,29 @@ public interface ImageIconsSupplier {
     static Image getImageLive(final boolean alive,final Dimension size){
         return  getImageIconLive(alive).getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT);
     }
+
+    static ImageIcon getImageIconPass(Dimension size){
+        return  new ImageIcon(PASS.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageIconSpin(Dimension size){
+        return  new ImageIcon(SPIN.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageIconX(Dimension size){
+        return  new ImageIcon(X.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageIconCheck(Dimension size){
+        return  new ImageIcon(CHECK.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageIconIndicator(Dimension size){
+        return  new ImageIcon(INDICATOR.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageIconVs(Dimension size){
+        return  new ImageIcon(VS.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
 }

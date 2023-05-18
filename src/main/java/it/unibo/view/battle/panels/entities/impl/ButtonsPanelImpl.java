@@ -10,6 +10,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ButtonsPanelImpl implements ButtonsPanel {
+    private final static double BUTTON_SCALE = 0.7;
+    private final static Dimension BUTTON_DIMENSION= new Dimension(
+            (int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE),
+            (int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE));
 
     private final JButton spin;
     private final JButton pass;
@@ -17,14 +21,22 @@ public class ButtonsPanelImpl implements ButtonsPanel {
 
     public ButtonsPanelImpl() {
         this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_BUTTONS);
-        this.spin = new JButton("SPIN");
-        this.pass = new JButton("PASS");
+        this.spin = new JButton();
+        this.pass = new JButton();
 
-        this.mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
+        this.mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
         this.mainPanel.add(pass);
         this.mainPanel.add(spin);
 
         this.mainPanel.setPreferredSize(PanelDimensions.getSideButtonsPanel());
+
+        this.pass.setIcon(ImageIconsSupplier.getImageIconPass(BUTTON_DIMENSION));
+        this.spin.setIcon(ImageIconsSupplier.getImageIconSpin(BUTTON_DIMENSION));
+        this.spin.setBorder(BorderFactory.createLineBorder(new Color(249,158,24),4,true));
+        this.pass.setBorder(BorderFactory.createLineBorder(new Color(249,158,24),4,true));
+        this.pass.setPreferredSize(BUTTON_DIMENSION);
+        this.spin.setPreferredSize(BUTTON_DIMENSION);
+
     }
 
 

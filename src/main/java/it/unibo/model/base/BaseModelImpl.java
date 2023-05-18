@@ -2,9 +2,11 @@ package it.unibo.model.base;
 
 import java.awt.geom.Point2D;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,15 +37,21 @@ public class BaseModelImpl implements BaseModel {
     private GameData gameData;
     private ThreadManager threadManager;
 
+    private List<BuildingObserver> buildingStateChangedObservers;
+    private List<BuildingObserver> buildingProductionObservers;
+
     public BaseModelImpl(@NotNull GameData gameData) {
         this();
         Objects.requireNonNull(gameData);
         this.gameData = gameData;
+        logger.info("Base model succesfully initialized");
     }
     private BaseModelImpl(){
-        //TODO: When implemented instantiate ThreadManager
-        /*this.threadManager = new ThreadManagerImpl()*/;
+        this.threadManager = new ThreadManagerImpl(this);
+        this.buildingStateChangedObservers = new ArrayList<>();
+        this.buildingProductionObservers = new ArrayList<>();
     }
+
     //TODO: Make sure to make return values unmodifiable
     @Override
     public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode)
@@ -224,9 +232,13 @@ public class BaseModelImpl implements BaseModel {
         return Collections.unmodifiableMap(unmodMap);
     }
 
-    private synchronized void notifyBuildingStateChanged() {
+    @Override
+    public void notifyBuildingStateChangedObservers(UUID building) {
+        this.buildingStateChangedObservers.forEach(buildingStateObserver->buildingStateObserver.update(building));
     }
-    private synchronized void notifyBuildingProduction() {
+    @Override
+    public void notifyBuildingProductionObservers(UUID building) {
+        this.buildingProductionObservers.forEach(productionObserver->productionObserver.update(building));
     }
 
     /**
