@@ -20,12 +20,11 @@ public class CommandPanelImpl implements ComandPanel {
 
     
     public CommandPanelImpl(final int numberOfLives) {
-        this.mainPanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_SIDE);
+        this.mainPanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSidePanel());
         this.botLivesPanel=new LifePanelImpl(numberOfLives);
         this.playerLivesPanel= new LifePanelImpl(numberOfLives);
         this.buttonsPanel= new ButtonsPanelImpl();
 
-        this.mainPanel.setPreferredSize(PanelDimensions.getSidePanel());
 
         this.mainPanel.setLayout(new BoxLayout(this.mainPanel,BoxLayout.Y_AXIS));
         this.mainPanel.add(botLivesPanel.getPanel());

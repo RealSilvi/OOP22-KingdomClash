@@ -20,7 +20,7 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     private final JPanel mainPanel;
 
     public ButtonsPanelImpl() {
-        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_BUTTONS);
+        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSideButtonsPanel());
         this.spin = new JButton();
         this.pass = new JButton();
 
@@ -28,12 +28,11 @@ public class ButtonsPanelImpl implements ButtonsPanel {
         this.mainPanel.add(pass);
         this.mainPanel.add(spin);
 
-        this.mainPanel.setPreferredSize(PanelDimensions.getSideButtonsPanel());
 
         this.pass.setIcon(ImageIconsSupplier.getImageIconPass(BUTTON_DIMENSION));
         this.spin.setIcon(ImageIconsSupplier.getImageIconSpin(BUTTON_DIMENSION));
-        this.spin.setBorder(BorderFactory.createLineBorder(new Color(249,158,24),4,true));
-        this.pass.setBorder(BorderFactory.createLineBorder(new Color(249,158,24),4,true));
+        this.spin.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
+        this.pass.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
         this.pass.setPreferredSize(BUTTON_DIMENSION);
         this.spin.setPreferredSize(BUTTON_DIMENSION);
 

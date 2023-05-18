@@ -2,6 +2,8 @@ package it.unibo.view.battle;
 
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
+
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,7 @@ public final class BattlePanelImpl implements BattlePanel {
     private final CommandPanelImpl buttonsPanel;
 
     public BattlePanelImpl() {
-        this.mainPanel= new DrawPanel(new Color(249,158,24));
+        this.mainPanel= new DrawPanel(Color.darkGray, PanelDimensions.SCREEN_SIZE);
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
         final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));

@@ -9,52 +9,47 @@ import java.util.Map;
 
 public interface ImageIconsSupplier {
 
-    ImageIcon BACKGROUND_FIELD = new ImageIcon("src/main/resources/it/unibo/icons/battle/FieldBackground.png");
-    ImageIcon BACKGROUND_FREE_SPOT = new ImageIcon("src/main/resources/it/unibo/icons/battle/FreeSpotBackground.png");
-    ImageIcon BACKGROUND_PLAYERS = new ImageIcon("src/main/resources/it/unibo/icons/battle/PlayerBackground.png");
-    ImageIcon BACKGROUND_SIDE = new ImageIcon("src/main/resources/it/unibo/icons/battle/SideBackground.png");
-    ImageIcon BACKGROUND_LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/LifeBackground.png");
-    ImageIcon BACKGROUND_BUTTONS = new ImageIcon("src/main/resources/it/unibo/icons/battle/ButtonsBackground.png");
+    ImageIcon BACKGROUND_FILL_PATTERN = new ImageIcon("src/main/resources/it/unibo/icons/battle/BackgroundFumoNero.png");
 
     Map<Troop, List<String>> troopUrl = Map.of(
             Troop.AXE,
-            List.of("src/main/resources/it/unibo/icons/battle/Axe.png",
+            List.of("src/main/resources/it/unibo/icons/battle/AxeBlack.png",
                     "src/main/resources/it/unibo/icons/battle/AxeSelected.png"),
             Troop.SWORD,
-            List.of("src/main/resources/it/unibo/icons/battle/Sword.png",
+            List.of("src/main/resources/it/unibo/icons/battle/SwordBlack.png",
                     "src/main/resources/it/unibo/icons/battle/SwordSelected.png"),
             Troop.CATAPULT,
-            List.of("src/main/resources/it/unibo/icons/battle/Hammer.png",
+            List.of("src/main/resources/it/unibo/icons/battle/HammerBlack.png",
                     "src/main/resources/it/unibo/icons/battle/HammerSelected.png"),
             Troop.ARROW,
-            List.of("src/main/resources/it/unibo/icons/battle/Mace.png",
+            List.of("src/main/resources/it/unibo/icons/battle/MaceBlack.png",
                     "src/main/resources/it/unibo/icons/battle/MaceSelected.png"),
             Troop.SHIELD,
-            List.of("src/main/resources/it/unibo/icons/battle/Shield01.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Shield01Black.png",
                     "src/main/resources/it/unibo/icons/battle/Shield01Selected.png"),
             Troop.HELMET,
-            List.of("src/main/resources/it/unibo/icons/battle/Shield02.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Shield02Black.png",
                     "src/main/resources/it/unibo/icons/battle/Shield02Selected.png"),
             Troop.TOWER,
-            List.of("src/main/resources/it/unibo/icons/battle/Shield03.png",
+            List.of("src/main/resources/it/unibo/icons/battle/Shield03Black.png",
                     "src/main/resources/it/unibo/icons/battle/Shield03Selected.png"),
             Troop.DODGE,
-            List.of("src/main/resources/it/unibo/icons/battle/Helmet.png",
+            List.of("src/main/resources/it/unibo/icons/battle/HelmetBlack.png",
                     "src/main/resources/it/unibo/icons/battle/HelmetSelected.png")
 
     );
 
-    ImageIcon LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/Life.png");
-    ImageIcon DEATH = new ImageIcon("src/main/resources/it/unibo/icons/battle/Death.png");
+    ImageIcon LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/LifeBlack.png");
+    ImageIcon DEATH = new ImageIcon("src/main/resources/it/unibo/icons/battle/DeathBlack.png");
 
-    ImageIcon PASS = new ImageIcon("src/main/resources/it/unibo/icons/battle/Pass.png");
-    ImageIcon SPIN = new ImageIcon("src/main/resources/it/unibo/icons/battle/Spin.png");
+    ImageIcon PASS = new ImageIcon("src/main/resources/it/unibo/icons/battle/PassBlack.png");
+    ImageIcon SPIN = new ImageIcon("src/main/resources/it/unibo/icons/battle/SpinBlack.png");
 
-    ImageIcon CHECK = new ImageIcon("src/main/resources/it/unibo/icons/battle/Check.png");
-    ImageIcon X = new ImageIcon("src/main/resources/it/unibo/icons/battle/X.png");
+    ImageIcon CHECK = new ImageIcon("src/main/resources/it/unibo/icons/battle/CheckBlack.png");
+    ImageIcon X = new ImageIcon("src/main/resources/it/unibo/icons/battle/XBlack.png");
 
-    ImageIcon INDICATOR = new ImageIcon("src/main/resources/it/unibo/icons/battle/Indicator.png");
-    ImageIcon VS = new ImageIcon("src/main/resources/it/unibo/icons/battle/Vs.png");
+    ImageIcon INDICATOR = new ImageIcon("src/main/resources/it/unibo/icons/battle/IndicatorBlack.png");
+    ImageIcon VS = new ImageIcon("src/main/resources/it/unibo/icons/battle/VsBlack.png");
 
     static ImageIcon getImageIconFromTroop(final Troop troop, final boolean selected,Dimension size){
         return new ImageIcon(getImageFromTroop(troop,selected,size));

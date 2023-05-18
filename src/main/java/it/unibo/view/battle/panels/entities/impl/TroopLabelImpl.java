@@ -19,13 +19,13 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
     }
 
     public TroopLabelImpl(final Dimension size) {
-        super(ImageIconsSupplier.BACKGROUND_FREE_SPOT);
+        super(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
         this.size = size;
     }
 
     @Override
     public void setEmpty(){
-        this.setIcon(ImageIconsSupplier.BACKGROUND_FREE_SPOT);
+        this.setIcon(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
         this.setBorder(BorderFactory.createEmptyBorder());
     }
 

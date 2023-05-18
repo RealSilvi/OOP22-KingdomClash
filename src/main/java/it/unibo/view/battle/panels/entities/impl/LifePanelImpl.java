@@ -23,9 +23,8 @@ public class LifePanelImpl implements LifePanel {
 
     public LifePanelImpl(final int nrOfLives) {
         this.lives=new ArrayList<>();
-        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_LIFE);
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSideLifePanel());
 
-        this.mainPanel.setPreferredSize(PanelDimensions.getSideLifePanel());
 
         IntStream.range(0,nrOfLives).forEach(i -> lives.add(new LivesLabelImpl(LABEL_DIMENSION)));
         this.lives.forEach(this.mainPanel::add);

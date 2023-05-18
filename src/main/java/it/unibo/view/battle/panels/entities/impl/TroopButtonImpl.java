@@ -20,7 +20,7 @@ public class TroopButtonImpl extends JButton implements TroopButton {
 
         this.setPreferredSize(size);
         this.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.status,this.size));
-        this.setBorder(BorderFactory.createLineBorder(new Color(249,158,24),4,true));
+        this.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
 
     }
 

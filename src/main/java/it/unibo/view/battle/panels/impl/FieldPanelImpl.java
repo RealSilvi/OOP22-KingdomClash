@@ -26,7 +26,7 @@ public class FieldPanelImpl implements FieldPanel{
     private final List<TroopLabelImpl> army;
 
     public FieldPanelImpl(final int nrOfSlots) {
-        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FIELD);
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getFieldPanel());
         this.army=new ArrayList<>();
 
         this.mainPanel.setLayout(new GridLayout(ROWS,nrOfSlots));
@@ -34,7 +34,6 @@ public class FieldPanelImpl implements FieldPanel{
 
         this.army.forEach(this.mainPanel::add);
 
-        this.mainPanel.setPreferredSize(PanelDimensions.getFieldPanel());
     }
 
     @Override
