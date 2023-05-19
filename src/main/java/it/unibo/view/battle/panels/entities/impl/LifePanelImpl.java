@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
-
 public class LifePanelImpl implements LifePanel {
 
     private final static double LABEL_SCALE=0.2;

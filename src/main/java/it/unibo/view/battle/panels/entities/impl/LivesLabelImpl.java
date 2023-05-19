@@ -12,20 +12,19 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     private boolean alive;
 
     public LivesLabelImpl(final Dimension size) {
-        super(ImageIconsSupplier.getImageIconLive(true,size));
+        super(ImageIconsSupplier.getImageIconLife(true,size));
 
         this.size=size;
         this.alive=true;
 
         this.setPreferredSize(size);
-        this.setOpaque(true);
     }
 
 
     @Override
     public void changeStatus(){
         this.alive=!this.alive;
-        this.setIcon(ImageIconsSupplier.getImageIconLive(this.alive,this.size));
+        this.setIcon(ImageIconsSupplier.getImageIconLife(this.alive,this.size));
     }
 
     @Override

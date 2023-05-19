@@ -26,29 +26,28 @@ public class ButtonsPanelImpl implements ButtonsPanel {
 
     public ButtonsPanelImpl() {
         this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSideButtonsPanel());
-        this.spin = new JButton();
-        this.pass = new JButton();
-        this.info = new JButton();
+        this.spin = this.getCostumeButton(ImageIconsSupplier.getImageIconSpin(GAME_BUTTON_DIMENSION),GAME_BUTTON_DIMENSION);
+        this.pass = this.getCostumeButton(ImageIconsSupplier.getImageIconPass(GAME_BUTTON_DIMENSION),GAME_BUTTON_DIMENSION);
+        this.info = this.getCostumeButton(ImageIconsSupplier.getImageIconInfo(INFO_BUTTON_DIMENSION),INFO_BUTTON_DIMENSION);
 
         this.mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
-        this.mainPanel.add(pass);
         this.mainPanel.add(spin);
+        this.mainPanel.add(pass);
         this.mainPanel.add(info);
 
+    }
 
-        this.pass.setIcon(ImageIconsSupplier.getImageIconPass(GAME_BUTTON_DIMENSION));
-        this.spin.setIcon(ImageIconsSupplier.getImageIconSpin(GAME_BUTTON_DIMENSION));
-        this.info.setIcon(ImageIconsSupplier.getImageIconInfo(INFO_BUTTON_DIMENSION));
+    private JButton getCostumeButton(final ImageIcon icon, final Dimension size){
+        JButton button=new JButton(icon);
+        button.setDisabledIcon(icon);
 
+        button.setPreferredSize(size);
 
-        this.spin.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
-        this.pass.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
-        this.info.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
+        button.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
+        button.setBackground(Color.BLACK);
+        button.setOpaque(true);
 
-        this.pass.setPreferredSize(GAME_BUTTON_DIMENSION);
-        this.spin.setPreferredSize(GAME_BUTTON_DIMENSION);
-        this.info.setPreferredSize(INFO_BUTTON_DIMENSION);
-
+        return button;
     }
 
 
