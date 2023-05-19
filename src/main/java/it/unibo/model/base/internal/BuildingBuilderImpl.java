@@ -1,9 +1,6 @@
 package it.unibo.model.base.internal;
 
 import java.awt.geom.Point2D;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import it.unibo.model.base.basedata.Building;
