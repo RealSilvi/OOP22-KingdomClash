@@ -92,7 +92,7 @@ public class BaseModelImpl implements BaseModel {
             throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException {
         upgradeStructure(structureId, false);
     }
-
+    //TODO: apply refund before returning it
     @Override
     public Set<Resource> demolishStructure(UUID structureId) throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
