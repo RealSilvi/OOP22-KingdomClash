@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -47,12 +46,11 @@ public class BaseModelImpl implements BaseModel {
         logger.info("Base model succesfully initialized");
     }
     private BaseModelImpl(){
-        this.threadManager = new ThreadManagerImpl(this);
+        this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         this.buildingStateChangedObservers = new ArrayList<>();
         this.buildingProductionObservers = new ArrayList<>();
     }
 
-    //TODO: Make sure to make return values unmodifiable
     @Override
     public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode)
             throws NotEnoughResourceException, InvalidBuildingPlacementException {
@@ -78,20 +76,15 @@ public class BaseModelImpl implements BaseModel {
             throws NotEnoughResourceException, InvalidBuildingPlacementException {
         return buildStructure(position, type, 0, false);
     }
-    //TODO: Remember to upgrade ALL properties of a building
     @Override
     public void upgradeStructure(UUID structureId, boolean cheatMode)
             throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
-        if (selectedBuilding.getLevel() == Building.MAXLEVEL) {
+        if (selectedBuilding.getLevel() >= Building.MAXLEVEL) {
             throw new BuildingMaxedOutException();
         }
-        float buildingTime = selectedBuilding.getBuildingTime();
-        if (!cheatMode) {
-            buildingTime = 0.0f;
-        }
         gameData.setResources(subtractResources(gameData.getResources(), BaseModel.applyMultiplierToResources(selectedBuilding.getType().getCost(), selectedBuilding.getLevel()+1)));
-        //TODO: Start timer that builds structure
+        threadManager.addBuilding(structureId);
     }
 
     @Override
@@ -125,8 +118,6 @@ public class BaseModelImpl implements BaseModel {
 
     @Override
     public Path getStructureTexture(UUID structureId) throws InvalidStructureReferenceException {
-        Building selectedBuilding = checkAndGetBuilding(structureId);
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getStructureTexture'");
     }
 
@@ -171,38 +162,36 @@ public class BaseModelImpl implements BaseModel {
 
     @Override
     public void addBuildingStateChangedObserver(BuildingObserver observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addBuildingStateChangedObserver'");
+        this.buildingStateChangedObservers.add(observer);
     }
 
     @Override
     public void removeBuildingStateChangedObserver(BuildingObserver observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeBuildingStateChangedObserver'");
+        this.buildingProductionObservers.remove(observer);
     }
 
     @Override
     public void addBuildingProductionObserver(BuildingObserver observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addBuildingProductionObserver'");
+        this.buildingProductionObservers.add(observer);
     }
 
     @Override
     public void removeBuildingProductionObserver(BuildingObserver observer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removeBuildingProductionObserver'");
+        this.buildingProductionObservers.remove(observer);
     }
 
     @Override
     public void setClockTicking(boolean ticktime) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setClockTicking'");
+        if (ticktime) {
+            this.threadManager.pauseThreads();
+        } else {
+            this.threadManager.startThreads();
+        }
     }
 
     @Override
     public boolean isClockTicking() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isClockTicking'");
+        return this.threadManager.areThreadsRunning();
     }
 
     @Override
