@@ -1,6 +1,7 @@
 package it.unibo.model.battle.entitydata;
 
 import it.unibo.model.battle.CellsImpl;
+import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
 
@@ -8,8 +9,8 @@ import java.util.*;
 
 public class PlayerDataImpl implements PlayerData {
 
-    public static final int PLAYER_TROOPS = 5;
-    public static final int TOTAL_TROOPS = 10;
+    public static final int PLAYER_TROOPS = FightData.PLAYER_TROOPS;
+    public static final int TOTAL_TROOPS = FightData.TOTAL_TROOPS;
 
     private Map<Integer, CellsImpl> playerTroop = new HashMap<>();
 
@@ -20,12 +21,12 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     @Override
-    public void AddPlayerTroop(Integer key) {
+    public void addPlayerTroop(Integer key) {
         this.playerTroop.get(key).setClicked(true);
     }
 
     @Override
-    public void RemovePlayerTroop(Integer key) {
+    public void removePlayerTroop(Integer key) {
         this.playerTroop.get(key).setClicked(false);
     }
 

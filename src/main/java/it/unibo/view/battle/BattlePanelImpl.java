@@ -58,7 +58,7 @@ public final class BattlePanelImpl implements BattlePanel {
 
     @Override
     public void hitBot() {
-        this.buttonsPanel.decreasePlayerLive();
+        this.buttonsPanel.decreaseBotLive();
     }
 
     @Override

@@ -14,14 +14,14 @@ public interface BotData {
      * @param key represents the position of the clicked troop
      */
 
-    public void AddBotTroop(Integer key);
+    public void addBotTroop(Integer key);
 
     /**
      * Removes the clicked troop from the field
      * @param key represents the position of the clicked troop
      */
 
-    public void RemoveBotTroop(Integer key);
+    public void removeBotTroop(Integer key);
 
     /**
      * take the key and return its status

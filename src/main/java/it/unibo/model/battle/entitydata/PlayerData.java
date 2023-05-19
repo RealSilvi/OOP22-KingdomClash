@@ -14,14 +14,14 @@ public interface PlayerData {
      * @param key represents the position of the clicked troop
      */
 
-    public void AddPlayerTroop(Integer key);
+    public void addPlayerTroop(Integer key);
 
     /**
      * Removes the clicked troop from the field
      * @param key represents the position of the clicked troop
      */
 
-    public void RemovePlayerTroop(Integer key);
+    public void removePlayerTroop(Integer key);
 
     /**
      * take the key and return its status

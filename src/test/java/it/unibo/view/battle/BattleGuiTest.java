@@ -13,6 +13,7 @@ class BattleGuiTest {
 
         BattlePanelImpl panel = new BattlePanelImpl();
         battleFrame.getContentPane().add(panel.getPanel());
+        panel.disableBotSlots();
 
         battleFrame.setVisible(true);
         battleFrame.pack();

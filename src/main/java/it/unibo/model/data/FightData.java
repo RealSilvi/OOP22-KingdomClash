@@ -7,7 +7,12 @@ import it.unibo.model.battle.entitydata.PlayerDataImpl;
 
 public class FightData {
 
-    public static final int BOT_TROOPS = BotDataImpl.BOT_TROOPS;
+    public static final int PLAYER_LIFE = 10;
+    public static final int BOT_LIFE = 10;
+    public static final int MAX_ROUND = 3;
+    public static final int BOT_TROOPS = 5;
+    public static final int PLAYER_TROOPS = 5;
+    public static final int TOTAL_TROOPS = PLAYER_TROOPS+BOT_TROOPS;
 
     private BotData botData;
     private PlayerData playerData;

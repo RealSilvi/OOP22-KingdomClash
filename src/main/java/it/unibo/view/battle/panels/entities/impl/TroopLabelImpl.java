@@ -12,7 +12,7 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
     private final Dimension size;
 
     public TroopLabelImpl(final Troop troop, final Dimension size) {
-        super(ImageIconsSupplier.getImageIconFromTroop(troop,true,size));
+        super(ImageIconsSupplier.getImageIconFromTroop(troop,size));
         this.size=size;
         this.setPreferredSize(this.size);
 
@@ -31,7 +31,7 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
 
     @Override
     public void setTroop(final Troop troop){
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop,true,this.size));
+        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop,this.size));
         this.setBorder(BorderFactory.createLineBorder(Color.GRAY,2,true));
     }
 }
