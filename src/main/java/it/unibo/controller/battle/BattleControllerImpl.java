@@ -33,40 +33,49 @@ public class BattleControllerImpl implements  BattleController{
     }
 
 
-    public void Pass(){
+    public void pass(){
         this.battlePanel.enableBotSlots();
         this.battlePanel.disablePassButton();
         this.battlePanel.disablePlayerSlots();
         this.battlePanel.disableSpinButton();
-        this.battleModel.BattlePass();
+        this.battleModel.battlePass();
         this.battlePanel.enablePassButton();
         this.battlePanel.enablePlayerSlots();
         this.battlePanel.enableSpinButton();
         this.battlePanel.disableBotSlots();
     }
 
-    public void Spin(){
-        this.battlePanel.disableSpinButton();
-        this.battlePanel.spinPlayerFreeSlot(battleModel.BattleSpin(PLAYER));
+    public void spin(Integer entity){
+        if(entity == PLAYER){
+            battlePanel.disableSpinButton();
+            battlePanel.spinPlayerFreeSlot(fightData.get().getPlayerData().changeNotSelectedTroop());
+        }else{
+            battlePanel.spinBotFreeSlot(fightData.get().getBotData().changeNotSelectedTroop());
+        }
+
     }
 
-    public void ClickedButtonPlayer(Integer key){
+    public void clickedButtonPlayer(Integer key){
         if(fightData.get().getPlayerData().getCells(key).getClicked()){
-            fightData.get().getPlayerData().RemovePlayerTroop(key);
+            fightData.get().getPlayerData().removePlayerTroop(key);
+            update();
         }else{
-            fightData.get().getPlayerData().AddPlayerTroop(key);
+            fightData.get().getPlayerData().addPlayerTroop(key);
+            update();
         }
     }
 
-    public void ClickedButtonBot(Integer key){
-        if(fightData.get().getBotData().getCells(key).getClicked()){
-            fightData.get().getBotData().RemoveBotTroop(key);
-        }else{
-            fightData.get().getBotData().AddBotTroop(key);
-        }
+    public void update(){
+        battlePanel.updateField(fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()),
+                fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()));
     }
 
+    public void playerLifeDecrease(){
+        battlePanel.hitPlayer();
+    }
 
-
+    public void botLifeDecrease(){
+        battlePanel.hitBot();
+    }
 
 }

@@ -2,12 +2,16 @@ package it.unibo.controller.battle;
 
 public interface BattleController {
 
-    public void Pass();
+    public void pass();
 
-    public void Spin();
+    public void spin(Integer entity);
 
-    public void ClickedButtonPlayer(Integer key);
+    public void clickedButtonPlayer(Integer key);
 
-    public void ClickedButtonBot(Integer key);
+    public void update();
+
+    public void playerLifeDecrease();
+
+    public void botLifeDecrease();
 
 }
