@@ -100,6 +100,13 @@ public class BaseModelImpl implements BaseModel {
         for (Resource resource : refund) {
             resource.setAmount(resource.getAmount()%Building.REFUND_TAX_PERCENTAGE);
         }
+        try {
+            applyResources(refund);
+        } catch (NotEnoughResourceException e) {
+            logger.severe("Not enough resources Exception thrown when adding resources,"
+                        +" this implies a broken state of the player resource set and should be fixed!"
+                        +" dumping stacktrace:\n"+e.getStackTrace());
+        }
         return refund;
     }
 
