@@ -2,6 +2,7 @@ package it.unibo.model.base;
 
 import java.awt.geom.Point2D;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
 
 public class ThreadManagerImplTest {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+
     private GameData gameData;
     private BaseModel baseModel;
     private void initModel(){
@@ -46,6 +49,7 @@ public class ThreadManagerImplTest {
                 lock.wait();
                 long endTime = System.currentTimeMillis();
                 long elapsedTime = endTime - startTime;
+                logger.info("Time passed: "+elapsedTime);
                 boolean timeElapsedCorrect = buildingTime < elapsedTime;
                 Assertions.assertTrue(timeElapsedCorrect);
             } catch (InterruptedException e) {}

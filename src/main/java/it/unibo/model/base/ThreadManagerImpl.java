@@ -128,7 +128,7 @@ public class ThreadManagerImpl implements ThreadManager {
                 @Override
                 public Boolean apply(UUID buildingToConstruct) {
                     try {
-                        long sleepTime = (long) ((buildingMapRef.get(buildingToConstruct)
+                        long sleepTime = ((buildingMapRef.get(buildingToConstruct)
                         .getBuildingTime()/100)-REFRESH_RATE_MS);
                         Thread.sleep(sleepTime);
                         int currentBuildProgress = buildingMapRef
@@ -164,7 +164,7 @@ public class ThreadManagerImpl implements ThreadManager {
                 @Override
                 public Boolean apply(UUID productionBuilding) {
                     try {
-                        long sleepTime = (long) ((buildingMapRef.get(productionBuilding).getProductionTime())/100-REFRESH_RATE_MS);
+                        long sleepTime = ((buildingMapRef.get(productionBuilding).getProductionTime())/100-REFRESH_RATE_MS);
                         Thread.sleep(sleepTime);
                         int currentProductionProgress = buildingMapRef.get(productionBuilding).getProductionProgress();
                         if (currentProductionProgress < 100) {
@@ -204,17 +204,23 @@ public class ThreadManagerImpl implements ThreadManager {
 
         @Override
         public void run() {
+            long startTime = System.currentTimeMillis();
             while(isThreadRunning()) {
                 while(Boolean.TRUE.equals(threadsRunning.get(this.threadType))) {
                     try {
                         synchronized(threadMap.get(this.threadType).get(associatedBuildingIdentifier)) {
                             if (Boolean.FALSE.equals(task.apply(associatedBuildingIdentifier))) {
                                 setRunThread(false);
+                                long endTime = System.currentTimeMillis();
+                                long elapsedTime = endTime - startTime;
+                                logger.info("Time passed after function completion: "+elapsedTime);
                                 return;
                             }
+                            logger.info("Continuing cycle");
                         }
                     //Thrown when the building is null
                     } catch (NullPointerException e) {
+                        logger.warning("Assigned building was null!");
                         return;
                     }
                     try {
