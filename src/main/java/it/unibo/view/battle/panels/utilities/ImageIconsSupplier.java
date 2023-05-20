@@ -4,6 +4,8 @@ import it.unibo.view.battle.Troop;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 public interface ImageIconsSupplier {
 
@@ -74,6 +76,19 @@ public interface ImageIconsSupplier {
 
     static ImageIcon getImageIconIndicator(Dimension size){
         return  new ImageIcon(INDICATOR.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static Font getPrimaryFont(){
+        Font font;
+        try {
+            font= Font.createFont(Font.TRUETYPE_FONT,new File("src/main/resources/it/unibo/icons/battle/armalite.ttf"));
+            GraphicsEnvironment g= GraphicsEnvironment.getLocalGraphicsEnvironment();
+            g.registerFont(Font.createFont(Font.TRUETYPE_FONT,new File("src/main/resources/it/unibo/icons/battle/armalite.ttf")));
+            return font.deriveFont(40f);
+        }catch(IOException | FontFormatException e){
+            font=Font.getFont("arial");
+            return font.deriveFont(40f);
+        }
     }
 
 }

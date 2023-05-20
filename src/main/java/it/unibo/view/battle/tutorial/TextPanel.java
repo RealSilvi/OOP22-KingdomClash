@@ -6,11 +6,10 @@ import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 
 public class TextPanel extends DrawPanel{
+
 
     private final static int VERTICAL_PADDING=10;
     private final static int HORIZONTAL_PADDING=30;
@@ -38,16 +37,7 @@ public class TextPanel extends DrawPanel{
 
         this.title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
-        Font font;
-        try {
-            font= Font.createFont(Font.TRUETYPE_FONT,new File("src/main/resources/it/unibo/icons/battle/armalite.ttf"));
-            GraphicsEnvironment g= GraphicsEnvironment.getLocalGraphicsEnvironment();
-            g.registerFont(Font.createFont(Font.TRUETYPE_FONT,new File("src/main/resources/it/unibo/icons/battle/armalite.ttf")));
-        }catch(IOException | FontFormatException e){
-            font=Font.getFont("arial");
-        }
-
-        this.title.setFont(font.deriveFont(40f));
+        this.title.setFont(ImageIconsSupplier.getPrimaryFont());
         this.content.setFont(this.content.getFont().deriveFont(20f));
 
         this.content.setOpaque(false);
