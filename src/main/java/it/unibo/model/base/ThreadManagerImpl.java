@@ -33,7 +33,7 @@ public class ThreadManagerImpl implements ThreadManager {
         this.buildingMapRef = buildingMapRef;
         for (ThreadSelector selection : ThreadSelector.values()) {
             this.threadMap.put(selection, new ConcurrentHashMap<>());
-            this.threadsRunning.put(selection, false);
+            this.threadsRunning.put(selection, true);
             this.threadLocks.put(selection, new Object());
         }
     }
@@ -81,7 +81,7 @@ public class ThreadManagerImpl implements ThreadManager {
         }
         return allThreadsRunning;
     }
-
+    @Override
     public void addBuilding(UUID buildingIdentifier) {
             ThreadSelector selection = ThreadSelector.PRODUCTION;
         if (buildingMapRef.get(buildingIdentifier).isBeingBuilt()) {
@@ -128,8 +128,9 @@ public class ThreadManagerImpl implements ThreadManager {
                 @Override
                 public Boolean apply(UUID buildingToConstruct) {
                     try {
-                        Thread.sleep((long) buildingMapRef.get(buildingToConstruct)
-                            .getBuildingTime()-REFRESH_RATE_MS);
+                        long sleepTime = (long) ((buildingMapRef.get(buildingToConstruct)
+                        .getBuildingTime()/100)-REFRESH_RATE_MS);
+                        Thread.sleep(sleepTime);
                         int currentBuildProgress = buildingMapRef
                             .get(buildingToConstruct).getBuildingProgress();
                         if (currentBuildProgress < 100) {
@@ -163,7 +164,8 @@ public class ThreadManagerImpl implements ThreadManager {
                 @Override
                 public Boolean apply(UUID productionBuilding) {
                     try {
-                        Thread.sleep((long) buildingMapRef.get(productionBuilding).getProductionTime()-REFRESH_RATE_MS);
+                        long sleepTime = (long) ((buildingMapRef.get(productionBuilding).getProductionTime())/100-REFRESH_RATE_MS);
+                        Thread.sleep(sleepTime);
                         int currentProductionProgress = buildingMapRef.get(productionBuilding).getProductionProgress();
                         if (currentProductionProgress < 100) {
                             buildingMapRef.get(productionBuilding).setProductionProgress(currentProductionProgress+1);
