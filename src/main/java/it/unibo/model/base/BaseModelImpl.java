@@ -40,15 +40,12 @@ public class BaseModelImpl implements BaseModel {
     private List<BuildingObserver> buildingProductionObservers;
 
     public BaseModelImpl(@NotNull GameData gameData) {
-        this();
         Objects.requireNonNull(gameData);
         this.gameData = gameData;
-        logger.info("Base model succesfully initialized");
-    }
-    private BaseModelImpl(){
         this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         this.buildingStateChangedObservers = new ArrayList<>();
         this.buildingProductionObservers = new ArrayList<>();
+        logger.info("Base model succesfully initialized");
     }
 
     @Override
@@ -79,11 +76,14 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public void upgradeStructure(UUID structureId, boolean cheatMode)
             throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException {
-        Building selectedBuilding = checkAndGetBuilding(structureId);
-        if (selectedBuilding.getLevel() >= Building.MAXLEVEL) {
+        checkAndGetBuilding(structureId);
+        if (this.gameData.getBuildings().get(structureId).getLevel() >= Building.MAXLEVEL) {
             throw new BuildingMaxedOutException();
         }
-        gameData.setResources(subtractResources(gameData.getResources(), BaseModel.applyMultiplierToResources(selectedBuilding.getType().getCost(), selectedBuilding.getLevel()+1)));
+        gameData.setResources(subtractResources(gameData.getResources(),
+        BaseModel.applyMultiplierToResources(this.gameData.getBuildings().get(structureId).getType().getCost(),
+            this.gameData.getBuildings().get(structureId).getLevel()+1)));
+            this.gameData.getBuildings().get(structureId).setBeingBuilt(true);
         threadManager.addBuilding(structureId);
     }
 
