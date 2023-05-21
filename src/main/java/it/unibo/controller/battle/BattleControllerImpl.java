@@ -16,6 +16,7 @@ public class BattleControllerImpl implements  BattleController{
     private Optional<FightData> fightData;
     private final BattlePanel battlePanel;
 
+
     public BattleControllerImpl(BattleModel battleModel, GameData gameData){
         this.battleModel = battleModel;
         this.battlePanel = new BattlePanelImpl();
@@ -30,6 +31,12 @@ public class BattleControllerImpl implements  BattleController{
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
+    }
+
+    public BattleControllerImpl(Optional<FightData> fightData){
+        this.battleModel = new BattleModelImpl();
+        this.battlePanel = new BattlePanelImpl();
+        this.fightData = fightData;
     }
 
 

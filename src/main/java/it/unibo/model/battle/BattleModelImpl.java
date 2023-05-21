@@ -6,6 +6,7 @@ import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 public class BattleModelImpl implements BattleModel{
@@ -26,6 +27,15 @@ public class BattleModelImpl implements BattleModel{
             this.fightData = gameData.getFightData();
         }
         this.battleController = new BattleControllerImpl(gameData);
+    }
+
+    public BattleModelImpl(){
+
+    }
+
+    public BattleModelImpl(Optional<FightData> fightData){
+        this.fightData = fightData;
+        this.battleController = new BattleControllerImpl(this.fightData);
     }
 
     @Override
