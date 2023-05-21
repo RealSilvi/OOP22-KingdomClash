@@ -35,6 +35,7 @@ public interface ImageIconsSupplier {
     ImageIcon X = new ImageIcon("src/main/resources/it/unibo/icons/battle/X.png");
 
     ImageIcon INDICATOR = new ImageIcon("src/main/resources/it/unibo/icons/battle/Indicator.png");
+    ImageIcon EXIT = new ImageIcon("src/main/resources/it/unibo/icons/battle/Exit.png");
 
     static ImageIcon getImageIconFromTroop(final Troop troop,Dimension size){
         return new ImageIcon(getImageFromTroop(troop,size));
@@ -76,6 +77,10 @@ public interface ImageIconsSupplier {
 
     static ImageIcon getImageIconIndicator(Dimension size){
         return  new ImageIcon(INDICATOR.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
+    }
+
+    static ImageIcon getImageExitIndicator(Dimension size){
+        return  new ImageIcon(EXIT.getImage().getScaledInstance(size.width,size.height,Image.SCALE_DEFAULT));
     }
 
     static Font getPrimaryFont(){

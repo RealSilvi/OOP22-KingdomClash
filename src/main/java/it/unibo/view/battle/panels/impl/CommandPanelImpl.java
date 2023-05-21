@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.panels.api.ComandPanel;
+import it.unibo.view.battle.panels.api.CommandPanel;
 import it.unibo.view.battle.panels.entities.impl.ButtonsPanelImpl;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.LifePanelImpl;
@@ -10,7 +10,7 @@ import it.unibo.view.battle.panels.utilities.PanelDimensions;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class CommandPanelImpl implements ComandPanel {
+public class CommandPanelImpl implements CommandPanel {
 
     private final JPanel mainPanel;
 

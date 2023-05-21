@@ -38,7 +38,6 @@ public class InfoPanelImpl implements InfoPanel {
                 Troop.DODGE,true,
                 Troop.TOWER,true,
                 Troop.HELMET,true
-
         ));
     }
 
