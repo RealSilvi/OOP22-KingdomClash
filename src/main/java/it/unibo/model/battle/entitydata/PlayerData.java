@@ -10,6 +10,20 @@ import java.util.Optional;
 public interface PlayerData {
 
     /**
+     *
+     * @return player's troops
+     */
+
+    public Map<Integer, CellsImpl> getPlayerTroop();
+
+    /**
+     * set the hand
+     * @param playerTroop troops to set
+     */
+
+    public void setPlayerTroop(Map<Integer, CellsImpl> playerTroop);
+
+    /**
      * Adds the clicked troop into the field
      * @param key represents the position of the clicked troop
      */

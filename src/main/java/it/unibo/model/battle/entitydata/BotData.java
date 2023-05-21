@@ -10,6 +10,20 @@ import java.util.Optional;
 public interface BotData {
 
     /**
+     *
+     * @return bot's troops
+     */
+
+    public Map<Integer, CellsImpl> getBotTroop();
+
+    /**
+     * set the hand
+     * @param botTroop troops to set
+     */
+
+    public void setBotTroop(Map<Integer, CellsImpl> botTroop);
+
+    /**
      * Adds the clicked troop into the field
      * @param key represents the position of the clicked troop
      */

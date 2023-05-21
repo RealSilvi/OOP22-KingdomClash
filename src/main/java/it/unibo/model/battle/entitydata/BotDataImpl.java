@@ -11,12 +11,23 @@ public class BotDataImpl implements BotData{
 
     public static final int BOT_TROOPS = FightData.BOT_TROOPS;
     public static final int TOTAL_TROOPS = FightData.TOTAL_TROOPS;
+    public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
     private Map<Integer, CellsImpl> botTroop = new HashMap<>();
 
-    public BotDataImpl(GameData gameData){
+    public BotDataImpl(){
         for(int i=0; i < BOT_TROOPS; i++){
             this.botTroop.put(i,new CellsImpl(Troop.getRandomTroop(),false,false));
         }
+    }
+
+    @Override
+    public Map<Integer, CellsImpl> getBotTroop() {
+        return this.botTroop;
+    }
+
+    @Override
+    public void setBotTroop(Map<Integer, CellsImpl> botTroop) {
+        this.botTroop = botTroop;
     }
 
     @Override
@@ -102,6 +113,8 @@ public class BotDataImpl implements BotData{
         Random random = new Random();
         int chosen_key;
         chosen_key = random.nextInt(keys.size());
+        System.out.println("chosen key: " + chosen_key);
+        System.out.println("toList: " + keys.toString());
         return keys.get(chosen_key);
     }
 
@@ -131,7 +144,7 @@ public class BotDataImpl implements BotData{
         List<Optional<Troop>> botOptionalList = new ArrayList<>();
         int difference_size;
 
-        for( int i=0; i<TOTAL_TROOPS; i++){
+        for( int i=0; i<TOTAL_DIFFERENT_TROOP; i++){
             int a=i;
             playerOptionalList.addAll(playerData.getSelected().stream().filter(x -> x.getId()==a).map(Optional::of).toList());
             botOptionalList.addAll(getSelected().stream()
@@ -145,21 +158,21 @@ public class BotDataImpl implements BotData{
                     .map(Optional::of)
                     .toList());
 
+            int b=0;
             if(playerOptionalList.size() < botOptionalList.size()){
                 difference_size = botOptionalList.size() - playerOptionalList.size();
-                for(i = 0; i < difference_size; i++ ){
+                for(b = 0; b < difference_size; b++ ){
                     playerOptionalList.add(Optional.empty());
                 }
             } else if (playerOptionalList.size() > botOptionalList.size()) {
                 difference_size = playerOptionalList.size() - botOptionalList.size();
-                for(i = 0; i < difference_size; i++ ){
+                for(b = 0; b < difference_size; b++ ){
                     botOptionalList.add(Optional.empty());
                 }
             }
 
         }
 
-        //updateField(playerOptionalList, botOptionalList)
         return botOptionalList;
     }
 
