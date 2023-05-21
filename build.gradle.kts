@@ -20,13 +20,17 @@ repositories { // Where to search for dependencies
 }
 
 dependencies {
-    implementation("org.jetbrains:annotations:24.0.0")
+    implementation("org.jetbrains:annotations:24.0.1")
     // Suppressions for SpotBugs
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.7.3")
 
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
     implementation("com.omertron:API-OMDB:1.5")
     implementation("org.jooq:jool:0.9.15")
+
+    //Json-simple
+    implementation ("com.googlecode.json-simple:json-simple:1.1.1")
+
 
     /*
      * Simple Logging Facade for Java (SLF4J) with Apache Log4j

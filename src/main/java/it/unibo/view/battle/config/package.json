@@ -1,0 +1,30 @@
+{
+  "name": "config",
+  "version": "1.0.0",
+  "dependencies": {
+
+  },
+
+  "TutorialPanel" : {
+      "NorthPanel": {
+        "title": "TopPanel-Title",
+        "text": "TopPanel-Testo"
+      },
+      "SouthPanel": {
+        "title": "BootomPanel-Title",
+        "text": "BottomPanel-Test"
+      },
+      "WestPanel": {
+        "title": "LeftPanel-Title",
+        "text": "LeftPanel-Testo"
+      },
+      "EastPanel": {
+        "title": "RightPanel-Title",
+        "text": "RightPanel-Testo"
+      },
+      "CenterPanel": {
+        "title": "CenterPanel-Title",
+        "text": "CenterPanel-Testo"
+      }
+  }
+}
