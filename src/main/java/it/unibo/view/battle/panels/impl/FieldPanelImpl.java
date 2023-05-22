@@ -25,6 +25,10 @@ public class FieldPanelImpl implements FieldPanel{
 
     private final List<TroopLabelImpl> army;
 
+    /**
+     *
+     * @param nrOfSlots ho many slots the player has in the PlayerPanel
+     */
     public FieldPanelImpl(final int nrOfSlots) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getFieldPanel());
         this.army=new ArrayList<>();

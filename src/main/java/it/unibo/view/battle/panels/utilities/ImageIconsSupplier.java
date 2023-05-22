@@ -11,6 +11,7 @@ public interface ImageIconsSupplier {
 
     Color PRIMARY_COLOR=new Color(168,19,48);
     Color SECONDARY_COLOR=new Color(250,160,21);
+    Color DEFAULT_COLOR=Color.darkGray;
 
     ImageIcon BACKGROUND_FILL_PATTERN = new ImageIcon("src/main/resources/it/unibo/icons/battle/Background.png");
 

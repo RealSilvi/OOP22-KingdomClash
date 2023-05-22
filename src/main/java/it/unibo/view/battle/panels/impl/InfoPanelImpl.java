@@ -23,6 +23,10 @@ public class InfoPanelImpl implements InfoPanel {
     private final JPanel mainPanel;
     private final List<JLabel> table;
 
+    /**
+     *
+     * @param nrOfTroops how many troops are in total in the game
+     */
     public InfoPanelImpl(final int nrOfTroops) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSidePanel());
         this.table=new ArrayList<>();

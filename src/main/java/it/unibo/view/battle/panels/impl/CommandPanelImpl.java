@@ -18,7 +18,10 @@ public class CommandPanelImpl implements CommandPanel {
     private final LifePanelImpl botLivesPanel;
     private final ButtonsPanelImpl buttonsPanel;
 
-    
+    /**
+     *
+     * @param numberOfLives how many health points has the players
+     */
     public CommandPanelImpl(final int numberOfLives) {
         this.mainPanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSidePanel());
         this.botLivesPanel=new LifePanelImpl(numberOfLives);
@@ -70,6 +73,11 @@ public class CommandPanelImpl implements CommandPanel {
     @Override
     public void setActionListenerSpin(final ActionListener actionListener){
         this.buttonsPanel.setActionListenerSpin(actionListener);
+    }
+
+    @Override
+    public void setActionListenerInfo(final ActionListener actionListener){
+        this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 
     @Override

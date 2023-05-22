@@ -7,15 +7,15 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**
- * This interface show how to use southPanel and northPanel of the Gui.
+ * This interface show how to use southPanel and northPanel of the BattlePanel.
  * <br>
  * Show how to use the TroopButtons which the user can choose before passing the round.
  */
 public interface PlayerPanel {
 
-
     /**
-     * Display new Random TroopButtons and block those which are already chosen.
+     * Update the displayed troops
+     * @param troops define in which position put the new troop
      */
     void update(Map<Integer, Troop> troops);
 

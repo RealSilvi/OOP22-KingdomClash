@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-public class TextPanelFactoryImpl{
+public class TextPanelFactoryImpl implements TextPanelFactory {
     private static final String TITLE_JSON_KEY = "title";
     private static final String CONTENT_JSON_KEY = "text";
 
@@ -22,6 +22,7 @@ public class TextPanelFactoryImpl{
     private final JSonToData dataManager = new JSonToData();
 
 
+    @Override
     public JPanel getTutorialNorthPanelDefault() {
         return new TextPanel(
                 dataManager.getTutorialPanelsFields(NORTH_PANEL_JSON_KEY, TITLE_JSON_KEY),
@@ -29,6 +30,7 @@ public class TextPanelFactoryImpl{
                 PanelDimensions.getPlayersPanel());
     }
 
+    @Override
     public JPanel getTutorialWestPanelDefault() {
         return new TextPanel(
                 dataManager.getTutorialPanelsFields(WEST_PANEL_JSON_KEY, TITLE_JSON_KEY),
@@ -36,6 +38,7 @@ public class TextPanelFactoryImpl{
                 PanelDimensions.getSidePanel());
     }
 
+    @Override
     public JPanel getTutorialEastPanelDefault() {
         return new TextPanel(
                 dataManager.getTutorialPanelsFields(EAST_PANEL_JSON_KEY, TITLE_JSON_KEY),
@@ -43,6 +46,7 @@ public class TextPanelFactoryImpl{
                 PanelDimensions.getSidePanel());
     }
 
+    @Override
     public JPanel getTutorialSouthPanelDefault() {
         return new TextPanel(
                 dataManager.getTutorialPanelsFields(SOUTH_PANEL_JSON_KEY, TITLE_JSON_KEY),
@@ -50,12 +54,14 @@ public class TextPanelFactoryImpl{
                 PanelDimensions.getPlayersPanel());
     }
 
+    @Override
     public JPanel getTutorialCenterPanelDefault() {
         return new TextPanel(dataManager.getTutorialPanelsFields(CENTER_PANEL_JSON_KEY, TITLE_JSON_KEY),
                 dataManager.getTutorialPanelsFields(CENTER_PANEL_JSON_KEY, CONTENT_JSON_KEY),
                 PanelDimensions.getFieldPanel());
     }
 
+    @Override
     public JPanel getCustomizedTextPanel(String title, String text, Dimension size) {
         return new TextPanel(title, text, size);
     }

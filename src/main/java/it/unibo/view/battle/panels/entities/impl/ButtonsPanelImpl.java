@@ -87,6 +87,11 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     }
 
     @Override
+    public void setActionListenerInfo(final ActionListener actionListener){
+        this.info.addActionListener(actionListener);
+    }
+
+    @Override
     public JPanel getPanel() {
         return this.mainPanel;
     }

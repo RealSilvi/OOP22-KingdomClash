@@ -11,6 +11,10 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     private final Dimension size;
     private boolean alive;
 
+    /**
+     *
+     * @param size the size of the label
+     */
     public LivesLabelImpl(final Dimension size) {
         super(ImageIconsSupplier.getImageIconLife(true,size));
 

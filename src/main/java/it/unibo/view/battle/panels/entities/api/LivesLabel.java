@@ -1,18 +1,19 @@
 package it.unibo.view.battle.panels.entities.api;
 
 /**
- * Represents a JLabel for a single part of players live.
+ * Represents a JLabel for a single healthPoint displaying an image.
  */
 public interface LivesLabel {
 
     /**
-     * Display that the player had lose a point life.
+     * Switch the status of the label displaying a lost health point
+     * or an active health point.
      */
     void changeStatus();
 
     /**
      *
-     * @return the status of a point life
+     * @return the status of a health point.
      */
     boolean isAlive();
 }

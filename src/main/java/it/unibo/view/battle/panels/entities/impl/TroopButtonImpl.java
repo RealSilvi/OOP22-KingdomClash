@@ -13,6 +13,12 @@ public class TroopButtonImpl extends JButton implements TroopButton {
     private final Dimension size;
     private boolean status;
 
+    /**
+     *
+     * @param troop the troop to set on this button
+     * @param status the enable status of this button
+     * @param size  the dimension of this button
+     */
     public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size) {
         this.troop=troop;
         this.status= status;
@@ -27,6 +33,18 @@ public class TroopButtonImpl extends JButton implements TroopButton {
         this.setBorderStatus();
     }
 
+    private void setBorderStatus(){
+        if(this.isEnabled()){
+            if(this.status){
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+            }else{
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
+            }
+        }else{
+            this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR,4,true));
+        }
+    }
+
     @Override
     public void changeStatusImage(){
         this.status=!this.status;
@@ -39,28 +57,21 @@ public class TroopButtonImpl extends JButton implements TroopButton {
     }
 
     @Override
-    public void setEnabled(boolean b) {
-        super.setEnabled(b);
-        this.setBorderStatus();
-    }
-
-
-    private void setBorderStatus(){
-        if(this.isEnabled()){
-            if(this.status){
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
-            }else{
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
-            }
-        }else{
-            this.setBorder(BorderFactory.createLineBorder(Color.GRAY,4,true));
-        }
-    }
-
-    public void setTroop(Troop troop){
+    public void setTroop(final Troop troop){
         this.troop=troop;
         this.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
         this.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+    }
+
+    /**
+     * Overwritten the method to change the border of the button
+     * based on isEnable()
+     * @param b  true to enable the button, otherwise false
+     */
+    @Override
+    public void setEnabled(final boolean b) {
+        super.setEnabled(b);
+        this.setBorderStatus();
     }
 }
 

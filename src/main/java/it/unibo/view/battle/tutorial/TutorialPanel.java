@@ -18,6 +18,12 @@ public final class TutorialPanel{
     private final JButton turnBack;
     private final TextPanelFactoryImpl panelFactory;
 
+
+    //TODO interfacce e commenti
+    //TODO tutti i final dei parametri
+    //TODO tutti i punti alla fine dei comenti
+    //TODO tutti i commenti dei costruttori
+    //TODO tutti i commenti delle interfacce da rivedere
     public TutorialPanel() {
         this.turnBack=new JButton(ImageIconsSupplier.getImageExitIndicator(EXIT_DIMENSION));
         this.panelFactory=new TextPanelFactoryImpl();

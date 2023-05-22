@@ -11,6 +11,10 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
 
     private final Dimension size;
 
+    /**
+     * @param troop The troop to display.
+     * @param size  The size of the JLabel.
+     */
     public TroopLabelImpl(final Troop troop, final Dimension size) {
         super(ImageIconsSupplier.getImageIconFromTroop(troop,size));
         this.size=size;
@@ -18,6 +22,10 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
 
     }
 
+    /**
+     * Create an empty label.
+     * @param size The dimension of the JLabel.
+     */
     public TroopLabelImpl(final Dimension size) {
         super(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
         this.size = size;

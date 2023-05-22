@@ -20,6 +20,10 @@ public class LifePanelImpl implements LifePanel {
     private final JPanel mainPanel;
     private final ArrayList<LivesLabelImpl> lives;
 
+    /**
+     *
+     * @param nrOfLives how many health points has the player.
+     */
     public LifePanelImpl(final int nrOfLives) {
         this.lives=new ArrayList<>();
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSideLifePanel());

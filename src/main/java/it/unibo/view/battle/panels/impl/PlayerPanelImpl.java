@@ -24,6 +24,11 @@ public class PlayerPanelImpl implements PlayerPanel {
     private final JPanel mainPanel;
     private final List<TroopButtonImpl> slots;
 
+    /**
+     *
+     * @param troops  defines which buttons have which troop displayed it on
+     * @param nrOfSlots how many buttons to display
+     */
     public PlayerPanelImpl(final Map<Integer,Troop> troops,final Integer nrOfSlots) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getPlayersPanel());
         this.slots = new ArrayList<>();
