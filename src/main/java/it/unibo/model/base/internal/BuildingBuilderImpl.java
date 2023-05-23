@@ -1,6 +1,7 @@
 package it.unibo.model.base.internal;
 
 import java.awt.geom.Point2D;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +15,7 @@ public class BuildingBuilderImpl implements BuildingBuilder {
 
     public BuildingBuilderImpl() {
         this.cache = new EnumMap<>(BuildingTypes.class);
-        this.cache.forEach((buildingType, levelBuildingMap)->new HashMap<>());
+        Arrays.stream(BuildingTypes.values()).forEach(buildingType->this.cache.put(buildingType, new HashMap<>()));
     }
 
     @Override
@@ -32,6 +33,11 @@ public class BuildingBuilderImpl implements BuildingBuilder {
         type.getBaseProduction().stream().map(x->new Resource(x.getResource(), x.getAmount()*level)).collect(Collectors.toSet()));
         cache.get(type).put(level, standardizedBuilding);
         return standardizedBuilding;
+    }
+
+    @Override
+    public Building makeStandardBuilding(BuildingTypes type, int level) {
+        return makeStandardBuilding(type, new Point2D.Float(0.0f, 0.0f), level);
     }
 
     @Override
