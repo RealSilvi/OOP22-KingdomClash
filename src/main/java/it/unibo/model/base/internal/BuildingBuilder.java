@@ -55,5 +55,6 @@ public interface BuildingBuilder {
      * @param type the type of the building
      */
     public Building makeStandardBuilding(BuildingTypes type, Point2D position, int level);
+    public Building makeStandardBuilding(BuildingTypes type, int level);
     public Building upgradeBuildingByLevel(Building building, int level);
 }
