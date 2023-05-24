@@ -22,8 +22,8 @@ public class Building {
 
     private BuildingTypes type;
     private int level;
-    private int buildingTime;                        /*milliseconds*/
-    private int productionTime;
+    private long buildingTime;                        /*milliseconds*/
+    private long productionTime;
     private boolean beingBuilt;
     private int buildingProgress;
     private int productionProgress;
@@ -32,12 +32,13 @@ public class Building {
 
     //The high parameter count is necessary to set all of the properties of the class
     @SuppressWarnings("java:S107")
-    public Building(BuildingTypes type, int level, int buildingTime,
+    public Building(BuildingTypes type, int level, long buildingTime, long productionTime,
             boolean beingBuilt, int buildingProgress, int productionProgress, Point2D structurePos,
             Set<Resource> productionAmount) {
         this.type = type;
         this.level = level;
         this.buildingTime = buildingTime;
+        this.productionTime = productionTime;
         this.beingBuilt = beingBuilt;
         this.buildingProgress = buildingProgress;
         this.productionProgress = productionProgress;
@@ -76,13 +77,13 @@ public class Building {
      * Returns the time to build the structure
      * @return building time in milliseconds
      */
-    public synchronized int getBuildingTime() {
+    public synchronized long getBuildingTime() {
         return buildingTime;
     }
     /**
      * Sets the time to build the structure, thread safe
      */
-    public synchronized void setBuildingTime(int buildingTime) {
+    public synchronized void setBuildingTime(long buildingTime) {
         this.buildingTime = buildingTime;
     }
     /**
@@ -160,14 +161,14 @@ public class Building {
      * Returns in milliseconds the time that it takes to produce a set of resources
      * @return time in milliseconds
      */
-    public int getProductionTime() {
+    public long getProductionTime() {
         return productionTime;
     }
     /**
      * Sets in milliseconds the time that it takes to produce a set of resources
      * @param productionTime time in milliseconds
      */
-    public void setProductionTime(int productionTime) {
+    public void setProductionTime(long productionTime) {
         this.productionTime = productionTime;
     }
 }
