@@ -26,6 +26,7 @@ public class BuildingBuilderImpl implements BuildingBuilder {
         Building standardizedBuilding = new Building(type,
         level,
         type.getBuildTime(),
+        type.getProductionTime(),
         false,
         0,
         0,

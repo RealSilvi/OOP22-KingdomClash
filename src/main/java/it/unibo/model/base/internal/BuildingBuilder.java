@@ -14,25 +14,30 @@ public interface BuildingBuilder {
     //TODO: Fix building costs
     public enum BuildingTypes {
         HALL(30_000,
+            5_000,
             Set.of(new Resource(ResourceType.WHEAT, 10),
                 new Resource(ResourceType.WOOD, 10)),
             Set.of(new Resource(ResourceType.WOOD, 50),
                 new Resource(ResourceType.WHEAT, 30))),
         LUMBERJACK(30_000,
+            5_000,
             Set.of(new Resource(ResourceType.WOOD, 30)),
             Set.of(new Resource(ResourceType.WOOD, 50),
                 new Resource(ResourceType.WHEAT, 30))),
         FARM(30_000,
+            5_000,
             Set.of(new Resource(ResourceType.WHEAT, 30)),
             Set.of(new Resource(ResourceType.WOOD, 50),
                 new Resource(ResourceType.WHEAT, 30)));
 
-        private int defaultBuildTime;
+        private long defaultBuildTime;
+        private long defaultProductionTime;
         private Set<Resource> baseProduction;
         private Set<Resource> cost;
 
-        BuildingTypes(int defaultBuildTime, Set<Resource> baseProduction, Set<Resource> cost) {
+        BuildingTypes(long defaultBuildTime, long defaultProductionTime, Set<Resource> baseProduction, Set<Resource> cost) {
             this.defaultBuildTime = defaultBuildTime;
+            this.defaultProductionTime = defaultProductionTime;
             this.baseProduction = baseProduction;
             this.cost = cost;
         }
@@ -41,8 +46,12 @@ public interface BuildingBuilder {
             return baseProduction;
         }
 
-        public int getBuildTime() {
+        public long getBuildTime() {
             return defaultBuildTime;
+        }
+
+        public long getProductionTime() {
+            return defaultProductionTime;
         }
 
         public Set<Resource> getCost() {
