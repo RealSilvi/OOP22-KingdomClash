@@ -2,6 +2,7 @@ package it.unibo.model.base;
 
 import java.awt.geom.Point2D;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
@@ -29,11 +30,12 @@ public class ThreadManagerImplTest {
         initModel();
         Object lock = new Object();
         UUID builtStructureId = baseModel.buildStructure(new Point2D.Float(0.0f, 0.0f), BuildingTypes.FARM);
-        int buildingTime = baseModel.getBuildingMap().get(builtStructureId).getBuildingTime();
+        long buildingTime = baseModel.getBuildingMap().get(builtStructureId).getBuildingTime();
         baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
             public void update(UUID buildingId) {
                 if (gameData.getBuildings().get(buildingId).getBuildingProgress() != 100) {
+                    logger.log(Level.INFO, "Checking building progress {0}", gameData.getBuildings().get(buildingId).getBuildingProgress());
                     return;
                 }
                 synchronized (lock) {
@@ -49,8 +51,8 @@ public class ThreadManagerImplTest {
                 long endTime = System.currentTimeMillis();
                 long elapsedTime = endTime - startTime;
                 logger.info("Time passed: "+elapsedTime);
-                //Tolerance of 600ms
-                boolean timeElapsedCorrect = elapsedTime < (buildingTime+600);
+                //Tolerance of 500ms
+                boolean timeElapsedCorrect = (elapsedTime < (buildingTime+500)) && (elapsedTime > (buildingTime-500));
                 Assertions.assertEquals(1, baseModel.getBuildingMap().get(builtStructureId).getLevel());
                 Assertions.assertTrue(timeElapsedCorrect);
             } catch (InterruptedException e) {}
