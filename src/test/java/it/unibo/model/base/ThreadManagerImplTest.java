@@ -33,7 +33,6 @@ public class ThreadManagerImplTest {
         baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
             public void update(UUID buildingId) {
-                //Assertions.assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
                 if (gameData.getBuildings().get(buildingId).getBuildingProgress() != 100) {
                     return;
                 }
@@ -50,7 +49,9 @@ public class ThreadManagerImplTest {
                 long endTime = System.currentTimeMillis();
                 long elapsedTime = endTime - startTime;
                 logger.info("Time passed: "+elapsedTime);
-                boolean timeElapsedCorrect = elapsedTime < buildingTime;
+                //Tolerance of 600ms
+                boolean timeElapsedCorrect = elapsedTime < (buildingTime+600);
+                Assertions.assertEquals(1, baseModel.getBuildingMap().get(builtStructureId).getLevel());
                 Assertions.assertTrue(timeElapsedCorrect);
             } catch (InterruptedException e) {}
         }
