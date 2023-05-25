@@ -1,5 +1,6 @@
 package it.unibo.model.base.basedata;
 
+import java.util.Collections;
 import java.util.Set;
 
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
@@ -15,10 +16,14 @@ public class Building {
      * Maximum level that the buildings can reach
      */
     public static final int MAXLEVEL = 3;
+    public static final int MAXBUILDINGS = 4;
     /**
      * The tax as a percentage that gets applied when reimboursing materials after demolition
      */
     public static final int REFUND_TAX_PERCENTAGE = 25;
+    public static final int UPGRADE_TAX_PERCENTAGE = 15;
+    public static final int PRODUCTION_MULTIPLIER_PERCENTAGE = 0;
+    public static final int PRODUCTION_TIME_REDUCITON_PERCENTAGE = 0;
 
     private BuildingTypes type;
     private int level;
@@ -29,12 +34,13 @@ public class Building {
     private int productionProgress;
     private Point2D structurePos;
     private Set<Resource> productionAmount;
+    private Set<Resource> buildingValue;
 
     //The high parameter count is necessary to set all of the properties of the class
     @SuppressWarnings("java:S107")
     public Building(BuildingTypes type, int level, long buildingTime, long productionTime,
             boolean beingBuilt, int buildingProgress, int productionProgress, Point2D structurePos,
-            Set<Resource> productionAmount) {
+            Set<Resource> productionAmount, Set<Resource> buildingValue) {
         this.type = type;
         this.level = level;
         this.buildingTime = buildingTime;
@@ -44,6 +50,7 @@ public class Building {
         this.productionProgress = productionProgress;
         this.structurePos = structurePos;
         this.productionAmount = productionAmount;
+        this.buildingValue = buildingValue;
     }
     /**
      * Returns the type of building, thread safe
@@ -133,8 +140,10 @@ public class Building {
      * Gets the current position of the building
      * @return a Point2D that represents the building's current location
      */
+    //Intended behaviour
+    @SuppressWarnings("java:S2153")
     public synchronized Point2D getStructurePos() {
-        return structurePos;
+        return new Point2D.Float(Double.valueOf(structurePos.getX()).floatValue(), Double.valueOf(structurePos.getY()).floatValue());
     }
     /**
      * Sets the position of the building
@@ -144,19 +153,34 @@ public class Building {
         this.structurePos = structurePos;
     }
     /**
-     * Gets a list of resources produced every production cycle
+     * Gets an unmodifiable set of resources produced every production cycle
      * @return a set of resources produced
      */
     public synchronized Set<Resource> getProductionAmount() {
-        return productionAmount;
+        return Collections.unmodifiableSet(productionAmount);
     }
     /**
-     * Sets the list of resources that the building will produce every production cycle
+     * Sets a set of resources that the building will produce every production cycle
      * @param productionAmount the resources that will be produced
      */
     public synchronized void setProductionAmount(Set<Resource> productionAmount) {
         this.productionAmount = productionAmount;
     }
+    /**
+     * Returns an unmodifiable set containing the value of this building
+     * @return an unmodifiable set with the values of this building
+     */
+    public synchronized Set<Resource> getBuildingValue() {
+        return Collections.unmodifiableSet(buildingValue);
+    }
+    /**
+     * Sets the value of the current building
+     * @param buildingValue the value of this building
+     */
+    public synchronized void setBuildingValue(Set<Resource> buildingValue) {
+        this.buildingValue = buildingValue;
+    }
+
     /**
      * Returns in milliseconds the time that it takes to produce a set of resources
      * @return time in milliseconds
