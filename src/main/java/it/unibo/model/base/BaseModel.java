@@ -96,7 +96,10 @@ public interface BaseModel {
      * @param structureId an existing structure's identifier
      * @return the texture's path
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
+     * @deprecated This method will be removed in the future because texture handling is not a
+     * responsability for the model anymore
      */
+    @Deprecated
     public Path getStructureTexture(final UUID structureId) throws InvalidStructureReferenceException;
     /**
      * Given a structure's identifier, returns the progress in percentage of the current operation
@@ -213,7 +216,10 @@ public interface BaseModel {
      * @param resource the set of resources that need to be worked on
      * @param level an integer representing the level
      * @return a set with updated resources given a level multiplier
+     * @deprecated This metod is deprecated and will not be used anymore
+     * because it has been implemented internally in {@link it.unibo.model.base.internal.BuildingBuilderImpl}
      */
+    @Deprecated
     public static Set<Resource> applyMultiplierToResources(Set<Resource> resource, int level) {
         Set<Resource> alteredResource = new HashSet<>();
         resource.forEach(singleCost->alteredResource.add(new Resource(singleCost.getResource(), singleCost.getAmount()*(level == 0 ? 1 : level))));
