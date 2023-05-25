@@ -1,6 +1,7 @@
 package it.unibo.model.base.internal;
 
 import java.awt.geom.Point2D;
+import java.util.HashSet;
 import java.util.Set;
 
 import it.unibo.model.base.basedata.Building;
@@ -45,6 +46,10 @@ public interface BuildingBuilder {
         public Set<Resource> getBaseProduction() {
             return baseProduction;
         }
+        public Set<Resource> getBaseProduction(int level) {
+            return BuildingBuilder.applyIncrementToResourceSet(
+                baseProduction, Building.PRODUCTION_MULTIPLIER_PERCENTAGE*level);
+        }
 
         public long getBuildTime() {
             return defaultBuildTime;
@@ -57,7 +62,12 @@ public interface BuildingBuilder {
         public Set<Resource> getCost() {
             return cost;
         }
+        public Set<Resource> getCost(int level) {
+            return BuildingBuilder.applyIncrementToResourceSet(
+                cost, Building.UPGRADE_TAX_PERCENTAGE*level);
+        }
     }
+
     /**
      * Works like {@link BuildingBuilder#makeBuilding(BuildingTypes type, int level)}
      * with the main difference that the building's level defaults to 0
@@ -65,5 +75,18 @@ public interface BuildingBuilder {
      */
     public Building makeStandardBuilding(BuildingTypes type, Point2D position, int level);
     public Building makeStandardBuilding(BuildingTypes type, int level);
-    public Building upgradeBuildingByLevel(Building building, int level);
+
+    //Intended behaviour
+    @SuppressWarnings("java:S2153")
+    public static Set<Resource> applyIncrementToResourceSet(Set<Resource> resourceSet, int incrementPercentage) {
+        Set<Resource> modifiedSet = new HashSet<>(resourceSet);
+        modifiedSet.forEach(
+            resource->
+                resource.setAmount(Double.valueOf(applyIncrementToDouble(resource.getAmount(), incrementPercentage)).intValue()));
+        return modifiedSet;
+    }
+    public static double applyIncrementToDouble(double valueToIncrement, int incrementPercentage) {
+        double increment = valueToIncrement * (incrementPercentage / 100.0);
+        return valueToIncrement + increment;
+    }
 }

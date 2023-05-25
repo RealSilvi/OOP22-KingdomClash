@@ -5,10 +5,8 @@ import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import it.unibo.model.base.basedata.Building;
-import it.unibo.model.data.Resource;
 
 public class BuildingBuilderImpl implements BuildingBuilder {
     private Map<BuildingTypes, Map<Integer, Building>> cache;
@@ -24,14 +22,15 @@ public class BuildingBuilderImpl implements BuildingBuilder {
             return cache.get(type).get(level);
         }
         Building standardizedBuilding = new Building(type,
-        level,
-        type.getBuildTime(),
-        type.getProductionTime(),
-        false,
-        0,
-        0,
-        position,
-        type.getBaseProduction().stream().map(x->new Resource(x.getResource(), x.getAmount()*level)).collect(Collectors.toSet()));
+            level,
+            type.getBuildTime(),
+            type.getProductionTime(),
+            false,
+            0,
+            0,
+            position,
+            type.getBaseProduction(level),
+            type.getCost(level));
         cache.get(type).put(level, standardizedBuilding);
         return standardizedBuilding;
     }
@@ -39,10 +38,5 @@ public class BuildingBuilderImpl implements BuildingBuilder {
     @Override
     public Building makeStandardBuilding(BuildingTypes type, int level) {
         return makeStandardBuilding(type, new Point2D.Float(0.0f, 0.0f), level);
-    }
-
-    @Override
-    public Building upgradeBuildingByLevel(Building building, int level) {
-        return makeStandardBuilding(building.getType(), building.getStructurePos(), level);
     }
 }
