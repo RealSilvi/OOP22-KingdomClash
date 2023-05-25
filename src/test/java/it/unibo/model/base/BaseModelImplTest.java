@@ -1,7 +1,6 @@
 package it.unibo.model.base;
 
 import java.awt.geom.Point2D;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
@@ -29,10 +28,5 @@ public class BaseModelImplTest {
             wasExceptionThrown = true;
         } catch (InvalidBuildingPlacementException e) {}
         Assertions.assertTrue(wasExceptionThrown);
-    }
-
-    @Test
-    public void testApplyMultiplierToResources() {
-        
     }
 }
