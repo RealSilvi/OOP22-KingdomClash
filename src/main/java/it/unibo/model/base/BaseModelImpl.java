@@ -54,8 +54,8 @@ public class BaseModelImpl implements BaseModel {
         BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
         Building newStructure = buildingBuilder.makeStandardBuilding(type, position, startingLevel);
         gameData.setResources(subtractResources(gameData.getResources(),
-            BaseModel
-            .applyMultiplierToResources(newStructure.getType().getCost(),
+            BuildingBuilder
+            .applyIncrementToResourceSet(newStructure.getType().getCost(),
                 startingLevel)));
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
@@ -81,9 +81,9 @@ public class BaseModelImpl implements BaseModel {
             throw new BuildingMaxedOutException();
         }
         gameData.setResources(subtractResources(gameData.getResources(),
-        BaseModel.applyMultiplierToResources(this.gameData.getBuildings().get(structureId).getType().getCost(),
-            this.gameData.getBuildings().get(structureId).getLevel()+1)));
-            this.gameData.getBuildings().get(structureId).setBeingBuilt(true);
+            this.gameData.getBuildings().get(structureId).getType().getCost(
+                this.gameData.getBuildings().get(structureId).getLevel()+1)));
+        this.gameData.getBuildings().get(structureId).setBeingBuilt(true);
         threadManager.addBuilding(structureId);
     }
 
@@ -92,11 +92,11 @@ public class BaseModelImpl implements BaseModel {
             throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException {
         upgradeStructure(structureId, false);
     }
-    //TODO: apply refund before returning it
     @Override
     public Set<Resource> demolishStructure(UUID structureId) throws InvalidStructureReferenceException {
-        Building selectedBuilding = checkAndGetBuilding(structureId);
-        Set<Resource> refund = BaseModel.applyMultiplierToResources(selectedBuilding.getType().getCost(), selectedBuilding.getLevel());
+        checkAndGetBuilding(structureId);
+        Set<Resource> refund = this.gameData.getBuildings().get(structureId).getType().getCost(
+            this.gameData.getBuildings().get(structureId).getLevel()+1);
         for (Resource resource : refund) {
             resource.setAmount(resource.getAmount()%Building.REFUND_TAX_PERCENTAGE);
         }
@@ -113,14 +113,14 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public void relocateStructure(Point2D position, UUID structureId)
             throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
-        Building selectedBuilding = checkAndGetBuilding(structureId);
+        checkAndGetBuilding(structureId);
         Set<UUID> keys = gameData.getBuildings().keySet();
         for (UUID key : keys) {
             if (gameData.getBuildings().get(key).getStructurePos().equals(position) && !structureId.equals(key)) {
                 throw new InvalidBuildingPlacementException();
             }
         }
-        selectedBuilding.setStructurePos(position);
+        this.gameData.getBuildings().get(structureId).setStructurePos(position);
     }
 
     @Override
