@@ -29,6 +29,7 @@ import it.unibo.model.base.internal.BuildingBuilderImpl;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
+import it.unibo.view.battle.Troop;
 
 public class BaseModelImpl implements BaseModel {
 
@@ -165,6 +166,24 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public Set<Resource> getResourceCount() {
         return Collections.unmodifiableSet(gameData.getResources());
+    }
+
+    @Override
+    public void upgradeTroop(Troop troopToUpgrade) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'upgradeTroop'");
+    }
+
+    @Override
+    public void upgradeTroop(Troop troopToUpgrade, int level) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'upgradeTroop'");
+    }
+
+    @Override
+    public Map<Troop, Integer> getTroopMap() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTroopMap'");
     }
 
     @Override

@@ -9,6 +9,7 @@ import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
+import it.unibo.view.battle.Troop;
 
 import java.awt.geom.Point2D;
 import java.nio.file.Path;
@@ -139,6 +140,22 @@ public interface BaseModel {
      */
     public Set<Resource> getResourceCount();
 
+    /**
+     * 
+     * @param troopToUpgrade
+     */
+    public void upgradeTroop(Troop troopToUpgrade);
+    /**
+     * Upgrades a troop to a given level
+     * @param troopToUpgrade the type of troop to upgrade
+     * @param level the level wich the troop has to be upgraded to
+     */
+    public void upgradeTroop(Troop troopToUpgrade, int level);
+    /**
+     * @return a map containing the troop type as a key and an integer
+     * representing the leevl
+     */
+    public Map<Troop, Integer> getTroopMap();
     /**
      * Registers an observer object that gets notified whenever a building state changes
      * @param observer the object that needs to be registered
