@@ -34,7 +34,7 @@ public class ThreadManagerImplTest {
         baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
             public void update(UUID buildingId) {
-                if (gameData.getBuildings().get(buildingId).getBuildingProgress() != 100) {
+                if (gameData.getBuildings().get(buildingId).getLevel() != 1) {
                     logger.log(Level.INFO, "Checking building progress {0}", gameData.getBuildings().get(buildingId).getBuildingProgress());
                     return;
                 }
