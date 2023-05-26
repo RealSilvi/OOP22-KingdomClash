@@ -1,9 +1,13 @@
 package it.unibo.model.data;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import it.unibo.model.battle.entitydata.BotData;
 import it.unibo.model.battle.entitydata.BotDataImpl;
 import it.unibo.model.battle.entitydata.PlayerData;
 import it.unibo.model.battle.entitydata.PlayerDataImpl;
+import it.unibo.view.battle.Troop;
 
 public class FightData {
 
@@ -17,10 +21,13 @@ public class FightData {
 
     private BotData botData;
     private PlayerData playerData;
+    private Set<Troop> playerTroopUpgrades;
 
     public FightData() {
         this.botData = new BotDataImpl();
         this.playerData = new PlayerDataImpl();
+        this.playerTroopUpgrades = new HashSet<>();
+        this.playerTroopUpgrades.addAll(Set.of(Troop.values()));
     }
 
     public void setPlayerData(PlayerData playerData){
@@ -38,7 +45,11 @@ public class FightData {
     public BotData getBotData(){
         return this.botData;
     }
+    public Set<Troop> getPlayerUpgrades() {
+        return playerTroopUpgrades;
+    }
 
-
-
+    public void setPlayerUpgrades(Set<Troop> playerTroopUpgrades) {
+        this.playerTroopUpgrades = playerTroopUpgrades;
+    }
 }
