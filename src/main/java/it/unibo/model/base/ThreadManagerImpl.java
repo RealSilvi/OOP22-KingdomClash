@@ -138,9 +138,13 @@ public class ThreadManagerImpl implements ThreadManager {
                     constructionPercentage++;
                     buildingMapRef.get(buildingToBuildIdentifier).setBuildingProgress(constructionPercentage);
                     if (constructionPercentage == 100) {
-                        //TODO: Remove placeholder building upgrade
-                        buildingMapRef.get(buildingToBuildIdentifier).setLevel(
-                            buildingMapRef.get(buildingToBuildIdentifier).getLevel()+1);
+                        buildingMapRef.put(buildingToBuildIdentifier,
+                            buildingBuilder.makeStandardBuilding(
+                                buildingMapRef.get(
+                                    buildingToBuildIdentifier).getType(),
+                                buildingMapRef.get(
+                                    buildingToBuildIdentifier).getLevel()+1));
+                        baseModel.notifyBuildingStateChangedObservers(buildingToBuildIdentifier);
                     }
                     baseModel.notifyBuildingStateChangedObservers(buildingToBuildIdentifier);
                     return constructionPercentage;
@@ -204,6 +208,14 @@ public class ThreadManagerImpl implements ThreadManager {
             this.remainingTimeSetter = remainingTimeSetter;
             this.operation = operation;
             this.assignedBuilding = assignedBuilding;
+            switch(this.threadType) {
+                case PRODUCTION:
+                    this.setName("Production Thread");
+                break;
+                case CONSTRUCTION:
+                    this.setName("Construction Thread");
+                break;
+            }
         }
 
         @Override
