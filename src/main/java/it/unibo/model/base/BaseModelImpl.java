@@ -22,10 +22,12 @@ import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
+import it.unibo.model.base.exceptions.InvalidTroopLevelException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.base.internal.BuildingBuilderImpl;
+import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
@@ -169,19 +171,25 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public void upgradeTroop(Troop troopToUpgrade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'upgradeTroop'");
+    public void upgradeTroop(Troop troopToUpgrade) throws InvalidTroopLevelException {
+        upgradeTroop(troopToUpgrade, troopToUpgrade.getLevel()+1);
     }
 
     @Override
-    public void upgradeTroop(Troop troopToUpgrade, int level) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'upgradeTroop'");
+    public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException {
+        //TODO Remove placeholder when limit is implemented
+        int placeholderLimit = 3;
+        if (level>=placeholderLimit) {
+            throw new InvalidTroopLevelException(troopToUpgrade, level);
+        }
+        if (gameData.getFightData().isEmpty()) {
+            gameData.setFightData(Optional.of(new FightData()));
+        }
+        gameData.getFightData().get().getPlayerUpgrades().add(troopToUpgrade);
     }
 
     @Override
-    public Map<Troop, Integer> getTroopMap() {
+    public Set<Troop> getTroopSet() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTroopMap'");
     }

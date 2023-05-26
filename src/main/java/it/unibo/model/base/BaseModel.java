@@ -5,6 +5,7 @@ import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
+import it.unibo.model.base.exceptions.InvalidTroopLevelException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
@@ -144,18 +145,17 @@ public interface BaseModel {
      * 
      * @param troopToUpgrade
      */
-    public void upgradeTroop(Troop troopToUpgrade);
+    public void upgradeTroop(Troop troopToUpgrade) throws InvalidTroopLevelException;
     /**
      * Upgrades a troop to a given level
      * @param troopToUpgrade the type of troop to upgrade
      * @param level the level wich the troop has to be upgraded to
      */
-    public void upgradeTroop(Troop troopToUpgrade, int level);
+    public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException;
     /**
-     * @return a map containing the troop type as a key and an integer
-     * representing the leevl
+     * @return a set containing the player's troops with their corresponding stats
      */
-    public Map<Troop, Integer> getTroopMap();
+    public Set<Troop> getTroopSet();
     /**
      * Registers an observer object that gets notified whenever a building state changes
      * @param observer the object that needs to be registered
