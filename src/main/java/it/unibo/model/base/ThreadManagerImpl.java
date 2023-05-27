@@ -93,6 +93,7 @@ public class ThreadManagerImpl implements ThreadManager {
             ThreadSelector selection = ThreadSelector.PRODUCTION;
         if (buildingMapRef.get(buildingIdentifier).isBeingBuilt()) {
             selection = ThreadSelector.CONSTRUCTION;
+            removeBuilding(buildingIdentifier);
             threadMap.get(selection).put(buildingIdentifier, new ThreadBuilder().createBuildingThread(buildingIdentifier));
         } else {
             threadMap.get(selection).put(buildingIdentifier, new ThreadBuilder().createProductionThread(buildingIdentifier));

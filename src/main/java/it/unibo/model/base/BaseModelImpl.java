@@ -91,6 +91,16 @@ public class BaseModelImpl implements BaseModel {
             this.gameData.getBuildings().get(structureId).getType().getCost(
                 this.gameData.getBuildings().get(structureId).getLevel()+1)));
         this.gameData.getBuildings().get(structureId).setBeingBuilt(true);
+        addBuildingStateChangedObserver(new BuildingObserver() {
+            @Override
+            public void update(UUID buildingId) {
+                if (structureId.equals(buildingId) 
+                    && (gameData.getBuildings().get(structureId).getBuildingProgress() == 0
+                        && !gameData.getBuildings().get(structureId).isBeingBuilt())) {
+                        threadManager.addBuilding(buildingId);
+                }
+            }
+        });
         threadManager.addBuilding(structureId);
     }
 
@@ -181,7 +191,7 @@ public class BaseModelImpl implements BaseModel {
 
     @Override
     public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException {
-        //TODO Remove placeholder when limit is implemented
+        //TODO Remove placeholder when limit is implemented and finish this function
         //TODO Implement cost system when battle part is complete
         int placeholderLimit = 3;
         if (level>=placeholderLimit) {
@@ -190,7 +200,6 @@ public class BaseModelImpl implements BaseModel {
         if (gameData.getFightData().isEmpty()) {
             gameData.setFightData(Optional.of(new FightData()));
         }
-        gameData.getFightData().get().getPlayerUpgrades().add(troopToUpgrade);
     }
 
     @Override
