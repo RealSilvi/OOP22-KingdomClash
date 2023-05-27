@@ -6,6 +6,7 @@ import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.InvalidTroopLevelException;
+import it.unibo.model.base.exceptions.MaxBuildingLimitReachedException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
@@ -39,7 +40,7 @@ public interface BaseModel {
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException;
     /**
      * Tries to build a structure in a given position at a given level
      * @param position placing position of the structure
@@ -50,7 +51,7 @@ public interface BaseModel {
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException;
     /**
      * Tries to build a structure in a given position
      * @param position placing position of the structure
@@ -59,7 +60,7 @@ public interface BaseModel {
      * @throws NotEnoughResourceException thrown when the player does not have enough resources to build this structure
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type) throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException;
     /**
      * If the structure exists, starts the upgrading progress or builds it
      * instantly if instabuild is true

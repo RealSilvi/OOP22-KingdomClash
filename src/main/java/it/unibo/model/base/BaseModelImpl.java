@@ -23,6 +23,7 @@ import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.InvalidTroopLevelException;
+import it.unibo.model.base.exceptions.MaxBuildingLimitReachedException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
@@ -53,7 +54,10 @@ public class BaseModelImpl implements BaseModel {
 
     @Override
     public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode)
-            throws NotEnoughResourceException, InvalidBuildingPlacementException {
+            throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
+        if (gameData.getBuildings().size() >= Building.MAXBUILDINGS) {
+            throw new MaxBuildingLimitReachedException();
+        }
         BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
         Building newStructure = buildingBuilder.makeStandardBuilding(type, position, startingLevel);
         gameData.setResources(subtractResources(gameData.getResources(),
@@ -67,13 +71,13 @@ public class BaseModelImpl implements BaseModel {
 
     @Override
     public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel)
-            throws NotEnoughResourceException, InvalidBuildingPlacementException {
+            throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
         return buildStructure(position, type, startingLevel, false);
     }
 
     @Override
     public UUID buildStructure(Point2D position, BuildingTypes type)
-            throws NotEnoughResourceException, InvalidBuildingPlacementException {
+            throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
         return buildStructure(position, type, 0, false);
     }
     @Override
@@ -178,6 +182,7 @@ public class BaseModelImpl implements BaseModel {
     @Override
     public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException {
         //TODO Remove placeholder when limit is implemented
+        //TODO Implement cost system when battle part is complete
         int placeholderLimit = 3;
         if (level>=placeholderLimit) {
             throw new InvalidTroopLevelException(troopToUpgrade, level);

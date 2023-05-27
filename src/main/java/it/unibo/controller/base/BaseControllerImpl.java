@@ -10,10 +10,12 @@ import javax.annotation.Nonnull;
 
 import it.unibo.model.base.BaseModel;
 import it.unibo.model.base.basedata.Building;
+import it.unibo.model.base.exceptions.BuildingException;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
+import it.unibo.model.base.exceptions.ResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
@@ -33,7 +35,7 @@ public class BaseControllerImpl implements BaseController {
         Optional<UUID> providedUUID;
         try {
             providedUUID = Optional.of(baseModel.buildStructure(position, type, startingLevel, cheatMode));
-        } catch (NotEnoughResourceException | InvalidBuildingPlacementException e) {
+        } catch (BuildingException | ResourceException e) {
             // TODO: Warn the user that he can't do that and why!
             providedUUID = Optional.empty();
         }
@@ -56,7 +58,7 @@ public class BaseControllerImpl implements BaseController {
         try {
             baseModel.upgradeStructure(structureId, cheatMode);
             upgradeSucceded = true;
-        } catch (NotEnoughResourceException | BuildingMaxedOutException | InvalidStructureReferenceException e) {
+        } catch (ResourceException | BuildingMaxedOutException | InvalidStructureReferenceException e) {
             // TODO: Warn the user that he can't do that and why!
             upgradeSucceded = false;
         }
