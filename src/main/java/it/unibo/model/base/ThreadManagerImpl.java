@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
+import it.unibo.model.base.ThreadManager.ThreadSelector;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder;
@@ -103,6 +104,9 @@ public class ThreadManagerImpl implements ThreadManager {
 
     @Override
     public void removeBuilding(UUID buildingToRemove) {
+        if (!isThreadPresent(buildingToRemove)) {
+            return;
+        }
         threadMap.forEach((selection, mapOfThreads)->{
             mapOfThreads.get(buildingToRemove).setThreadRunning(false);
             try {
@@ -178,6 +182,7 @@ public class ThreadManagerImpl implements ThreadManager {
                                     .get(buildingForProductionIdentifier).getType(),
                                 buildingMapRef
                                     .get(buildingForProductionIdentifier).getLevel()).getProductionTime());
+                        //TODO: Fix complete action
                         baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
                         return 0;
                     }
@@ -263,5 +268,13 @@ public class ThreadManagerImpl implements ThreadManager {
         private void threadClosureOperation() {
             threadMap.get(threadType).remove(assignedBuilding);
         }
+    }
+    
+    private boolean isThreadPresent(final UUID buildingId) {
+        boolean threadFound = false;
+        for (ThreadSelector selector : ThreadSelector.values()) {
+            threadFound = threadMap.get(selector).containsKey(buildingId);
+        }
+        return threadFound;
     }
 }
