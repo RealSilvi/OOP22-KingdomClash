@@ -16,13 +16,25 @@ public class Building {
      * Maximum level that the buildings can reach
      */
     public static final int MAXLEVEL = 3;
+    /**
+     * Max number of allowed buildings for the player
+     */
     public static final int MAXBUILDINGS = 4;
     /**
-     * The tax as a percentage that gets applied when reimboursing materials after demolition
+     * Tax as a percentage that gets applied when reimboursing materials after demolition
      */
     public static final int REFUND_TAX_PERCENTAGE = 25;
+    /**
+     * Tax that gets applied to the cost of the building when upgrading
+     */
     public static final int UPGRADE_TAX_PERCENTAGE = 15;
+    /**
+     * Increment that gets applied to the building per turn producion set
+     */
     public static final int PRODUCTION_MULTIPLIER_PERCENTAGE = 0;
+    /**
+     * Decrement that gets applied to the production time
+     */
     public static final int PRODUCTION_TIME_REDUCITON_PERCENTAGE = 0;
 
     private BuildingTypes type;
