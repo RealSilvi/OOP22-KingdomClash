@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
+import it.unibo.model.base.exceptions.MaxBuildingLimitReachedException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
@@ -26,7 +27,8 @@ public class BaseModelImplTest {
             baseModel.buildStructure(new Point2D.Float(0.0f, 0.0f), BuildingTypes.FARM);
         } catch (NotEnoughResourceException e) {
             wasExceptionThrown = true;
-        } catch (InvalidBuildingPlacementException e) {}
+        } catch (InvalidBuildingPlacementException e) {} 
+        catch (MaxBuildingLimitReachedException e) {}
         Assertions.assertTrue(wasExceptionThrown);
     }
 }

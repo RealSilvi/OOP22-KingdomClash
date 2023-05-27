@@ -12,6 +12,7 @@ import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
+import it.unibo.model.base.exceptions.MaxBuildingLimitReachedException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
@@ -26,7 +27,7 @@ public class ThreadManagerImplTest {
         this.baseModel = new BaseModelImpl(this.gameData);
     }
     @Test
-    public void testProductionThreads() throws NotEnoughResourceException, InvalidBuildingPlacementException, BuildingMaxedOutException, InvalidStructureReferenceException {
+    public void testProductionThreads() throws NotEnoughResourceException, InvalidBuildingPlacementException, BuildingMaxedOutException, InvalidStructureReferenceException, MaxBuildingLimitReachedException {
         initModel();
         Object lock = new Object();
         UUID builtStructureId = baseModel.buildStructure(new Point2D.Float(0.0f, 0.0f), BuildingTypes.FARM);
