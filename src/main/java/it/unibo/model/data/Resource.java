@@ -30,6 +30,14 @@ public class Resource {
     }
 
     @Override
+    public String toString() {
+        return "ResourceType: "+resource.name()+"\nAmount: "+amount;
+    }
+    @Override
+    public int hashCode() {
+        return getResource().hashCode();
+    }
+    @Override
     public boolean equals(Object otherResource) {
         if (otherResource == null) {
             return false;
