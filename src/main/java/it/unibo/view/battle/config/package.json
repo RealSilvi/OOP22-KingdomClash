@@ -26,5 +26,19 @@
         "title": "CenterPanel-Title",
         "text": "CenterPanel-Testo"
       }
+  },
+
+  "BaseModelConfig" : {
+    "BuildingConfiguration" : {
+      "MaxLevel" : 3,
+      "MaxBuildings" : 4,
+      "RefundTaxPercentage" : 25,
+      "UpgradeTaxPercentage" : 15,
+      "ProductionIncrementPercentage" : 0,
+      "ProductionTimeReductionPercentage" : 0
+    },
+    "ThreadManagerConfiguration" : {
+      "RefreshRateMilliseconds" : 60
+    }
   }
 }
