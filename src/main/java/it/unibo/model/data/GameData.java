@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import it.unibo.model.base.basedata.Building;
+import it.unibo.view.battle.Troop;
 /**
  * A simple data class to store all the game's information
  */
@@ -12,6 +13,7 @@ public class GameData {
     private String playerName;
     private Set<Resource> resources;
     private ConcurrentMap<UUID, Building> buildings;
+    private Map<Troop, Integer> playerArmyLevel;
 
     private Optional<FightData> fightData;
 
@@ -19,6 +21,8 @@ public class GameData {
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
         this.fightData = Optional.empty();
+        this.playerArmyLevel = new EnumMap<>(Troop.class);
+        Arrays.stream(Troop.values()).forEach(troopType->this.playerArmyLevel.put(troopType, 0));
     }
 
     public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings, Optional<FightData> fightData){
