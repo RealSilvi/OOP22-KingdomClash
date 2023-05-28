@@ -204,9 +204,8 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public Set<Troop> getTroopSet() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTroopMap'");
+    public Map<Troop, Integer> getTroopMap() {
+        return Collections.unmodifiableMap(gameData.getPlayerArmyLevel());
     }
 
     @Override

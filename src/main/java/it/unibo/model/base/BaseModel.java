@@ -154,9 +154,9 @@ public interface BaseModel {
      */
     public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException;
     /**
-     * @return a set containing the player's troops with their corresponding stats
+     * @return a map containing the player's troops with their corresponding stats
      */
-    public Set<Troop> getTroopSet();
+    public Map<Troop, Integer> getTroopMap();
     /**
      * Registers an observer object that gets notified whenever a building state changes
      * @param observer the object that needs to be registered
