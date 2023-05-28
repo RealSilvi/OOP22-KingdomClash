@@ -149,7 +149,6 @@ public class ThreadManagerImpl implements ThreadManager {
                                     buildingToBuildIdentifier).getType(),
                                 buildingMapRef.get(
                                     buildingToBuildIdentifier).getLevel()+1));
-                        baseModel.notifyBuildingStateChangedObservers(buildingToBuildIdentifier);
                     }
                     baseModel.notifyBuildingStateChangedObservers(buildingToBuildIdentifier);
                     return constructionPercentage;
