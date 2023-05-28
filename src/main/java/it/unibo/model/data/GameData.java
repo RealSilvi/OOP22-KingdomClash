@@ -75,6 +75,20 @@ public class GameData {
     public void setBuildings(ConcurrentMap<UUID, Building> buildings) {
         this.buildings = buildings;
     }
+    /**
+     * Gets a map with a troop type and it's corresponding level for the player
+     * @return a map with the troop and the level of the troop as an integer
+     */
+    public Map<Troop, Integer> getPlayerArmyLevel() {
+        return this.playerArmyLevel;
+    }
+    /**
+     * Sets a map with a troop type and it's corresponding level for the player
+     * @param playerArmyLevel a map with the troop and the level of the troop as an integer
+     */
+    public void setPlayerArmyLevel(Map<Troop, Integer> playerArmyLevel) {
+        this.playerArmyLevel = playerArmyLevel;
+    }
 
     public Optional<FightData> getFightData(){ return fightData;}
 
