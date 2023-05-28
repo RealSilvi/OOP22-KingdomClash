@@ -1,5 +1,8 @@
 package it.unibo.model.data;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class Resource {
     public enum ResourceType {
         WHEAT,
@@ -47,5 +50,15 @@ public class Resource {
             return true;
         }
         return super.equals(otherResource);
+    }
+
+    public Resource clone() {
+        return new Resource(this.resource, this.amount);
+    }
+
+    public static Set<Resource> deepCopySet(Set<Resource> resourceSet) {
+        return resourceSet.stream()
+                .map(Resource::clone)
+                .collect(Collectors.toSet());
     }
 }

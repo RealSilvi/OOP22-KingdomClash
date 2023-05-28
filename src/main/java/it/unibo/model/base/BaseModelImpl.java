@@ -323,7 +323,7 @@ public class BaseModelImpl implements BaseModel {
      * @return a negated set
      */
     private Set<Resource> negateResources(Set<Resource> resourceToNegate) {
-        Set<Resource> negatedResources = new HashSet<>(resourceToNegate);
+        Set<Resource> negatedResources = Resource.deepCopySet(resourceToNegate);
         negatedResources.stream().forEach(x->x.setAmount(-x.getAmount()));
         return negatedResources;
     }

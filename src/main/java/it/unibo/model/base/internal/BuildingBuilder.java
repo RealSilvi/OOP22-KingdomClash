@@ -1,7 +1,7 @@
 package it.unibo.model.base.internal;
 
 import java.awt.geom.Point2D;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 
 import it.unibo.model.base.basedata.Building;
@@ -59,7 +59,7 @@ public interface BuildingBuilder {
         }
 
         public Set<Resource> getCost() {
-            return cost;
+            return Collections.unmodifiableSet(cost);
         }
         public Set<Resource> getCost(int level) {
             return BuildingBuilder.applyIncrementToResourceSet(
@@ -78,7 +78,7 @@ public interface BuildingBuilder {
     //Intended behaviour
     @SuppressWarnings("java:S2153")
     public static Set<Resource> applyIncrementToResourceSet(Set<Resource> resourceSet, int incrementPercentage) {
-        Set<Resource> modifiedSet = new HashSet<>(resourceSet);
+        Set<Resource> modifiedSet = Resource.deepCopySet(resourceSet);
         modifiedSet.forEach(
             resource->
                 resource.setAmount(Double.valueOf(applyIncrementToDouble(resource.getAmount(), incrementPercentage)).intValue()));
