@@ -49,6 +49,7 @@ public class BaseModelImpl implements BaseModel {
         this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         this.buildingStateChangedObservers = new ArrayList<>();
         this.buildingProductionObservers = new ArrayList<>();
+        initializeDataStructures();
         logger.info("Base model succesfully initialized");
     }
 
@@ -289,9 +290,9 @@ public class BaseModelImpl implements BaseModel {
     private Set<Resource> unsafeOperation(final Set<Resource> resourceStorage, Set<Resource> resourceCost) {
         Set<Resource> storageResult = new HashSet<>();
         Iterator<Resource> storageIterator = resourceStorage.iterator();
-        Iterator<Resource> costIterator = resourceCost.iterator();
         while (storageIterator.hasNext()) {
             Resource currentStorageResource = storageIterator.next();
+            Iterator<Resource> costIterator = resourceCost.iterator();
             while (costIterator.hasNext()) {
                 Resource currentCostResource = costIterator.next();
                 if (currentStorageResource.equals(currentCostResource)) {
@@ -362,5 +363,22 @@ public class BaseModelImpl implements BaseModel {
         return Stream.generate(UUID::randomUUID)
         .filter(x->!gameData.getBuildings().containsKey(x)).findFirst()
         .orElseThrow();
+    }
+    /**
+     * Check if data structures in GameData are initialized, if not
+     * this method will correctly initialize the data structures
+     */
+    private void initializeDataStructures() {
+        initializeResourceSet();
+    }
+
+    private void initializeResourceSet() {
+        if (gameData.getResources() == null) {
+            gameData.setResources(new HashSet<>());
+        }
+        if (gameData.getResources().size() != Resource.ResourceType.values().length) {
+            Set.of(Resource.ResourceType.values()).forEach(
+                resourceType->gameData.getResources().add(new Resource(resourceType)));
+        }
     }
 }
