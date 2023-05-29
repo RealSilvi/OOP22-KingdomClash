@@ -14,8 +14,8 @@ public class GameMenuImpl implements GameMenu{
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
     private static final int WIDTH_BUTTON = (int)DIMENSION_SCREEN.getWidth()/20;
     private static final int HEIGHT_BUTTON = (int)DIMENSION_SCREEN.getHeight()/20;
-    ImageIcon BACKGROUND_BUTTON = new ImageIcon("C:\\Users\\llafa\\OneDrive\\Documenti\\My Games\\Immagini\\Immagini\\Saved Pictures\\legno massello sfondo.jpg");
-    ImageIcon BACKGROUND_PANEL = new ImageIcon("C:\\Users\\llafa\\OneDrive\\Documenti\\My Games\\Immagini\\Immagini\\Saved Pictures\\Robot vs human.jpg");
+    ImageIcon BACKGROUND_BUTTON = new ImageIcon("src/main/resources/it/unibo/game.menu/wood.jpg");
+    ImageIcon BACKGROUND_PANEL = new ImageIcon("src/main/resources/it/unibo/game.menu/RvsH.jpg");
 
     public GameMenuImpl(){
         JFrame frame = new JFrame("menu game");
