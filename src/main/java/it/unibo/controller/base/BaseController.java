@@ -9,6 +9,7 @@ import java.util.UUID;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
+import it.unibo.view.battle.Troop;
 
 public interface BaseController {
     /**
@@ -78,6 +79,25 @@ public interface BaseController {
      */
     public Set<Resource> requestResourceCount();
 
+    /**
+     * @return an immutable map containing the player's troop types ad a key
+     * and it's corresponding level as an integer
+     */
+    public Map<Troop, Integer> requestTroopLevels();
+
+    /**
+     * Tries to upgrade a player's troop type to a given level
+     * @param troopToUpgrade the troop that needs to be upgraded
+     * @param levelToUpgradeTo the level where the troop neesd to be upgraded to
+     * @return true if the troop has been upgraded
+     */
+    public boolean upgradeTroop(Troop troopToUpgrade, int levelToUpgradeTo);
+    /**
+     * Tries to upgrade a player's troop type
+     * @param troopToUpgrade the troop that needs to be upgraded
+     * @return true if the troop has been upgraded
+     */
+    public boolean upgradeTroop(Troop troopToUpgrade);
     /**
      * Returns an unmodifiable map of Buildings
      * @return an unmodifiable map of buildings
