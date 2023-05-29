@@ -1,5 +1,6 @@
 package it.unibo.view.battle.config;
 
+import it.unibo.view.battle.Troop;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -14,7 +15,6 @@ public class JSonToData{
     private final JSONParser jsonParser=new JSONParser();
 
     public JSonToData() {
-
         try(Reader reader = new FileReader("src/main/java/it/unibo/view/battle/config/package.json")){
             jsonObject = (JSONObject) jsonParser.parse(reader);
             tutorialPanelData = (JSONObject) jsonObject.get("TutorialPanel");
@@ -22,7 +22,6 @@ public class JSonToData{
             jsonObject=new JSONObject(Map.of("bella","zio"));
             tutorialPanelData= new JSONObject(Map.of("adv","dasd"));
         }
-
     }
 
     public String getTutorialPanelsFields(String keyPanel, String keyField){

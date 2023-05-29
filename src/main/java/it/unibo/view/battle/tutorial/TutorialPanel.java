@@ -24,6 +24,7 @@ public final class TutorialPanel{
     //TODO tutti i punti alla fine dei comenti
     //TODO tutti i commenti dei costruttori
     //TODO tutti i commenti delle interfacce da rivedere
+    //TODO aggiungi roba in json e fai i metodi per averli
     public TutorialPanel() {
         this.turnBack=new JButton(ImageIconsSupplier.getImageExitIndicator(EXIT_DIMENSION));
         this.panelFactory=new TextPanelFactoryImpl();

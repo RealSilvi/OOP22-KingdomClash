@@ -6,6 +6,7 @@ import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,9 +16,7 @@ import javax.swing.*;
 public final class BattlePanelImpl implements BattlePanel {
 
     private final static int BORDER_LAYOUT_GAP = 3;
-    private final static int nrOfSlots=5;
-    private final static int nrOfTroops=8;
-    private final static int nrOfLives=8;
+
 
     private final JPanel mainPanel;
 
@@ -34,15 +33,15 @@ public final class BattlePanelImpl implements BattlePanel {
      * param nrOfTroops How many troops has the game.
      * param nrOfLives  How many lives has each player
      */
-    public BattlePanelImpl(/*final int nrOfSlots, final int nrOfTroops,final int nrOfLives*/){
+    public BattlePanelImpl(final int nrOfSlots, final int nrOfTroops,final int nrOfLives,final Map<Integer,Troop> botTroops,final Map<Integer,Troop> playerTroops){
         this.mainPanel= new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
         final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
         //this.menuPanel = new MenuPanel();
-        this.botPanel = new PlayerPanelImpl(null,nrOfSlots);
-        this.playerPanel = new PlayerPanelImpl(null,nrOfSlots);
+        this.botPanel = new PlayerPanelImpl(botTroops,nrOfSlots);
+        this.playerPanel = new PlayerPanelImpl(playerTroops,nrOfSlots);
         this.infoPanel = new InfoPanelImpl(nrOfTroops);
         this.buttonsPanel = new CommandPanelImpl(nrOfLives);
         this.fieldPanel = new FieldPanelImpl(nrOfSlots);
@@ -133,4 +132,19 @@ public final class BattlePanelImpl implements BattlePanel {
         return this.mainPanel;
     }
 
+    public void setActionListenersPlayerSlot(final ActionListener actionListener){
+        this.playerPanel.setActionListenersSlot(actionListener);
+    }
+
+    public void setActionListenerSpinButton(final ActionListener actionListener){
+        this.buttonsPanel.setActionListenerSpin(actionListener);
+    }
+
+    public void setActionListenerInfoButton(final ActionListener actionListener){
+        this.buttonsPanel.setActionListenerInfo(actionListener);
+    }
+
+    public void setActionListenerPass(final ActionListener actionListener){
+        this.buttonsPanel.setActionListenerPass(actionListener);
+    }
 }

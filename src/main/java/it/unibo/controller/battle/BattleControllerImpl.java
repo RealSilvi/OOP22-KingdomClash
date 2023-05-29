@@ -6,7 +6,12 @@ import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
+import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
+import it.unibo.view.battle.tutorial.TutorialPanel;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 import static it.unibo.model.battle.BattleModelImpl.BOT;
@@ -15,15 +20,22 @@ import static it.unibo.model.data.FightData.TOTAL_TROOPS;
 
 public class BattleControllerImpl implements  BattleController{
 
+    private JFrame frame;
+    private final static int nrOfSlots=5;
+    private final static int nrOfTroops=8;
+    private final static int nrOfLives=8;
+
     public static final int PLAYER = 1;
     public static final int NOSKIP = 0;
+
+    private JPanel currentPanel;
     private final BattleModel battleModel;
     private Optional<FightData> fightData;
-    private final BattlePanel battlePanel;
+    private final BattlePanelImpl battlePanel;
 
     public BattleControllerImpl(BattleModel battleModel, GameData gameData){
         this.battleModel = battleModel;
-        this.battlePanel = new BattlePanelImpl();
+        this.battlePanel = new BattlePanelImpl(nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
@@ -31,7 +43,7 @@ public class BattleControllerImpl implements  BattleController{
 
     public BattleControllerImpl(GameData gameData){
         this.battleModel = new BattleModelImpl(gameData);
-        this.battlePanel = new BattlePanelImpl();
+        this.battlePanel = new BattlePanelImpl(nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
@@ -39,8 +51,13 @@ public class BattleControllerImpl implements  BattleController{
 
     public BattleControllerImpl(Optional<FightData> fightData){
         this.battleModel = new BattleModelImpl(fightData);
-        this.battlePanel = new BattlePanelImpl();
+        this.battlePanel = new BattlePanelImpl(nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
+        this.currentPanel=this.battlePanel.getPanel();
+        this.setActionListenerInfo();
+        this.setActionListenerSpin();
+        this.setActionListenerPass();
         this.fightData = fightData;
+        this.frame=new JFrame();
     }
 
 
@@ -77,6 +94,7 @@ public class BattleControllerImpl implements  BattleController{
             }
             update(i+1);
         }
+
     }
 
     public void clickedButtonPlayer(Integer key){
@@ -101,5 +119,60 @@ public class BattleControllerImpl implements  BattleController{
     public void botLifeDecrease(){
         battlePanel.hitBot();
     }
+
+    public BattleModel getBattleModel() {
+        return battleModel;
+    }
+
+    public Optional<FightData> getFightData() {
+        return fightData;
+    }
+
+    public BattlePanel getBattlePanel() {
+        return battlePanel;
+    }
+
+    public JPanel getCurrentPanel(){
+        return this.currentPanel;
+    }
+
+    private void setActionListenerInfo(){
+        ActionListener actionListenerInfo = e -> switchPanels();
+        this.battlePanel.setActionListenerInfoButton(actionListenerInfo);
+    }
+    private void switchPanels(){
+        this.frame.getContentPane().removeAll();
+
+        this.currentPanel=new TutorialPanel().getPanel();
+        this.frame.getContentPane().add(this.getCurrentPanel());
+        this.frame.validate();
+
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    private void setActionListenerPass(){
+        ActionListener actionListenerInfo = e -> pass();
+        this.battlePanel.setActionListenerPass(actionListenerInfo);
+    }
+
+    private void setActionListenerSpin(){
+        ActionListener actionListenerInfo = e -> {
+            spin();
+        };
+        this.battlePanel.setActionListenerSpinButton(actionListenerInfo);
+    }
+
+    private void setActionListenerSlots(){
+        ActionListener actionListenerInfo = e -> {
+            TroopButtonImpl button =(TroopButtonImpl) (e.getSource());
+            clickedButtonPlayer(button.getPosition());
+            button.changeStatusImage();
+        };
+        this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);
+    }
+
 
 }

@@ -24,4 +24,5 @@ public interface TroopButton {
     void setTroop(final Troop troop);
 
 
+    void setEnabled(boolean b);
 }

@@ -7,11 +7,13 @@ import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import javax.swing.*;
 import java.awt.*;
 
-public class TroopButtonImpl extends JButton implements TroopButton {
+public class TroopButtonImpl implements TroopButton {
 
     private Troop troop;
     private final Dimension size;
     private boolean status;
+    private JButton button;
+    private int position;
 
     /**
      *
@@ -19,29 +21,31 @@ public class TroopButtonImpl extends JButton implements TroopButton {
      * @param status the enable status of this button
      * @param size  the dimension of this button
      */
-    public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size) {
+    public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size, final int position) {
+        this.button=new JButton();
         this.troop=troop;
         this.status= status;
         this.size=size;
+        this.position=position;
 
-        this.setPreferredSize(size);
+        this.button.setPreferredSize(size);
 
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
-        this.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
-        this.setBackground(Color.BLACK);
-        this.setOpaque(true);
+        this.button.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setBackground(Color.BLACK);
+        this.button.setOpaque(true);
         this.setBorderStatus();
     }
 
     private void setBorderStatus(){
-        if(this.isEnabled()){
+        if(this.button.isEnabled()){
             if(this.status){
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+                this.button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
             }else{
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
+                this.button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
             }
         }else{
-            this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR,4,true));
+            this.button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR,4,true));
         }
     }
 
@@ -59,8 +63,8 @@ public class TroopButtonImpl extends JButton implements TroopButton {
     @Override
     public void setTroop(final Troop troop){
         this.troop=troop;
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
-        this.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
     }
 
     /**
@@ -70,8 +74,16 @@ public class TroopButtonImpl extends JButton implements TroopButton {
      */
     @Override
     public void setEnabled(final boolean b) {
-        super.setEnabled(b);
+        this.button.setEnabled(b);
         this.setBorderStatus();
+    }
+
+    public JButton getButton() {
+        return this.button;
+    }
+
+    public int getPosition() {
+        return this.position;
     }
 }
 

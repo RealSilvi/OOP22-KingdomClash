@@ -34,7 +34,7 @@ public class FieldPanelImpl implements FieldPanel{
         this.army=new ArrayList<>();
 
         this.mainPanel.setLayout(new GridLayout(ROWS,nrOfSlots));
-        IntStream.range(0,nrOfSlots*4).forEach(x->  this.army.add(new TroopLabelImpl(Troop.getRandomTroop(), LABEL_DIMENSION)));
+        //IntStream.range(0,nrOfSlots*4).forEach(x->  this.army.add(new TroopLabelImpl(Troop.getRandomTroop(), LABEL_DIMENSION)));
 
         this.army.forEach(this.mainPanel::add);
 

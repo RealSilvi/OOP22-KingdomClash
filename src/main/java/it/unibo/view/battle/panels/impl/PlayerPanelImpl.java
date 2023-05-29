@@ -32,9 +32,9 @@ public class PlayerPanelImpl implements PlayerPanel {
     public PlayerPanelImpl(final Map<Integer,Troop> troops,final Integer nrOfSlots) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getPlayersPanel());
         this.slots = new ArrayList<>();
-        IntStream.range(0,nrOfSlots).forEach(x ->this.slots.add(new TroopButtonImpl(Troop.getRandomTroop(),true,BUTTON_DIMENSION)/*new TroopButtonImpl(troops.get(x),true)*/));
+        IntStream.range(0,nrOfSlots).forEach(x ->this.slots.add(new TroopButtonImpl(troops.get(x),true,BUTTON_DIMENSION,x)/*new TroopButtonImpl(troops.get(x),true)*/));
 
-        this.slots.forEach(this.mainPanel::add);
+        this.slots.forEach(x -> mainPanel.add(x.getButton()));
 
     }
 
@@ -43,7 +43,7 @@ public class PlayerPanelImpl implements PlayerPanel {
         IntStream.range(0,this.slots.size()).forEach(x -> {
             if(troops.containsKey(x)){
                 slots.get(x).setEnabled(true);
-                slots.set(x,new TroopButtonImpl(troops.get(x),true,BUTTON_DIMENSION));
+                slots.get(x).setTroop(troops.get(x));
             }else{
                 slots.get(x).setEnabled(false);
             }
@@ -62,7 +62,7 @@ public class PlayerPanelImpl implements PlayerPanel {
 
     @Override
     public void setActionListenersSlot(final ActionListener actionListener){
-        this.slots.forEach(x -> x.addActionListener(actionListener));
+        this.slots.forEach(x -> x.getButton().addActionListener(actionListener));
     }
 
     @Override
