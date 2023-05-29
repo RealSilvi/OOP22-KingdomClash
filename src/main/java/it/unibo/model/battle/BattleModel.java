@@ -6,6 +6,8 @@ import java.util.Map;
 
 public interface BattleModel {
 
+    Integer getCountedRound();
+
     /**
      * Takes care of passing the turn to the bot and managing its choices.
      */
@@ -16,13 +18,13 @@ public interface BattleModel {
      * to make random troops appear between the choices of the player or bot.
      * The troops that change are only those that have not been selected.
      */
-    void battleSpin(Integer entity);
+    Map<Integer,Troop> battleSpin(Integer entity);
 
     /**
      * Takes care about the fighting player vs bot. It lets troops
      * fighting against each other, controlling the life of both entity.
      */
 
-    void battleCombat();
+    Integer battleCombat(Integer position);
 
 }
