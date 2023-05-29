@@ -12,8 +12,7 @@ public class TroopButtonImpl implements TroopButton {
     private Troop troop;
     private final Dimension size;
     private boolean status;
-    private final JButton button;
-    private final int position;
+    private final PositionJbutton button;
 
     /**
      *
@@ -22,11 +21,10 @@ public class TroopButtonImpl implements TroopButton {
      * @param size  the dimension of this button
      */
     public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size, final int position) {
-        this.button=new JButton();
+        this.button=new PositionJbutton(position);
         this.troop=troop;
         this.status= status;
         this.size=size;
-        this.position=position;
 
         this.button.setPreferredSize(size);
 
@@ -82,8 +80,21 @@ public class TroopButtonImpl implements TroopButton {
         return this.button;
     }
 
-    public int getPosition() {
-        return this.position;
+    public class PositionJbutton extends JButton{
+
+        private final int position;
+
+        public PositionJbutton(int position) {
+            this.position = position;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void updateBorder(){
+            changeStatusImage();
+        }
     }
 }
 

@@ -55,6 +55,7 @@ public class BattleControllerImpl implements  BattleController{
         this.setActionListenerInfo();
         this.setActionListenerSpin();
         this.setActionListenerPass();
+        this.setActionListenerSlots();
         this.fightData = fightData;
         this.frame=new JFrame();
     }
@@ -72,7 +73,6 @@ public class BattleControllerImpl implements  BattleController{
             battle();
         }
         this.battlePanel.enablePassButton();
-        this.battlePanel.enablePlayerSlots();
         this.battlePanel.enableSpinButton();
         this.battlePanel.disableBotSlots();
     }
@@ -166,9 +166,9 @@ public class BattleControllerImpl implements  BattleController{
 
     private void setActionListenerSlots(){
         ActionListener actionListenerInfo = e -> {
-            TroopButtonImpl button =(TroopButtonImpl) (e.getSource());
+            TroopButtonImpl.PositionJbutton button = (TroopButtonImpl.PositionJbutton) e.getSource();
             clickedButtonPlayer(button.getPosition());
-            button.changeStatusImage();
+            button.updateBorder();
         };
         this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);
     }
