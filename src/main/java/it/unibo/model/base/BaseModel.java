@@ -218,6 +218,16 @@ public interface BaseModel {
     public Map<UUID, Building> getBuildingMap();
 
     /**
+     * @return the player's name
+     */
+    public String getPlayerName();
+    /**
+     * Sets the player's ingame name
+     * @param playerName the player's nickname
+     */
+    public void setPlayerName(String playerName);
+
+    /**
      * Safely dds or removes the given resources to the player's deposit
      * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
      */

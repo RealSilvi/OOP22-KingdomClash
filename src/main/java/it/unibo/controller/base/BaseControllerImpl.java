@@ -113,6 +113,16 @@ public class BaseControllerImpl implements BaseController {
     }
 
     @Override
+    public String requestPlayerName() {
+        return baseModel.getPlayerName();
+    }
+    
+    @Override
+    public void setPlayerName(String playerName) {
+        baseModel.setPlayerName(playerName);
+    }
+
+    @Override
     public Map<Troop, Integer> requestTroopLevels() {
         return baseModel.getTroopMap();
     }

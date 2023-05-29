@@ -105,6 +105,16 @@ public interface BaseController {
     public Map<UUID, Building> requestBuildingMap();
 
     /**
+     * @return the player's name
+     */
+    public String requestPlayerName();
+    /**
+     * Sets the player's ingame name
+     * @param playerName the player's nickname
+     */
+    public void setPlayerName(String playerName);
+
+    /**
      * Starts and stops the clock that keeps track of time passed
      * @param ticktime true to make time pass, false to stop time from passing
      */

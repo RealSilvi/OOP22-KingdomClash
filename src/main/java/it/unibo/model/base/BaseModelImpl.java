@@ -270,6 +270,16 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
+    public String getPlayerName() {
+        return gameData.getPlayerName();
+    }
+    
+    @Override
+    public void setPlayerName(String playerName) {
+        gameData.setPlayerName(playerName);
+    }
+
+    @Override
     public void notifyBuildingStateChangedObservers(UUID building) {
         this.buildingStateChangedObservers.forEach(buildingStateObserver->buildingStateObserver.update(building));
     }
