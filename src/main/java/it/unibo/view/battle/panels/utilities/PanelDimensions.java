@@ -24,10 +24,10 @@ public interface PanelDimensions {
     double MENU_HEIGHT_SCALE = 0.1;
 
     double SIDE_LIFE_WIDTH_SCALE = 1;
-    double SIDE_LIFE_HEIGHT_SCALE = 0.25;
+    double SIDE_LIFE_HEIGHT_SCALE = 0.3;
 
     double SIDE_BUTTONS_WIDTH_SCALE = 1;
-    double SIDE_BUTTONS_HEIGHT_SCALE = 0.5;
+    double SIDE_BUTTONS_HEIGHT_SCALE = 0.4;
 
     /**
      * @return The preferred dimension of the CenterPanel.

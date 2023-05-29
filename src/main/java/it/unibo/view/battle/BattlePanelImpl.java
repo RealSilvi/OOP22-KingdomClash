@@ -2,6 +2,9 @@ package it.unibo.view.battle;
 
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.PanelDimensions;
+
 import java.awt.*;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +28,14 @@ public final class BattlePanelImpl implements BattlePanel {
     private final InfoPanelImpl infoPanel;
     private final CommandPanelImpl buttonsPanel;
 
-    public BattlePanelImpl() {
-        this.mainPanel= new DrawPanel(Color.gray);
+    /**
+     *
+     * param nrOfSlots  How many slots has each player.
+     * param nrOfTroops How many troops has the game.
+     * param nrOfLives  How many lives has each player
+     */
+    public BattlePanelImpl(/*final int nrOfSlots, final int nrOfTroops,final int nrOfLives*/){
+        this.mainPanel= new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
         final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
@@ -56,16 +65,16 @@ public final class BattlePanelImpl implements BattlePanel {
 
     @Override
     public void hitBot() {
-        this.buttonsPanel.decreasePlayerLive();
+        this.buttonsPanel.decreaseBotLive();
     }
 
     @Override
-    public void spinPlayerFreeSlot(Map<Integer,Troop> troops) {
+    public void spinPlayerFreeSlot(final Map<Integer,Troop> troops) {
         this.playerPanel.update(troops);
     }
 
     @Override
-    public void spinBotFreeSlot(Map<Integer,Troop> troops) {
+    public void spinBotFreeSlot(final Map<Integer,Troop> troops) {
         this.botPanel.update(troops);
     }
 

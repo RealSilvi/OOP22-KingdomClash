@@ -1,24 +1,34 @@
 package it.unibo.model.base;
 
 import it.unibo.model.base.api.BuildingObserver;
+import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
+import it.unibo.model.base.exceptions.InvalidTroopLevelException;
+import it.unibo.model.base.exceptions.MaxBuildingLimitReachedException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
+import it.unibo.view.battle.Troop;
 
 import java.awt.geom.Point2D;
 import java.nio.file.Path;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+
 /**
  * Interface for the base model, it has simple functions that allows other classes to interact
  * and inspect the game data
  */
 public interface BaseModel {
+    public enum OperationType {
+        SUBTRACTION,
+        ADDITION
+    }
     /**
      * Tries to build a structure in a given position at a given level
      * @param position placing position of the structure
@@ -30,7 +40,7 @@ public interface BaseModel {
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode) throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException;
     /**
      * Tries to build a structure in a given position at a given level
      * @param position placing position of the structure
@@ -41,7 +51,7 @@ public interface BaseModel {
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel) throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException;
     /**
      * Tries to build a structure in a given position
      * @param position placing position of the structure
@@ -50,7 +60,7 @@ public interface BaseModel {
      * @throws NotEnoughResourceException thrown when the player does not have enough resources to build this structure
      * @throws InvalidBuildingPlacementException thrown when the building position is obstructed
      */
-    public UUID buildStructure(final Point2D position, final BuildingTypes type) throws NotEnoughResourceException, InvalidBuildingPlacementException;
+    public UUID buildStructure(final Point2D position, final BuildingTypes type) throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException;
     /**
      * If the structure exists, starts the upgrading progress or builds it
      * instantly if instabuild is true
@@ -89,7 +99,10 @@ public interface BaseModel {
      * @param structureId an existing structure's identifier
      * @return the texture's path
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
+     * @deprecated This method will be removed in the future because texture handling is not a
+     * responsability for the model anymore
      */
+    @Deprecated
     public Path getStructureTexture(final UUID structureId) throws InvalidStructureReferenceException;
     /**
      * Given a structure's identifier, returns the progress in percentage of the current operation
@@ -128,7 +141,22 @@ public interface BaseModel {
      * @return an unmodifiable set of resources
      */
     public Set<Resource> getResourceCount();
-    
+
+    /**
+     * 
+     * @param troopToUpgrade
+     */
+    public void upgradeTroop(Troop troopToUpgrade) throws InvalidTroopLevelException;
+    /**
+     * Upgrades a troop to a given level
+     * @param troopToUpgrade the type of troop to upgrade
+     * @param level the level wich the troop has to be upgraded to
+     */
+    public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException;
+    /**
+     * @return a map containing the player's troops with their corresponding stats
+     */
+    public Map<Troop, Integer> getTroopMap();
     /**
      * Registers an observer object that gets notified whenever a building state changes
      * @param observer the object that needs to be registered
@@ -148,9 +176,21 @@ public interface BaseModel {
     /**
      * Unregisters an observer that gets notified whenever a building generates resources
      * @param observer the object that needs to be unregistered
-     * @see {@link #addBuildingProductionObservers()}
+     * @see {@link #addBuildingProductionObserver()}
      */
     public void removeBuildingProductionObserver(final BuildingObserver observer);
+    /**
+     * Notifies all object registered to BuildingStateChangedObservers
+     * @param building the identifier of the building responsible for the event
+     * @see {@link #addBuildingStateChangedObserver()}
+     */
+    public void notifyBuildingStateChangedObservers(final UUID building);
+    /**
+     * Notifies all object registered to BuildingProductionObservers
+     * @param building the identifier of the building responsible for the event
+     * @see {@link #addBuildingProductionObserver()}
+     */
+    public void notifyBuildingProductionObservers(final UUID building);
 
     /**
      * Starts and stops the clock that keeps track of time passed
@@ -170,7 +210,34 @@ public interface BaseModel {
      * @return game data object that contains every information of the current game
      */
     public GameData obtainGameData();
+    
+    /**
+     * Returns an unmodifiable map of Buildings
+     * @return an unmodifiable map of buildings
+     */
+    public Map<UUID, Building> getBuildingMap();
 
+    /**
+     * Safely dds or removes the given resources to the player's deposit
+     * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
+     */
+    public void applyResources(Set<Resource> resource) throws NotEnoughResourceException;
+    /**
+     * Safely dds or removes the given resources to the player's deposit
+     * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
+     * @param operation The type of operation that has to be applied to the resources
+     */
+    public void applyResources(Set<Resource> resource, OperationType operation) throws NotEnoughResourceException;
+
+    /**
+     * Applies the level multiplier given a set of resources and a level, returning a set with updated resources
+     * @param resource the set of resources that need to be worked on
+     * @param level an integer representing the level
+     * @return a set with updated resources given a level multiplier
+     * @deprecated This metod is deprecated and will not be used anymore
+     * because it has been implemented internally in {@link it.unibo.model.base.internal.BuildingBuilderImpl}
+     */
+    @Deprecated
     public static Set<Resource> applyMultiplierToResources(Set<Resource> resource, int level) {
         Set<Resource> alteredResource = new HashSet<>();
         resource.forEach(singleCost->alteredResource.add(new Resource(singleCost.getResource(), singleCost.getAmount()*(level == 0 ? 1 : level))));

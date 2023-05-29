@@ -5,24 +5,41 @@ import it.unibo.view.battle.panels.entities.api.TroopLabel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TroopLabelImpl extends JLabel implements TroopLabel {
 
-    public TroopLabelImpl(Troop troop) {
-        super(ImageIconsSupplier.getImageIconFromTroop(troop,true));
+    private final Dimension size;
+
+    /**
+     * @param troop The troop to display.
+     * @param size  The size of the JLabel.
+     */
+    public TroopLabelImpl(final Troop troop, final Dimension size) {
+        super(ImageIconsSupplier.getImageIconFromTroop(troop,size));
+        this.size=size;
+        this.setPreferredSize(this.size);
+
     }
 
-    public TroopLabelImpl() {
-        super(ImageIconsSupplier.BACKGROUND_FREE_SPOT);
+    /**
+     * Create an empty label.
+     * @param size The dimension of the JLabel.
+     */
+    public TroopLabelImpl(final Dimension size) {
+        super(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
+        this.size = size;
     }
 
     @Override
     public void setEmpty(){
-        this.setIcon(ImageIconsSupplier.BACKGROUND_FREE_SPOT);
+        this.setIcon(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
+        this.setBorder(BorderFactory.createEmptyBorder());
     }
 
     @Override
-    public void setTroop(Troop troop){
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop,true));
+    public void setTroop(final Troop troop){
+        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop,this.size));
+        this.setBorder(BorderFactory.createLineBorder(Color.GRAY,2,true));
     }
 }

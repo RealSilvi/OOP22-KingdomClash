@@ -72,4 +72,25 @@ public enum Troop {
                 '}';
     }
 
+    public static Troop getTroop(Integer id){
+        if(Troop.AXE.id == id){
+            return Troop.AXE;
+        }else if(Troop.SWORD.id == id){
+            return Troop.SWORD;
+        }else if(Troop.CATAPULT.id == id){
+            return Troop.CATAPULT;
+        }else if(Troop.ARROW.id == id){
+            return Troop.ARROW;
+        }else if(Troop.SHIELD.id == id){
+            return Troop.SHIELD;
+        }else if(Troop.HELMET.id == id){
+            return Troop.HELMET;
+        }else if(Troop.TOWER.id == id){
+            return Troop.TOWER;
+        }else{
+            return Troop.DODGE;
+        }
+
+    }
+
 }

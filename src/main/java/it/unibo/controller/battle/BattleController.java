@@ -2,22 +2,16 @@ package it.unibo.controller.battle;
 
 public interface BattleController {
 
-    public void addSubEvent(Event event, SubEvent subevent);
+    public void pass();
 
-    public void removeSubEvent(Event event, SubEvent subevent);
+    public void spin(Integer entity);
 
-    public void notify(Event event);
+    public void clickedButtonPlayer(Integer key);
 
-    public void Pass();
+    public void update();
 
-    public void Spin();
+    public void playerLifeDecrease();
 
-    public void ClickedButtonPlayer(Integer key);
-
-    public void UnClickedButtonPlayer(Integer key);
-
-    public void ClickedButtonBot(Integer key);
-
-    public void UnClickedButtonBot(Integer key);
+    public void botLifeDecrease();
 
 }

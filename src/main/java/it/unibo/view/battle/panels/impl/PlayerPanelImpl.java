@@ -16,43 +16,34 @@ import java.util.stream.IntStream;
 
 public class PlayerPanelImpl implements PlayerPanel {
 
-    private final static double BUTTON_SCALE = 0.95;
-
-    private final Dimension buttonsDimension;
+    private final static double BUTTON_SCALE = 0.90;
+    private final static Dimension BUTTON_DIMENSION= new Dimension(
+            (int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE),
+            (int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE));
 
     private final JPanel mainPanel;
     private final List<TroopButtonImpl> slots;
 
+    /**
+     *
+     * @param troops  defines which buttons have which troop displayed it on
+     * @param nrOfSlots how many buttons to display
+     */
     public PlayerPanelImpl(final Map<Integer,Troop> troops,final Integer nrOfSlots) {
-        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_PLAYERS);
+        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getPlayersPanel());
         this.slots = new ArrayList<>();
-        IntStream.range(0,nrOfSlots).forEach(x ->this.slots.add(new TroopButtonImpl(troops.get(x),true)));
+        IntStream.range(0,nrOfSlots).forEach(x ->this.slots.add(new TroopButtonImpl(Troop.getRandomTroop(),true,BUTTON_DIMENSION)/*new TroopButtonImpl(troops.get(x),true)*/));
+
         this.slots.forEach(this.mainPanel::add);
 
-
-        this.mainPanel.setMinimumSize(PanelDimensions.getPlayersPanel());
-        this.mainPanel.setMaximumSize(PanelDimensions.getPlayersPanel());
-
-        this.buttonsDimension= new Dimension(
-                (int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE)
-                ,(int)(PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE));
-        this.setButtonsSize();
-
-        this.update(troops);
-    }
-
-    private void setButtonsSize(){
-        this.slots
-                .forEach(
-                        x -> x.setPreferredSize(this.buttonsDimension));
     }
 
     @Override
-    public void update(Map<Integer,Troop> troops) {
+    public void update(final Map<Integer,Troop> troops) {
         IntStream.range(0,this.slots.size()).forEach(x -> {
             if(troops.containsKey(x)){
                 slots.get(x).setEnabled(true);
-                slots.set(x,new TroopButtonImpl(troops.get(x),true));
+                slots.set(x,new TroopButtonImpl(troops.get(x),true,BUTTON_DIMENSION));
             }else{
                 slots.get(x).setEnabled(false);
             }
@@ -70,7 +61,7 @@ public class PlayerPanelImpl implements PlayerPanel {
     }
 
     @Override
-    public void setActionListenersSlot(ActionListener actionListener){
+    public void setActionListenersSlot(final ActionListener actionListener){
         this.slots.forEach(x -> x.addActionListener(actionListener));
     }
 

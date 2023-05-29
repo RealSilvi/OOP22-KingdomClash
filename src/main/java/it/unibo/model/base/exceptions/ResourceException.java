@@ -1,6 +1,6 @@
 package it.unibo.model.base.exceptions;
 
-public class ResourceException extends Exception{
+public class ResourceException extends Exception {
     public ResourceException(String msg) {
         super(msg);
     }

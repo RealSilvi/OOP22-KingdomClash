@@ -4,76 +4,85 @@ import it.unibo.model.battle.BattleModel;
 import it.unibo.model.battle.BattleModelImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
+import it.unibo.view.battle.BattlePanel;
+import it.unibo.view.battle.BattlePanelImpl;
 
 import java.util.*;
 
 public class BattleControllerImpl implements  BattleController{
 
-    private final Map<Event, List<SubEvent>> specific_event;
+    public static final int PLAYER = 1;
     private final BattleModel battleModel;
     private Optional<FightData> fightData;
+    private final BattlePanel battlePanel;
+
 
     public BattleControllerImpl(BattleModel battleModel, GameData gameData){
-        this.specific_event = new HashMap<>();
-        for(Event event : Event.values()){
-            this.specific_event.put(event,new ArrayList<>());
-        }
         this.battleModel = battleModel;
+        this.battlePanel = new BattlePanelImpl();
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
     }
 
     public BattleControllerImpl(GameData gameData){
-        this.specific_event = new HashMap<>();
-        for(Event event : Event.values()){
-            this.specific_event.put(event,new ArrayList<>());
-        }
         this.battleModel = new BattleModelImpl(gameData);
+        this.battlePanel = new BattlePanelImpl();
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
     }
 
-    @Override
-    public void addSubEvent(Event event, SubEvent subevent) {
-        specific_event.get(event).add(subevent);
-    }
-
-    @Override
-    public void removeSubEvent(Event event, SubEvent subevent) {
-        specific_event.get(event).remove(subevent);
-    }
-
-    @Override
-    public void notify(Event event) {
-        specific_event.get(event).forEach(x -> x.update(event));
-    }
-
-    public void Pass(){
-        battleModel.BattlePass();
-    }
-
-    public void Spin(){
-        battleModel.BattleSpin();
-    }
-
-    public void ClickedButtonPlayer(Integer key){
-        fightData.get().getPlayerData().AddPlayerTroop(key);
-    }
-
-    public void UnClickedButtonPlayer(Integer key){
-        fightData.get().getPlayerData().RemovePlayerTroop(key);
-    }
-
-    public void ClickedButtonBot(Integer key){
-        fightData.get().getBotData().AddBotTroop(key);
-    }
-
-    public void UnClickedButtonBot(Integer key){
-        fightData.get().getBotData().RemoveBotTroop(key);
+    public BattleControllerImpl(Optional<FightData> fightData){
+        this.battleModel = new BattleModelImpl();
+        this.battlePanel = new BattlePanelImpl();
+        this.fightData = fightData;
     }
 
 
+    public void pass(){
+        this.battlePanel.enableBotSlots();
+        this.battlePanel.disablePassButton();
+        this.battlePanel.disablePlayerSlots();
+        this.battlePanel.disableSpinButton();
+        this.battleModel.battlePass();
+        this.battlePanel.enablePassButton();
+        this.battlePanel.enablePlayerSlots();
+        this.battlePanel.enableSpinButton();
+        this.battlePanel.disableBotSlots();
+    }
+
+    public void spin(Integer entity){
+        if(entity == PLAYER){
+            battlePanel.disableSpinButton();
+            battlePanel.spinPlayerFreeSlot(fightData.get().getPlayerData().changeNotSelectedTroop());
+        }else{
+            battlePanel.spinBotFreeSlot(fightData.get().getBotData().changeNotSelectedTroop());
+        }
+
+    }
+
+    public void clickedButtonPlayer(Integer key){
+        if(fightData.get().getPlayerData().getCells(key).getClicked()){
+            fightData.get().getPlayerData().removePlayerTroop(key);
+            update();
+        }else{
+            fightData.get().getPlayerData().addPlayerTroop(key);
+            update();
+        }
+    }
+
+    public void update(){
+        battlePanel.updateField(fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()),
+                fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()));
+    }
+
+    public void playerLifeDecrease(){
+        battlePanel.hitPlayer();
+    }
+
+    public void botLifeDecrease(){
+        battlePanel.hitBot();
+    }
 
 }

@@ -1,5 +1,6 @@
 package it.unibo.model.base;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
@@ -16,8 +17,11 @@ public class TestExceptions {
         try {
             throw new NotEnoughResourceException(resources);
         } catch (NotEnoughResourceException e) {
-            Assertions.assertArrayEquals("You still need 490 WHEAT 400 WOOD to build this!".split(" "),
-                e.getMessage().split(" "));
+            String[] expected = "You still need 490 WHEAT 400 WOOD to build this!".split(" ");
+            Arrays.sort(expected);
+            String[] result = e.getMessage().split(" ");
+            Arrays.sort(result);
+            Assertions.assertArrayEquals(expected, result);
         }
     }
 }

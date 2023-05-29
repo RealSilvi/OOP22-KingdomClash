@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.panels.api.ComandPanel;
+import it.unibo.view.battle.panels.api.CommandPanel;
 import it.unibo.view.battle.panels.entities.impl.ButtonsPanelImpl;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.LifePanelImpl;
@@ -10,7 +10,7 @@ import it.unibo.view.battle.panels.utilities.PanelDimensions;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class CommandPanelImpl implements ComandPanel {
+public class CommandPanelImpl implements CommandPanel {
 
     private final JPanel mainPanel;
 
@@ -18,21 +18,17 @@ public class CommandPanelImpl implements ComandPanel {
     private final LifePanelImpl botLivesPanel;
     private final ButtonsPanelImpl buttonsPanel;
 
-    
+    /**
+     *
+     * @param numberOfLives how many health points has the players
+     */
     public CommandPanelImpl(final int numberOfLives) {
-        this.mainPanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_SIDE);
+        this.mainPanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSidePanel());
         this.botLivesPanel=new LifePanelImpl(numberOfLives);
         this.playerLivesPanel= new LifePanelImpl(numberOfLives);
         this.buttonsPanel= new ButtonsPanelImpl();
 
-        this.mainPanel.setMinimumSize(PanelDimensions.getSidePanel());
-        this.mainPanel.setMaximumSize(PanelDimensions.getSidePanel());
 
-        this.restart();
-    }
-
-    @Override
-    public void restart() {
         this.mainPanel.setLayout(new BoxLayout(this.mainPanel,BoxLayout.Y_AXIS));
         this.mainPanel.add(botLivesPanel.getPanel());
         this.mainPanel.add(buttonsPanel.getPanel());
@@ -70,13 +66,18 @@ public class CommandPanelImpl implements ComandPanel {
     }
     
     @Override
-    public void setActionListenerPass(ActionListener actionListener){
+    public void setActionListenerPass(final ActionListener actionListener){
         this.buttonsPanel.setActionListenerPass(actionListener);
     }
     
     @Override
-    public void setActionListenerSpin(ActionListener actionListener){
+    public void setActionListenerSpin(final ActionListener actionListener){
         this.buttonsPanel.setActionListenerSpin(actionListener);
+    }
+
+    @Override
+    public void setActionListenerInfo(final ActionListener actionListener){
+        this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 
     @Override

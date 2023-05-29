@@ -10,18 +10,41 @@ import java.util.Optional;
 public interface BotData {
 
     /**
+     *
+     * @return bot's troops
+     */
+
+    public Map<Integer, CellsImpl> getBotTroop();
+
+    /**
+     * set the hand
+     * @param botTroop troops to set
+     */
+
+    public void setBotTroop(Map<Integer, CellsImpl> botTroop);
+
+    /**
      * Adds the clicked troop into the field
      * @param key represents the position of the clicked troop
      */
 
-    public void AddBotTroop(Integer key);
+    public void addBotTroop(Integer key);
 
     /**
      * Removes the clicked troop from the field
      * @param key represents the position of the clicked troop
      */
 
-    public void RemoveBotTroop(Integer key);
+    public void removeBotTroop(Integer key);
+
+    /**
+     * take the key and return its status
+     * @param key the position which I need to get the status
+     * @return CellsImpl, it means all the information about that position
+     * (troop, clicked or not, chosen or not).
+     */
+
+    public CellsImpl getCells(Integer key);
 
     /**
      * Selects only the clicked troops.
@@ -50,7 +73,13 @@ public interface BotData {
      * @return a Map of the troop with the current values (eventually modified) and the right position.
      */
 
-    public Map<Integer, CellsImpl> changeNotSelectedTroop();
+    public Map<Integer, Troop> changeNotSelectedTroop();
+
+    /**
+     * Blocks the clicked troops, setting them to chosen.
+     */
+
+    public void setClickedToChosen();
 
     /**
      * Selects a random troop between the not clicked troops.

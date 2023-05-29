@@ -1,8 +1,5 @@
 package it.unibo.model.battle.entitydata;
 
-import it.unibo.controller.battle.BattleController;
-import it.unibo.controller.battle.BattleControllerImpl;
-import it.unibo.controller.battle.Event;
 import it.unibo.model.battle.CellsImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
@@ -12,31 +9,42 @@ import java.util.*;
 
 public class PlayerDataImpl implements PlayerData {
 
-    public static final int PLAYER_TROOPS = 5;
-    public static final int TOTAL_TROOPS = 10;
+    public static final int PLAYER_TROOPS = FightData.PLAYER_TROOPS;
+    public static final int TOTAL_TROOPS = FightData.TOTAL_TROOPS;
+    public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
 
     private Map<Integer, CellsImpl> playerTroop = new HashMap<>();
-    private Optional<FightData> fightData;
-    private BattleController battleController;
 
-    public PlayerDataImpl(GameData gameData){
+    public PlayerDataImpl(){
         for(int i=0; i < PLAYER_TROOPS; i++){
             this.playerTroop.put(i,new CellsImpl(Troop.getRandomTroop(),false,false));
         }
-        this.fightData = gameData.getFightData();
-        this.battleController = new BattleControllerImpl(gameData);
+    }
+
+
+    @Override
+    public Map<Integer, CellsImpl> getPlayerTroop() {
+        return this.playerTroop;
     }
 
     @Override
-    public void AddPlayerTroop(Integer key) {
+    public void setPlayerTroop(Map<Integer, CellsImpl> playerTroop) {
+        this.playerTroop = playerTroop;
+    }
+
+    @Override
+    public void addPlayerTroop(Integer key) {
         this.playerTroop.get(key).setClicked(true);
-        this.battleController.notify(Event.PRESS_PLAYER_BUTTON);
     }
 
     @Override
-    public void RemovePlayerTroop(Integer key) {
+    public void removePlayerTroop(Integer key) {
         this.playerTroop.get(key).setClicked(false);
-        this.battleController.notify(Event.PRESS_PLAYER_BUTTON);
+    }
+
+    @Override
+    public CellsImpl getCells(Integer key) {
+        return this.playerTroop.get(key);
     }
 
     @Override
@@ -62,13 +70,15 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     @Override
-    public Map<Integer, CellsImpl> changeNotSelectedTroop() {
+    public Map<Integer, Troop> changeNotSelectedTroop() {
+        Map<Integer, Troop> troopChanged = new HashMap<>();
         for(int i=0; i < PLAYER_TROOPS; i++){
             if(!playerTroop.get(i).getClicked()){
                 playerTroop.get(i).setTroop(Troop.getRandomTroop());
+                troopChanged.put(i, playerTroop.get(i).getTroop());
             }
         }
-        return playerTroop;
+        return troopChanged;
     }
 
     @Override
@@ -88,35 +98,34 @@ public class PlayerDataImpl implements PlayerData {
         List<Optional<Troop>> botOptionalList = new ArrayList<>();
         int difference_size;
 
-        for( int i=0; i<TOTAL_TROOPS; i++){
-            int a=i;
-            playerOptionalList.addAll(getSelected().stream().filter(x -> x.getId()==a).map(Optional::of).toList());
-            botOptionalList.addAll(botData.getSelected().stream()
-                    .filter(x ->
-                            x.equals(Troop.getNullable(
-                                    Arrays.stream(Troop.values())
-                                            .filter(z -> z.getId() == a)
-                                            .iterator()
-                                            .next()))
-                    )
-                    .map(Optional::of)
-                    .toList());
-
-            if(playerOptionalList.size() < botOptionalList.size()){
-                difference_size = botOptionalList.size() - playerOptionalList.size();
-                for(i = 0; i < difference_size; i++ ){
-                    playerOptionalList.add(Optional.empty());
+        for( int i=0; i<TOTAL_DIFFERENT_TROOP; i++) {
+            int a = i;
+                playerOptionalList.addAll(getSelected().stream().filter(x -> x.getId() == a).map(Optional::of).toList());
+                botOptionalList.addAll(botData.getSelected().stream()
+                        .filter(x ->
+                                x.equals(Troop.getNullable(
+                                        Arrays.stream(Troop.values())
+                                                .filter(z -> z.getId() == a)
+                                                .iterator()
+                                                .next()))
+                        )
+                        .map(Optional::of)
+                        .toList());
+                int b = 0;
+                if (playerOptionalList.size() < botOptionalList.size()) {
+                    difference_size = botOptionalList.size() - playerOptionalList.size();
+                    for (b = 0; b < difference_size; b++) {
+                        playerOptionalList.add(Optional.empty());
+                    }
+                } else if (playerOptionalList.size() > botOptionalList.size()) {
+                    difference_size = playerOptionalList.size() - botOptionalList.size();
+                    for (b = 0; b < difference_size; b++) {
+                        botOptionalList.add(Optional.empty());
+                    }
                 }
-            } else if (playerOptionalList.size() > botOptionalList.size()) {
-                difference_size = playerOptionalList.size() - botOptionalList.size();
-                for(i = 0; i < difference_size; i++ ){
-                    botOptionalList.add(Optional.empty());
-                }
-            }
 
         }
 
-        //updateField(playerOptionalList, botOptionalList)
         return playerOptionalList;
     }
 

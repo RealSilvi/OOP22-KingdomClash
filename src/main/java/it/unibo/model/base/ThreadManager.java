@@ -1,12 +1,13 @@
 package it.unibo.model.base;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import it.unibo.model.base.basedata.Building;
-
 public interface ThreadManager {
+    /**
+     * Time in milliseconds that the thread will wait for before doing another cycle
+     */
+    public static final int REFRESH_RATE_MS = 60;
     /**
      * A simple enum to select only on a kind of thread
      */
@@ -18,11 +19,7 @@ public interface ThreadManager {
         /**
          * Selects threads dedicated to generate resources for buildings
          */
-        PRODUCTION,
-        /**
-         * Selects all kind of threads
-         */
-        ALL
+        PRODUCTION
     }
     /**
      * Starts the threads dedicated to a kind of resource
@@ -57,14 +54,14 @@ public interface ThreadManager {
 
     /**
      * Registers a map of buildings to keep track of time
-     * @param buildingMap the map of buildings to keep track of
+     * @param buildingToAdd the map of buildings to keep track of
      */
-    public void addBuildings(Map<UUID, Building> buildingMap);
+    public void addBuilding(UUID buildingToAdd);
     /**
      * Unre a map of buildings to keep track of time
-     * @param buildingMap the map of buildings to keep track of
+     * @param buildingToRemove the map of buildings to keep track of
      */
-    public void removeBuildings(Map<UUID, Building> buildingMap);
+    public void removeBuilding(UUID buildingToRemove);
     /**
      * Unregisters a set of buildings with the corresponding ID
      * to keep track of time
