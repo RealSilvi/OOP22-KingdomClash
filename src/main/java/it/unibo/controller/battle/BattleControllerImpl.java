@@ -10,7 +10,6 @@ import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 import it.unibo.view.battle.tutorial.TutorialPanel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 

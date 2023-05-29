@@ -12,8 +12,8 @@ public class TroopButtonImpl implements TroopButton {
     private Troop troop;
     private final Dimension size;
     private boolean status;
-    private JButton button;
-    private int position;
+    private final JButton button;
+    private final int position;
 
     /**
      *

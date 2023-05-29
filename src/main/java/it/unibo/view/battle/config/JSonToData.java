@@ -34,4 +34,12 @@ public class JSonToData{
         }
     }
 
+
+    public Map<Troop,Integer> getBotTroop(final int lv){
+        return null;
+    }
+
+    public Map<Troop,Integer> getPlayerTroop(){
+        return this.getBotTroop(1);
+    }
 }
