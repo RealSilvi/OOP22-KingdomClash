@@ -1,7 +1,5 @@
 package it.unibo.model.base;
 
-import static org.junit.Assert.assertEquals;
-
 import java.awt.geom.Point2D;
 import java.util.Iterator;
 import java.util.Set;
@@ -44,7 +42,7 @@ public class BaseModelImplTest {
                 public void update(UUID buildingId) {
                     if (buildingId.equals(buildingIdentifier)
                          && !baseModel.getBuildingMap().get(buildingIdentifier).isBeingBuilt()) {
-                        assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
+                        Assertions.assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
                         synchronized(synchronizationObject) {
                             synchronizationObject.notifyAll();
                             increaseCounter();
@@ -104,7 +102,7 @@ public class BaseModelImplTest {
                 Assertions.assertTrue(baseModel.isClockTicking());
                 if (buildingId.equals(singleBuildingUUID)
                      && !baseModel.getBuildingMap().get(singleBuildingUUID).isBeingBuilt()) {
-                    assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
+                    Assertions.assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
                     synchronized(synchronizationObject) {
                         synchronizationObject.notifyAll();
                     }
