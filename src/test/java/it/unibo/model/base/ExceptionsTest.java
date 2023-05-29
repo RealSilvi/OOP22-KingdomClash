@@ -10,7 +10,7 @@ import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
 
-public class TestExceptions {
+public class ExceptionsTest {
     @Test
     public void testNotEnoughResourcesException() {
         Set<Resource> resources = Set.of(new Resource(ResourceType.WHEAT, 490), new Resource(ResourceType.WOOD, 400));

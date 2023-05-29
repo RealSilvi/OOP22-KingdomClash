@@ -228,12 +228,12 @@ public interface BaseModel {
     public void setPlayerName(String playerName);
 
     /**
-     * Safely dds or removes the given resources to the player's deposit
+     * Safely adds or removes the given resources to the player's deposit
      * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
      */
     public void applyResources(Set<Resource> resource) throws NotEnoughResourceException;
     /**
-     * Safely dds or removes the given resources to the player's deposit
+     * Safely adds or removes the given resources to the player's deposit
      * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
      * @param operation The type of operation that has to be applied to the resources
      */
