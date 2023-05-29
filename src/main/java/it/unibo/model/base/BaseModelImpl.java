@@ -61,10 +61,12 @@ public class BaseModelImpl implements BaseModel {
         }
         BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
         Building newStructure = buildingBuilder.makeStandardBuilding(type, position, startingLevel);
-        gameData.setResources(subtractResources(gameData.getResources(),
+        if (!cheatMode) {
+            gameData.setResources(subtractResources(gameData.getResources(),
             BuildingBuilder
             .applyIncrementToResourceSet(newStructure.getType().getCost(),
                 startingLevel)));
+        }
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
         return newStructureId;
@@ -230,7 +232,7 @@ public class BaseModelImpl implements BaseModel {
 
     @Override
     public void setClockTicking(boolean ticktime) {
-        if (ticktime) {
+        if (!ticktime) {
             this.threadManager.pauseThreads();
         } else {
             this.threadManager.startThreads();

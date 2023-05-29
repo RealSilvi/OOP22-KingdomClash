@@ -53,7 +53,9 @@ public class ThreadManagerImpl implements ThreadManager {
     public void startThreads(final ThreadSelector threadType) {
         setKeepAliveThreads(true);
         threadsRunning.put(threadType, true);
-        threadLocks.get(threadType).notifyAll();
+        synchronized(threadLocks.get(threadType)) {
+            threadLocks.get(threadType).notifyAll();
+        }
     }
 
     @Override
@@ -82,9 +84,9 @@ public class ThreadManagerImpl implements ThreadManager {
 
     @Override
     public boolean areThreadsRunning() {
-        boolean allThreadsRunning = true;
+        boolean allThreadsRunning = false;
         for (ThreadSelector selection : ThreadSelector.values()) {
-            allThreadsRunning = allThreadsRunning && this.threadsRunning.get(selection);
+            allThreadsRunning = this.threadsRunning.get(selection);
         }
         return allThreadsRunning;
     }
