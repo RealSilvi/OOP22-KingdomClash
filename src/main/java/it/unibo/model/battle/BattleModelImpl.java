@@ -8,6 +8,7 @@ import javax.swing.text.html.Option;
 import java.util.*;
 
 import static it.unibo.controller.battle.BattleControllerImpl.PLAYER;
+import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
 public class BattleModelImpl implements BattleModel{
 
@@ -84,7 +85,6 @@ public class BattleModelImpl implements BattleModel{
 
     @Override
     public Integer battleCombat(Integer position){
-        counted_round = 0;
 
         Optional<Troop> playerField = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).get(position);
         Optional<Troop> botField = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).get(position);
@@ -126,6 +126,19 @@ public class BattleModelImpl implements BattleModel{
                 }
 
                 return -1;
+    }
+
+    @Override
+    public void reset(){
+        counted_round = 0;
+
+        for(int i = 0; i < PLAYER_TROOPS; i++){
+            fightData.get().getPlayerData().getCells(i).setClicked(false);
+            fightData.get().getPlayerData().getCells(i).setChosen(false);
+            fightData.get().getBotData().getCells(i).setClicked(false);
+            fightData.get().getBotData().getCells(i).setChosen(false);
+        }
+
     }
 
 

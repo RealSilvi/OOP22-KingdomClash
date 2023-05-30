@@ -27,4 +27,6 @@ public interface BattleModel {
 
     Integer battleCombat(Integer position);
 
+    void reset();
+
 }
