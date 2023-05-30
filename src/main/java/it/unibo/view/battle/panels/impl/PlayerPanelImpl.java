@@ -38,6 +38,7 @@ public class PlayerPanelImpl implements PlayerPanel {
 
     }
 
+
     @Override
     public void update(final Map<Integer,Troop> troops) {
         IntStream.range(0,this.slots.size()).forEach(x -> {

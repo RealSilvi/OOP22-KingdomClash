@@ -26,21 +26,18 @@ public class FieldPanelImpl implements FieldPanel{
     private final List<TroopLabelImpl> armyPlayer;
     private final List<TroopLabelImpl> armyBot;
 
-    private final int nrOfFieldSpot ;
-
     /**
      *
-     * @param nrOfSlots ho many slots the player has in the PlayerPanel
+     * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
      */
-    public FieldPanelImpl(final int nrOfSlots) {
-        this.nrOfFieldSpot=nrOfSlots*2;
+    public FieldPanelImpl(final int nrOfFieldSpot) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getFieldPanel());
         this.armyPlayer=new ArrayList<>();
         this.armyBot=new ArrayList<>();
 
-        this.mainPanel.setLayout(new GridLayout(ROWS,nrOfSlots));
-        IntStream.range(0,nrOfFieldSpot).forEach(x-> this.armyBot.add(new TroopLabelImpl(LABEL_DIMENSION)));
-        IntStream.range(0,nrOfFieldSpot).forEach(x-> this.armyPlayer.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        this.mainPanel.setLayout(new GridLayout(ROWS,nrOfFieldSpot/ROWS));
+        IntStream.range(0, nrOfFieldSpot).forEach(x-> this.armyBot.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        IntStream.range(0, nrOfFieldSpot).forEach(x-> this.armyPlayer.add(new TroopLabelImpl(LABEL_DIMENSION)));
 
         this.restart();
         this.armyBot.forEach(this.mainPanel::add);
@@ -57,7 +54,7 @@ public class FieldPanelImpl implements FieldPanel{
     @Override
     public void redraw(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botTroops) {
         this.restart();
-
+        //TODO togli
         System.out.println("playerTroop"+ playerTroops);
         System.out.println("playerField"+ armyPlayer.size());
         System.out.println("botTroop"+ botTroops);

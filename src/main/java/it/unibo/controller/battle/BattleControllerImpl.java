@@ -15,7 +15,6 @@ import java.util.*;
 
 import static it.unibo.model.battle.BattleModelImpl.BOT;
 import static it.unibo.model.battle.BattleModelImpl.MAX_ROUND;
-import static it.unibo.model.data.FightData.TOTAL_TROOPS;
 
 public class BattleControllerImpl implements  BattleController{
 
@@ -23,6 +22,7 @@ public class BattleControllerImpl implements  BattleController{
     private final static int nrOfSlots=5;
     private final static int nrOfTroops=8;
     private final static int nrOfLives=8;
+    private final static int nrOfFieldSpots=nrOfSlots*2;
 
     public static final int PLAYER = 1;
     public static final int NOSKIP = 0;
@@ -34,7 +34,7 @@ public class BattleControllerImpl implements  BattleController{
 
     public BattleControllerImpl(BattleModel battleModel, GameData gameData){
         this.battleModel = battleModel;
-        this.battlePanel = new BattlePanelImpl(nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
+        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots,nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
@@ -42,7 +42,7 @@ public class BattleControllerImpl implements  BattleController{
 
     public BattleControllerImpl(GameData gameData){
         this.battleModel = new BattleModelImpl(gameData);
-        this.battlePanel = new BattlePanelImpl(nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
+        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
@@ -50,7 +50,7 @@ public class BattleControllerImpl implements  BattleController{
 
     public BattleControllerImpl(Optional<FightData> fightData){
         this.battleModel = new BattleModelImpl(fightData);
-        this.battlePanel = new BattlePanelImpl(nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
+        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
         this.currentPanel=this.battlePanel.getPanel();
         this.battlePanel.disableSpinButton();
         this.setActionListenerInfo();
@@ -60,7 +60,6 @@ public class BattleControllerImpl implements  BattleController{
         this.fightData = fightData;
         this.frame=new JFrame();
     }
-
 
     public void pass(){
         this.battlePanel.enableBotSlots();

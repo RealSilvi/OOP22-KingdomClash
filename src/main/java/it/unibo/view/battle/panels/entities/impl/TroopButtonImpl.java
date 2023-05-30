@@ -11,7 +11,6 @@ public class TroopButtonImpl implements TroopButton {
 
     private Troop troop;
     private final Dimension size;
-    private boolean status;
     private final PositionJbutton button;
 
     /**
@@ -23,7 +22,6 @@ public class TroopButtonImpl implements TroopButton {
     public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size, final int position) {
         this.button=new PositionJbutton(position);
         this.troop=troop;
-        this.status= status;
         this.size=size;
 
         this.button.setPreferredSize(size);
@@ -32,25 +30,6 @@ public class TroopButtonImpl implements TroopButton {
         this.button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
         this.button.setBackground(Color.BLACK);
         this.button.setOpaque(true);
-        this.setBorderStatus();
-    }
-
-    private void setBorderStatus(){
-        if(this.button.isEnabled()){
-            if(this.status){
-                this.button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
-            }else{
-                this.button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
-            }
-        }else{
-            this.button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR,4,true));
-        }
-    }
-
-    @Override
-    public void changeStatusImage(){
-        this.status=!this.status;
-        this.setBorderStatus();
     }
 
     @Override
@@ -73,7 +52,6 @@ public class TroopButtonImpl implements TroopButton {
     @Override
     public void setEnabled(final boolean b) {
         this.button.setEnabled(b);
-        this.setBorderStatus();
     }
 
     public JButton getButton() {
@@ -83,9 +61,12 @@ public class TroopButtonImpl implements TroopButton {
     public class PositionJbutton extends JButton{
 
         private final int position;
+        private boolean selectedBorder;
 
         public PositionJbutton(int position) {
             this.position = position;
+            this.selectedBorder=false;
+            this.setEnabled(true);
         }
 
         public int getPosition() {
@@ -93,7 +74,23 @@ public class TroopButtonImpl implements TroopButton {
         }
 
         public void updateBorder(){
-            changeStatusImage();
+            this.selectedBorder=!this.selectedBorder;
+            if(!selectedBorder){
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+            }else{
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
+            }
+        }
+
+        @Override
+        public void setEnabled(boolean b) {
+            super.setEnabled(b);
+            this.selectedBorder=false;
+            if(b){
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+            }else{
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR,4,true));
+            }
         }
     }
 }

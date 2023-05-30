@@ -33,7 +33,7 @@ public final class BattlePanelImpl implements BattlePanel {
      * param nrOfTroops How many troops has the game.
      * param nrOfLives  How many lives has each player
      */
-    public BattlePanelImpl(final int nrOfSlots, final int nrOfTroops,final int nrOfLives,final Map<Integer,Troop> botTroops,final Map<Integer,Troop> playerTroops){
+    public BattlePanelImpl(final int nrOfFieldSpots, final int nrOfSlots, final int nrOfTroops,final int nrOfLives,final Map<Integer,Troop> botTroops,final Map<Integer,Troop> playerTroops){
         this.mainPanel= new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
 
@@ -44,7 +44,7 @@ public final class BattlePanelImpl implements BattlePanel {
         this.playerPanel = new PlayerPanelImpl(playerTroops,nrOfSlots);
         this.infoPanel = new InfoPanelImpl(nrOfTroops);
         this.buttonsPanel = new CommandPanelImpl(nrOfLives);
-        this.fieldPanel = new FieldPanelImpl(nrOfSlots);
+        this.fieldPanel = new FieldPanelImpl(nrOfFieldSpots);
 
         //topPanel.add(menuPanel, BorderLayout.NORTH);
         topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);
