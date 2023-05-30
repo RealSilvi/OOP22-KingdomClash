@@ -40,6 +40,7 @@ public class PlayerDataImpl implements PlayerData {
     @Override
     public void removePlayerTroop(Integer key) {
         this.playerTroop.get(key).setClicked(false);
+        this.playerTroop.get(key).setChosen(false);
     }
 
     @Override

@@ -32,8 +32,12 @@ public class CellsImpl implements  Cells{
     @Override
     public void setChosen(Boolean chosen) {
 
-        this.chosen = chosen;
-        this.clicked = true;
+        if(chosen){
+            this.chosen = chosen;
+            this.clicked = true;
+        }else{
+            this.chosen = chosen;
+        }
 
     }
 

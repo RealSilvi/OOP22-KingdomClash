@@ -133,10 +133,8 @@ public class BattleModelImpl implements BattleModel{
         counted_round = 0;
 
         for(int i = 0; i < PLAYER_TROOPS; i++){
-            fightData.get().getPlayerData().getCells(i).setClicked(false);
-            fightData.get().getPlayerData().getCells(i).setChosen(false);
-            fightData.get().getBotData().getCells(i).setClicked(false);
-            fightData.get().getBotData().getCells(i).setChosen(false);
+            fightData.get().getPlayerData().removePlayerTroop(i);
+            fightData.get().getBotData().removeBotTroop(i);
         }
 
     }

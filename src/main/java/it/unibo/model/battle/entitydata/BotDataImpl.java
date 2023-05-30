@@ -38,6 +38,7 @@ public class BotDataImpl implements BotData{
     @Override
     public void removeBotTroop(Integer key) {
         this.botTroop.get(key).setClicked(false);
+        this.botTroop.get(key).setChosen(false);
     }
 
     @Override

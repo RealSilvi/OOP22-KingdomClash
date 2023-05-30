@@ -102,9 +102,9 @@ public class BattleControllerImpl implements  BattleController{
             }
             update(i+1);
         }
+        this.battleModel.reset();
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
         spin();
-        this.battleModel.reset();
         update(NOSKIP);
 
     }
