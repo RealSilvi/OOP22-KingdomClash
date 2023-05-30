@@ -83,7 +83,15 @@ public class BattleControllerImpl implements  BattleController{
     }
 
     public void battle(){
-        for(int i= 0; i < TOTAL_TROOPS; i++){
+        int total = 0;
+        if(fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).size() >
+        fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).size()){
+            total = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).size();
+        }else{
+            total = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).size();
+        }
+        update(NOSKIP);
+        for(int i= 0; i < total; i++){
             if(this.battleModel.battleCombat(i) == BOT){
                 botLifeDecrease();
             }else if(this.battleModel.battleCombat(i) == PLAYER){

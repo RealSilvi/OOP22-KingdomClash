@@ -1,7 +1,5 @@
 package it.unibo.model.battle;
 
-import it.unibo.controller.battle.BattleController;
-import it.unibo.controller.battle.BattleControllerImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
@@ -57,7 +55,9 @@ public class BattleModelImpl implements BattleModel{
             });
         }else{
             if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                fightData.get().getBotData().addBotTroop(fightData.get().getBotData().selectRandomTroop());
+                int keyy = fightData.get().getBotData().selectRandomTroop();
+                fightData.get().getBotData().addBotTroop(keyy);
+                System.out.println("è cliccata quindi?" + fightData.get().getBotData().getCells(keyy).getClicked());
             }
         }
 
