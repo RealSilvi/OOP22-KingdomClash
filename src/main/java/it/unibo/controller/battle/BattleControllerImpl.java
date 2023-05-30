@@ -71,8 +71,9 @@ public class BattleControllerImpl implements  BattleController{
         update(NOSKIP);
         if(this.battleModel.getCountedRound() == MAX_ROUND){
             battle();
+        }else{
+            this.battlePanel.enableSpinButton();
         }
-        this.battlePanel.enableSpinButton();
         this.battlePanel.disableBotSlots();
     }
 
