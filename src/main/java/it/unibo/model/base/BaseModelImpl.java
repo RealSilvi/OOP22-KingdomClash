@@ -392,4 +392,9 @@ public class BaseModelImpl implements BaseModel {
                 resourceType->gameData.getResources().add(new Resource(resourceType)));
         }
     }
+    @Override
+    public void refreshBuildings() {
+        this.gameData.getBuildings().forEach((structureId, structure)->
+            this.threadManager.addBuilding(structureId));
+    }
 }

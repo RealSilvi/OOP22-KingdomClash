@@ -240,6 +240,11 @@ public interface BaseModel {
     public void applyResources(Set<Resource> resource, OperationType operation) throws NotEnoughResourceException;
 
     /**
+     * Refreshes threadmanager's building list
+     */
+    public void refreshBuildings();
+
+    /**
      * Applies the level multiplier given a set of resources and a level, returning a set with updated resources
      * @param resource the set of resources that need to be worked on
      * @param level an integer representing the level

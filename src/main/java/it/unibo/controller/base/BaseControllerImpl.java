@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import it.unibo.controller.Controller;
 import it.unibo.model.base.BaseModel;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingException;
@@ -21,13 +22,29 @@ import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
 import it.unibo.view.battle.Troop;
 
-public class BaseControllerImpl implements BaseController {
+public class BaseControllerImpl implements Controller, BaseController {
 
     private BaseModel baseModel;
+    
+    private boolean controllerActive = false;
+
+    @Override
+    public void setActive(boolean currentControllerActive) {
+        this.setTimeRunning(currentControllerActive);
+    }
+    @Override
+    public boolean isActive() {
+        return this.controllerActive;
+    }
+    @Override
+    public void disable() {
+        setActive(false);
+    }
 
     //TODO: Remove below comments in this constructor once BaseView is implemented
     public BaseControllerImpl(@Nonnull BaseModel baseModel/*, BaseView baseView */) {
         this.baseModel = baseModel;
+        this.baseModel.refreshBuildings();
     }
 
     @Override
