@@ -6,6 +6,8 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class JSonToData{
@@ -41,5 +43,17 @@ public class JSonToData{
 
     public Map<Troop,Integer> getPlayerTroop(){
         return this.getBotTroop(1);
+    }
+
+    public JSONObject categoryGetter(String categoryName) {
+        return (JSONObject) jsonObject.get(categoryName);
+    }
+    public String getProperty(String pathToObject) {
+        List<String> pathSequence = Arrays.asList(pathToObject.split("."));
+        JSONObject dataObject = this.jsonObject;
+        for (String singleElement : pathSequence) {
+            dataObject = (JSONObject) dataObject.get(singleElement);
+        }
+        return String.valueOf(dataObject);
     }
 }
