@@ -56,9 +56,13 @@ public class FieldPanelImpl implements FieldPanel{
 
     @Override
     public void redraw(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botTroops) {
-        if(playerTroops.isEmpty() || botTroops.isEmpty()){
-            this.restart();
-        }
+        this.restart();
+
+        System.out.println("playerTroop"+ playerTroops);
+        System.out.println("playerField"+ armyPlayer.size());
+        System.out.println("botTroop"+ botTroops);
+        System.out.println("botField"+ armyBot.size());
+        System.out.println("\n\n");
         IntStream.range(0,playerTroops.size()).forEach( x-> {
             if(playerTroops.get(x).isEmpty()){
                 this.armyPlayer.get(x).setEmpty();
