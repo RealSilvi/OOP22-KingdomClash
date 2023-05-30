@@ -73,13 +73,13 @@ public class BattleControllerImpl implements  BattleController{
         if(this.battleModel.getCountedRound() == MAX_ROUND){
             battle();
         }
-        this.battlePanel.enablePassButton();
         this.battlePanel.enableSpinButton();
         this.battlePanel.disableBotSlots();
     }
 
     public void spin(){
         battlePanel.disableSpinButton();
+        this.battlePanel.enablePassButton();
         battlePanel.spinPlayerFreeSlot(this.battleModel.battleSpin(PLAYER));
     }
 
