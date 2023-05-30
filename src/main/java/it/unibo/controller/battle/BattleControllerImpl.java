@@ -52,6 +52,7 @@ public class BattleControllerImpl implements  BattleController{
         this.battleModel = new BattleModelImpl(fightData);
         this.battlePanel = new BattlePanelImpl(nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
         this.currentPanel=this.battlePanel.getPanel();
+        this.battlePanel.disableSpinButton();
         this.setActionListenerInfo();
         this.setActionListenerSpin();
         this.setActionListenerPass();
