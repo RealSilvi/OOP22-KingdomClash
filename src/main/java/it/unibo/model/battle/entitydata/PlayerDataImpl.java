@@ -10,7 +10,6 @@ import java.util.*;
 public class PlayerDataImpl implements PlayerData {
 
     public static final int PLAYER_TROOPS = FightData.PLAYER_TROOPS;
-    public static final int TOTAL_TROOPS = FightData.TOTAL_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
 
     private Map<Integer, CellsImpl> playerTroop = new HashMap<>();

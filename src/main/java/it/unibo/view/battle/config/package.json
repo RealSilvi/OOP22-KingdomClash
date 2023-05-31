@@ -74,5 +74,16 @@
     "AXadvcasdE": 3,
     "AXcsadcE": 3,
     "AXdavE": 3
+  },
+
+  "FightData" : {
+    "PLAYERLIFE": 10,
+    "BOTLIFE": 10,
+    "MAX ROUND": 3,
+    "BOT_TROOPS": 5,
+    "PLAYER_TROOPS": 5,
+    "TOTAL_DIFFERENT_TROOPS": 8,
+    "counted_round": 0
   }
+
 }
