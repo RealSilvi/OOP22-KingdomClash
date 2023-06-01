@@ -4,6 +4,7 @@ import it.unibo.model.data.FightData;
 import it.unibo.view.battle.tutorial.TutorialPanel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Optional;
 
 public class BattleControllerTest {
@@ -15,9 +16,6 @@ public class BattleControllerTest {
 
         JFrame battleFrame = battleController.getFrame();
         battleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        TutorialPanel panel = new TutorialPanel();
-        battleFrame.getContentPane().add(battleController.getCurrentPanel());
 
 
         battleFrame.setVisible(true);

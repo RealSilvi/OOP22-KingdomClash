@@ -7,7 +7,6 @@ import it.unibo.model.data.GameData;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
-import it.unibo.view.battle.tutorial.TutorialPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -53,14 +52,18 @@ public class BattleControllerImpl implements  BattleController{
     public BattleControllerImpl(Optional<FightData> fightData){
         this.battleModel = new BattleModelImpl(fightData);
         this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
-        this.currentPanel=this.battlePanel.getPanel();
         this.battlePanel.disableSpinButton();
         this.setActionListenerInfo();
         this.setActionListenerSpin();
         this.setActionListenerPass();
         this.setActionListenerSlots();
         this.fightData = fightData;
+
+
         this.frame=new JFrame();
+        currentPanel=battlePanel.getPanel();
+        this.frame.getContentPane().add(currentPanel);
+
     }
 
     public void pass(){
@@ -162,23 +165,16 @@ public class BattleControllerImpl implements  BattleController{
     public JPanel getCurrentPanel(){
         return this.currentPanel;
     }
-
-    private void setActionListenerInfo(){
-        ActionListener actionListenerInfo = e -> switchPanels();
-        this.battlePanel.setActionListenerInfoButton(actionListenerInfo);
-    }
-    private void switchPanels(){
-        this.frame.getContentPane().removeAll();
-
-        this.currentPanel=new TutorialPanel().getPanel();
-        this.frame.getContentPane().add(this.getCurrentPanel());
-        this.frame.validate();
-
-    }
-
+    //TESTING
     public JFrame getFrame() {
         return frame;
     }
+
+    private void setActionListenerInfo(){
+        ActionListener actionListenerInfo = e -> this.battlePanel.showTutorialPanel();
+        this.battlePanel.setActionListenerInfoButton(actionListenerInfo);
+    }
+
 
     private void setActionListenerPass(){
         ActionListener actionListenerInfo = e -> pass();
@@ -200,6 +196,5 @@ public class BattleControllerImpl implements  BattleController{
         };
         this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);
     }
-
 
 }

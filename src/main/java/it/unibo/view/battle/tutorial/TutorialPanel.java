@@ -5,6 +5,7 @@ import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public final class TutorialPanel{
@@ -44,6 +45,10 @@ public final class TutorialPanel{
         this.mainPanel.add(this.panelFactory.getTutorialWestPanelDefault(),BorderLayout.WEST);
         this.mainPanel.add(this.panelFactory.getTutorialEastPanelDefault(),BorderLayout.EAST);
         this.mainPanel.add(this.panelFactory.getTutorialCenterPanelDefault(),BorderLayout.CENTER);
+    }
+
+    public void addActionListenerExit(ActionListener actionListener){
+        this.turnBack.addActionListener(actionListener);
     }
 
     public JPanel getPanel() {
