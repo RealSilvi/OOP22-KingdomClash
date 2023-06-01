@@ -208,7 +208,10 @@ public interface BaseModel {
      * Be careful! directly manipulating data inside of the returned object
      * might result in uncontrolled behaviour, use it carefully!
      * @return game data object that contains every information of the current game
+     * @deprecated This method will soon be removed because it is unsafe and it'not the
+     * BaseModel's responsibility to directly return GameData
      */
+    @Deprecated
     public GameData obtainGameData();
     
     /**
