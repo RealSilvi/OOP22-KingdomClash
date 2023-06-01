@@ -1,6 +1,7 @@
 package it.unibo.view.battle;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Random;
 
 public enum Troop {
@@ -58,9 +59,10 @@ public enum Troop {
                         (troop.equals(Troop.CATAPULT)) ? Troop.TOWER :
                                 (troop.equals(Troop.ARROW)) ? Troop.SHIELD :
                                         (troop.equals(Troop.SHIELD)) ? Troop.ARROW :
-                                                (troop.equals(Troop.TOWER)) ? Troop.CATAPULT :
-                                                        (troop.equals(Troop.DODGE)) ? Troop.SWORD :
-                                                                Troop.CATAPULT;
+                                                (troop.equals(Troop.HELMET)) ? Troop.AXE :
+                                                    (troop.equals(Troop.TOWER)) ? Troop.CATAPULT :
+                                                            (troop.equals(Troop.DODGE)) ? Troop.SWORD :
+                                                                    null;
     }
 
     @Override

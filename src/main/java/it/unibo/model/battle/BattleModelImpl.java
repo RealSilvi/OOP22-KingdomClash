@@ -1,7 +1,5 @@
 package it.unibo.model.battle;
 
-import it.unibo.controller.battle.BattleController;
-import it.unibo.controller.battle.BattleControllerImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.Troop;
@@ -9,13 +7,14 @@ import it.unibo.view.battle.Troop;
 import javax.swing.text.html.Option;
 import java.util.*;
 
+import static it.unibo.controller.battle.BattleControllerImpl.PLAYER;
+import static it.unibo.model.data.FightData.PLAYER_TROOPS;
+
 public class BattleModelImpl implements BattleModel{
 
-    public static final int FIRST_TROOP = 0;
     public static final int BOT = 0;
     public static final int MAX_ROUND = FightData.MAX_ROUND;
     private Optional<FightData> fightData;
-    private BattleController battleController;
 
     int counted_round = 0;
     int botLife = FightData.BOT_LIFE;
@@ -26,23 +25,20 @@ public class BattleModelImpl implements BattleModel{
         if(gameData.getFightData().isPresent()){
             this.fightData = gameData.getFightData();
         }
-        this.battleController = new BattleControllerImpl(gameData);
-    }
-
-    public BattleModelImpl(){
-
     }
 
     public BattleModelImpl(Optional<FightData> fightData){
         this.fightData = fightData;
-        this.battleController = new BattleControllerImpl(this.fightData);
+    }
+
+    public Integer getCountedRound(){
+        return this.counted_round;
     }
 
     @Override
     public void battlePass() {
 
         fightData.get().getPlayerData().setClickedToChosen();
-        battleSpin(BOT);
 
         if(fightData.get().getPlayerData().getSelected().size() > 0) {
             fightData.get().getPlayerData().getSelected().forEach(x -> {
@@ -60,7 +56,9 @@ public class BattleModelImpl implements BattleModel{
             });
         }else{
             if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                fightData.get().getBotData().addBotTroop(fightData.get().getBotData().selectRandomTroop());
+                int keyy = fightData.get().getBotData().selectRandomTroop();
+                fightData.get().getBotData().addBotTroop(keyy);
+                System.out.println("è cliccata quindi?" + fightData.get().getBotData().getCells(keyy).getClicked());
             }
         }
 
@@ -68,77 +66,76 @@ public class BattleModelImpl implements BattleModel{
         if(counted_round >= MAX_ROUND){
             fightData.get().getBotData().setAllChosen();
             fightData.get().getPlayerData().setAllChosen();
-            this.battleController.update();
-            counted_round = 0;
-            battleCombat();
         }else{
             fightData.get().getBotData().setClickedToChosen();
-            this.battleController.update();
         }
 
     }
 
     @Override
-    public void battleSpin(Integer entity) {
-        this.battleController.spin(entity);
+    public Map<Integer,Troop> battleSpin(Integer entity) {
+
+        if(entity == PLAYER){
+            return fightData.get().getPlayerData().changeNotSelectedTroop();
+        }else{
+            return fightData.get().getBotData().changeNotSelectedTroop();
+        }
+
     }
 
     @Override
-    public void battleCombat(){
+    public Integer battleCombat(Integer position){
 
-        List<Optional<Troop>> playerField = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData());
-        List<Optional<Troop>> botField = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData());
+        Optional<Troop> playerField = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).get(position);
+        Optional<Troop> botField = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).get(position);
 
-        playerField.forEach(x -> {
-
-                if(botField.get(FIRST_TROOP).isPresent() && x.isPresent()){
-                    if(x.get().getLevel() > botField.get(FIRST_TROOP).get().getLevel()){
-                        if(!x.get().isDefense()){
+                if(botField.isPresent() && playerField.isPresent()){
+                    if(playerField.get().getLevel() > botField.get().getLevel()){
+                        if(!playerField.get().isDefense()){
                             if(botLife == 1){
-                                botLife--;
-                                this.battleController.botLifeDecrease();
+                                return BOT;
                                 //TODO player win
                             }else{
-                                botLife--;
-                                this.battleController.botLifeDecrease();
+                                return BOT;
                             }
                         }
-                    }else if(x.get().getLevel() < botField.get(FIRST_TROOP).get().getLevel()){
-                        if(x.get().isDefense()){
+                    }else if(playerField.get().getLevel() < botField.get().getLevel()){
+                        if(playerField.get().isDefense()){
                             if(playerLife == 1){
-                                playerLife--;
-                                this.battleController.playerLifeDecrease();
+                                return PLAYER;
                                 //TODO bot win
                             }else{
-                                playerLife--;
-                                this.battleController.playerLifeDecrease();
+                                return PLAYER;
                             }
                         }
                     }
-                }else if(botField.get(FIRST_TROOP).isEmpty() && x.isPresent() && (!x.get().isDefense())){
+                }else if(botField.isEmpty() && playerField.isPresent() && (!playerField.get().isDefense())){
                     if(botLife == 1){
-                        botLife--;
-                        this.battleController.botLifeDecrease();
+                        return BOT;
                         //TODO player win
                     }else{
-                        botLife--;
-                        this.battleController.botLifeDecrease();
+                        return BOT;
                     }
-                }else if(x.isEmpty() && botField.get(FIRST_TROOP).isPresent() && (!botField.get(FIRST_TROOP).get().isDefense())){
+                }else if(playerField.isEmpty() && botField.isPresent() && (!botField.get().isDefense())){
                     if(playerLife == 1){
-                        playerLife--;
-                        this.battleController.playerLifeDecrease();
+                        return PLAYER;
                         //TODO bot win
                     }else{
-                        playerLife--;
-                        this.battleController.playerLifeDecrease();
+                        return PLAYER;
                     }
                 }
 
-                botField.remove(FIRST_TROOP);
+                return -1;
+    }
 
-        });
-        playerField = null;
+    @Override
+    public void reset(){
+        counted_round = 0;
+
+        for(int i = 0; i < PLAYER_TROOPS; i++){
+            fightData.get().getPlayerData().removePlayerTroop(i);
+            fightData.get().getBotData().removeBotTroop(i);
+        }
 
     }
 

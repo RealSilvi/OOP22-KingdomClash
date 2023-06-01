@@ -23,39 +23,53 @@ public class FieldPanelImpl implements FieldPanel{
 
     private final JPanel mainPanel;
 
-    private final List<TroopLabelImpl> army;
+    private final List<TroopLabelImpl> armyPlayer;
+    private final List<TroopLabelImpl> armyBot;
 
     /**
      *
-     * @param nrOfSlots ho many slots the player has in the PlayerPanel
+     * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
      */
-    public FieldPanelImpl(final int nrOfSlots) {
+    public FieldPanelImpl(final int nrOfFieldSpot) {
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getFieldPanel());
-        this.army=new ArrayList<>();
+        this.armyPlayer=new ArrayList<>();
+        this.armyBot=new ArrayList<>();
 
-        this.mainPanel.setLayout(new GridLayout(ROWS,nrOfSlots));
-        IntStream.range(0,nrOfSlots*4).forEach(x->  this.army.add(new TroopLabelImpl(Troop.getRandomTroop(), LABEL_DIMENSION)));
+        this.mainPanel.setLayout(new GridLayout(ROWS,nrOfFieldSpot/ROWS));
+        IntStream.range(0, nrOfFieldSpot).forEach(x-> this.armyBot.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        IntStream.range(0, nrOfFieldSpot).forEach(x-> this.armyPlayer.add(new TroopLabelImpl(LABEL_DIMENSION)));
 
-        this.army.forEach(this.mainPanel::add);
+        this.restart();
+        this.armyBot.forEach(this.mainPanel::add);
+        this.armyPlayer.forEach(this.mainPanel::add);
 
     }
 
     @Override
     public void restart(){
-        this.army.forEach(TroopLabelImpl::setEmpty);
+        this.armyBot.forEach(TroopLabelImpl::setEmpty);
+        this.armyPlayer.forEach(TroopLabelImpl::setEmpty);
     }
 
-
     @Override
-    public void redraw(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botPlayer) {
-        List<Optional<Troop>> field=new ArrayList<>(playerTroops);
-        field.addAll(botPlayer);
-
-        IntStream.range(0,field.size()).forEach( x-> {
-            if(field.get(x).isEmpty()){
-                this.army.get(x).setEmpty();
+    public void redraw(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botTroops) {
+        this.restart();
+        //TODO togli
+        System.out.println("playerTroop"+ playerTroops);
+        System.out.println("playerField"+ armyPlayer.size());
+        System.out.println("botTroop"+ botTroops);
+        System.out.println("botField"+ armyBot.size());
+        System.out.println("\n\n");
+        IntStream.range(0,playerTroops.size()).forEach( x-> {
+            if(playerTroops.get(x).isEmpty()){
+                this.armyPlayer.get(x).setEmpty();
             }else{
-                this.army.get(x).setTroop(field.get(x).get());
+                this.armyPlayer.get(x).setTroop(playerTroops.get(x).get());
+            }
+            if(botTroops.get(x).isEmpty()){
+                this.armyBot.get(x).setEmpty();
+            }else{
+                this.armyBot.get(x).setTroop(botTroops.get(x).get());
             }
         });
     }

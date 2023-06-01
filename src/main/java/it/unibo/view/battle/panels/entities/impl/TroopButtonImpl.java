@@ -7,11 +7,11 @@ import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import javax.swing.*;
 import java.awt.*;
 
-public class TroopButtonImpl extends JButton implements TroopButton {
+public class TroopButtonImpl implements TroopButton {
 
     private Troop troop;
     private final Dimension size;
-    private boolean status;
+    private final PositionJbutton button;
 
     /**
      *
@@ -19,36 +19,17 @@ public class TroopButtonImpl extends JButton implements TroopButton {
      * @param status the enable status of this button
      * @param size  the dimension of this button
      */
-    public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size) {
+    public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size, final int position) {
+        this.button=new PositionJbutton(position);
         this.troop=troop;
-        this.status= status;
         this.size=size;
 
-        this.setPreferredSize(size);
+        this.button.setPreferredSize(size);
 
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
-        this.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
-        this.setBackground(Color.BLACK);
-        this.setOpaque(true);
-        this.setBorderStatus();
-    }
-
-    private void setBorderStatus(){
-        if(this.isEnabled()){
-            if(this.status){
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
-            }else{
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
-            }
-        }else{
-            this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR,4,true));
-        }
-    }
-
-    @Override
-    public void changeStatusImage(){
-        this.status=!this.status;
-        this.setBorderStatus();
+        this.button.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setBackground(Color.BLACK);
+        this.button.setOpaque(true);
     }
 
     @Override
@@ -59,8 +40,8 @@ public class TroopButtonImpl extends JButton implements TroopButton {
     @Override
     public void setTroop(final Troop troop){
         this.troop=troop;
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
-        this.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
+        this.button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop,this.size));
     }
 
     /**
@@ -70,8 +51,47 @@ public class TroopButtonImpl extends JButton implements TroopButton {
      */
     @Override
     public void setEnabled(final boolean b) {
-        super.setEnabled(b);
-        this.setBorderStatus();
+        this.button.setEnabled(b);
+    }
+
+    public JButton getButton() {
+        return this.button;
+    }
+
+    public class PositionJbutton extends JButton{
+
+        private final int position;
+        private boolean selectedBorder;
+
+        public PositionJbutton(int position) {
+            this.position = position;
+            this.selectedBorder=false;
+            this.setEnabled(true);
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public void updateBorder(){
+            this.selectedBorder=!this.selectedBorder;
+            if(!selectedBorder){
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+            }else{
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
+            }
+        }
+
+        @Override
+        public void setEnabled(boolean b) {
+            super.setEnabled(b);
+            this.selectedBorder=false;
+            if(b){
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+            }else{
+                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR,4,true));
+            }
+        }
     }
 }
 

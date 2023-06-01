@@ -10,7 +10,6 @@ import java.util.*;
 public class BotDataImpl implements BotData{
 
     public static final int BOT_TROOPS = FightData.BOT_TROOPS;
-    public static final int TOTAL_TROOPS = FightData.TOTAL_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
     private Map<Integer, CellsImpl> botTroop = new HashMap<>();
 
@@ -38,6 +37,7 @@ public class BotDataImpl implements BotData{
     @Override
     public void removeBotTroop(Integer key) {
         this.botTroop.get(key).setClicked(false);
+        this.botTroop.get(key).setChosen(false);
     }
 
     @Override

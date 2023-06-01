@@ -218,16 +218,31 @@ public interface BaseModel {
     public Map<UUID, Building> getBuildingMap();
 
     /**
-     * Safely dds or removes the given resources to the player's deposit
+     * @return the player's name
+     */
+    public String getPlayerName();
+    /**
+     * Sets the player's ingame name
+     * @param playerName the player's nickname
+     */
+    public void setPlayerName(String playerName);
+
+    /**
+     * Safely adds or removes the given resources to the player's deposit
      * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
      */
     public void applyResources(Set<Resource> resource) throws NotEnoughResourceException;
     /**
-     * Safely dds or removes the given resources to the player's deposit
+     * Safely adds or removes the given resources to the player's deposit
      * @param resource A set of resources, if a resource's amount is negative, it will be subtracted from player's deposit
      * @param operation The type of operation that has to be applied to the resources
      */
     public void applyResources(Set<Resource> resource, OperationType operation) throws NotEnoughResourceException;
+
+    /**
+     * Refreshes threadmanager's building list
+     */
+    public void refreshBuildings();
 
     /**
      * Applies the level multiplier given a set of resources and a level, returning a set with updated resources

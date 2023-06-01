@@ -38,12 +38,24 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     }
 
     private JButton getCostumeButton(final ImageIcon icon, final Dimension size){
-        JButton button=new JButton(icon);
+        JButton button=new JButton(){
+            @Override
+            public void setEnabled(boolean b) {
+                super.setEnabled(b);
+                if(b){
+                    this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
+                }else{
+                    this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+                }
+            }
+        };
+
+        button.setIcon(icon);
         button.setDisabledIcon(icon);
 
         button.setPreferredSize(size);
 
-        button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
+        button.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
         button.setBackground(Color.BLACK);
         button.setOpaque(true);
 
@@ -94,19 +106,6 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     @Override
     public JPanel getPanel() {
         return this.mainPanel;
-    }
-
-    public void setBordersByStatus(){
-        if(this.spin.isEnabled()){
-            this.spin.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
-        }else{
-            this.spin.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
-        }
-        if(this.pass.isEnabled()){
-            this.pass.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR,4,true));
-        }else{
-            this.pass.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR,4,true));
-        }
     }
 
 }

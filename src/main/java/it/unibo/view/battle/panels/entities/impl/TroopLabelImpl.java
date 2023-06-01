@@ -34,12 +34,10 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
     @Override
     public void setEmpty(){
         this.setIcon(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
-        this.setBorder(BorderFactory.createEmptyBorder());
     }
 
     @Override
     public void setTroop(final Troop troop){
         this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop,this.size));
-        this.setBorder(BorderFactory.createLineBorder(Color.GRAY,2,true));
     }
 }

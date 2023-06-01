@@ -8,25 +8,43 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
+import it.unibo.controller.Controller;
 import it.unibo.model.base.BaseModel;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingException;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
-import it.unibo.model.base.exceptions.NotEnoughResourceException;
+import it.unibo.model.base.exceptions.InvalidTroopLevelException;
 import it.unibo.model.base.exceptions.ResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
+import it.unibo.view.battle.Troop;
 
-public class BaseControllerImpl implements BaseController {
+public class BaseControllerImpl implements Controller, BaseController {
 
     private BaseModel baseModel;
+    
+    private boolean controllerActive = false;
+
+    @Override
+    public void setActive(boolean currentControllerActive) {
+        this.setTimeRunning(currentControllerActive);
+    }
+    @Override
+    public boolean isActive() {
+        return this.controllerActive;
+    }
+    @Override
+    public void disable() {
+        setActive(false);
+    }
 
     //TODO: Remove below comments in this constructor once BaseView is implemented
     public BaseControllerImpl(@Nonnull BaseModel baseModel/*, BaseView baseView */) {
         this.baseModel = baseModel;
+        this.baseModel.refreshBuildings();
     }
 
     @Override
@@ -109,6 +127,38 @@ public class BaseControllerImpl implements BaseController {
     @Override
     public Map<UUID, Building> requestBuildingMap() {
         return baseModel.getBuildingMap();
+    }
+
+    @Override
+    public String requestPlayerName() {
+        return baseModel.getPlayerName();
+    }
+    
+    @Override
+    public void setPlayerName(String playerName) {
+        baseModel.setPlayerName(playerName);
+    }
+
+    @Override
+    public Map<Troop, Integer> requestTroopLevels() {
+        return baseModel.getTroopMap();
+    }
+
+    @Override
+    public boolean upgradeTroop(Troop troopToUpgrade, int levelToUpgradeTo) {
+        boolean operationSuccessful = false;
+        try {
+            baseModel.upgradeTroop(troopToUpgrade, levelToUpgradeTo);
+            operationSuccessful = true;
+        } catch (InvalidTroopLevelException e) {
+            // TODO: Warn the user that he can't do that and why!
+        }
+        return operationSuccessful;
+    }
+
+    @Override
+    public boolean upgradeTroop(Troop troopToUpgrade) {
+        return upgradeTroop(troopToUpgrade, baseModel.getTroopMap().get(troopToUpgrade));
     }
 
     @Override

@@ -40,5 +40,50 @@
     "ThreadManagerConfiguration" : {
       "RefreshRateMilliseconds" : 60
     }
+  },
+
+
+  "BotTroopsLv01" : {
+    "AXE": 1,
+    "Aadscdsv": 1,
+    "AXadcvsdavE": 1,
+    "AXadvdsE": 1,
+    "AXadvcsdcE": 1,
+    "AXadvcasdE": 1,
+    "AXcsadcE": 1,
+    "AXdavE": 1
+  },
+
+  "BotTroopsLv02" : {
+    "AXE": 2,
+    "Aadscdsv": 2,
+    "AXadcvsdavE": 2,
+    "AXadvdsE": 2,
+    "AXadvcsdcE": 2,
+    "AXadvcasdE": 2,
+    "AXcsadcE": 2,
+    "AXdavE": 2
+  },
+
+  "BotTroopsLv03" : {
+    "AXE": 3,
+    "Aadscdsv": 3,
+    "AXadcvsdavE": 3,
+    "AXadvdsE": 3,
+    "AXadvcsdcE": 3,
+    "AXadvcasdE": 3,
+    "AXcsadcE": 3,
+    "AXdavE": 3
+  },
+
+  "FightData" : {
+    "PLAYERLIFE": 10,
+    "BOTLIFE": 10,
+    "MAX ROUND": 3,
+    "BOT_TROOPS": 5,
+    "PLAYER_TROOPS": 5,
+    "TOTAL_DIFFERENT_TROOPS": 8,
+    "counted_round": 0
   }
+
 }

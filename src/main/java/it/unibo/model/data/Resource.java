@@ -2,8 +2,13 @@ package it.unibo.model.data;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-
+/**
+ * A simple data class that stores a type of resource and it's corresponding amount
+ */
 public class Resource {
+    /**
+     * An enum containing all type of resources
+     */
     public enum ResourceType {
         WHEAT,
         WOOD
@@ -55,7 +60,11 @@ public class Resource {
     public Resource clone() {
         return new Resource(this.resource, this.amount);
     }
-
+    /**
+     * Performs a deep copy of a given resource set
+     * @param resourceSet the set to be copy
+     * @return a deep copy of the given set
+     */
     public static Set<Resource> deepCopySet(Set<Resource> resourceSet) {
         return resourceSet.stream()
                 .map(Resource::clone)

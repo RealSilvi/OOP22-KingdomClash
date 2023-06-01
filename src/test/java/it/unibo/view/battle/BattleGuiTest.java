@@ -1,5 +1,7 @@
 package it.unibo.view.battle;
 
+import it.unibo.view.battle.tutorial.TutorialPanel;
+
 import javax.swing.*;
 
 class BattleGuiTest {
@@ -11,9 +13,8 @@ class BattleGuiTest {
         JFrame battleFrame = new JFrame();
         battleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        BattlePanelImpl panel = new BattlePanelImpl();
+        TutorialPanel panel = new TutorialPanel();
         battleFrame.getContentPane().add(panel.getPanel());
-        panel.disableBotSlots();
 
         battleFrame.setVisible(true);
         battleFrame.pack();
