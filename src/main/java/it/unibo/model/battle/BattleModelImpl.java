@@ -60,9 +60,8 @@ public class BattleModelImpl implements BattleModel{
             });
         }else{
             if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                int keyy = fightData.get().getBotData().selectRandomTroop();
-                fightData.get().getBotData().addBotTroop(keyy);
-                System.out.println("è cliccata quindi?" + fightData.get().getBotData().getCells(keyy).getClicked());
+                int key = fightData.get().getBotData().selectRandomTroop();
+                fightData.get().getBotData().addBotTroop(key);
             }
         }
 
