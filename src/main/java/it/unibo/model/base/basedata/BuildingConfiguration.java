@@ -26,13 +26,12 @@ public class BuildingConfiguration {
         } catch (Exception e) {
             logger.warning("Exception thrown when reading configuration!"
             +" Falling back to default configurations, printing stacktrace:\n"+e.toString());
-            this.maxLevel = Building.MAXLEVEL;
-            this.maxBuildings = Building.MAXBUILDINGS;
-            this.refundTaxPercentage = Building.REFUND_TAX_PERCENTAGE;
-            this.upgradeTaxPercentage = Building.UPGRADE_TAX_PERCENTAGE;
-            this.productionMultiplierPercentage = Building.PRODUCTION_MULTIPLIER_PERCENTAGE;
-            this.productionTimeReductionPercentage = Building.PRODUCTION_TIME_REDUCITON_PERCENTAGE;
+            fallbackConfiguration();
         }
+    }
+
+    public BuildingConfiguration() {
+        fallbackConfiguration();
     }
 
     private int maxLevel;
@@ -62,5 +61,14 @@ public class BuildingConfiguration {
     }
     public int getProductionTimeReductionPercentage() {
         return productionTimeReductionPercentage;
+    }
+
+    private void fallbackConfiguration() {
+        this.maxLevel = Building.MAXLEVEL;
+        this.maxBuildings = Building.MAXBUILDINGS;
+        this.refundTaxPercentage = Building.REFUND_TAX_PERCENTAGE;
+        this.upgradeTaxPercentage = Building.UPGRADE_TAX_PERCENTAGE;
+        this.productionMultiplierPercentage = Building.PRODUCTION_MULTIPLIER_PERCENTAGE;
+        this.productionTimeReductionPercentage = Building.PRODUCTION_TIME_REDUCITON_PERCENTAGE;
     }
 }
