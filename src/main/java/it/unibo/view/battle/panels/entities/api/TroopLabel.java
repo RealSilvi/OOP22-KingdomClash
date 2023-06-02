@@ -15,6 +15,7 @@ public interface TroopLabel {
 
     /**
      * Displays a troop.
+     *
      * @param troop the troop to display.
      */
     void setTroop(Troop troop);

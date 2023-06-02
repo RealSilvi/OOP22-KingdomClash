@@ -33,49 +33,48 @@ public final class BattlePanelImpl implements BattlePanel {
     private final CommandPanelImpl buttonsPanel;
 
     /**
-     *
      * param nrOfSlots  How many slots has each player.
      * param nrOfTroops How many troops has the game.
      * param nrOfLives  How many lives has each player
      */
-    public BattlePanelImpl(final int nrOfFieldSpots, final int nrOfSlots, final int nrOfTroops,final int nrOfLives,final Map<Integer,Troop> botTroops,final Map<Integer,Troop> playerTroops){
-        this.layoutManager=new CardLayout();
-        this.mainPanel=new JPanel(this.layoutManager);
-        this.tutorialPanel=new TutorialPanel();
-        this.gamePanel= new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
-        this.gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
+    public BattlePanelImpl(final int nrOfFieldSpots, final int nrOfSlots, final int nrOfTroops, final int nrOfLives, final Map<Integer, Troop> botTroops, final Map<Integer, Troop> playerTroops) {
+        this.layoutManager = new CardLayout();
+        this.mainPanel = new JPanel(this.layoutManager);
+        this.tutorialPanel = new TutorialPanel();
+        this.gamePanel = new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
+        this.gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
-        final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
+        final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
         //this.menuPanel = new MenuPanel();
-        this.botPanel = new PlayerPanelImpl(botTroops,nrOfSlots);
-        this.playerPanel = new PlayerPanelImpl(playerTroops,nrOfSlots);
+        this.botPanel = new PlayerPanelImpl(botTroops, nrOfSlots);
+        this.playerPanel = new PlayerPanelImpl(playerTroops, nrOfSlots);
         this.infoPanel = new InfoPanelImpl(nrOfTroops);
         this.buttonsPanel = new CommandPanelImpl(nrOfLives);
         this.fieldPanel = new FieldPanelImpl(nrOfFieldSpots);
 
         //topPanel.add(menuPanel, BorderLayout.NORTH);
-        topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);
+        topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")), BorderLayout.NORTH);
         topPanel.add(botPanel.getPanel(), BorderLayout.SOUTH);
 
-        this.gamePanel.add(topPanel,BorderLayout.NORTH);
-        this.gamePanel.add(playerPanel.getPanel(),BorderLayout.SOUTH);
-        this.gamePanel.add(infoPanel.getPanel(),BorderLayout.WEST);
-        this.gamePanel.add(buttonsPanel.getPanel(),BorderLayout.EAST);
-        this.gamePanel.add(fieldPanel.getPanel(),BorderLayout.CENTER);
+        this.gamePanel.add(topPanel, BorderLayout.NORTH);
+        this.gamePanel.add(playerPanel.getPanel(), BorderLayout.SOUTH);
+        this.gamePanel.add(infoPanel.getPanel(), BorderLayout.WEST);
+        this.gamePanel.add(buttonsPanel.getPanel(), BorderLayout.EAST);
+        this.gamePanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
 
         this.mainPanel.add(gamePanel, "1");
-        this.mainPanel.add(tutorialPanel.getPanel(),"2");
+        this.mainPanel.add(tutorialPanel.getPanel(), "2");
 
         this.setActionListenerExit();
     }
 
-    public void showTutorialPanel(){
-        layoutManager.show(mainPanel,"2");
+    public void showTutorialPanel() {
+        layoutManager.show(mainPanel, "2");
     }
 
-    public void showGamePanel(){
-        layoutManager.show(mainPanel,"1");
+    public void showGamePanel() {
+        layoutManager.show(mainPanel, "1");
     }
 
     @Override
@@ -89,12 +88,12 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     @Override
-    public void spinPlayerFreeSlot(final Map<Integer,Troop> troops) {
+    public void spinPlayerFreeSlot(final Map<Integer, Troop> troops) {
         this.playerPanel.update(troops);
     }
 
     @Override
-    public void spinBotFreeSlot(final Map<Integer,Troop> troops) {
+    public void spinBotFreeSlot(final Map<Integer, Troop> troops) {
         this.botPanel.update(troops);
     }
 
@@ -104,8 +103,8 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     @Override
-    public void updateField(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botPlayer) {
-        this.fieldPanel.redraw(playerTroops,botPlayer);
+    public void updateField(final List<Optional<Troop>> playerTroops, final List<Optional<Troop>> botPlayer) {
+        this.fieldPanel.redraw(playerTroops, botPlayer);
     }
 
     @Override
@@ -153,24 +152,26 @@ public final class BattlePanelImpl implements BattlePanel {
         return this.mainPanel;
     }
 
-    public void setActionListenersPlayerSlot(final ActionListener actionListener){
+    public void setActionListenersPlayerSlot(final ActionListener actionListener) {
         this.playerPanel.setActionListenersSlot(actionListener);
     }
 
-    public void setActionListenerSpinButton(final ActionListener actionListener){
+    public void setActionListenerSpinButton(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerSpin(actionListener);
     }
 
-    public void setActionListenerInfoButton(final ActionListener actionListener){
+    public void setActionListenerInfoButton(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 
-    public void setActionListenerPass(final ActionListener actionListener){
+    public void setActionListenerPass(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerPass(actionListener);
     }
 
-    private void setActionListenerExit(){
-        ActionListener actionListenerInfo = e -> { this.showGamePanel();};
+    private void setActionListenerExit() {
+        ActionListener actionListenerInfo = e -> {
+            this.showGamePanel();
+        };
         this.tutorialPanel.addActionListenerExit(actionListenerInfo);
     }
 }

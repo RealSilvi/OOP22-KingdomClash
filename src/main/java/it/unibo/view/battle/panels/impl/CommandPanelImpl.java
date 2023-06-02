@@ -19,64 +19,63 @@ public class CommandPanelImpl implements CommandPanel {
     private final ButtonsPanelImpl buttonsPanel;
 
     /**
-     *
      * @param numberOfLives how many health points has the players
      */
     public CommandPanelImpl(final int numberOfLives) {
-        this.mainPanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getSidePanel());
-        this.botLivesPanel=new LifePanelImpl(numberOfLives);
-        this.playerLivesPanel= new LifePanelImpl(numberOfLives);
-        this.buttonsPanel= new ButtonsPanelImpl();
+        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getSidePanel());
+        this.botLivesPanel = new LifePanelImpl(numberOfLives);
+        this.playerLivesPanel = new LifePanelImpl(numberOfLives);
+        this.buttonsPanel = new ButtonsPanelImpl();
 
 
-        this.mainPanel.setLayout(new BoxLayout(this.mainPanel,BoxLayout.Y_AXIS));
+        this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
         this.mainPanel.add(botLivesPanel.getPanel());
         this.mainPanel.add(buttonsPanel.getPanel());
         this.mainPanel.add(playerLivesPanel.getPanel());
     }
 
     @Override
-    public void disablePassButton(){
+    public void disablePassButton() {
         this.buttonsPanel.disablePassButton();
     }
 
     @Override
-    public void enablePassButton(){
+    public void enablePassButton() {
         this.buttonsPanel.enablePassButton();
     }
 
     @Override
-    public void disableSpinButton(){
+    public void disableSpinButton() {
         this.buttonsPanel.disableSpinButton();
     }
 
     @Override
-    public void enableSpinButton(){
+    public void enableSpinButton() {
         this.buttonsPanel.enableSpinButton();
     }
 
     @Override
-    public void decreasePlayerLive(){
+    public void decreasePlayerLive() {
         this.playerLivesPanel.decreaseLife();
     }
-    
+
     @Override
-    public void decreaseBotLive(){
+    public void decreaseBotLive() {
         this.botLivesPanel.decreaseLife();
     }
-    
+
     @Override
-    public void setActionListenerPass(final ActionListener actionListener){
+    public void setActionListenerPass(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerPass(actionListener);
     }
-    
+
     @Override
-    public void setActionListenerSpin(final ActionListener actionListener){
+    public void setActionListenerSpin(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerSpin(actionListener);
     }
 
     @Override
-    public void setActionListenerInfo(final ActionListener actionListener){
+    public void setActionListenerInfo(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 

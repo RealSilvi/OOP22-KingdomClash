@@ -14,6 +14,6 @@ public interface BarPanel {
 
     void getTroopInfo(Set<Troop> type);
 
-    void getPlayerInfo( GameData gameData);
+    void getPlayerInfo(GameData gameData);
 
 }

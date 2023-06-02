@@ -15,6 +15,7 @@ public interface PlayerPanel {
 
     /**
      * Update the displayed troops
+     *
      * @param troops define in which position put the new troop
      */
     void update(Map<Integer, Troop> troops);
@@ -30,7 +31,6 @@ public interface PlayerPanel {
     void enableAllSlots();
 
     /**
-     *
      * @param actionListener gives instruction at all the TroopButtons.
      */
     void setActionListenersSlot(ActionListener actionListener);

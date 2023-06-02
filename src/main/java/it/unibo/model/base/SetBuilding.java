@@ -12,22 +12,12 @@ import java.util.Map;
 import javax.swing.*;
 
 public interface SetBuilding {
-    
-    BuildingBuilder setbuilding(BuildingTypes type, Map<Point2D,JButton> position );
+
+    BuildingBuilder setbuilding(BuildingTypes type, Map<Point2D, JButton> position);
 
     ResourceType updatequantity(ResourceType resource, int amount);
 
     boolean isbuildingplaceable();
 
 
-
-
-
-
-
-     
-
-
-
-    
 }

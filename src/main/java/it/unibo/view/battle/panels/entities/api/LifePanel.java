@@ -13,7 +13,6 @@ public interface LifePanel {
     void decreaseLife();
 
     /**
-     *
      * @return this panel
      */
     JPanel getPanel();

@@ -9,15 +9,15 @@ import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.image.ImageObserver;
 
-public class GameMenuImpl implements GameMenu{
+public class GameMenuImpl implements GameMenu {
 
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final int WIDTH_BUTTON = (int)DIMENSION_SCREEN.getWidth()/20;
-    private static final int HEIGHT_BUTTON = (int)DIMENSION_SCREEN.getHeight()/20;
+    private static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
+    private static final int HEIGHT_BUTTON = (int) DIMENSION_SCREEN.getHeight() / 20;
     ImageIcon BACKGROUND_BUTTON = new ImageIcon("src/main/resources/it/unibo/game.menu/wood.jpg");
     ImageIcon BACKGROUND_PANEL = new ImageIcon("src/main/resources/it/unibo/game.menu/RvsH.jpg");
 
-    public GameMenuImpl(){
+    public GameMenuImpl() {
         JFrame frame = new JFrame("menu game");
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,7 +37,7 @@ public class GameMenuImpl implements GameMenu{
         options.setHorizontalTextPosition(SwingConstants.CENTER);
         options.setFocusable(false);
 
-        Font font = new Font("font", Font.ITALIC,((WIDTH_BUTTON)-(HEIGHT_BUTTON)));
+        Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
         ex.setFont(font);
         GridBagConstraints grid = new GridBagConstraints();
 
@@ -53,19 +53,19 @@ public class GameMenuImpl implements GameMenu{
         new_game.setFont(font);
         new_game.setPreferredSize(ex.getPreferredSize());
         new_game.setForeground(Color.BLACK);
-        panel.add(new_game,grid);
+        panel.add(new_game, grid);
 
         grid.gridy = 2;
         load.setFont(font);
         load.setPreferredSize(ex.getPreferredSize());
         load.setForeground(Color.BLACK);
-        panel.add(load,grid);
+        panel.add(load, grid);
 
         grid.gridy = 3;
         options.setFont(font);
         options.setPreferredSize(ex.getPreferredSize());
         options.setForeground(Color.BLACK);
-        panel.add(options,grid);
+        panel.add(options, grid);
 
         frame.getContentPane().add(panel);
 

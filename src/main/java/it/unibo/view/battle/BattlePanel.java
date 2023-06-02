@@ -22,29 +22,33 @@ public interface BattlePanel {
 
     /**
      * Update the player's slot
+     *
      * @param troops Indicate which troop to put in which position.
      */
-    void spinPlayerFreeSlot(final Map<Integer,Troop> troops);
+    void spinPlayerFreeSlot(final Map<Integer, Troop> troops);
 
     /**
      * Update the bot's slot
+     *
      * @param troops Indicate which troop to put in which position.
      */
-    void spinBotFreeSlot(final Map<Integer,Troop> troops);
+    void spinBotFreeSlot(final Map<Integer, Troop> troops);
 
     /**
      * Display a power info of the player's troops.
+     *
      * @param troopLv Foreach troop indicates if it's strong enough to defeat corresponding bot's defense.
      */
-    void drawInfoTable(final Map<Troop,Boolean> troopLv);
+    void drawInfoTable(final Map<Troop, Boolean> troopLv);
 
     /**
      * Update the Field with all the selected troops on it keeping in mind that can
      * exist empty slots.
-     * @param playerTroops  Sorted List of player's troops.
-     * @param botTroops     Sorted List od bot's tropps
+     *
+     * @param playerTroops Sorted List of player's troops.
+     * @param botTroops    Sorted List od bot's tropps
      */
-    void updateField(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botTroops);
+    void updateField(final List<Optional<Troop>> playerTroops, final List<Optional<Troop>> botTroops);
 
     /**
      * Disable all the bot's slots

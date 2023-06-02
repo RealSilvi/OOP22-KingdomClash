@@ -12,20 +12,20 @@ public class BuildingConfiguration {
     public BuildingConfiguration(JSonToData dataJson) {
         try {
             this.maxLevel = Integer.parseInt(
-                dataJson.getProperty(BUILDING_CONF_PATH+".MaxLevel"));
+                    dataJson.getProperty(BUILDING_CONF_PATH + ".MaxLevel"));
             this.maxBuildings = Integer.parseInt(
-                dataJson.getProperty(BUILDING_CONF_PATH+".MaxBuildings"));
+                    dataJson.getProperty(BUILDING_CONF_PATH + ".MaxBuildings"));
             this.refundTaxPercentage = Integer.parseInt(
-                dataJson.getProperty(BUILDING_CONF_PATH+".RefundTaxPercentage"));
+                    dataJson.getProperty(BUILDING_CONF_PATH + ".RefundTaxPercentage"));
             this.upgradeTaxPercentage = Integer.parseInt(
-                dataJson.getProperty(BUILDING_CONF_PATH+".UpgradeTaxPercentage"));
+                    dataJson.getProperty(BUILDING_CONF_PATH + ".UpgradeTaxPercentage"));
             this.productionMultiplierPercentage = Integer.parseInt(
-                dataJson.getProperty(BUILDING_CONF_PATH+".ProductionIncrementPercentage"));
+                    dataJson.getProperty(BUILDING_CONF_PATH + ".ProductionIncrementPercentage"));
             this.productionTimeReductionPercentage = Integer.parseInt(
-                dataJson.getProperty(BUILDING_CONF_PATH+".ProductionTimeReductionPercentage"));
+                    dataJson.getProperty(BUILDING_CONF_PATH + ".ProductionTimeReductionPercentage"));
         } catch (Exception e) {
             logger.warning("Exception thrown when reading configuration!"
-            +" Falling back to default configurations, printing stacktrace:\n"+e.toString());
+                    + " Falling back to default configurations, printing stacktrace:\n" + e.toString());
             fallbackConfiguration();
         }
     }
@@ -44,21 +44,27 @@ public class BuildingConfiguration {
     public Logger getLogger() {
         return logger;
     }
+
     public int getMaxLevel() {
         return maxLevel;
     }
+
     public int getMaxBuildings() {
         return maxBuildings;
     }
+
     public int getRefundTaxPercentage() {
         return refundTaxPercentage;
     }
+
     public int getUpgradeTaxPercentage() {
         return upgradeTaxPercentage;
     }
+
     public int getProductionIncrementPercentage() {
         return productionMultiplierPercentage;
     }
+
     public int getProductionTimeReductionPercentage() {
         return productionTimeReductionPercentage;
     }

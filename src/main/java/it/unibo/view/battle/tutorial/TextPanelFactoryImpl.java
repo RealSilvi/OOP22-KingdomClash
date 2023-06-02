@@ -1,6 +1,7 @@
 package it.unibo.view.battle.tutorial;
 
 import it.unibo.view.battle.config.JSonToData;
+import it.unibo.view.battle.config.JsonKeys;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
@@ -25,7 +26,9 @@ public class TextPanelFactoryImpl implements TextPanelFactory {
     @Override
     public JPanel getTutorialNorthPanelDefault() {
         return new TextPanel(
-                dataManager.getTutorialPanelsFields(NORTH_PANEL_JSON_KEY, TITLE_JSON_KEY),
+                dataManager.getTutorialPanelsFields(
+                        JsonKeys.BattlePanelJsonKeys.TutorialPanelJsonKeys.NorthPanelJsonKeys.TEXT_KEY.getKey(),
+                        TITLE_JSON_KEY),
                 dataManager.getTutorialPanelsFields(NORTH_PANEL_JSON_KEY, CONTENT_JSON_KEY),
                 PanelDimensions.getPlayersPanel());
     }
@@ -65,6 +68,7 @@ public class TextPanelFactoryImpl implements TextPanelFactory {
     public JPanel getCustomizedTextPanel(String title, String text, Dimension size) {
         return new TextPanel(title, text, size);
     }
+
 
     private static class TextPanel extends DrawPanel {
 

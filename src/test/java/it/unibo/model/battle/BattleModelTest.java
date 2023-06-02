@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 
 import static it.unibo.controller.battle.BattleControllerImpl.CONTINUE;
 import static org.junit.Assert.*;
+
 import java.util.*;
 
 public class BattleModelTest {
@@ -19,8 +20,8 @@ public class BattleModelTest {
     private BotData botData;
     private PlayerData playerData;
     private GameData gameData;
-    private Map<Integer,CellsImpl> botTroop;
-    private Map<Integer,CellsImpl> playerTroop;
+    private Map<Integer, CellsImpl> botTroop;
+    private Map<Integer, CellsImpl> playerTroop;
 
     @BeforeEach
     public void init() {
@@ -38,17 +39,17 @@ public class BattleModelTest {
         this.botTroop = new HashMap<>();
         this.playerTroop = new HashMap<>();
 
-        this.botTroop.put(0,new CellsImpl(Troop.CATAPULT,false,false));
-        this.botTroop.put(1,new CellsImpl(Troop.SWORD,false,false));
-        this.botTroop.put(2,new CellsImpl(Troop.AXE,false,false));
-        this.botTroop.put(3,new CellsImpl(Troop.SHIELD,false,false));
-        this.botTroop.put(4,new CellsImpl(Troop.SWORD,false,false));
+        this.botTroop.put(0, new CellsImpl(Troop.CATAPULT, false, false));
+        this.botTroop.put(1, new CellsImpl(Troop.SWORD, false, false));
+        this.botTroop.put(2, new CellsImpl(Troop.AXE, false, false));
+        this.botTroop.put(3, new CellsImpl(Troop.SHIELD, false, false));
+        this.botTroop.put(4, new CellsImpl(Troop.SWORD, false, false));
 
-        this.playerTroop.put(0,new CellsImpl(Troop.HELMET,false,false));
-        this.playerTroop.put(1,new CellsImpl(Troop.HELMET,false,false));
-        this.playerTroop.put(2,new CellsImpl(Troop.AXE,false,false));
-        this.playerTroop.put(3,new CellsImpl(Troop.ARROW,false,false));
-        this.playerTroop.put(4,new CellsImpl(Troop.SWORD,false,false));
+        this.playerTroop.put(0, new CellsImpl(Troop.HELMET, false, false));
+        this.playerTroop.put(1, new CellsImpl(Troop.HELMET, false, false));
+        this.playerTroop.put(2, new CellsImpl(Troop.AXE, false, false));
+        this.playerTroop.put(3, new CellsImpl(Troop.ARROW, false, false));
+        this.playerTroop.put(4, new CellsImpl(Troop.SWORD, false, false));
 
         //this.botData.setBotTroop(this.botTroop);
         //this.playerData.setPlayerTroop(this.playerTroop);
@@ -59,7 +60,7 @@ public class BattleModelTest {
     }
 
     @Test
-    public void getSelected(){
+    public void getSelected() {
 
         System.out.println("entered getSelected");
         this.playerData.getCells(1).setClicked(true);
@@ -76,7 +77,7 @@ public class BattleModelTest {
     }
 
     @Test
-    public void getOrderedField(){
+    public void getOrderedField() {
 
         /*this.playerData.getCells(1).setClicked(false);
         this.playerData.getCells(3).setClicked(false);
@@ -108,9 +109,9 @@ public class BattleModelTest {
     }
 
     @Test
-    public void getPass(){
+    public void getPass() {
 
-        for(int i= 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
 
             /*this.playerData.getCells(1).setClicked(false);
             this.playerData.getCells(3).setClicked(false);

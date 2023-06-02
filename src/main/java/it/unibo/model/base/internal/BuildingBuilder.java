@@ -7,6 +7,7 @@ import java.util.Set;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
+
 /**
  * A very simple builder to easily create standardized buildings
  */
@@ -14,21 +15,21 @@ public interface BuildingBuilder {
     //TODO: Tweak values for balance
     public enum BuildingTypes {
         HALL(30_000,
-            5_000,
-            Set.of(new Resource(ResourceType.WHEAT, 10),
-                new Resource(ResourceType.WOOD, 10)),
-            Set.of(new Resource(ResourceType.WOOD, 50),
-                new Resource(ResourceType.WHEAT, 30))),
+                5_000,
+                Set.of(new Resource(ResourceType.WHEAT, 10),
+                        new Resource(ResourceType.WOOD, 10)),
+                Set.of(new Resource(ResourceType.WOOD, 50),
+                        new Resource(ResourceType.WHEAT, 30))),
         LUMBERJACK(30_000,
-            5_000,
-            Set.of(new Resource(ResourceType.WOOD, 30)),
-            Set.of(new Resource(ResourceType.WOOD, 50),
-                new Resource(ResourceType.WHEAT, 30))),
+                5_000,
+                Set.of(new Resource(ResourceType.WOOD, 30)),
+                Set.of(new Resource(ResourceType.WOOD, 50),
+                        new Resource(ResourceType.WHEAT, 30))),
         FARM(30_000,
-            5_000,
-            Set.of(new Resource(ResourceType.WHEAT, 30)),
-            Set.of(new Resource(ResourceType.WOOD, 50),
-                new Resource(ResourceType.WHEAT, 30)));
+                5_000,
+                Set.of(new Resource(ResourceType.WHEAT, 30)),
+                Set.of(new Resource(ResourceType.WOOD, 50),
+                        new Resource(ResourceType.WHEAT, 30)));
 
         private long defaultBuildTime;
         private long defaultProductionTime;
@@ -45,9 +46,10 @@ public interface BuildingBuilder {
         public Set<Resource> getBaseProduction() {
             return baseProduction;
         }
+
         public Set<Resource> getBaseProduction(int level) {
             return BuildingBuilder.applyIncrementToResourceSet(
-                baseProduction, Building.PRODUCTION_MULTIPLIER_PERCENTAGE*level);
+                    baseProduction, Building.PRODUCTION_MULTIPLIER_PERCENTAGE * level);
         }
 
         public long getBuildTime() {
@@ -61,18 +63,21 @@ public interface BuildingBuilder {
         public Set<Resource> getCost() {
             return Collections.unmodifiableSet(cost);
         }
+
         public Set<Resource> getCost(int level) {
             return BuildingBuilder.applyIncrementToResourceSet(
-                cost, Building.UPGRADE_TAX_PERCENTAGE*level);
+                    cost, Building.UPGRADE_TAX_PERCENTAGE * level);
         }
     }
 
     /**
      * Works like {@link BuildingBuilder#makeBuilding(BuildingTypes type, int level)}
      * with the main difference that the building's level defaults to 0
+     *
      * @param type the type of the building
      */
     public Building makeStandardBuilding(BuildingTypes type, Point2D position, int level);
+
     public Building makeStandardBuilding(BuildingTypes type, int level);
 
     //Intended behaviour
@@ -80,10 +85,11 @@ public interface BuildingBuilder {
     public static Set<Resource> applyIncrementToResourceSet(Set<Resource> resourceSet, int incrementPercentage) {
         Set<Resource> modifiedSet = Resource.deepCopySet(resourceSet);
         modifiedSet.forEach(
-            resource->
-                resource.setAmount(Double.valueOf(applyIncrementToDouble(resource.getAmount(), incrementPercentage)).intValue()));
+                resource ->
+                        resource.setAmount(Double.valueOf(applyIncrementToDouble(resource.getAmount(), incrementPercentage)).intValue()));
         return modifiedSet;
     }
+
     public static double applyIncrementToDouble(double valueToIncrement, int incrementPercentage) {
         double increment = valueToIncrement * (incrementPercentage / 100.0);
         return valueToIncrement + increment;

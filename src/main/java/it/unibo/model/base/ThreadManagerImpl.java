@@ -53,7 +53,7 @@ public class ThreadManagerImpl implements ThreadManager {
     public void startThreads(final ThreadSelector threadType) {
         setKeepAliveThreads(true);
         threadsRunning.put(threadType, true);
-        synchronized(threadLocks.get(threadType)) {
+        synchronized (threadLocks.get(threadType)) {
             threadLocks.get(threadType).notifyAll();
         }
     }
@@ -90,9 +90,10 @@ public class ThreadManagerImpl implements ThreadManager {
         }
         return allThreadsRunning;
     }
+
     @Override
     public void addBuilding(UUID buildingIdentifier) {
-            ThreadSelector selection = ThreadSelector.PRODUCTION;
+        ThreadSelector selection = ThreadSelector.PRODUCTION;
         if (buildingMapRef.get(buildingIdentifier).isBeingBuilt()) {
             selection = ThreadSelector.CONSTRUCTION;
             removeBuilding(buildingIdentifier);
@@ -108,7 +109,7 @@ public class ThreadManagerImpl implements ThreadManager {
         if (!isThreadPresent(buildingToRemove)) {
             return;
         }
-        threadMap.forEach((selection, mapOfThreads)->{
+        threadMap.forEach((selection, mapOfThreads) -> {
             mapOfThreads.get(buildingToRemove).setThreadRunning(false);
             try {
                 mapOfThreads.get(buildingToRemove).join();
@@ -117,6 +118,7 @@ public class ThreadManagerImpl implements ThreadManager {
             }
         });
     }
+
     @Override
     public void removeBuildings(Set<UUID> buildingMap) {
         buildingMap.forEach(this::removeBuilding);
@@ -124,50 +126,54 @@ public class ThreadManagerImpl implements ThreadManager {
 
     @Override
     public void clearBuildings() {
-        threadMap.forEach((selection, idThreadMap)->removeBuildings(idThreadMap.keySet()));
+        threadMap.forEach((selection, idThreadMap) -> removeBuildings(idThreadMap.keySet()));
     }
+
     //Unused function, might be used in the future
     @SuppressWarnings("unused")
     private synchronized boolean shouldThreadsBeAlive() {
         return this.keepAliveThreads;
     }
+
     private synchronized void setKeepAliveThreads(boolean keepAliveThreads) {
         this.keepAliveThreads = keepAliveThreads;
     }
+
     private class ThreadBuilder {
         public WorkerThread createBuildingThread(UUID identifier) {
-            Function<UUID, Integer> buildingOperation = new Function<>(){
+            Function<UUID, Integer> buildingOperation = new Function<>() {
                 @Override
                 public Integer apply(UUID buildingToBuildIdentifier) {
                     int constructionPercentage = buildingMapRef.get(buildingToBuildIdentifier)
-                        .getBuildingProgress();
+                            .getBuildingProgress();
                     constructionPercentage++;
                     buildingMapRef.get(buildingToBuildIdentifier).setBuildingProgress(constructionPercentage);
                     if (constructionPercentage == 100) {
                         buildingMapRef.put(buildingToBuildIdentifier,
-                            buildingBuilder.makeStandardBuilding(
-                                buildingMapRef.get(
-                                    buildingToBuildIdentifier).getType(),
-                                buildingMapRef.get(
-                                    buildingToBuildIdentifier).getLevel()+1));
+                                buildingBuilder.makeStandardBuilding(
+                                        buildingMapRef.get(
+                                                buildingToBuildIdentifier).getType(),
+                                        buildingMapRef.get(
+                                                buildingToBuildIdentifier).getLevel() + 1));
                     }
                     baseModel.notifyBuildingStateChangedObservers(buildingToBuildIdentifier);
                     return constructionPercentage;
                 }
             };
             return new WorkerThread(ThreadSelector.CONSTRUCTION,
-                ()->buildingMapRef.get(identifier).getBuildingTime(),
-                time->buildingMapRef.get(identifier).setBuildingTime(time),
-                buildingOperation,
-                identifier);
+                    () -> buildingMapRef.get(identifier).getBuildingTime(),
+                    time -> buildingMapRef.get(identifier).setBuildingTime(time),
+                    buildingOperation,
+                    identifier);
         }
+
         public WorkerThread createProductionThread(UUID identifier) {
-            Function<UUID, Integer> productionOperation = new Function<>(){
+            Function<UUID, Integer> productionOperation = new Function<>() {
                 @Override
                 public Integer apply(UUID buildingForProductionIdentifier) {
                     int productionPercentage = buildingMapRef.get(buildingForProductionIdentifier)
-                        .getProductionProgress();
-                        productionPercentage++;
+                            .getProductionProgress();
+                    productionPercentage++;
                     buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(productionPercentage);
                     if (productionPercentage == 100) {
                         buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(0);
@@ -177,11 +183,11 @@ public class ThreadManagerImpl implements ThreadManager {
                             logger.severe("Error adding resources!");
                         }
                         buildingMapRef.get(buildingForProductionIdentifier)
-                            .setProductionTime(buildingBuilder.makeStandardBuilding(
-                                buildingMapRef
-                                    .get(buildingForProductionIdentifier).getType(),
-                                buildingMapRef
-                                    .get(buildingForProductionIdentifier).getLevel()).getProductionTime());
+                                .setProductionTime(buildingBuilder.makeStandardBuilding(
+                                        buildingMapRef
+                                                .get(buildingForProductionIdentifier).getType(),
+                                        buildingMapRef
+                                                .get(buildingForProductionIdentifier).getLevel()).getProductionTime());
                         baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
                         return 0;
                     }
@@ -190,12 +196,13 @@ public class ThreadManagerImpl implements ThreadManager {
                 }
             };
             return new WorkerThread(ThreadSelector.CONSTRUCTION,
-                ()->buildingMapRef.get(identifier).getProductionTime(),
-                time->buildingMapRef.get(identifier).setBuildingTime(time),
-                productionOperation,
-                identifier);
+                    () -> buildingMapRef.get(identifier).getProductionTime(),
+                    time -> buildingMapRef.get(identifier).setBuildingTime(time),
+                    productionOperation,
+                    identifier);
         }
     }
+
     private class WorkerThread extends Thread {
         private boolean threadRunning = true;
         private ThreadSelector threadType;
@@ -205,27 +212,27 @@ public class ThreadManagerImpl implements ThreadManager {
         private UUID assignedBuilding;
 
         public WorkerThread(ThreadSelector threadType,
-        Supplier<Long> remainingTimeGetter, Consumer<Long> remainingTimeSetter,
-        Function<UUID, Integer> operation, UUID assignedBuilding) {
+                            Supplier<Long> remainingTimeGetter, Consumer<Long> remainingTimeSetter,
+                            Function<UUID, Integer> operation, UUID assignedBuilding) {
             super();
             this.threadType = threadType;
             this.remainingTimeGetter = remainingTimeGetter;
             this.remainingTimeSetter = remainingTimeSetter;
             this.operation = operation;
             this.assignedBuilding = assignedBuilding;
-            switch(this.threadType) {
+            switch (this.threadType) {
                 case PRODUCTION:
                     this.setName("Production Thread");
-                break;
+                    break;
                 case CONSTRUCTION:
                     this.setName("Construction Thread");
-                break;
+                    break;
             }
         }
 
         @Override
         public void run() {
-            while(isThreadRunning()) {
+            while (isThreadRunning()) {
                 long operationStartTime = System.currentTimeMillis();
                 int remainingWork = 100 - operation.apply(assignedBuilding);
                 if (remainingWork == 0 && threadType.equals(ThreadSelector.CONSTRUCTION)) {
@@ -237,7 +244,7 @@ public class ThreadManagerImpl implements ThreadManager {
                 long elapsedTime = System.currentTimeMillis() - operationStartTime;
                 long remainingAvailableTime = remainingTimeGetter.get() - elapsedTime;
                 remainingTimeSetter.accept(remainingAvailableTime > 0 ? remainingAvailableTime : 0);
-                long waitTime = remainingAvailableTime > 0 ? remainingAvailableTime/100 : 0;
+                long waitTime = remainingAvailableTime > 0 ? remainingAvailableTime / 100 : 0;
                 logger.log(Level.FINEST, "Sleeping for: {0}ms", waitTime);
                 try {
                     sleep(waitTime);
@@ -246,7 +253,7 @@ public class ThreadManagerImpl implements ThreadManager {
                     Thread.currentThread().interrupt();
                 }
                 if (!threadsRunning.get(threadType)) {
-                    synchronized(threadLocks.get(threadType)) {
+                    synchronized (threadLocks.get(threadType)) {
                         try {
                             threadLocks.get(threadType).wait();
                         } catch (InterruptedException e) {
@@ -258,17 +265,20 @@ public class ThreadManagerImpl implements ThreadManager {
             }
             threadClosureOperation();
         }
+
         public synchronized boolean isThreadRunning() {
             return this.threadRunning;
         }
+
         public synchronized void setThreadRunning(boolean threadRunning) {
             this.threadRunning = threadRunning;
         }
+
         private void threadClosureOperation() {
             threadMap.get(threadType).remove(assignedBuilding);
         }
     }
-    
+
     private boolean isThreadPresent(final UUID buildingId) {
         boolean threadFound = false;
         for (ThreadSelector selector : ThreadSelector.values()) {

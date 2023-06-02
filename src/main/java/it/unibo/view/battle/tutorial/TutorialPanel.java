@@ -1,5 +1,6 @@
 package it.unibo.view.battle.tutorial;
 
+import it.unibo.view.battle.config.JsonKeys;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;

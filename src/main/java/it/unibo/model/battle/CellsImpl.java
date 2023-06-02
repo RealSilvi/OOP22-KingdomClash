@@ -2,14 +2,14 @@ package it.unibo.model.battle;
 
 import it.unibo.view.battle.Troop;
 
-public class CellsImpl implements  Cells{
+public class CellsImpl implements Cells {
     private Troop troop;
 
     private Boolean clicked;
 
     private Boolean chosen;
 
-    public CellsImpl(Troop troop, Boolean clicked, Boolean chosen){
+    public CellsImpl(Troop troop, Boolean clicked, Boolean chosen) {
         this.troop = troop;
         this.clicked = clicked;
         this.chosen = chosen;
@@ -32,10 +32,10 @@ public class CellsImpl implements  Cells{
     @Override
     public void setChosen(Boolean chosen) {
 
-        if(chosen){
+        if (chosen) {
             this.chosen = chosen;
             this.clicked = true;
-        }else{
+        } else {
             this.chosen = chosen;
         }
 

@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface PlayerData {
 
     /**
-     *
      * @return player's troops
      */
 
@@ -18,6 +17,7 @@ public interface PlayerData {
 
     /**
      * set the hand
+     *
      * @param playerTroop troops to set
      */
 
@@ -25,6 +25,7 @@ public interface PlayerData {
 
     /**
      * Adds the clicked troop into the field
+     *
      * @param key represents the position of the clicked troop
      */
 
@@ -32,6 +33,7 @@ public interface PlayerData {
 
     /**
      * Removes the clicked troop from the field
+     *
      * @param key represents the position of the clicked troop
      */
 
@@ -39,6 +41,7 @@ public interface PlayerData {
 
     /**
      * take the key and return its status
+     *
      * @param key the position which I need to get the status
      * @return CellsImpl, it means all the information about that position
      * (troop, clicked or not, chosen or not).
@@ -48,6 +51,7 @@ public interface PlayerData {
 
     /**
      * Selects only the clicked troops.
+     *
      * @return the selected troops. It means all the troops in the field.
      */
 
@@ -55,6 +59,7 @@ public interface PlayerData {
 
     /**
      * Selects all the troops chosen.
+     *
      * @return all the chosen troops, that is,
      * only the troops that cannot be taken back in hand.
      */
@@ -63,6 +68,7 @@ public interface PlayerData {
 
     /**
      * Change all the troops in the hand, which are not clicked.
+     *
      * @return a Map of the troop with the current values (eventually modified) and the right position.
      */
 
@@ -77,9 +83,10 @@ public interface PlayerData {
     /**
      * Orders the field. Puts each troop against nothing or against the opposite,
      * creating a corrected field, with empty spaces and right troops.
+     *
      * @param botData the data of the bot,
-     * and therefore the corresponding troops chosen,
-     * which we want to compare with those of the player
+     *                and therefore the corresponding troops chosen,
+     *                which we want to compare with those of the player
      * @return the corrected player's field.
      */
 

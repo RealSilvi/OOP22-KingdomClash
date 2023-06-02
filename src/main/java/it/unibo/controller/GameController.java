@@ -23,9 +23,9 @@ public class GameController {
 
     public GameController(GameModel gameModel, GameMenu gameMenu) {
         this.gameModel = gameModel;
-        this.gameMenu = gameMenu;        
+        this.gameMenu = gameMenu;
     }
-    
+
     public void setGameState(GameStates gameState) {
 
     }

@@ -2,48 +2,55 @@
   "name": "config",
   "version": "1.0.0",
   "dependencies": {
-
   },
-
-  "TutorialPanel" : {
-      "NorthPanel": {
-        "title": "TopPanel-Title",
-        "text": "TopPanel-Testo"
+  "BattlePanel": {
+    "TextPanels": {
+      "WinPanel": {
+        "title": "WinPanel - Title",
+        "text": "WinPanel - Text"
       },
-      "SouthPanel": {
-        "title": "BootomPanel-Title",
-        "text": "BottomPanel-Test"
+      "LosePanel": {
+        "title": "Lose - Title",
+        "text": "Lose - Text"
       },
-      "WestPanel": {
-        "title": "LeftPanel-Title",
-        "text": "LeftPanel-Testo"
-      },
-      "EastPanel": {
-        "title": "RightPanel-Title",
-        "text": "RightPanel-Testo"
-      },
-      "CenterPanel": {
-        "title": "CenterPanel-Title",
-        "text": "CenterPanel-Testo"
+      "TutorialPanel": {
+        "NorthPanel": {
+          "title": "TopPanel-Title",
+          "text": "TopPanel-Testo"
+        },
+        "SouthPanel": {
+          "title": "BootomPanel-Title",
+          "text": "BottomPanel-Test"
+        },
+        "WestPanel": {
+          "title": "LeftPanel-Title",
+          "text": "LeftPanel-Testo"
+        },
+        "EastPanel": {
+          "title": "RightPanel-Title",
+          "text": "RightPanel-Testo"
+        },
+        "CenterPanel": {
+          "title": "CenterPanel-Title",
+          "text": "CenterPanel-Testo"
+        }
       }
-  },
-
-  "BaseModelConfig" : {
-    "BuildingConfiguration" : {
-      "MaxLevel" : 3,
-      "MaxBuildings" : 4,
-      "RefundTaxPercentage" : 25,
-      "UpgradeTaxPercentage" : 15,
-      "ProductionIncrementPercentage" : 0,
-      "ProductionTimeReductionPercentage" : 0
-    },
-    "ThreadManagerConfiguration" : {
-      "RefreshRateMilliseconds" : 60
     }
   },
-
-
-  "BotTroopsLv01" : {
+  "BaseModelConfig": {
+    "BuildingConfiguration": {
+      "MaxLevel": 3,
+      "MaxBuildings": 4,
+      "RefundTaxPercentage": 25,
+      "UpgradeTaxPercentage": 15,
+      "ProductionIncrementPercentage": 0,
+      "ProductionTimeReductionPercentage": 0
+    },
+    "ThreadManagerConfiguration": {
+      "RefreshRateMilliseconds": 60
+    }
+  },
+  "BotTroopsLv01": {
     "AXE": 1,
     "Aadscdsv": 1,
     "AXadcvsdavE": 1,
@@ -53,8 +60,7 @@
     "AXcsadcE": 1,
     "AXdavE": 1
   },
-
-  "BotTroopsLv02" : {
+  "BotTroopsLv02": {
     "AXE": 2,
     "Aadscdsv": 2,
     "AXadcvsdavE": 2,
@@ -64,8 +70,7 @@
     "AXcsadcE": 2,
     "AXdavE": 2
   },
-
-  "BotTroopsLv03" : {
+  "BotTroopsLv03": {
     "AXE": 3,
     "Aadscdsv": 3,
     "AXadcvsdavE": 3,
@@ -75,8 +80,7 @@
     "AXcsadcE": 3,
     "AXdavE": 3
   },
-
-  "FightData" : {
+  "FightData": {
     "PLAYERLIFE": 10,
     "BOTLIFE": 10,
     "MAX ROUND": 3,
@@ -85,5 +89,4 @@
     "TOTAL_DIFFERENT_TROOPS": 8,
     "counted_round": 0
   }
-
 }

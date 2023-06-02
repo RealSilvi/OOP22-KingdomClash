@@ -12,7 +12,7 @@ public class FightData {
     public static final int MAX_ROUND = 3;
     public static final int BOT_TROOPS = 5;
     public static final int PLAYER_TROOPS = 5;
-    public static final int TOTAL_TROOPS = PLAYER_TROOPS+BOT_TROOPS;
+    public static final int TOTAL_TROOPS = PLAYER_TROOPS + BOT_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = 8;
 
     private BotData botData;
@@ -23,7 +23,7 @@ public class FightData {
         this.playerData = new PlayerDataImpl();
     }
 
-    public void setPlayerData(PlayerData playerData){
+    public void setPlayerData(PlayerData playerData) {
         this.playerData = playerData;
     }
 
@@ -35,7 +35,7 @@ public class FightData {
         return this.playerData;
     }
 
-    public BotData getBotData(){
+    public BotData getBotData() {
         return this.botData;
     }
 }

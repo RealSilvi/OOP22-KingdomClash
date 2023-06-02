@@ -24,10 +24,12 @@ public class ThreadManagerImplTest {
 
     private GameData gameData;
     private BaseModel baseModel;
-    private void initModel(){
+
+    private void initModel() {
         this.gameData = new GameData();
         this.baseModel = new BaseModelImpl(this.gameData);
     }
+
     @Test
     public void testBuildingAndProductionCycle() throws NotEnoughResourceException, InvalidBuildingPlacementException, BuildingMaxedOutException, InvalidStructureReferenceException, MaxBuildingLimitReachedException {
         initModel();
@@ -69,19 +71,20 @@ public class ThreadManagerImplTest {
                 lock.wait();
                 long endTime = System.currentTimeMillis();
                 long elapsedTime = endTime - startTime;
-                logger.info("Time passed: "+elapsedTime);
+                logger.info("Time passed: " + elapsedTime);
                 //Tolerance of 500ms
-                boolean timeElapsedCorrect = (elapsedTime < (buildingTime+500)) && (elapsedTime > (buildingTime-500));
+                boolean timeElapsedCorrect = (elapsedTime < (buildingTime + 500)) && (elapsedTime > (buildingTime - 500));
                 Assertions.assertEquals(1, baseModel.getBuildingMap().get(builtStructureId).getLevel());
                 Assertions.assertTrue(timeElapsedCorrect);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+            }
         }
         baseModel.addBuildingProductionObserver(new BuildingObserver() {
             @Override
             public void update(UUID buildingId) {
                 if (buildingId.equals(builtStructureId)) {
                     Assertions.assertEquals(gameData.getBuildings().get(builtStructureId)
-                        .getProductionAmount(), gameData.getResources());
+                            .getProductionAmount(), gameData.getResources());
                 }
             }
         });

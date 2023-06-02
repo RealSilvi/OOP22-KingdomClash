@@ -13,7 +13,7 @@ public class BuildingBuilderImpl implements BuildingBuilder {
 
     public BuildingBuilderImpl() {
         this.cache = new EnumMap<>(BuildingTypes.class);
-        Arrays.stream(BuildingTypes.values()).forEach(buildingType->this.cache.put(buildingType, new HashMap<>()));
+        Arrays.stream(BuildingTypes.values()).forEach(buildingType -> this.cache.put(buildingType, new HashMap<>()));
     }
 
     @Override
@@ -22,15 +22,15 @@ public class BuildingBuilderImpl implements BuildingBuilder {
             return cache.get(type).get(level);
         }
         Building standardizedBuilding = new Building(type,
-            level,
-            type.getBuildTime(),
-            type.getProductionTime(),
-            false,
-            0,
-            0,
-            position,
-            type.getBaseProduction(level),
-            type.getCost(level));
+                level,
+                type.getBuildTime(),
+                type.getProductionTime(),
+                false,
+                0,
+                0,
+                position,
+                type.getBaseProduction(level),
+                type.getCost(level));
         cache.get(type).put(level, standardizedBuilding);
         return standardizedBuilding;
     }

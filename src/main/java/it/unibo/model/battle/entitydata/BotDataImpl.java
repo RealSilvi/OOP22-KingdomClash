@@ -9,15 +9,15 @@ import java.util.*;
 
 import static it.unibo.model.data.FightData.TOTAL_TROOPS;
 
-public class BotDataImpl implements BotData{
+public class BotDataImpl implements BotData {
 
     public static final int BOT_TROOPS = FightData.BOT_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
     private Map<Integer, CellsImpl> botTroop = new HashMap<>();
 
-    public BotDataImpl(){
-        for(int i=0; i < BOT_TROOPS; i++){
-            this.botTroop.put(i,new CellsImpl(Troop.getRandomTroop(),false,false));
+    public BotDataImpl() {
+        for (int i = 0; i < BOT_TROOPS; i++) {
+            this.botTroop.put(i, new CellsImpl(Troop.getRandomTroop(), false, false));
         }
     }
 
@@ -50,8 +50,8 @@ public class BotDataImpl implements BotData{
     @Override
     public List<Troop> getSelected() {
         List<Troop> selectedTroop = new ArrayList<>();
-        for(int i=0; i < BOT_TROOPS; i++){
-            if(this.botTroop.get(i).getClicked()){
+        for (int i = 0; i < BOT_TROOPS; i++) {
+            if (this.botTroop.get(i).getClicked()) {
                 selectedTroop.add(this.botTroop.get(i).getTroop());
             }
         }
@@ -61,8 +61,8 @@ public class BotDataImpl implements BotData{
     @Override
     public List<Troop> getNotSelected() {
         List<Troop> notSelectedTroop = new ArrayList<>();
-        for(int i=0; i < BOT_TROOPS; i++){
-            if(!this.botTroop.get(i).getClicked()){
+        for (int i = 0; i < BOT_TROOPS; i++) {
+            if (!this.botTroop.get(i).getClicked()) {
                 notSelectedTroop.add(this.botTroop.get(i).getTroop());
             }
         }
@@ -72,8 +72,8 @@ public class BotDataImpl implements BotData{
     @Override
     public List<Troop> getChosen() {
         List<Troop> chosenTroop = new ArrayList<>();
-        for(int i=0; i < BOT_TROOPS; i++){
-            if(this.botTroop.get(i).getChosen()){
+        for (int i = 0; i < BOT_TROOPS; i++) {
+            if (this.botTroop.get(i).getChosen()) {
                 chosenTroop.add(this.botTroop.get(i).getTroop());
             }
         }
@@ -83,8 +83,8 @@ public class BotDataImpl implements BotData{
     @Override
     public Map<Integer, Troop> changeNotSelectedTroop() {
         Map<Integer, Troop> troopChanged = new HashMap<>();
-        for(int i=0; i < BOT_TROOPS; i++){
-            if(!botTroop.get(i).getClicked()){
+        for (int i = 0; i < BOT_TROOPS; i++) {
+            if (!botTroop.get(i).getClicked()) {
                 botTroop.get(i).setTroop(Troop.getRandomTroop());
                 troopChanged.put(i, botTroop.get(i).getTroop());
             }
@@ -95,8 +95,8 @@ public class BotDataImpl implements BotData{
     @Override
     public void setClickedToChosen() {
 
-        for(int i = 0; i < BOT_TROOPS; i++){
-            if(botTroop.get(i).getClicked()){
+        for (int i = 0; i < BOT_TROOPS; i++) {
+            if (botTroop.get(i).getClicked()) {
                 botTroop.get(i).setChosen(true);
             }
         }
@@ -107,8 +107,8 @@ public class BotDataImpl implements BotData{
     public Integer selectRandomTroop() {
         List<Integer> keys = new ArrayList<>();
 
-        for(int i=0; i < BOT_TROOPS; i++){
-            if(!botTroop.get(i).getClicked()){
+        for (int i = 0; i < BOT_TROOPS; i++) {
+            if (!botTroop.get(i).getClicked()) {
                 keys.add(i);
             }
         }
@@ -130,12 +130,12 @@ public class BotDataImpl implements BotData{
     @Override
     public Integer getKeyFromTroop(Troop troop) {
 
-        if(getNotSelected().contains(troop)){
-                for(int i=0; i < BOT_TROOPS; i++){
-                    if (botTroop.get(i).getTroop().equals(troop) && !botTroop.get(i).getClicked()) {
-                        return i;
-                    }
+        if (getNotSelected().contains(troop)) {
+            for (int i = 0; i < BOT_TROOPS; i++) {
+                if (botTroop.get(i).getTroop().equals(troop) && !botTroop.get(i).getClicked()) {
+                    return i;
                 }
+            }
         }
         return -1;
     }
@@ -146,9 +146,9 @@ public class BotDataImpl implements BotData{
         List<Optional<Troop>> botOptionalList = new ArrayList<>();
         int difference_size;
 
-        for( int i=0; i<TOTAL_DIFFERENT_TROOP; i++){
-            int a=i;
-            playerOptionalList.addAll(playerData.getSelected().stream().filter(x -> x.getId()==a).map(Optional::of).toList());
+        for (int i = 0; i < TOTAL_DIFFERENT_TROOP; i++) {
+            int a = i;
+            playerOptionalList.addAll(playerData.getSelected().stream().filter(x -> x.getId() == a).map(Optional::of).toList());
             botOptionalList.addAll(getSelected().stream()
                     .filter(x ->
                             x.equals(Troop.getNullable(
@@ -160,15 +160,15 @@ public class BotDataImpl implements BotData{
                     .map(Optional::of)
                     .toList());
 
-            int b=0;
-            if(playerOptionalList.size() < botOptionalList.size()){
+            int b = 0;
+            if (playerOptionalList.size() < botOptionalList.size()) {
                 difference_size = botOptionalList.size() - playerOptionalList.size();
-                for(b = 0; b < difference_size; b++ ){
+                for (b = 0; b < difference_size; b++) {
                     playerOptionalList.add(Optional.empty());
                 }
             } else if (playerOptionalList.size() > botOptionalList.size()) {
                 difference_size = playerOptionalList.size() - botOptionalList.size();
-                for(b = 0; b < difference_size; b++ ){
+                for (b = 0; b < difference_size; b++) {
                     botOptionalList.add(Optional.empty());
                 }
             }
@@ -185,43 +185,43 @@ public class BotDataImpl implements BotData{
 
     }
 
-    public List<Optional<Troop>> ExOrdered(PlayerData playerData){
+    public List<Optional<Troop>> ExOrdered(PlayerData playerData) {
         List<Optional<Troop>> playerOrdered = playerData.getOrderedField(this);
         List<Optional<Troop>> botOrdered = getOrderedField(playerData);
         List<Optional<Troop>> finalPlayer = new ArrayList<>(TOTAL_TROOPS);
         List<Optional<Troop>> finalBot = new ArrayList<>(TOTAL_TROOPS);
-        int max_position = TOTAL_TROOPS-1;
+        int max_position = TOTAL_TROOPS - 1;
 
-        for(int a = 0; a < TOTAL_TROOPS; a++){
+        for (int a = 0; a < TOTAL_TROOPS; a++) {
             finalPlayer.add(Optional.empty());
             finalBot.add(Optional.empty());
         }
 
-        int f=0;
-        for(int i= 0; i < botOrdered.size(); i++){
-            if(playerOrdered.get(i).isPresent() && !playerOrdered.get(i).get().isDefense()){
-                finalPlayer.set(i,playerOrdered.get(i));
-                if(botOrdered.get(i).isPresent()){
-                    finalBot.set(i,botOrdered.get(i));
-                }else{
+        int f = 0;
+        for (int i = 0; i < botOrdered.size(); i++) {
+            if (playerOrdered.get(i).isPresent() && !playerOrdered.get(i).get().isDefense()) {
+                finalPlayer.set(i, playerOrdered.get(i));
+                if (botOrdered.get(i).isPresent()) {
+                    finalBot.set(i, botOrdered.get(i));
+                } else {
                     finalBot.set(i, Optional.empty());
                 }
-            }else if(playerOrdered.get(i).isPresent()){
-                finalPlayer.set(max_position-(f),playerOrdered.get(i));
-                if(botOrdered.get(i).isPresent()){
-                    finalBot.set(max_position-(f++),botOrdered.get(i));
-                }else{
-                    finalBot.set(max_position-(f++), Optional.empty());
+            } else if (playerOrdered.get(i).isPresent()) {
+                finalPlayer.set(max_position - (f), playerOrdered.get(i));
+                if (botOrdered.get(i).isPresent()) {
+                    finalBot.set(max_position - (f++), botOrdered.get(i));
+                } else {
+                    finalBot.set(max_position - (f++), Optional.empty());
                 }
-            }else if(playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && !botOrdered.get(i).get().isDefense()){
-                finalBot.set(max_position-(f),botOrdered.get(i));
-                finalPlayer.set(max_position-(f++), Optional.empty());
-            }else if(playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && botOrdered.get(i).get().isDefense()){
-                finalBot.set(i,botOrdered.get(i));
-                finalPlayer.set(i,Optional.empty());
-            }else if(playerOrdered.get(i).isEmpty() && botOrdered.get(i).isEmpty()){
-                finalPlayer.set(i,Optional.empty());
-                finalBot.set(i,Optional.empty());
+            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && !botOrdered.get(i).get().isDefense()) {
+                finalBot.set(max_position - (f), botOrdered.get(i));
+                finalPlayer.set(max_position - (f++), Optional.empty());
+            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && botOrdered.get(i).get().isDefense()) {
+                finalBot.set(i, botOrdered.get(i));
+                finalPlayer.set(i, Optional.empty());
+            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isEmpty()) {
+                finalPlayer.set(i, Optional.empty());
+                finalBot.set(i, Optional.empty());
             }
         }
 

@@ -4,60 +4,57 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *  Extends a JPanel defining the size and a background.<br>
- *  The background could be a color or an image.
- *  The background' image is created replicating the input
- *  image for all over the size of the Panel.
+ * Extends a JPanel defining the size and a background.<br>
+ * The background could be a color or an image.
+ * The background' image is created replicating the input
+ * image for all over the size of the Panel.
  */
 public class DrawPanel extends JPanel {
 
-    private static final int WIDHT_IMAGE_FILL_PATTERN=200;
-    private static final int HEIGHT_IMAGE_FILL_PATTERN=200;
-    private static final int HGAP=20;
-    private static final int VGAP=10;
-    private static final Color DEFAULT_COLOR=Color.darkGray;
+    private static final int WIDHT_IMAGE_FILL_PATTERN = 200;
+    private static final int HEIGHT_IMAGE_FILL_PATTERN = 200;
+    private static final int HGAP = 20;
+    private static final int VGAP = 10;
+    private static final Color DEFAULT_COLOR = Color.darkGray;
 
     private final Image backgroundImage;
     private final Dimension size;
 
     /**
      * @param backgroundImage The image to replicate as background.
-     * @param size The dimension of the Panel.
+     * @param size            The dimension of the Panel.
      */
     public DrawPanel(final Image backgroundImage, final Dimension size) {
-        this.backgroundImage= backgroundImage.getScaledInstance(WIDHT_IMAGE_FILL_PATTERN,HEIGHT_IMAGE_FILL_PATTERN,Image.SCALE_DEFAULT);
-        this.size= size;
+        this.backgroundImage = backgroundImage.getScaledInstance(WIDHT_IMAGE_FILL_PATTERN, HEIGHT_IMAGE_FILL_PATTERN, Image.SCALE_DEFAULT);
+        this.size = size;
 
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,HGAP,VGAP));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, HGAP, VGAP));
         this.setPreferredSize(size);
     }
 
     /**
-     *
      * @param backgroundImageIcon The ImageIcon to replicate as background.
-     * @param size The dimension of the Panel.
+     * @param size                The dimension of the Panel.
      */
-    public DrawPanel(final ImageIcon backgroundImageIcon,final Dimension size){
-        this(backgroundImageIcon.getImage(),size);
+    public DrawPanel(final ImageIcon backgroundImageIcon, final Dimension size) {
+        this(backgroundImageIcon.getImage(), size);
     }
 
     /**
-     *
      * @param backgroundUrl The url of the image to replicate as background.
-     * @param size The dimension of the Panel.
+     * @param size          The dimension of the Panel.
      */
-    public DrawPanel(final String backgroundUrl, final Dimension size){
-        this(new ImageIcon(backgroundUrl),size);
+    public DrawPanel(final String backgroundUrl, final Dimension size) {
+        this(new ImageIcon(backgroundUrl), size);
     }
 
     /**
-     *
      * @param color The color to set as background.
      * @param size  The dimension of the Panel.
      */
-    public DrawPanel(final Color color,final Dimension size){
-        this.backgroundImage=null;
-        this.size=size;
+    public DrawPanel(final Color color, final Dimension size) {
+        this.backgroundImage = null;
+        this.size = size;
 
         this.setPreferredSize(size);
         this.setBackground(color);
@@ -65,10 +62,11 @@ public class DrawPanel extends JPanel {
 
     /**
      * Create a JPanel with the default color.
-     * @param size  The dimension of the Panel.
+     *
+     * @param size The dimension of the Panel.
      */
-    public DrawPanel(final Dimension size){
-        this(DEFAULT_COLOR,size);
+    public DrawPanel(final Dimension size) {
+        this(DEFAULT_COLOR, size);
     }
 
 
@@ -76,6 +74,7 @@ public class DrawPanel extends JPanel {
      * Overwritten the paintComponent method to display a background
      * image, fruit of replicating an imagePattern passed at the new instance of
      * the class.
+     *
      * @param g the <code>Graphics</code> object to protect
      */
     @Override

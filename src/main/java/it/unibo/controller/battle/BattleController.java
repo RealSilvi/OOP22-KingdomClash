@@ -20,12 +20,14 @@ public interface BattleController {
 
     /**
      * It finishes the battle and return to the city
+     *
      * @param entity who win the battle
      */
     public void end(Integer entity);
 
     /**
      * Add or remove from the field the troop selected
+     *
      * @param key position of the troop clicked by the player
      */
 
@@ -33,8 +35,9 @@ public interface BattleController {
 
     /**
      * Updates the field
+     *
      * @param skip is the number of position in the field to skip.
-     * With the skip, the update shows only the troops remained which has to fight
+     *             With the skip, the update shows only the troops remained which has to fight
      */
 
     public void update(Integer skip);

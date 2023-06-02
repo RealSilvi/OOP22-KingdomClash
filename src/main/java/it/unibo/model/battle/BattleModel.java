@@ -18,7 +18,7 @@ public interface BattleModel {
      * to make random troops appear between the choices of the player or bot.
      * The troops that change are only those that have not been selected.
      */
-    Map<Integer,Troop> battleSpin(Integer entity);
+    Map<Integer, Troop> battleSpin(Integer entity);
 
     /**
      * Takes care about the fighting player vs bot. It lets troops

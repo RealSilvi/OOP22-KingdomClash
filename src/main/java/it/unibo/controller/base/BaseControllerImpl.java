@@ -25,17 +25,19 @@ import it.unibo.view.battle.Troop;
 public class BaseControllerImpl implements Controller, BaseController {
 
     private BaseModel baseModel;
-    
+
     private boolean controllerActive = false;
 
     @Override
     public void setActive(boolean currentControllerActive) {
         this.setTimeRunning(currentControllerActive);
     }
+
     @Override
     public boolean isActive() {
         return this.controllerActive;
     }
+
     @Override
     public void disable() {
         setActive(false);
@@ -49,7 +51,7 @@ public class BaseControllerImpl implements Controller, BaseController {
 
     @Override
     public Optional<UUID> handleBuildingPlaced(Point2D position, BuildingTypes type, int startingLevel,
-            boolean cheatMode) {
+                                               boolean cheatMode) {
         Optional<UUID> providedUUID;
         try {
             providedUUID = Optional.of(baseModel.buildStructure(position, type, startingLevel, cheatMode));
@@ -133,7 +135,7 @@ public class BaseControllerImpl implements Controller, BaseController {
     public String requestPlayerName() {
         return baseModel.getPlayerName();
     }
-    
+
     @Override
     public void setPlayerName(String playerName) {
         baseModel.setPlayerName(playerName);

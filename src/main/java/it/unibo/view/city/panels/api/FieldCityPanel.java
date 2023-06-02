@@ -6,13 +6,12 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 public interface FieldCityPanel {
-    
-     void setfield(int width, int height);
+
+    void setfield(int width, int height);
 
     float showresources();
 
     /*JTextArea createTextArea(String text);*/
-
 
 
 }

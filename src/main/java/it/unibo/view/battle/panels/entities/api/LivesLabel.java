@@ -12,7 +12,6 @@ public interface LivesLabel {
     void changeStatus();
 
     /**
-     *
      * @return the status of a health point.
      */
     boolean isAlive();

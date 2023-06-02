@@ -14,6 +14,7 @@ public interface TroopButton {
 
     /**
      * Sets a new troop for the choice.
+     *
      * @param troop the troop to set on this button
      */
     void setTroop(final Troop troop);
