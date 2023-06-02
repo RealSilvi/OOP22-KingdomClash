@@ -11,7 +11,7 @@ public interface BattleModel {
     /**
      * Takes care of passing the turn to the bot and managing its choices.
      */
-    void battlePass();
+    void battlePass(Integer finished);
 
     /**
      * It allows you to make a spin, it means

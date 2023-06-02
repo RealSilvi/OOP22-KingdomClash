@@ -8,6 +8,7 @@ import it.unibo.view.battle.Troop;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
+import static it.unibo.controller.battle.BattleControllerImpl.CONTINUE;
 import static org.junit.Assert.*;
 import java.util.*;
 
@@ -121,7 +122,7 @@ public class BattleModelTest {
             this.botData.getCells(4).setClicked(false);
              */
             System.out.println("entered getPass");
-            this.battleModel.battlePass();
+            this.battleModel.battlePass(CONTINUE);
             List<Troop> bcp = this.fightData.getPlayerData().getSelected();
             List<Troop> bcb = this.fightData.getBotData().getSelected();
             List<Troop> expected1 = new ArrayList<>();

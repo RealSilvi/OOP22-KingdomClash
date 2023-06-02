@@ -7,14 +7,13 @@ import it.unibo.model.data.GameData;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
-import it.unibo.view.battle.tutorial.TutorialPanel;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.*;
 
-import static it.unibo.model.battle.BattleModelImpl.BOT;
-import static it.unibo.model.battle.BattleModelImpl.MAX_ROUND;
+import static it.unibo.model.battle.BattleModelImpl.*;
+import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
 public class BattleControllerImpl implements  BattleController{
 
@@ -26,6 +25,8 @@ public class BattleControllerImpl implements  BattleController{
 
     public static final int PLAYER = 1;
     public static final int NOSKIP = 0;
+    public static final int PLAYER_FINISH = 1;
+    public static final int CONTINUE = 0;
 
     private JPanel currentPanel;
     private final BattleModel battleModel;
@@ -51,14 +52,18 @@ public class BattleControllerImpl implements  BattleController{
     public BattleControllerImpl(Optional<FightData> fightData){
         this.battleModel = new BattleModelImpl(fightData);
         this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots,nrOfTroops,nrOfLives,fightData.get().getBotData().changeNotSelectedTroop(),fightData.get().getPlayerData().changeNotSelectedTroop());
-        this.currentPanel=this.battlePanel.getPanel();
         this.battlePanel.disableSpinButton();
         this.setActionListenerInfo();
         this.setActionListenerSpin();
         this.setActionListenerPass();
         this.setActionListenerSlots();
         this.fightData = fightData;
+
+
         this.frame=new JFrame();
+        currentPanel=battlePanel.getPanel();
+        this.frame.getContentPane().add(currentPanel);
+
     }
 
     public void pass(){
@@ -67,11 +72,18 @@ public class BattleControllerImpl implements  BattleController{
         this.battlePanel.disablePlayerSlots();
         this.battlePanel.disableSpinButton();
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
-        this.battleModel.battlePass();
+        if(fightData.get().getPlayerData().getSelected().size() == PLAYER_TROOPS){
+            for(int i = this.battleModel.getCountedRound(); i < MAX_ROUND; i++){
+                this.battleModel.battlePass(PLAYER_FINISH);
+                update(NOSKIP);
+            }
+        }else{
+            this.battleModel.battlePass(CONTINUE);
+        }
         update(NOSKIP);
         if(this.battleModel.getCountedRound() == MAX_ROUND){
             battle();
-        }else{
+        }else if(fightData.get().getPlayerData().getSelected().size() < PLAYER_TROOPS){
             this.battlePanel.enableSpinButton();
         }
         this.battlePanel.disableBotSlots();
@@ -97,8 +109,10 @@ public class BattleControllerImpl implements  BattleController{
                 botLifeDecrease();
             }else if(this.battleModel.battleCombat(i) == PLAYER){
                 playerLifeDecrease();
-            }else{
-                //TODO nobody get damage
+            }else if(this.battleModel.battleCombat(i) == WIN_BOT){
+                end(WIN_BOT);
+            }else if(this.battleModel.battleCombat(i) == WIN_PLAYER){
+                end(WIN_PLAYER);
             }
             update(i+1);
         }
@@ -106,6 +120,10 @@ public class BattleControllerImpl implements  BattleController{
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
         spin();
         update(NOSKIP);
+
+    }
+
+    public void end(Integer entity){
 
     }
 
@@ -120,8 +138,8 @@ public class BattleControllerImpl implements  BattleController{
     }
 
     public void update(Integer skip){
-        battlePanel.updateField(fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).stream().skip(skip).toList(),
-                fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).stream().skip(skip).toList());
+        battlePanel.updateField(fightData.get().getPlayerData().ExOrdered(fightData.get().getBotData()).stream().skip(skip).toList(),
+                fightData.get().getBotData().ExOrdered(fightData.get().getPlayerData()).stream().skip(skip).toList());
     }
 
     public void playerLifeDecrease(){
@@ -147,23 +165,16 @@ public class BattleControllerImpl implements  BattleController{
     public JPanel getCurrentPanel(){
         return this.currentPanel;
     }
-
-    private void setActionListenerInfo(){
-        ActionListener actionListenerInfo = e -> switchPanels();
-        this.battlePanel.setActionListenerInfoButton(actionListenerInfo);
-    }
-    private void switchPanels(){
-        this.frame.getContentPane().removeAll();
-
-        this.currentPanel=new TutorialPanel().getPanel();
-        this.frame.getContentPane().add(this.getCurrentPanel());
-        this.frame.validate();
-
-    }
-
+    //TESTING
     public JFrame getFrame() {
         return frame;
     }
+
+    private void setActionListenerInfo(){
+        ActionListener actionListenerInfo = e -> this.battlePanel.showTutorialPanel();
+        this.battlePanel.setActionListenerInfoButton(actionListenerInfo);
+    }
+
 
     private void setActionListenerPass(){
         ActionListener actionListenerInfo = e -> pass();
@@ -185,6 +196,5 @@ public class BattleControllerImpl implements  BattleController{
         };
         this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);
     }
-
 
 }

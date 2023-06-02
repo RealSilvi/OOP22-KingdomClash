@@ -7,12 +7,14 @@ import it.unibo.view.battle.Troop;
 import javax.swing.text.html.Option;
 import java.util.*;
 
-import static it.unibo.controller.battle.BattleControllerImpl.PLAYER;
+import static it.unibo.controller.battle.BattleControllerImpl.*;
 import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
 public class BattleModelImpl implements BattleModel{
 
     public static final int BOT = 0;
+    public static final int WIN_BOT = 2;
+    public static final int WIN_PLAYER = 3;
     public static final int MAX_ROUND = FightData.MAX_ROUND;
     private Optional<FightData> fightData;
 
@@ -36,7 +38,7 @@ public class BattleModelImpl implements BattleModel{
     }
 
     @Override
-    public void battlePass() {
+    public void battlePass(Integer finished) {
 
         fightData.get().getPlayerData().setClickedToChosen();
 
@@ -48,17 +50,18 @@ public class BattleModelImpl implements BattleModel{
                         key = fightData.get().getBotData().getKeyFromTroop(Troop.getNullable(x));
                         fightData.get().getBotData().addBotTroop(key);
                     } else {
-                        if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                            fightData.get().getBotData().addBotTroop(fightData.get().getBotData().selectRandomTroop());
+                        if(finished == CONTINUE){
+                            if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                                fightData.get().getBotData().addBotTroop(fightData.get().getBotData().selectRandomTroop());
+                            }
                         }
                     }
                 }
             });
         }else{
             if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                int keyy = fightData.get().getBotData().selectRandomTroop();
-                fightData.get().getBotData().addBotTroop(keyy);
-                System.out.println("è cliccata quindi?" + fightData.get().getBotData().getCells(keyy).getClicked());
+                int key = fightData.get().getBotData().selectRandomTroop();
+                fightData.get().getBotData().addBotTroop(key);
             }
         }
 
@@ -93,8 +96,7 @@ public class BattleModelImpl implements BattleModel{
                     if(playerField.get().getLevel() > botField.get().getLevel()){
                         if(!playerField.get().isDefense()){
                             if(botLife == 1){
-                                return BOT;
-                                //TODO player win
+                                return WIN_PLAYER;
                             }else{
                                 return BOT;
                             }
@@ -102,8 +104,7 @@ public class BattleModelImpl implements BattleModel{
                     }else if(playerField.get().getLevel() < botField.get().getLevel()){
                         if(playerField.get().isDefense()){
                             if(playerLife == 1){
-                                return PLAYER;
-                                //TODO bot win
+                                return WIN_BOT;
                             }else{
                                 return PLAYER;
                             }
@@ -111,15 +112,13 @@ public class BattleModelImpl implements BattleModel{
                     }
                 }else if(botField.isEmpty() && playerField.isPresent() && (!playerField.get().isDefense())){
                     if(botLife == 1){
-                        return BOT;
-                        //TODO player win
+                        return WIN_PLAYER;
                     }else{
                         return BOT;
                     }
                 }else if(playerField.isEmpty() && botField.isPresent() && (!botField.get().isDefense())){
                     if(playerLife == 1){
-                        return PLAYER;
-                        //TODO bot win
+                        return WIN_BOT;
                     }else{
                         return PLAYER;
                     }
