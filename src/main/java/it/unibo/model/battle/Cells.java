@@ -10,7 +10,7 @@ public interface Cells {
      * @param troop the troop which substitute the old one.
      */
 
-    public void setTroop(Troop troop);
+    void setTroop(Troop troop);
 
     /**
      * Change the status of a troop.
@@ -20,7 +20,7 @@ public interface Cells {
      *                it means that the troop is being removed from the field.
      */
 
-    public void setClicked(Boolean clicked);
+    void setClicked(Boolean clicked);
 
     /**
      * Change the status of a troop.
@@ -30,7 +30,7 @@ public interface Cells {
      *               the troop will not be anymore immutable.
      */
 
-    public void setChosen(Boolean chosen);
+    void setChosen(Boolean chosen);
 
     /**
      * Takes the troop.
@@ -38,7 +38,7 @@ public interface Cells {
      * @return the troop.
      */
 
-    public Troop getTroop();
+    Troop getTroop();
 
     /**
      * Takes the status.
@@ -46,7 +46,7 @@ public interface Cells {
      * @return the status, true if clicked, false if not.
      */
 
-    public Boolean getClicked();
+    Boolean getClicked();
 
     /**
      * Takes the status.
@@ -54,7 +54,7 @@ public interface Cells {
      * @return the status, true if chosen, false if not.
      */
 
-    public Boolean getChosen();
+    Boolean getChosen();
 
 
 }

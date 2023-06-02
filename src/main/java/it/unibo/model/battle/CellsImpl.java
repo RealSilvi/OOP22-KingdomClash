@@ -33,10 +33,10 @@ public class CellsImpl implements Cells {
     public void setChosen(Boolean chosen) {
 
         if (chosen) {
-            this.chosen = chosen;
+            this.chosen = true;
             this.clicked = true;
         } else {
-            this.chosen = chosen;
+            this.chosen = false;
         }
 
     }
