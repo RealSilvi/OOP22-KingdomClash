@@ -138,8 +138,8 @@ public class BattleControllerImpl implements  BattleController{
     }
 
     public void update(Integer skip){
-        battlePanel.updateField(fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).stream().skip(skip).toList(),
-                fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).stream().skip(skip).toList());
+        battlePanel.updateField(fightData.get().getPlayerData().ExOrdered(fightData.get().getBotData()).stream().skip(skip).toList(),
+                fightData.get().getBotData().ExOrdered(fightData.get().getPlayerData()).stream().skip(skip).toList());
     }
 
     public void playerLifeDecrease(){

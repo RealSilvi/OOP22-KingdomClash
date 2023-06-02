@@ -7,6 +7,8 @@ import it.unibo.view.battle.Troop;
 
 import java.util.*;
 
+import static it.unibo.model.data.FightData.TOTAL_TROOPS;
+
 public class PlayerDataImpl implements PlayerData {
 
     public static final int PLAYER_TROOPS = FightData.PLAYER_TROOPS;
@@ -134,6 +136,50 @@ public class PlayerDataImpl implements PlayerData {
 
         this.playerTroop.values().forEach(x -> x.setChosen(true));
 
+    }
+
+    public List<Optional<Troop>> ExOrdered(BotData botData){
+        List<Optional<Troop>> playerOrdered = getOrderedField(botData);
+        List<Optional<Troop>> botOrdered = botData.getOrderedField(this);
+        List<Optional<Troop>> finalPlayer = new ArrayList<>(TOTAL_TROOPS);
+        List<Optional<Troop>> finalBot = new ArrayList<>(TOTAL_TROOPS);
+        int max_position = TOTAL_TROOPS-1;
+
+        for(int a = 0; a < TOTAL_TROOPS; a++){
+            finalPlayer.add(Optional.empty());
+            finalBot.add(Optional.empty());
+        }
+
+        int f = 0;
+        for(int i= 0; i < playerOrdered.size(); i++){
+            if(playerOrdered.get(i).isPresent() && !playerOrdered.get(i).get().isDefense()){
+                finalPlayer.set(i,playerOrdered.get(i));
+                if(botOrdered.get(i).isPresent()){
+                    finalBot.set(i,botOrdered.get(i));
+                }else{
+                    finalBot.set(i, Optional.empty());
+                }
+            }else if(playerOrdered.get(i).isPresent() && playerOrdered.get(i).get().isDefense()){
+                finalPlayer.set(max_position-(f),playerOrdered.get(i));
+                if(botOrdered.get(i).isPresent()){
+                    finalBot.set(max_position-(f++),botOrdered.get(i));
+                }else{
+                    finalBot.set(max_position-(f++), Optional.empty());
+                }
+            }else if(playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && !botOrdered.get(i).get().isDefense()){
+                finalBot.set(max_position-(f),botOrdered.get(i));
+                finalPlayer.set(max_position-(f++), Optional.empty());
+            }else if(playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && botOrdered.get(i).get().isDefense()){
+                finalBot.set(i,botOrdered.get(i));
+                finalPlayer.set(i,Optional.empty());
+            }else if(playerOrdered.get(i).isEmpty() && botOrdered.get(i).isEmpty()){
+                finalPlayer.set(i,Optional.empty());
+                finalBot.set(i,Optional.empty());
+            }
+        }
+
+
+        return finalPlayer;
     }
 
 }

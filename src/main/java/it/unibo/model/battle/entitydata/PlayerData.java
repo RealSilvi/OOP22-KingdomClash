@@ -92,4 +92,6 @@ public interface PlayerData {
 
     public void setAllChosen();
 
+    public List<Optional<Troop>> ExOrdered(BotData botData);
+
 }
