@@ -10,44 +10,51 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class JSonToData{
+public class JSonToData {
 
-    private  JSONObject jsonObject;
-    private  JSONObject tutorialPanelData;
-    private final JSONParser jsonParser=new JSONParser();
+    private JSONObject jsonObject;
+    private JSONObject battlePanelData;
+    private JSONObject textPanelData;
+    private JSONObject tutorialPanelData;
+    private final JSONParser jsonParser = new JSONParser();
 
     public JSonToData() {
-        try(Reader reader = new FileReader("src/main/java/it/unibo/view/battle/config/package.json")){
+        try (Reader reader = new FileReader("src/main/java/it/unibo/view/battle/config/package.json")) {
             jsonObject = (JSONObject) jsonParser.parse(reader);
-            tutorialPanelData = (JSONObject) jsonObject.get("TutorialPanel");
-        }catch (Exception ignored){
-            jsonObject=new JSONObject(Map.of("bella","zio"));
-            tutorialPanelData= new JSONObject(Map.of("adv","dasd"));
+            battlePanelData = (JSONObject) jsonObject.get("BattlePanel");
+            textPanelData = (JSONObject) battlePanelData.get("TextPanels");
+            tutorialPanelData = (JSONObject) textPanelData.get("TutorialPanel");
+        } catch (Exception ignored) {
+            jsonObject = new JSONObject(Map.of("bella", "zio"));
+            tutorialPanelData = new JSONObject(Map.of("adv", "dasd"));
         }
-    }
+        System.out.println(jsonObject.keySet());
+        System.out.println(jsonObject.values());
+        }
 
-    public String getTutorialPanelsFields(String keyPanel, String keyField){
-        try{
+    public String getTutorialPanelsFields(String keyPanel, String keyField) {
+        try {
             JSONObject topPanelData;
             topPanelData = (JSONObject) this.tutorialPanelData.get(keyPanel);
             return (String) topPanelData.get(keyField);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException();
         }
     }
 
 
-    public Map<Troop,Integer> getBotTroop(final int lv){
+    public Map<Troop, Integer> getBotTroop(final int lv) {
         return null;
     }
 
-    public Map<Troop,Integer> getPlayerTroop(){
+    public Map<Troop, Integer> getPlayerTroop() {
         return this.getBotTroop(1);
     }
 
     public JSONObject categoryGetter(String categoryName) {
         return (JSONObject) jsonObject.get(categoryName);
     }
+
     public String getProperty(String pathToObject) {
         List<String> pathSequence = Arrays.asList(pathToObject.split("."));
         JSONObject dataObject = this.jsonObject;
