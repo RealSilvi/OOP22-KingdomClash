@@ -72,13 +72,13 @@ public class TextPanelFactoryImpl implements TextPanelFactory {
 
     private static class TextPanel extends DrawPanel {
 
-        private final static int VERTICAL_PADDING=10;
-        private final static int HORIZONTAL_PADDING=30;
+        private final static int VERTICAL_PADDING = 10;
+        private final static int HORIZONTAL_PADDING = 30;
         private final static float TITLE_FONT_SIZE = 30f;
         private final static float CONTENT_FONT_SIZE = 20f;
 
-        public TextPanel(final String title,final String content,final Dimension size) {
-            super(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,size);
+        public TextPanel(final String title, final String content, final Dimension size) {
+            super(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, size);
 
             JLabel title1 = new JLabel(title);
             JTextArea content1 = new JTextArea(content);
@@ -106,7 +106,7 @@ public class TextPanelFactoryImpl implements TextPanelFactory {
             title1.setForeground(ImageIconsSupplier.PRIMARY_COLOR);
             content1.setForeground(ImageIconsSupplier.PRIMARY_COLOR);
 
-            this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(title1);
             this.add(content1);
         }
