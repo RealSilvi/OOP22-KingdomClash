@@ -1,12 +1,13 @@
 package it.unibo.model.data;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
  * A simple data class that stores a type of resource and it's corresponding amount
  */
-public class Resource {
+public class Resource implements Serializable {
     /**
      * An enum containing all type of resources
      */

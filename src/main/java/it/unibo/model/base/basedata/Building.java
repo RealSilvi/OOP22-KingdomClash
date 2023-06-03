@@ -7,11 +7,12 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 /**
  * A simple data class that stores information about a building in the game
  */
-public class Building {
+public class Building implements Serializable {
     /**
      * Maximum level that the buildings can reach
      */

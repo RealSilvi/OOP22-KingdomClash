@@ -1,12 +1,17 @@
 package it.unibo.model.data;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import it.unibo.model.base.basedata.Building;
-import it.unibo.view.battle.Troop;
 
 /**
  * A simple data class to store all the game's information
@@ -15,7 +20,7 @@ public class GameData implements Serializable {
     private String playerName;
     private Set<Resource> resources;
     private ConcurrentMap<UUID, Building> buildings;
-    private Map<Troop, Integer> playerArmyLevel;
+    private Map<TroopType, Integer> playerArmyLevel;
 
     private transient GameConfiguration configuration;
 
@@ -25,8 +30,9 @@ public class GameData implements Serializable {
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
         this.fightData = Optional.empty();
-        this.playerArmyLevel = new EnumMap<>(Troop.class);
-        Arrays.stream(Troop.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 0));
+        this.playerArmyLevel = new EnumMap<>(TroopType.class);
+        this.configuration = new GameConfiguration();
+        Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 0));
     }
 
     public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings, Optional<FightData> fightData, GameConfiguration configuration) {
@@ -98,7 +104,7 @@ public class GameData implements Serializable {
      *
      * @return a map with the troop and the level of the troop as an integer
      */
-    public Map<Troop, Integer> getPlayerArmyLevel() {
+    public Map<TroopType, Integer> getPlayerArmyLevel() {
         return this.playerArmyLevel;
     }
 
@@ -107,7 +113,7 @@ public class GameData implements Serializable {
      *
      * @param playerArmyLevel a map with the troop and the level of the troop as an integer
      */
-    public void setPlayerArmyLevel(Map<Troop, Integer> playerArmyLevel) {
+    public void setPlayerArmyLevel(Map<TroopType, Integer> playerArmyLevel) {
         this.playerArmyLevel = playerArmyLevel;
     }
 
@@ -119,4 +125,10 @@ public class GameData implements Serializable {
         this.fightData = fightData;
     }
 
+    /**
+     * @return The game's configuration
+     */
+    public GameConfiguration getGameConfiguration() {
+        return this.configuration;
+    }
 }
