@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +22,8 @@ public class BaseModelImplTest {
     private BaseModel baseModel;
     private int counter;
 
-    @Test
-    public void testBuildMultipleStructures() {
+    @org.junit.jupiter.api.BeforeEach
+    public void buildAllStructures() {
         initModel();
         float xvariation = 0.0f;
         for (BuildingTypes currentType : BuildingTypes.values()) {
@@ -30,6 +31,11 @@ public class BaseModelImplTest {
             Point2D pos = new Point2D.Float(xvariation, 0);
             Assertions.assertDoesNotThrow(() -> baseModel.buildStructure(pos, currentType, 0, true));
         }
+    }
+
+    @Test
+    public void testBuildMultipleStructures() {
+        buildAllStructures();
     }
 
     @Test
