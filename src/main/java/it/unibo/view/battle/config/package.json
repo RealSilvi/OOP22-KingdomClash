@@ -16,23 +16,23 @@
       "TutorialPanel": {
         "NorthPanel": {
           "title": "TopPanel-Title",
-          "text": "TopPanel-Testo"
+          "text": "This panel contains the opponent's set of dice."
         },
         "SouthPanel": {
           "title": "BootomPanel-Title",
-          "text": "BottomPanel-Test"
+          "text": "In this panel, you'll find your set of data, where you can select troops to deploy on the battlefield. The chosen troops are automatically arranged on the battlefield."
         },
         "WestPanel": {
           "title": "LeftPanel-Title",
-          "text": "LeftPanel-Testo"
+          "text": "Here, the combat effectiveness of each troop is compared to the level of the opponent's troops. If two troops of the same level clash, they cancel each other out. However, if one troop has a higher level than the other, it prevails over the other."
         },
         "EastPanel": {
           "title": "RightPanel-Title",
-          "text": "RightPanel-Testo"
+          "text": "This panel provides information about the troops currently on the battlefield."
         },
         "CenterPanel": {
           "title": "CenterPanel-Title",
-          "text": "CenterPanel-Testo"
+          "text": "Within this panel, you'll find the battlefield,where deployed troops are automatically arranged. The outcome of the combat between one troop and another is displayed in the information panel."
         }
       }
     }
