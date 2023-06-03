@@ -3,6 +3,7 @@ package it.unibo.model.base.basedata;
 import java.util.Collections;
 import java.util.Set;
 
+import it.unibo.kingdomclash.util.Pair;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
 
@@ -38,14 +39,15 @@ public class Building implements Serializable {
      */
     public static final int PRODUCTION_TIME_REDUCITON_PERCENTAGE = 0;
 
+    /*All timings should be in milliseconds*/
     private BuildingTypes type;
     private int level;
-    private long buildingTime;                        /*milliseconds*/
+    private long buildingTime;
     private long productionTime;
     private boolean beingBuilt;
     private int buildingProgress;
     private int productionProgress;
-    private Point2D structurePos;
+    private Pair<Float, Float> structurePos;
     private Set<Resource> productionAmount;
     private Set<Resource> buildingValue;
 
@@ -61,7 +63,7 @@ public class Building implements Serializable {
         this.beingBuilt = beingBuilt;
         this.buildingProgress = buildingProgress;
         this.productionProgress = productionProgress;
-        this.structurePos = structurePos;
+        this.structurePos = pointToFloatPair(structurePos);
         this.productionAmount = productionAmount;
         this.buildingValue = buildingValue;
     }
@@ -176,10 +178,8 @@ public class Building implements Serializable {
      *
      * @return a Point2D that represents the building's current location
      */
-    //Intended behaviour
-    @SuppressWarnings("java:S2153")
     public synchronized Point2D getStructurePos() {
-        return new Point2D.Float(Double.valueOf(structurePos.getX()).floatValue(), Double.valueOf(structurePos.getY()).floatValue());
+        return new Point2D.Float(structurePos.getFirst(), structurePos.getSecond());
     }
 
     /**
@@ -188,7 +188,7 @@ public class Building implements Serializable {
      * @param structurePos a Point2D that represents the building's location
      */
     public synchronized void setStructurePos(Point2D structurePos) {
-        this.structurePos = structurePos;
+        this.structurePos = pointToFloatPair(structurePos);
     }
 
     /**
@@ -243,5 +243,12 @@ public class Building implements Serializable {
      */
     public void setProductionTime(long productionTime) {
         this.productionTime = productionTime;
+    }
+
+    //Double is boxed for a safe conversion
+    @SuppressWarnings("java:S2153")
+    private Pair<Float, Float> pointToFloatPair(Point2D positionToConvert) {
+        return new Pair<>(Double.valueOf(positionToConvert.getX()).floatValue(),
+            Double.valueOf(positionToConvert.getY()).floatValue());
     }
 }
