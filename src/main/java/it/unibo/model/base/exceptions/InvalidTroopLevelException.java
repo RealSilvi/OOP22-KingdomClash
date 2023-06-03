@@ -1,9 +1,9 @@
 package it.unibo.model.base.exceptions;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 public class InvalidTroopLevelException extends TroopException {
-    public InvalidTroopLevelException(Troop troopType, int level) {
+    public InvalidTroopLevelException(TroopType troopType, int level) {
         //TODO: Ouptut max level to string when ready
         super("Level " + level + " is invalid for troop: "
                 + troopType.name() + " Max level is: TO BE ADDED");

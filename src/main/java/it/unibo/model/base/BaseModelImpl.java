@@ -31,8 +31,8 @@ import it.unibo.model.base.internal.BuildingBuilderImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
+import it.unibo.model.data.TroopType;
 import it.unibo.model.data.Resource.ResourceType;
-import it.unibo.view.battle.Troop;
 
 public class BaseModelImpl implements BaseModel {
 
@@ -44,13 +44,14 @@ public class BaseModelImpl implements BaseModel {
     private List<BuildingObserver> buildingProductionObservers;
 
     public BaseModelImpl(@NotNull GameData gameData) {
+        logger.finest("Initializing BaseModel...");
         Objects.requireNonNull(gameData);
         this.gameData = gameData;
         this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         this.buildingStateChangedObservers = new ArrayList<>();
         this.buildingProductionObservers = new ArrayList<>();
         initializeDataStructures();
-        logger.info("Base model succesfully initialized");
+        logger.finest("Base model succesfully initialized!");
     }
 
     @Override
@@ -190,12 +191,12 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public void upgradeTroop(Troop troopToUpgrade) throws InvalidTroopLevelException {
-        upgradeTroop(troopToUpgrade, troopToUpgrade.getLevel() + 1);
+    public void upgradeTroop(TroopType troopToUpgrade) throws InvalidTroopLevelException {
+        upgradeTroop(troopToUpgrade, gameData.getPlayerArmyLevel().get(troopToUpgrade) + 1);
     }
 
     @Override
-    public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException {
+    public void upgradeTroop(TroopType troopToUpgrade, int level) throws InvalidTroopLevelException {
         //TODO Remove placeholder when limit is implemented and finish this function
         //TODO Implement cost system when battle part is complete
         int placeholderLimit = 3;
@@ -208,7 +209,7 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public Map<Troop, Integer> getTroopMap() {
+    public Map<TroopType, Integer> getTroopMap() {
         return Collections.unmodifiableMap(gameData.getPlayerArmyLevel());
     }
 

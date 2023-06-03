@@ -19,8 +19,8 @@ import it.unibo.model.base.exceptions.InvalidTroopLevelException;
 import it.unibo.model.base.exceptions.ResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
+import it.unibo.model.data.TroopType;
 import it.unibo.model.data.Resource.ResourceType;
-import it.unibo.view.battle.Troop;
 
 public class BaseControllerImpl implements Controller, BaseController {
 
@@ -142,12 +142,12 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public Map<Troop, Integer> requestTroopLevels() {
+    public Map<TroopType, Integer> requestTroopLevels() {
         return baseModel.getTroopMap();
     }
 
     @Override
-    public boolean upgradeTroop(Troop troopToUpgrade, int levelToUpgradeTo) {
+    public boolean upgradeTroop(TroopType troopToUpgrade, int levelToUpgradeTo) {
         boolean operationSuccessful = false;
         try {
             baseModel.upgradeTroop(troopToUpgrade, levelToUpgradeTo);
@@ -159,7 +159,7 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public boolean upgradeTroop(Troop troopToUpgrade) {
+    public boolean upgradeTroop(TroopType troopToUpgrade) {
         return upgradeTroop(troopToUpgrade, baseModel.getTroopMap().get(troopToUpgrade));
     }
 

@@ -236,7 +236,7 @@ public class ThreadManagerImpl implements ThreadManager {
                 long operationStartTime = System.currentTimeMillis();
                 int remainingWork = 100 - operation.apply(assignedBuilding);
                 if (remainingWork == 0 && threadType.equals(ThreadSelector.CONSTRUCTION)) {
-                    logger.log(Level.INFO, "Operations on building id {0} completed!", assignedBuilding);
+                    logger.log(Level.FINEST, "Operations on building id {0} completed!", assignedBuilding);
                     threadClosureOperation();
                     return;
                 }
@@ -249,6 +249,7 @@ public class ThreadManagerImpl implements ThreadManager {
                 try {
                     sleep(waitTime);
                 } catch (InterruptedException e) {
+                    logger.severe("Thread killed!");
                     threadClosureOperation();
                     Thread.currentThread().interrupt();
                 }
