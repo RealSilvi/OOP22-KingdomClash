@@ -1,6 +1,8 @@
 package it.unibo.kingdomclash.util;
 
-public class Pair<X, Y> {
+import java.io.Serializable;
+
+public class Pair<X extends Serializable, Y extends Serializable> implements Serializable {
     private X first;
     private Y second;
 
