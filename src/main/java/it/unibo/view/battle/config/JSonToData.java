@@ -28,9 +28,7 @@ public class JSonToData {
             jsonObject = new JSONObject(Map.of("bella", "zio"));
             tutorialPanelData = new JSONObject(Map.of("adv", "dasd"));
         }
-        System.out.println(jsonObject.keySet());
-        System.out.println(jsonObject.values());
-        }
+    }
 
     public String getTutorialPanelsFields(String keyPanel, String keyField) {
         try {

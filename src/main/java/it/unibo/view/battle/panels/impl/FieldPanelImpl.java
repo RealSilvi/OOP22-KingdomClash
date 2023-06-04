@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.panels.api.FieldPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
@@ -51,14 +51,9 @@ public class FieldPanelImpl implements FieldPanel {
     }
 
     @Override
-    public void redraw(final List<Optional<Troop>> playerTroops, final List<Optional<Troop>> botTroops) {
+    public void redraw(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botTroops) {
         this.restart();
-        //TODO togli
-        System.out.println("playerTroop" + playerTroops);
-        System.out.println("playerField" + armyPlayer.size());
-        System.out.println("botTroop" + botTroops);
-        System.out.println("botField" + armyBot.size());
-        System.out.println("\n\n");
+
         IntStream.range(0, playerTroops.size()).forEach(x -> {
             if (playerTroops.get(x).isEmpty()) {
                 this.armyPlayer.get(x).setEmpty();

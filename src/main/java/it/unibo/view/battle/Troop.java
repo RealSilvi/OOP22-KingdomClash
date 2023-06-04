@@ -1,7 +1,6 @@
 package it.unibo.view.battle;
 
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.Random;
 //TODO: Remove this enum because it has become useless now
 public enum Troop {

@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.entities.api;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 /**
  * Define a JLabel for displaying a Troop.
@@ -18,5 +18,5 @@ public interface TroopLabel {
      *
      * @param troop the troop to display.
      */
-    void setTroop(Troop troop);
+    void setTroop(TroopType troop);
 }

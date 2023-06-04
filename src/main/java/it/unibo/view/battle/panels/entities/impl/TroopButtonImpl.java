@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.entities.impl;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
@@ -9,16 +9,15 @@ import java.awt.*;
 
 public class TroopButtonImpl implements TroopButton {
 
-    private Troop troop;
+    private TroopType troop;
     private final Dimension size;
     private final PositionJbutton button;
 
     /**
      * @param troop  the troop to set on this button
-     * @param status the enable status of this button
      * @param size   the dimension of this button
      */
-    public TroopButtonImpl(final Troop troop, final boolean status, final Dimension size, final int position) {
+    public TroopButtonImpl(final TroopType troop, final Dimension size, final int position) {
         this.button = new PositionJbutton(position);
         this.troop = troop;
         this.size = size;
@@ -33,16 +32,27 @@ public class TroopButtonImpl implements TroopButton {
     }
 
     @Override
-    public Troop getTroop() {
+    public TroopType getTroop() {
         return this.troop;
     }
 
     @Override
-    public void setTroop(final Troop troop) {
-        this.troop = troop;
-        this.button.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop, this.size));
-        this.button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop, this.size));
+    public void setTroop(TroopType troop) {
+
     }
+
+//TODO fai il timer come spin effect
+    public void setTroop(final TroopType troop, final int delay) {
+        this.troop = troop;
+        Timer timer = new Timer(delay, e -> {
+            // the actionPerformed call-back code
+            button.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop, size));
+            button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(troop, size));
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
 
     /**
      * Overwritten the method to change the border of the button
@@ -59,7 +69,7 @@ public class TroopButtonImpl implements TroopButton {
         return this.button;
     }
 
-    public class PositionJbutton extends JButton {
+    public static class PositionJbutton extends JButton {
 
         private final int position;
         private boolean selectedBorder;

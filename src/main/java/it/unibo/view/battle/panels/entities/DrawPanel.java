@@ -6,15 +6,15 @@ import java.awt.*;
 /**
  * Extends a JPanel defining the size and a background.<br>
  * The background could be a color or an image.
- * The background' image is created replicating the input
+ * The background's image is created replicating the input
  * image for all over the size of the Panel.
  */
 public class DrawPanel extends JPanel {
 
-    private static final int WIDHT_IMAGE_FILL_PATTERN = 200;
+    private static final int WIDTH_IMAGE_FILL_PATTERN = 200;
     private static final int HEIGHT_IMAGE_FILL_PATTERN = 200;
-    private static final int HGAP = 20;
-    private static final int VGAP = 10;
+    private static final int H_GAP = 20;
+    private static final int V_GAP = 10;
     private static final Color DEFAULT_COLOR = Color.darkGray;
 
     private final Image backgroundImage;
@@ -25,10 +25,10 @@ public class DrawPanel extends JPanel {
      * @param size            The dimension of the Panel.
      */
     public DrawPanel(final Image backgroundImage, final Dimension size) {
-        this.backgroundImage = backgroundImage.getScaledInstance(WIDHT_IMAGE_FILL_PATTERN, HEIGHT_IMAGE_FILL_PATTERN, Image.SCALE_DEFAULT);
+        this.backgroundImage = backgroundImage.getScaledInstance(WIDTH_IMAGE_FILL_PATTERN, HEIGHT_IMAGE_FILL_PATTERN, Image.SCALE_DEFAULT);
         this.size = size;
 
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, HGAP, VGAP));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, H_GAP, V_GAP));
         this.setPreferredSize(size);
     }
 
@@ -82,7 +82,7 @@ public class DrawPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
         for (int y = 0; y < this.size.height; y += HEIGHT_IMAGE_FILL_PATTERN) {
-            for (int x = 0; x < this.size.width; x += WIDHT_IMAGE_FILL_PATTERN) {
+            for (int x = 0; x < this.size.width; x += WIDTH_IMAGE_FILL_PATTERN) {
                 g2d.drawImage(backgroundImage, x, y, this);
             }
         }
