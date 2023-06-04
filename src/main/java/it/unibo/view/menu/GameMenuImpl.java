@@ -1,13 +1,7 @@
 package it.unibo.view.menu;
 
-import it.unibo.view.battle.panels.entities.DrawPanel;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.image.ImageObserver;
 
 public class GameMenuImpl implements GameMenu {
 
@@ -36,6 +30,9 @@ public class GameMenuImpl implements GameMenu {
         JButton options = new JButton("OPTIONS", BACKGROUND_BUTTON);
         options.setHorizontalTextPosition(SwingConstants.CENTER);
         options.setFocusable(false);
+        JButton info = new JButton("INFO", BACKGROUND_BUTTON);
+        info.setHorizontalTextPosition(SwingConstants.CENTER);
+        info.setFocusable(false);
 
         Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
         ex.setFont(font);
@@ -67,9 +64,61 @@ public class GameMenuImpl implements GameMenu {
         options.setForeground(Color.BLACK);
         panel.add(options, grid);
 
-        frame.getContentPane().add(panel);
+        grid.gridy = 4;
+        info.setFont(font);
+        info.setPreferredSize(ex.getPreferredSize());
+        info.setForeground(Color.BLACK);
+        panel.add(info, grid);
 
+        info.addActionListener(e -> {
+            JPanel infopanel = new ImagePanel(BACKGROUND_PANEL.getImage());
+            infopanel.setLayout(new GridBagLayout());
+            GridBagConstraints grid1 = new GridBagConstraints();
+            grid1.gridx = 1;
+            grid1.gridy = 1;
+            grid1.ipadx = (WIDTH_BUTTON*10);
+            grid1.ipady = (HEIGHT_BUTTON*10);
+            grid1.insets = new Insets(30, 0, 0, 0);
+
+            Font font2 = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON))/2);
+
+            ImageTextArea label = new ImageTextArea();
+            label.setImage(BACKGROUND_BUTTON.getImage());
+            label.setFont(font2);
+            label.setWrapStyleWord(true);
+            label.setLineWrap(true);
+            label.setText("ciaooooooooooooooooooooooooooooooooooooo");
+            label.setEditable(false);
+            label.setForeground(Color.BLACK);
+            label.setPreferredSize(ex.getPreferredSize());
+            label.setFocusable(false);
+            infopanel.add(label, grid1);
+
+            JButton exit = new JButton("EXIT", BACKGROUND_BUTTON);
+            exit.setHorizontalTextPosition(SwingConstants.CENTER);
+            exit.setFocusable(false);
+            grid1.gridy = 2;
+            grid1.ipadx = (WIDTH_BUTTON);
+            grid1.ipady = (HEIGHT_BUTTON);
+            exit.setFont(font);
+            exit.setPreferredSize(ex.getPreferredSize());
+            exit.setForeground(Color.BLACK);
+            infopanel.add(exit, grid1);
+
+            exit.addActionListener(e1 -> {
+                frame.setContentPane(panel);
+                frame.setVisible(true);
+                frame.revalidate();
+            });
+
+            frame.setContentPane(infopanel);
+            frame.setVisible(true);
+            frame.revalidate();
+        });
+
+        frame.setContentPane(panel);
         frame.setVisible(true);
+        frame.revalidate();
 
     }
 
