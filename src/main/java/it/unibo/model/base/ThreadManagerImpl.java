@@ -17,9 +17,13 @@ import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.base.internal.BuildingBuilderImpl;
 
+/**
+ * Simple thread manager implementation that can handle multiple threads
+ * given action and timing functions.
+ */
 //threadsRuning boolean map is always initialized
 @SuppressWarnings("java:S5411")
-public class ThreadManagerImpl implements ThreadManager {
+public final class ThreadManagerImpl implements ThreadManager {
     private boolean keepAliveThreads = true;
 
     private BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
@@ -32,7 +36,14 @@ public class ThreadManagerImpl implements ThreadManager {
     private ConcurrentMap<ThreadSelector, Boolean> threadsRunning;
     private ConcurrentMap<ThreadSelector, Object> threadLocks;
 
-    public ThreadManagerImpl(@Nonnull BaseModel baseModel, ConcurrentMap<UUID, Building> buildingMapRef) {
+    /**
+     * Constructs a new instance of ThreadManagerImpl given a reference model
+     * and a map of building to work on.
+     * @param baseModel the base model to interact with
+     * @param buildingMapRef a concurrent map of buildings
+     */
+    public ThreadManagerImpl(final @Nonnull BaseModel baseModel,
+        final ConcurrentMap<UUID, Building> buildingMapRef) {
         this.baseModel = baseModel;
         this.threadMap = new ConcurrentHashMap<>();
         this.threadsRunning = new ConcurrentHashMap<>();
@@ -43,10 +54,6 @@ public class ThreadManagerImpl implements ThreadManager {
             this.threadsRunning.put(selection, true);
             this.threadLocks.put(selection, new Object());
         }
-    }
-
-    public ThreadManagerImpl(ConcurrentMap<ThreadSelector, ConcurrentMap<UUID, WorkerThread>> threadMap) {
-        this.threadMap = threadMap;
     }
 
     @Override
@@ -66,7 +73,7 @@ public class ThreadManagerImpl implements ThreadManager {
     }
 
     @Override
-    public void pauseThreads(ThreadSelector threadType) {
+    public void pauseThreads(final ThreadSelector threadType) {
         threadsRunning.put(threadType, false);
     }
 
@@ -78,7 +85,7 @@ public class ThreadManagerImpl implements ThreadManager {
     }
 
     @Override
-    public boolean areThreadsRunning(ThreadSelector threadType) {
+    public boolean areThreadsRunning(final ThreadSelector threadType) {
         return this.threadsRunning.get(threadType);
     }
 
@@ -92,20 +99,22 @@ public class ThreadManagerImpl implements ThreadManager {
     }
 
     @Override
-    public void addBuilding(UUID buildingIdentifier) {
+    public void addBuilding(final UUID buildingIdentifier) {
         ThreadSelector selection = ThreadSelector.PRODUCTION;
         if (buildingMapRef.get(buildingIdentifier).isBeingBuilt()) {
             selection = ThreadSelector.CONSTRUCTION;
             removeBuilding(buildingIdentifier);
-            threadMap.get(selection).put(buildingIdentifier, new ThreadBuilder().createBuildingThread(buildingIdentifier));
+            threadMap.get(selection).put(buildingIdentifier,
+                    new ThreadBuilder().createBuildingThread(buildingIdentifier));
         } else {
-            threadMap.get(selection).put(buildingIdentifier, new ThreadBuilder().createProductionThread(buildingIdentifier));
+            threadMap.get(selection).put(buildingIdentifier,
+                    new ThreadBuilder().createProductionThread(buildingIdentifier));
         }
         threadMap.get(selection).get(buildingIdentifier).start();
     }
 
     @Override
-    public void removeBuilding(UUID buildingToRemove) {
+    public void removeBuilding(final UUID buildingToRemove) {
         if (!isThreadPresent(buildingToRemove)) {
             return;
         }
@@ -120,7 +129,7 @@ public class ThreadManagerImpl implements ThreadManager {
     }
 
     @Override
-    public void removeBuildings(Set<UUID> buildingMap) {
+    public void removeBuildings(final Set<UUID> buildingMap) {
         buildingMap.forEach(this::removeBuilding);
     }
 
@@ -129,21 +138,21 @@ public class ThreadManagerImpl implements ThreadManager {
         threadMap.forEach((selection, idThreadMap) -> removeBuildings(idThreadMap.keySet()));
     }
 
-    //Unused function, might be used in the future
+    // Unused function, might be used in the future
     @SuppressWarnings("unused")
     private synchronized boolean shouldThreadsBeAlive() {
         return this.keepAliveThreads;
     }
 
-    private synchronized void setKeepAliveThreads(boolean keepAliveThreads) {
+    private synchronized void setKeepAliveThreads(final boolean keepAliveThreads) {
         this.keepAliveThreads = keepAliveThreads;
     }
 
     private class ThreadBuilder {
-        public WorkerThread createBuildingThread(UUID identifier) {
+        public WorkerThread createBuildingThread(final UUID identifier) {
             Function<UUID, Integer> buildingOperation = new Function<>() {
                 @Override
-                public Integer apply(UUID buildingToBuildIdentifier) {
+                public Integer apply(final UUID buildingToBuildIdentifier) {
                     int constructionPercentage = buildingMapRef.get(buildingToBuildIdentifier)
                             .getBuildingProgress();
                     constructionPercentage++;
@@ -167,10 +176,10 @@ public class ThreadManagerImpl implements ThreadManager {
                     identifier);
         }
 
-        public WorkerThread createProductionThread(UUID identifier) {
+        public WorkerThread createProductionThread(final UUID identifier) {
             Function<UUID, Integer> productionOperation = new Function<>() {
                 @Override
-                public Integer apply(UUID buildingForProductionIdentifier) {
+                public Integer apply(final UUID buildingForProductionIdentifier) {
                     int productionPercentage = buildingMapRef.get(buildingForProductionIdentifier)
                             .getProductionProgress();
                     productionPercentage++;
@@ -178,7 +187,8 @@ public class ThreadManagerImpl implements ThreadManager {
                     if (productionPercentage == 100) {
                         buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(0);
                         try {
-                            baseModel.applyResources(buildingMapRef.get(buildingForProductionIdentifier).getProductionAmount());
+                            baseModel.applyResources(
+                                    buildingMapRef.get(buildingForProductionIdentifier).getProductionAmount());
                         } catch (NotEnoughResourceException e) {
                             logger.severe("Error adding resources!");
                         }
@@ -187,7 +197,8 @@ public class ThreadManagerImpl implements ThreadManager {
                                         buildingMapRef
                                                 .get(buildingForProductionIdentifier).getType(),
                                         buildingMapRef
-                                                .get(buildingForProductionIdentifier).getLevel()).getProductionTime());
+                                                .get(buildingForProductionIdentifier).getLevel())
+                                        .getProductionTime());
                         baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
                         return 0;
                     }
@@ -203,7 +214,7 @@ public class ThreadManagerImpl implements ThreadManager {
         }
     }
 
-    private class WorkerThread extends Thread {
+    private final class WorkerThread extends Thread {
         private boolean threadRunning = true;
         private ThreadSelector threadType;
         private Supplier<Long> remainingTimeGetter;
@@ -211,9 +222,9 @@ public class ThreadManagerImpl implements ThreadManager {
         private Function<UUID, Integer> operation;
         private UUID assignedBuilding;
 
-        public WorkerThread(ThreadSelector threadType,
-                            Supplier<Long> remainingTimeGetter, Consumer<Long> remainingTimeSetter,
-                            Function<UUID, Integer> operation, UUID assignedBuilding) {
+        WorkerThread(final ThreadSelector threadType,
+                final Supplier<Long> remainingTimeGetter, final Consumer<Long> remainingTimeSetter,
+                final Function<UUID, Integer> operation, final UUID assignedBuilding) {
             super();
             this.threadType = threadType;
             this.remainingTimeGetter = remainingTimeGetter;
@@ -227,6 +238,7 @@ public class ThreadManagerImpl implements ThreadManager {
                 case CONSTRUCTION:
                     this.setName("Construction Thread");
                     break;
+                default:
             }
         }
 
@@ -271,7 +283,7 @@ public class ThreadManagerImpl implements ThreadManager {
             return this.threadRunning;
         }
 
-        public synchronized void setThreadRunning(boolean threadRunning) {
+        public synchronized void setThreadRunning(final boolean threadRunning) {
             this.threadRunning = threadRunning;
         }
 

@@ -14,11 +14,5 @@ public class BattleControllerTest {
         FightData fightData = new FightData();
         BattleControllerImpl battleController=new BattleControllerImpl(Optional.of(fightData));
 
-        JFrame battleFrame = battleController.getFrame();
-        battleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-        battleFrame.setVisible(true);
-        battleFrame.pack();
     }
 }

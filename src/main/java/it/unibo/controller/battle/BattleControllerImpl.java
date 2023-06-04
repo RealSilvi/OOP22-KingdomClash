@@ -1,5 +1,6 @@
 package it.unibo.controller.battle;
 
+import it.unibo.controller.Controller;
 import it.unibo.model.battle.BattleModel;
 import it.unibo.model.battle.BattleModelImpl;
 import it.unibo.model.data.FightData;
@@ -15,7 +16,7 @@ import java.util.*;
 import static it.unibo.model.battle.BattleModelImpl.*;
 import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
-public class BattleControllerImpl implements BattleController {
+public class BattleControllerImpl implements BattleController, Controller {
 
     private JFrame frame;
     private final static int nrOfSlots = 5;
@@ -28,7 +29,6 @@ public class BattleControllerImpl implements BattleController {
     public static final int PLAYER_FINISH = 1;
     public static final int CONTINUE = 0;
 
-    private JPanel currentPanel;
     private final BattleModel battleModel;
     private Optional<FightData> fightData;
     private final BattlePanelImpl battlePanel;
@@ -58,12 +58,6 @@ public class BattleControllerImpl implements BattleController {
         this.setActionListenerPass();
         this.setActionListenerSlots();
         this.fightData = fightData;
-
-
-        this.frame = new JFrame();
-        currentPanel = battlePanel.getPanel();
-        this.frame.getContentPane().add(currentPanel);
-
     }
 
     public void pass() {
@@ -162,14 +156,10 @@ public class BattleControllerImpl implements BattleController {
         return battlePanel;
     }
 
-    public JPanel getCurrentPanel() {
-        return this.currentPanel;
+    public JPanel getGuiPanel() {
+        return this.battlePanel.getPanel();
     }
 
-    //TESTING
-    public JFrame getFrame() {
-        return frame;
-    }
 
     private void setActionListenerInfo() {
         ActionListener actionListenerInfo = e -> this.battlePanel.showTutorialPanel();
@@ -197,5 +187,6 @@ public class BattleControllerImpl implements BattleController {
         };
         this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);
     }
+
 
 }

@@ -30,7 +30,7 @@ dependencies {
 
     //Json-simple
     implementation ("com.googlecode.json-simple:json-simple:1.1.1")
-
+    implementation ("com.google.code.gson:gson:2.10.1")
 
     /*
      * Simple Logging Facade for Java (SLF4J) with Apache Log4j

@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import it.unibo.view.battle.config.JSonToData;
 
 public class BuildingConfiguration {
-    private Logger logger = Logger.getLogger(this.getClass().getName());
+//    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     public static final String BUILDING_CONF_PATH = "BaseModelConfig.BuildingConfiguration";
 
@@ -24,8 +24,8 @@ public class BuildingConfiguration {
             this.productionTimeReductionPercentage = Integer.parseInt(
                     dataJson.getProperty(BUILDING_CONF_PATH + ".ProductionTimeReductionPercentage"));
         } catch (Exception e) {
-            logger.warning("Exception thrown when reading configuration!"
-                    + " Falling back to default configurations, printing stacktrace:\n" + e.toString());
+//            logger.warning("Exception thrown when reading configuration!"
+//                    + " Falling back to default configurations, printing stacktrace:\n" + e.toString());
             fallbackConfiguration();
         }
     }
@@ -41,9 +41,9 @@ public class BuildingConfiguration {
     private int productionMultiplierPercentage;
     private int productionTimeReductionPercentage;
 
-    public Logger getLogger() {
-        return logger;
-    }
+//    public Logger getLogger() {
+//        return logger;
+//    }
 
     public int getMaxLevel() {
         return maxLevel;
