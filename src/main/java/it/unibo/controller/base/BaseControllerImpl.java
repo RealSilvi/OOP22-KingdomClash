@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 
 import it.unibo.controller.Controller;
 import it.unibo.model.base.BaseModel;
+import it.unibo.model.base.BaseModelImpl;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingException;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
@@ -18,18 +19,22 @@ import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.InvalidTroopLevelException;
 import it.unibo.model.base.exceptions.ResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
+import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.TroopType;
 import it.unibo.model.data.Resource.ResourceType;
 
-public class BaseControllerImpl implements Controller, BaseController {
+/**
+ * A simple BaseController implementation.
+ */
+public final class BaseControllerImpl implements Controller, BaseController {
 
     private BaseModel baseModel;
 
     private boolean controllerActive = false;
 
     @Override
-    public void setActive(boolean currentControllerActive) {
+    public void setActive(final boolean currentControllerActive) {
         this.setTimeRunning(currentControllerActive);
     }
 
@@ -44,14 +49,22 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     //TODO: Remove below comments in this constructor once BaseView is implemented
-    public BaseControllerImpl(@Nonnull BaseModel baseModel/*, BaseView baseView */) {
-        this.baseModel = baseModel;
+    /**
+     * Builds a controller for the Base part of the game using the provided
+     * game data.
+     * @param gameData a non null gameData object representing the state
+     * of the game
+     */
+    public BaseControllerImpl(final @Nonnull GameData gameData) {
+        this.baseModel = new BaseModelImpl(gameData);
+        /*this.baseView = new BaseView(this, gameData.getConfiguration())*/
         this.baseModel.refreshBuildings();
     }
 
     @Override
-    public Optional<UUID> handleBuildingPlaced(Point2D position, BuildingTypes type, int startingLevel,
-                                               boolean cheatMode) {
+    public Optional<UUID> handleBuildingPlaced(final Point2D position,
+        final BuildingTypes type, final int startingLevel,
+        final boolean cheatMode) {
         Optional<UUID> providedUUID;
         try {
             providedUUID = Optional.of(baseModel.buildStructure(position, type, startingLevel, cheatMode));
@@ -63,17 +76,20 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public Optional<UUID> handleBuildingPlaced(Point2D position, BuildingTypes type, int startingLevel) {
+    public Optional<UUID> handleBuildingPlaced(final Point2D position,
+        final BuildingTypes type, final int startingLevel) {
         return handleBuildingPlaced(position, type, startingLevel, false);
     }
 
     @Override
-    public Optional<UUID> handleBuildingPlaced(Point2D position, BuildingTypes type) {
+    public Optional<UUID> handleBuildingPlaced(final Point2D position,
+        final BuildingTypes type) {
         return handleBuildingPlaced(position, type, 0);
     }
 
     @Override
-    public boolean handleStructureUpgrade(UUID structureId, boolean cheatMode) {
+    public boolean handleStructureUpgrade(final UUID structureId,
+        final boolean cheatMode) {
         boolean upgradeSucceded;
         try {
             baseModel.upgradeStructure(structureId, cheatMode);
@@ -86,12 +102,12 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public boolean handleStructureUpgrade(UUID structureId) {
+    public boolean handleStructureUpgrade(final UUID structureId) {
         return handleStructureUpgrade(structureId, false);
     }
 
     @Override
-    public boolean handleStructureDestruction(UUID structureId) {
+    public boolean handleStructureDestruction(final UUID structureId) {
         boolean demolitionSucceded;
         try {
             baseModel.demolishStructure(structureId);
@@ -104,7 +120,8 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public boolean handleStructureRelocation(Point2D position, UUID structureId) {
+    public boolean handleStructureRelocation(final Point2D position,
+        final UUID structureId) {
         boolean relocationSucceded;
         try {
             baseModel.relocateStructure(position, structureId);
@@ -117,7 +134,7 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public int requestResourceCount(ResourceType type) {
+    public int requestResourceCount(final ResourceType type) {
         return baseModel.getResourceCount(type);
     }
 
@@ -137,7 +154,7 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public void setPlayerName(String playerName) {
+    public void setPlayerName(final String playerName) {
         baseModel.setPlayerName(playerName);
     }
 
@@ -147,7 +164,7 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public boolean upgradeTroop(TroopType troopToUpgrade, int levelToUpgradeTo) {
+    public boolean upgradeTroop(final TroopType troopToUpgrade, final int levelToUpgradeTo) {
         boolean operationSuccessful = false;
         try {
             baseModel.upgradeTroop(troopToUpgrade, levelToUpgradeTo);
@@ -159,12 +176,12 @@ public class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public boolean upgradeTroop(TroopType troopToUpgrade) {
+    public boolean upgradeTroop(final TroopType troopToUpgrade) {
         return upgradeTroop(troopToUpgrade, baseModel.getTroopMap().get(troopToUpgrade));
     }
 
     @Override
-    public void setTimeRunning(boolean ticktime) {
+    public void setTimeRunning(final boolean ticktime) {
         baseModel.setClockTicking(ticktime);
     }
 
