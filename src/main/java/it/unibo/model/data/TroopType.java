@@ -1,7 +1,6 @@
 package it.unibo.model.data;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
@@ -20,14 +19,14 @@ public enum TroopType {
     HAMMER_DEFENCE,
     MACE_DEFENCE;
 
-    private static final Map<TroopType, TroopType> counterList = 
-        Collections.unmodifiableMap(Map.of(
-            TroopType.AXE, TroopType.AXE_DEFENCE,
-            TroopType.SWORD, TroopType.SWORD_DEFENCE,
-            TroopType.HAMMER, TroopType.HAMMER_DEFENCE,
-            TroopType.MACE, TroopType.MACE_DEFENCE));
+    private static final Map<TroopType, TroopType> counterList =
+            Map.of(
+                    TroopType.AXE, TroopType.AXE_DEFENCE,
+                    TroopType.SWORD, TroopType.SWORD_DEFENCE,
+                    TroopType.HAMMER, TroopType.HAMMER_DEFENCE,
+                    TroopType.MACE, TroopType.MACE_DEFENCE);
 
-    private static Random rnGenerator = new Random();
+    private static final Random rnGenerator = new Random();
 
     /**
      * @return Returns a random troop type everytime this method is called
@@ -52,5 +51,9 @@ public enum TroopType {
         .filter(troopEntry -> troopEntry.getValue() == troopToCheck)
         .map(Map.Entry::getKey)
         .findFirst();
+    }
+
+    public static boolean isDefense(TroopType troopType){
+        return !counterList.containsKey(troopType);
     }
 }
