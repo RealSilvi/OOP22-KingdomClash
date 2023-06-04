@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
+import javax.swing.*;
 
 import it.unibo.controller.Controller;
 import it.unibo.model.base.BaseModel;
@@ -31,22 +32,22 @@ public final class BaseControllerImpl implements Controller, BaseController {
 
     private BaseModel baseModel;
 
-    private boolean controllerActive = false;
+//    private boolean controllerActive = false;
 
-    @Override
-    public void setActive(final boolean currentControllerActive) {
-        this.setTimeRunning(currentControllerActive);
-    }
-
-    @Override
-    public boolean isActive() {
-        return this.controllerActive;
-    }
-
-    @Override
-    public void disable() {
-        setActive(false);
-    }
+//    @Override
+//    public void setActive(final boolean currentControllerActive) {
+//        this.setTimeRunning(currentControllerActive);
+//    }
+//
+//    @Override
+//    public boolean isActive() {
+//        return this.controllerActive;
+//    }
+//
+//    @Override
+//    public void disable() {
+//        setActive(false);
+//    }
 
     //TODO: Remove below comments in this constructor once BaseView is implemented
     /**
@@ -188,5 +189,10 @@ public final class BaseControllerImpl implements Controller, BaseController {
     @Override
     public boolean isTimeRunning() {
         return baseModel.isClockTicking();
+    }
+
+    @Override
+    public JPanel getGuiPanel() {
+        return null;
     }
 }
