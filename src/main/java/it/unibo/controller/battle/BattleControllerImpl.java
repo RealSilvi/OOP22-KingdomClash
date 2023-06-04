@@ -3,6 +3,7 @@ package it.unibo.controller.battle;
 import it.unibo.controller.Controller;
 import it.unibo.model.battle.BattleModel;
 import it.unibo.model.battle.BattleModelImpl;
+import it.unibo.model.battle.entitydata.EntityDataImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.view.battle.BattlePanel;
@@ -25,6 +26,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     private final static int nrOfFieldSpots = nrOfSlots * 2;
 
     public static final int PLAYER = 1;
+    public static final int BOT = 0;
     public static final int NOSKIP = 0;
     public static final int PLAYER_FINISH = 1;
     public static final int CONTINUE = 0;
@@ -91,11 +93,11 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void battle() {
         int total = 0;
-        if (fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).size() >
-                fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).size()) {
-            total = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).size();
+        if (EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).size() >
+                EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).size()) {
+            total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).size();
         } else {
-            total = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).size();
+            total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).size();
         }
         update(NOSKIP);
         for (int i = 0; i < total; i++) {
@@ -123,17 +125,17 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void clickedButtonPlayer(Integer key) {
         if (fightData.get().getPlayerData().getCells(key).getClicked()) {
-            fightData.get().getPlayerData().removePlayerTroop(key);
+            fightData.get().getPlayerData().removeEntityTroop(key);
             update(NOSKIP);
         } else {
-            fightData.get().getPlayerData().addPlayerTroop(key);
+            fightData.get().getPlayerData().addEntityTroop(key);
             update(NOSKIP);
         }
     }
 
     public void update(Integer skip) {
-        battlePanel.updateField(fightData.get().getPlayerData().ExOrdered(fightData.get().getBotData()).stream().skip(skip).toList(),
-                fightData.get().getBotData().ExOrdered(fightData.get().getPlayerData()).stream().skip(skip).toList());
+        battlePanel.updateField(EntityDataImpl.ExOrdered(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).stream().skip(skip).toList(),
+                EntityDataImpl.ExOrdered(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).stream().skip(skip).toList());
     }
 
     public void playerLifeDecrease() {

@@ -1,6 +1,8 @@
 package it.unibo.controller.battle;
 
 import it.unibo.model.data.FightData;
+import it.unibo.view.battle.BattlePanel;
+import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.tutorial.TutorialPanel;
 
 import javax.swing.*;

@@ -1,15 +1,13 @@
 package it.unibo.model.battle;
 
-import it.unibo.model.battle.entitydata.BotData;
-import it.unibo.model.battle.entitydata.PlayerData;
+import it.unibo.model.battle.entitydata.EntityData;
+import it.unibo.model.battle.entitydata.EntityDataImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.TroopType;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 
-import static it.unibo.controller.battle.BattleControllerImpl.CONTINUE;
-import static org.junit.Assert.*;
+import static it.unibo.controller.battle.BattleControllerImpl.*;
 
 import java.util.*;
 
@@ -17,8 +15,8 @@ public class BattleModelTest {
 
     private BattleModel battleModel;
     private FightData fightData;
-    private BotData botData;
-    private PlayerData playerData;
+    private EntityData botData;
+    private EntityData playerData;
     private GameData gameData;
     private Map<Integer, CellsImpl> botTroop;
     private Map<Integer, CellsImpl> playerTroop;
@@ -54,8 +52,8 @@ public class BattleModelTest {
         //this.botData.setBotTroop(this.botTroop);
         //this.playerData.setPlayerTroop(this.playerTroop);
 
-        System.out.println("player troops:" + this.playerData.getPlayerTroop().values().stream().map(x -> x.getTroop()).toList());
-        System.out.println("bot troops:" + this.botData.getBotTroop().values().stream().map(x -> x.getTroop()).toList());
+        System.out.println("player troops:" + this.playerData.getEntityTroop().values().stream().map(CellsImpl::getTroop).toList());
+        System.out.println("bot troops:" + this.botData.getEntityTroop().values().stream().map(CellsImpl::getTroop).toList());
 
     }
 
@@ -88,8 +86,8 @@ public class BattleModelTest {
         this.botData.getCells(0).setClicked(true);
         */
         System.out.println("entered getOrdered");
-        List<Optional<TroopType>> bc = this.fightData.getBotData().getOrderedField(this.fightData.getPlayerData());
-        List<Optional<TroopType>> pc = this.fightData.getPlayerData().getOrderedField(this.fightData.getBotData());
+        List<Optional<TroopType>> bc = EntityDataImpl.getOrderedField(this.fightData.getPlayerData(),this.fightData.getBotData(),BOT);
+        List<Optional<TroopType>> pc = EntityDataImpl.getOrderedField(this.fightData.getPlayerData(),this.fightData.getBotData(),PLAYER);
         List<Optional<TroopType>> expected = new ArrayList<>();
         expected.add(Optional.of(TroopType.SWORD));
         /*expected.add(Optional.of(Troop.SWORD));
