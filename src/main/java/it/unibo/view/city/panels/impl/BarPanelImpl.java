@@ -1,6 +1,7 @@
 package it.unibo.view.city.panels.impl;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.*;
 import javax.swing.*;
 
@@ -9,11 +10,39 @@ import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
 import it.unibo.view.battle.Troop;
+import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.city.panels.api.BarPanel;
 
 public class BarPanelImpl extends JLabel implements BarPanel {
 
+    private final JPanel mainpanel;
     Troop baseTroop;
+    GameData gameData;
+
+    public BarPanelImpl(Set<Resource> resources, Set<Troop> type){
+        this.mainpanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, getSize());
+        this.gameData= new GameData();
+
+        this.mainpanel.setLayout(new FlowLayout());
+
+        JButton troop= new JButton("troops button");
+        JButton playerinfo= new JButton("player info");
+        JButton switchbutton = new JButton("change screen");
+
+        this.mainpanel.add(troop);
+        this.mainpanel.add(playerinfo);
+        this.mainpanel.add(switchbutton);
+
+
+
+
+    }
+    
+    
+
+
+    
 
     @Override
     public void switchbutton() {
@@ -65,4 +94,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
     }
     
+    private JPanel getPanel(){
+        return this.mainpanel;
+    }
 }
