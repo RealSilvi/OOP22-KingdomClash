@@ -1,7 +1,6 @@
 package it.unibo.model.battle.entitydata;
 
 import it.unibo.controller.battle.BattleControllerImpl;
-import it.unibo.model.battle.BattleModelImpl;
 import it.unibo.model.battle.CellsImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.TroopType;
@@ -105,8 +104,6 @@ public class EntityDataImpl implements EntityData{
         Random random = new Random();
         int chosen_key;
         chosen_key = random.nextInt(keys.size());
-        System.out.println("chosen key: " + chosen_key);
-        System.out.println("toList: " + keys.toString());
         return keys.get(chosen_key);
     }
 
@@ -156,7 +153,7 @@ public class EntityDataImpl implements EntityData{
                     )
                     .map(Optional::of)
                     .toList());
-            int b = 0;
+            int b;
             if (playerOptionalList.size() < botOptionalList.size()) {
                 difference_size = botOptionalList.size() - playerOptionalList.size();
                 for (b = 0; b < difference_size; b++) {

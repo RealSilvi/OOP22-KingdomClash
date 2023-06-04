@@ -47,7 +47,7 @@ public class BattleModelImpl implements BattleModel {
 
         if (fightData.get().getPlayerData().getSelected().size() > 0) {
             fightData.get().getPlayerData().getSelected().forEach(x -> {
-                int key = 0;
+                int key;
                 if (!fightData.get().getBotData().isMatch(x)) {
                     if (fightData.get().getBotData().getNotSelected().contains(TroopType.getNullable(x).get())) {
                         key = fightData.get().getBotData().getKeyFromTroop(TroopType.getNullable(x).get());

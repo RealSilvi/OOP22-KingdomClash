@@ -27,7 +27,7 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public static final int PLAYER = 1;
     public static final int BOT = 0;
-    public static final int NOSKIP = 0;
+    public static final int NO_SKIP = 0;
     public static final int PLAYER_FINISH = 1;
     public static final int CONTINUE = 0;
 
@@ -36,11 +36,11 @@ public class BattleControllerImpl implements BattleController, Controller {
     private final BattlePanelImpl battlePanel;
 
     public BattleControllerImpl(BattleModel battleModel, GameData gameData) {
-        this.battleModel = battleModel;
-        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots, nrOfTroops, nrOfLives, fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop());
         if (gameData.getFightData().isPresent()) {
             this.fightData = gameData.getFightData();
         }
+        this.battleModel = battleModel;
+        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots, nrOfTroops, nrOfLives, fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop());
     }
 
     public BattleControllerImpl(GameData gameData) {
@@ -71,12 +71,12 @@ public class BattleControllerImpl implements BattleController, Controller {
         if (fightData.get().getPlayerData().getSelected().size() == PLAYER_TROOPS) {
             for (int i = this.battleModel.getCountedRound(); i < MAX_ROUND; i++) {
                 this.battleModel.battlePass(PLAYER_FINISH);
-                update(NOSKIP);
+                update(NO_SKIP);
             }
         } else {
             this.battleModel.battlePass(CONTINUE);
         }
-        update(NOSKIP);
+        update(NO_SKIP);
         if (this.battleModel.getCountedRound() == MAX_ROUND) {
             battle();
         } else if (fightData.get().getPlayerData().getSelected().size() < PLAYER_TROOPS) {
@@ -92,14 +92,9 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void battle() {
-        int total = 0;
-        if (EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).size() >
-                EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).size()) {
-            total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).size();
-        } else {
-            total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).size();
-        }
-        update(NOSKIP);
+        int total = Math.max(EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData(), BOT).size(),
+                EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData(), PLAYER).size());
+        update(NO_SKIP);
         for (int i = 0; i < total; i++) {
             if (this.battleModel.battleCombat(i) == BOT) {
                 botLifeDecrease();
@@ -115,7 +110,7 @@ public class BattleControllerImpl implements BattleController, Controller {
         this.battleModel.reset();
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
         spin();
-        update(NOSKIP);
+        update(NO_SKIP);
 
     }
 
@@ -126,10 +121,10 @@ public class BattleControllerImpl implements BattleController, Controller {
     public void clickedButtonPlayer(Integer key) {
         if (fightData.get().getPlayerData().getCells(key).getClicked()) {
             fightData.get().getPlayerData().removeEntityTroop(key);
-            update(NOSKIP);
+            update(NO_SKIP);
         } else {
             fightData.get().getPlayerData().addEntityTroop(key);
-            update(NOSKIP);
+            update(NO_SKIP);
         }
     }
 
