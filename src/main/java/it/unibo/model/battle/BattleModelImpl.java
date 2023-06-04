@@ -2,7 +2,7 @@ package it.unibo.model.battle;
 
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 import javax.swing.text.html.Option;
 import java.util.*;
@@ -17,6 +17,7 @@ public class BattleModelImpl implements BattleModel {
     public static final int WIN_PLAYER = 3;
     public static final int MAX_ROUND = FightData.MAX_ROUND;
     private Optional<FightData> fightData;
+    private Map<TroopType, Integer> troopLevel;
 
     int counted_round = 0;
     int botLife = FightData.BOT_LIFE;
@@ -27,6 +28,7 @@ public class BattleModelImpl implements BattleModel {
         if (gameData.getFightData().isPresent()) {
             this.fightData = gameData.getFightData();
         }
+        this.troopLevel = gameData.getPlayerArmyLevel();
     }
 
     public BattleModelImpl(Optional<FightData> fightData) {
@@ -46,8 +48,8 @@ public class BattleModelImpl implements BattleModel {
             fightData.get().getPlayerData().getSelected().forEach(x -> {
                 int key = 0;
                 if (!fightData.get().getBotData().isMatch(x)) {
-                    if (fightData.get().getBotData().getNotSelected().contains(Troop.getNullable(x))) {
-                        key = fightData.get().getBotData().getKeyFromTroop(Troop.getNullable(x));
+                    if (fightData.get().getBotData().getNotSelected().contains(TroopType.getNullable(x).get())) {
+                        key = fightData.get().getBotData().getKeyFromTroop(TroopType.getNullable(x).get());
                         fightData.get().getBotData().addBotTroop(key);
                     } else {
                         if (finished == CONTINUE) {
@@ -76,7 +78,7 @@ public class BattleModelImpl implements BattleModel {
     }
 
     @Override
-    public Map<Integer, Troop> battleSpin(Integer entity) {
+    public Map<Integer, TroopType> battleSpin(Integer entity) {
 
         if (entity == PLAYER) {
             return fightData.get().getPlayerData().changeNotSelectedTroop();
@@ -89,20 +91,20 @@ public class BattleModelImpl implements BattleModel {
     @Override
     public Integer battleCombat(Integer position) {
 
-        Optional<Troop> playerField = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).get(position);
-        Optional<Troop> botField = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).get(position);
+        Optional<TroopType> playerField = fightData.get().getPlayerData().getOrderedField(fightData.get().getBotData()).get(position);
+        Optional<TroopType> botField = fightData.get().getBotData().getOrderedField(fightData.get().getPlayerData()).get(position);
 
         if (botField.isPresent() && playerField.isPresent()) {
-            if (playerField.get().getLevel() > botField.get().getLevel()) {
-                if (!playerField.get().isDefense()) {
+            if (troopLevel.get(playerField.get()) > troopLevel.get(botField.get())) {
+                if (!TroopType.isDefense(playerField.get())) {
                     if (botLife == 1) {
                         return WIN_PLAYER;
                     } else {
                         return BOT;
                     }
                 }
-            } else if (playerField.get().getLevel() < botField.get().getLevel()) {
-                if (playerField.get().isDefense()) {
+            } else if (troopLevel.get(playerField.get()) < troopLevel.get(botField.get())) {
+                if (TroopType.isDefense(playerField.get())) {
                     if (playerLife == 1) {
                         return WIN_BOT;
                     } else {
@@ -110,13 +112,13 @@ public class BattleModelImpl implements BattleModel {
                     }
                 }
             }
-        } else if (botField.isEmpty() && playerField.isPresent() && (!playerField.get().isDefense())) {
+        } else if (botField.isEmpty() && playerField.isPresent() && (!TroopType.isDefense(playerField.get()))) {
             if (botLife == 1) {
                 return WIN_PLAYER;
             } else {
                 return BOT;
             }
-        } else if (playerField.isEmpty() && botField.isPresent() && (!botField.get().isDefense())) {
+        } else if (playerField.isEmpty() && botField.isPresent() && (!TroopType.isDefense(botField.get()))) {
             if (playerLife == 1) {
                 return WIN_BOT;
             } else {

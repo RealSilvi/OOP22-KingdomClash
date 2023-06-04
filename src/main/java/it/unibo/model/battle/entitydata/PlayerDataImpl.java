@@ -2,8 +2,7 @@ package it.unibo.model.battle.entitydata;
 
 import it.unibo.model.battle.CellsImpl;
 import it.unibo.model.data.FightData;
-import it.unibo.model.data.GameData;
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 import java.util.*;
 
@@ -18,7 +17,7 @@ public class PlayerDataImpl implements PlayerData {
 
     public PlayerDataImpl() {
         for (int i = 0; i < PLAYER_TROOPS; i++) {
-            this.playerTroop.put(i, new CellsImpl(Troop.getRandomTroop(), false, false));
+            this.playerTroop.put(i, new CellsImpl(TroopType.getRandomTroop(), false, false));
         }
     }
 
@@ -50,8 +49,8 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     @Override
-    public List<Troop> getSelected() {
-        List<Troop> selectedTroop = new ArrayList<>();
+    public List<TroopType> getSelected() {
+        List<TroopType> selectedTroop = new ArrayList<>();
         for (int i = 0; i < PLAYER_TROOPS; i++) {
             if (this.playerTroop.get(i).getClicked()) {
                 selectedTroop.add(this.playerTroop.get(i).getTroop());
@@ -61,8 +60,8 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     @Override
-    public List<Troop> getChosen() {
-        List<Troop> chosenTroop = new ArrayList<>();
+    public List<TroopType> getChosen() {
+        List<TroopType> chosenTroop = new ArrayList<>();
         for (int i = 0; i < PLAYER_TROOPS; i++) {
             if (this.playerTroop.get(i).getChosen()) {
                 chosenTroop.add(this.playerTroop.get(i).getTroop());
@@ -72,11 +71,11 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     @Override
-    public Map<Integer, Troop> changeNotSelectedTroop() {
-        Map<Integer, Troop> troopChanged = new HashMap<>();
+    public Map<Integer, TroopType> changeNotSelectedTroop() {
+        Map<Integer, TroopType> troopChanged = new HashMap<>();
         for (int i = 0; i < PLAYER_TROOPS; i++) {
             if (!playerTroop.get(i).getClicked()) {
-                playerTroop.get(i).setTroop(Troop.getRandomTroop());
+                playerTroop.get(i).setTroop(TroopType.getRandomTroop());
                 troopChanged.put(i, playerTroop.get(i).getTroop());
             }
         }
@@ -95,21 +94,21 @@ public class PlayerDataImpl implements PlayerData {
     }
 
     @Override
-    public List<Optional<Troop>> getOrderedField(BotData botData) {
-        List<Optional<Troop>> playerOptionalList = new ArrayList<>();
-        List<Optional<Troop>> botOptionalList = new ArrayList<>();
+    public List<Optional<TroopType>> getOrderedField(BotData botData) {
+        List<Optional<TroopType>> playerOptionalList = new ArrayList<>();
+        List<Optional<TroopType>> botOptionalList = new ArrayList<>();
         int difference_size;
 
         for (int i = 0; i < TOTAL_DIFFERENT_TROOP; i++) {
             int a = i;
-            playerOptionalList.addAll(getSelected().stream().filter(x -> x.getId() == a).map(Optional::of).toList());
+            playerOptionalList.addAll(getSelected().stream().filter(x -> x.ordinal() == a).map(Optional::of).toList());
             botOptionalList.addAll(botData.getSelected().stream()
                     .filter(x ->
-                            x.equals(Troop.getNullable(
-                                    Arrays.stream(Troop.values())
-                                            .filter(z -> z.getId() == a)
+                            x.equals(TroopType.getNullable(
+                                    Arrays.stream(TroopType.values())
+                                            .filter(z -> z.ordinal() == a)
                                             .iterator()
-                                            .next()))
+                                            .next()).get())
                     )
                     .map(Optional::of)
                     .toList());
@@ -138,11 +137,11 @@ public class PlayerDataImpl implements PlayerData {
 
     }
 
-    public List<Optional<Troop>> ExOrdered(BotData botData) {
-        List<Optional<Troop>> playerOrdered = getOrderedField(botData);
-        List<Optional<Troop>> botOrdered = botData.getOrderedField(this);
-        List<Optional<Troop>> finalPlayer = new ArrayList<>(TOTAL_TROOPS);
-        List<Optional<Troop>> finalBot = new ArrayList<>(TOTAL_TROOPS);
+    public List<Optional<TroopType>> ExOrdered(BotData botData) {
+        List<Optional<TroopType>> playerOrdered = getOrderedField(botData);
+        List<Optional<TroopType>> botOrdered = botData.getOrderedField(this);
+        List<Optional<TroopType>> finalPlayer = new ArrayList<>(TOTAL_TROOPS);
+        List<Optional<TroopType>> finalBot = new ArrayList<>(TOTAL_TROOPS);
         int max_position = TOTAL_TROOPS - 1;
 
         for (int a = 0; a < TOTAL_TROOPS; a++) {
@@ -152,24 +151,24 @@ public class PlayerDataImpl implements PlayerData {
 
         int f = 0;
         for (int i = 0; i < playerOrdered.size(); i++) {
-            if (playerOrdered.get(i).isPresent() && !playerOrdered.get(i).get().isDefense()) {
+            if (playerOrdered.get(i).isPresent() && !TroopType.isDefense(playerOrdered.get(i).get())) {
                 finalPlayer.set(i, playerOrdered.get(i));
                 if (botOrdered.get(i).isPresent()) {
                     finalBot.set(i, botOrdered.get(i));
                 } else {
                     finalBot.set(i, Optional.empty());
                 }
-            } else if (playerOrdered.get(i).isPresent() && playerOrdered.get(i).get().isDefense()) {
+            } else if (playerOrdered.get(i).isPresent()) {
                 finalPlayer.set(max_position - (f), playerOrdered.get(i));
                 if (botOrdered.get(i).isPresent()) {
                     finalBot.set(max_position - (f++), botOrdered.get(i));
                 } else {
                     finalBot.set(max_position - (f++), Optional.empty());
                 }
-            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && !botOrdered.get(i).get().isDefense()) {
+            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && !TroopType.isDefense(botOrdered.get(i).get())) {
                 finalBot.set(max_position - (f), botOrdered.get(i));
                 finalPlayer.set(max_position - (f++), Optional.empty());
-            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && botOrdered.get(i).get().isDefense()) {
+            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && TroopType.isDefense(botOrdered.get(i).get())) {
                 finalBot.set(i, botOrdered.get(i));
                 finalPlayer.set(i, Optional.empty());
             } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isEmpty()) {

@@ -1,6 +1,6 @@
 package it.unibo.model.battle;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 public interface Cells {
 
@@ -10,7 +10,7 @@ public interface Cells {
      * @param troop the troop which substitute the old one.
      */
 
-    void setTroop(Troop troop);
+    void setTroop(TroopType troop);
 
     /**
      * Change the status of a troop.
@@ -38,7 +38,7 @@ public interface Cells {
      * @return the troop.
      */
 
-    Troop getTroop();
+    TroopType getTroop();
 
     /**
      * Takes the status.

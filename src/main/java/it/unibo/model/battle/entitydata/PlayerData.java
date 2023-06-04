@@ -1,7 +1,7 @@
 package it.unibo.model.battle.entitydata;
 
 import it.unibo.model.battle.CellsImpl;
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,7 @@ public interface PlayerData {
      * @return the selected troops. It means all the troops in the field.
      */
 
-    public List<Troop> getSelected();
+    public List<TroopType> getSelected();
 
     /**
      * Selects all the troops chosen.
@@ -64,7 +64,7 @@ public interface PlayerData {
      * only the troops that cannot be taken back in hand.
      */
 
-    public List<Troop> getChosen();
+    public List<TroopType> getChosen();
 
     /**
      * Change all the troops in the hand, which are not clicked.
@@ -72,7 +72,7 @@ public interface PlayerData {
      * @return a Map of the troop with the current values (eventually modified) and the right position.
      */
 
-    public Map<Integer, Troop> changeNotSelectedTroop();
+    public Map<Integer, TroopType> changeNotSelectedTroop();
 
     /**
      * Blocks the clicked troops, setting them to chosen.
@@ -90,7 +90,7 @@ public interface PlayerData {
      * @return the corrected player's field.
      */
 
-    public List<Optional<Troop>> getOrderedField(BotData botData);
+    public List<Optional<TroopType>> getOrderedField(BotData botData);
 
     /**
      * Blocks all the troops, clicked and not clicked, setting them to chosen.
@@ -99,6 +99,6 @@ public interface PlayerData {
 
     public void setAllChosen();
 
-    public List<Optional<Troop>> ExOrdered(BotData botData);
+    public List<Optional<TroopType>> ExOrdered(BotData botData);
 
 }

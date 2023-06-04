@@ -1,7 +1,7 @@
 package it.unibo.model.battle.entitydata;
 
 import it.unibo.model.battle.CellsImpl;
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,7 @@ public interface BotData {
      * @return the selected troops. It means all the troops in the field.
      */
 
-    public List<Troop> getSelected();
+    public List<TroopType> getSelected();
 
     /**
      * Selects all the troops which are not clicked yet.
@@ -63,7 +63,7 @@ public interface BotData {
      * @return the not selected troops. It means all the troops not clicked.
      */
 
-    public List<Troop> getNotSelected();
+    public List<TroopType> getNotSelected();
 
     /**
      * Selects all the troops chosen.
@@ -72,7 +72,7 @@ public interface BotData {
      * only the troops that cannot be taken back in hand.
      */
 
-    public List<Troop> getChosen();
+    public List<TroopType> getChosen();
 
     /**
      * Change all the troops in the hand, which are not clicked.
@@ -80,7 +80,7 @@ public interface BotData {
      * @return a Map of the troop with the current values (eventually modified) and the right position.
      */
 
-    public Map<Integer, Troop> changeNotSelectedTroop();
+    public Map<Integer, TroopType> changeNotSelectedTroop();
 
     /**
      * Blocks the clicked troops, setting them to chosen.
@@ -104,7 +104,7 @@ public interface BotData {
      * Or false, if not.
      */
 
-    public Boolean isMatch(Troop troop);
+    public Boolean isMatch(TroopType troop);
 
     /**
      * Finds the right key of the troop given in input,
@@ -114,7 +114,7 @@ public interface BotData {
      * @return the key, or position, of the troop.
      */
 
-    public Integer getKeyFromTroop(Troop troop);
+    public Integer getKeyFromTroop(TroopType troop);
 
     /**
      * Orders the field. Puts each troop against nothing or against the opposite,
@@ -126,7 +126,7 @@ public interface BotData {
      * @return the corrected bot's field.
      */
 
-    public List<Optional<Troop>> getOrderedField(PlayerData playerData);
+    public List<Optional<TroopType>> getOrderedField(PlayerData playerData);
 
     /**
      * Blocks all the troops, clicked and not clicked, setting them to chosen.
@@ -135,6 +135,6 @@ public interface BotData {
 
     public void setAllChosen();
 
-    public List<Optional<Troop>> ExOrdered(PlayerData playerData);
+    public List<Optional<TroopType>> ExOrdered(PlayerData playerData);
 
 }

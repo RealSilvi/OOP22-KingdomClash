@@ -1,22 +1,22 @@
 package it.unibo.model.battle;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 public class CellsImpl implements Cells {
-    private Troop troop;
+    private TroopType troop;
 
     private Boolean clicked;
 
     private Boolean chosen;
 
-    public CellsImpl(Troop troop, Boolean clicked, Boolean chosen) {
+    public CellsImpl(TroopType troop, Boolean clicked, Boolean chosen) {
         this.troop = troop;
         this.clicked = clicked;
         this.chosen = chosen;
     }
 
     @Override
-    public void setTroop(Troop troop) {
+    public void setTroop(TroopType troop) {
 
         this.troop = troop;
 
@@ -43,7 +43,7 @@ public class CellsImpl implements Cells {
 
 
     @Override
-    public Troop getTroop() {
+    public TroopType getTroop() {
 
         return this.troop;
 
