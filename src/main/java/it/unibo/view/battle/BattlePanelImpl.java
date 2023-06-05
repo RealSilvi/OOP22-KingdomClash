@@ -4,7 +4,7 @@ import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.config.BattlePanelConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 import it.unibo.view.battle.tutorial.TutorialPanel;
 
@@ -39,7 +39,7 @@ public final class BattlePanelImpl implements BattlePanel {
         this.layoutManager = new CardLayout();
         this.mainPanel = new JPanel(this.layoutManager);
         this.tutorialPanel = new TutorialPanel(configuration.getTutorialPanelConfiguration());
-        JPanel gamePanel = new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
+        JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
         gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
         final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));

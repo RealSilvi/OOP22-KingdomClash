@@ -2,6 +2,7 @@ package it.unibo.view.battle.tutorial;
 
 import it.unibo.view.battle.config.TextConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
@@ -31,7 +32,7 @@ public final class TutorialPanel {
 
         this.turnBack.setPreferredSize(EXIT_DIMENSION);
         this.turnBack.setOpaque(false);
-        this.turnBack.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR, 2, true));
+        this.turnBack.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, 2, true));
 
         backPanel.add(this.turnBack);
 

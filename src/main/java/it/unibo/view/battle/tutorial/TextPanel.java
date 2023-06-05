@@ -1,6 +1,7 @@
 package it.unibo.view.battle.tutorial;
 
 import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
@@ -34,14 +35,14 @@ public class TextPanel extends DrawPanel {
 
         title1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 
-        title1.setFont(ImageIconsSupplier.getPrimaryFont().deriveFont(TITLE_FONT_SIZE));
+        title1.setFont(BattlePanelStyle.getPrimaryFont().deriveFont(TITLE_FONT_SIZE));
         content1.setFont(content1.getFont().deriveFont(CONTENT_FONT_SIZE));
 
         title1.setOpaque(false);
         content1.setOpaque(false);
 
-        title1.setForeground(ImageIconsSupplier.PRIMARY_COLOR);
-        content1.setForeground(ImageIconsSupplier.PRIMARY_COLOR);
+        title1.setForeground(BattlePanelStyle.PRIMARY_COLOR);
+        content1.setForeground(BattlePanelStyle.PRIMARY_COLOR);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title1);
