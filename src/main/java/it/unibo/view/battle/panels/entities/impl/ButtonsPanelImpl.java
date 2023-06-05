@@ -11,10 +11,12 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ButtonsPanelImpl implements ButtonsPanel {
+
     private final static double GAME_BUTTON_SCALE = 0.5;
     private final static Dimension GAME_BUTTON_DIMENSION = new Dimension(
             (int) (PanelDimensions.getSideButtonsPanel().getHeight() * GAME_BUTTON_SCALE),
             (int) (PanelDimensions.getSideButtonsPanel().getHeight() * GAME_BUTTON_SCALE));
+
     private final static double INFO_BUTTON_SCALE = 0.3;
     private final static Dimension INFO_BUTTON_DIMENSION = new Dimension(
             (int) (PanelDimensions.getSideButtonsPanel().getWidth() * INFO_BUTTON_SCALE),
