@@ -1,35 +1,12 @@
 package it.unibo.model.base.basedata;
 
-import java.util.logging.Logger;
-
-import it.unibo.view.battle.config.JSonToData;
-
-public class BuildingConfiguration {
-//    private Logger logger = Logger.getLogger(this.getClass().getName());
-
-    public static final String BUILDING_CONF_PATH = "BaseModelConfig.BuildingConfiguration";
-
-    public BuildingConfiguration(JSonToData dataJson) {
-        try {
-            this.maxLevel = Integer.parseInt(
-                    dataJson.getProperty(BUILDING_CONF_PATH + ".MaxLevel"));
-            this.maxBuildings = Integer.parseInt(
-                    dataJson.getProperty(BUILDING_CONF_PATH + ".MaxBuildings"));
-            this.refundTaxPercentage = Integer.parseInt(
-                    dataJson.getProperty(BUILDING_CONF_PATH + ".RefundTaxPercentage"));
-            this.upgradeTaxPercentage = Integer.parseInt(
-                    dataJson.getProperty(BUILDING_CONF_PATH + ".UpgradeTaxPercentage"));
-            this.productionMultiplierPercentage = Integer.parseInt(
-                    dataJson.getProperty(BUILDING_CONF_PATH + ".ProductionIncrementPercentage"));
-            this.productionTimeReductionPercentage = Integer.parseInt(
-                    dataJson.getProperty(BUILDING_CONF_PATH + ".ProductionTimeReductionPercentage"));
-        } catch (Exception e) {
-//            logger.warning("Exception thrown when reading configuration!"
-//                    + " Falling back to default configurations, printing stacktrace:\n" + e.toString());
-            fallbackConfiguration();
-        }
-    }
-
+/**
+ * A data class that contains parameters that configure some actions.
+ */
+public final class BuildingConfiguration {
+    /**
+     * Creates a configuration for buildings with default values.
+     */
     public BuildingConfiguration() {
         fallbackConfiguration();
     }
@@ -41,30 +18,43 @@ public class BuildingConfiguration {
     private int productionMultiplierPercentage;
     private int productionTimeReductionPercentage;
 
-//    public Logger getLogger() {
-//        return logger;
-//    }
-
+    /**
+     * @return The max level that the buildings can reach
+     */
     public int getMaxLevel() {
         return maxLevel;
     }
-
+    /**
+     * @return The maximum number of buildings that the player can build
+     */
     public int getMaxBuildings() {
         return maxBuildings;
     }
-
+    /**
+     * @return The percentage of resources that will be returned when
+     * demolishing a building
+     */
     public int getRefundTaxPercentage() {
         return refundTaxPercentage;
     }
-
+    /**
+     * @return A percentage that represent by how much the cost of the building
+     * increasaes by every level
+     */
     public int getUpgradeTaxPercentage() {
         return upgradeTaxPercentage;
     }
-
+    /**
+     * @return A percentage that represents by how much the resources produced
+     * increase by every level
+     */
     public int getProductionIncrementPercentage() {
         return productionMultiplierPercentage;
     }
-
+    /**
+     * @return A percentage that represents by how much the time that it takes
+     * to produce some resources decreases by every level
+     */
     public int getProductionTimeReductionPercentage() {
         return productionTimeReductionPercentage;
     }

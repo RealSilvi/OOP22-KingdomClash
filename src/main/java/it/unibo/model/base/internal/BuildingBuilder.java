@@ -83,7 +83,7 @@ public interface BuildingBuilder {
          * @return The initial resource set that the building
          * will produce
          */
-        public Set<Resource> getBaseProduction(int level) {
+        public Set<Resource> getBaseProduction(final int level) {
             return BuildingBuilder.applyIncrementToResourceSet(
                     baseProduction, Building.PRODUCTION_MULTIPLIER_PERCENTAGE * level);
         }
@@ -113,7 +113,7 @@ public interface BuildingBuilder {
          * @param level level of the building
          * @return The cost as a resource set of the building
          */
-        public Set<Resource> getCost(int level) {
+        public Set<Resource> getCost(final int level) {
             return BuildingBuilder.applyIncrementToResourceSet(
                     cost, Building.UPGRADE_TAX_PERCENTAGE * level);
         }
@@ -143,21 +143,26 @@ public interface BuildingBuilder {
      */
     //Intended behaviour
     @SuppressWarnings("java:S2153")
-    public static Set<Resource> applyIncrementToResourceSet(Set<Resource> resourceSet, int incrementPercentage) {
+    static Set<Resource> applyIncrementToResourceSet(Set<Resource> resourceSet,
+        int incrementPercentage) {
         Set<Resource> modifiedSet = Resource.deepCopySet(resourceSet);
         modifiedSet.forEach(
                 resource ->
-                        resource.setAmount(Double.valueOf(applyIncrementToDouble(resource.getAmount(), incrementPercentage)).intValue()));
+                        resource.setAmount(
+                            Double.valueOf(
+                                applyIncrementToDouble(
+                                    resource.getAmount(), incrementPercentage))
+                                    .intValue()));
         return modifiedSet;
     }
 
     /**
-     * 
-     * @param valueToIncrement
-     * @param incrementPercentage
-     * @return
+     * Applies an increment to a given double.
+     * @param valueToIncrement      the double to increment
+     * @param incrementPercentage   the increment as a percentage
+     * @return                      the double with the applied increment
      */
-    public static double applyIncrementToDouble(double valueToIncrement, int incrementPercentage) {
+    static double applyIncrementToDouble(double valueToIncrement, int incrementPercentage) {
         double increment = valueToIncrement * (incrementPercentage / 100.0);
         return valueToIncrement + increment;
     }

@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
-import javax.swing.*;
+import javax.swing.JPanel;
 
 import it.unibo.controller.Controller;
 import it.unibo.model.base.BaseModel;
