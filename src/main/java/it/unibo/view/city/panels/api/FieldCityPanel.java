@@ -7,9 +7,9 @@ import java.util.*;
 
 public interface FieldCityPanel {
     
-     void setfield(int width, int height);
+     public JPanel setfield(int width, int height);
 
-    float showresources();
+    public void showresources();
 
     /*JTextArea createTextArea(String text);*/
 
