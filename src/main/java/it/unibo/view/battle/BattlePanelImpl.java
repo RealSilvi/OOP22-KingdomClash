@@ -21,6 +21,7 @@ public final class BattlePanelImpl implements BattlePanel {
     private final static int BORDER_LAYOUT_GAP = 3;
 
     private final CardLayout layoutManager;
+
     private final JPanel mainPanel;
     private final TutorialPanel tutorialPanel;
 
@@ -42,7 +43,6 @@ public final class BattlePanelImpl implements BattlePanel {
         JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
         gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
-        final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
         this.botPanel = new PlayerPanelImpl(botTroops, configuration.getNrOfSlots());
         this.playerPanel = new PlayerPanelImpl(playerTroops,configuration.getNrOfSlots());
@@ -50,10 +50,7 @@ public final class BattlePanelImpl implements BattlePanel {
         this.buttonsPanel = new CommandPanelImpl(configuration.getNrOfLives());
         this.fieldPanel = new FieldPanelImpl(configuration.getNrOfFieldSpots());
 
-        topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")), BorderLayout.NORTH);
-        topPanel.add(botPanel.getPanel(), BorderLayout.SOUTH);
-
-        gamePanel.add(topPanel, BorderLayout.NORTH);
+        gamePanel.add(botPanel.getPanel(), BorderLayout.NORTH);
         gamePanel.add(playerPanel.getPanel(), BorderLayout.SOUTH);
         gamePanel.add(infoPanel.getPanel(), BorderLayout.WEST);
         gamePanel.add(buttonsPanel.getPanel(), BorderLayout.EAST);
@@ -157,10 +154,6 @@ public final class BattlePanelImpl implements BattlePanel {
         this.buttonsPanel.setActionListenerSpin(actionListener);
     }
 
-    private void setActionListenerInfoButton() {
-        ActionListener actionListenerInfo = e -> this.showTutorialPanel();
-        this.buttonsPanel.setActionListenerInfo(actionListenerInfo);
-    }
 
     public void setActionListenerPass(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerPass(actionListener);
@@ -170,6 +163,11 @@ public final class BattlePanelImpl implements BattlePanel {
         ActionListener actionListenerInfo = e -> this.showGamePanel();
         this.tutorialPanel.addActionListenerExit(actionListenerInfo);
     }
+    private void setActionListenerInfoButton() {
+        ActionListener actionListenerInfo = e -> this.showTutorialPanel();
+        this.buttonsPanel.setActionListenerInfo(actionListenerInfo);
+    }
+
 
 
 }

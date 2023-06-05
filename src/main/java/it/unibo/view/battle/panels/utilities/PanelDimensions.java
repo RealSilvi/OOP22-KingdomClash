@@ -1,5 +1,7 @@
 package it.unibo.view.battle.panels.utilities;
 
+import it.unibo.view.GameGui;
+
 import java.awt.*;
 
 /**
@@ -9,7 +11,7 @@ import java.awt.*;
  */
 public interface PanelDimensions {
 
-    Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    Dimension SCREEN_SIZE = GameGui.getAllPanel();
 
     double FIELD_WIDTH_SCALE = 0.6;
     double FIELD_HEIGHT_SCALE = 0.6;
@@ -20,8 +22,6 @@ public interface PanelDimensions {
     double PLAYERS_WIDTH_SCALE = 1;
     double PLAYERS_HEIGHT_SCALE = 0.2;
 
-    double MENU_WIDTH_SCALE = 1;
-    double MENU_HEIGHT_SCALE = 0.1;
 
     double SIDE_LIFE_WIDTH_SCALE = 1;
     double SIDE_LIFE_HEIGHT_SCALE = 0.3;
@@ -36,15 +36,6 @@ public interface PanelDimensions {
         return new Dimension(
                 (int) (SCREEN_SIZE.getWidth() * FIELD_WIDTH_SCALE),
                 (int) (SCREEN_SIZE.getHeight() * FIELD_HEIGHT_SCALE));
-    }
-
-    /**
-     * @return The preferred dimension of the NorthNorthPanel.
-     */
-    static Dimension getMenuPanel() {
-        return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * MENU_WIDTH_SCALE),
-                (int) (SCREEN_SIZE.getHeight() * MENU_HEIGHT_SCALE));
     }
 
     /**
