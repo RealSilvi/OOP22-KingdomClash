@@ -9,4 +9,6 @@ public interface GameMenu {
 
     void setActionListenerInfo(ActionListener actionListener);
 
+    void setActionListenerNewGame(ActionListener actionListener);
+
 }
