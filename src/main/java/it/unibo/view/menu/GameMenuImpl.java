@@ -17,20 +17,10 @@ public class GameMenuImpl implements GameMenu {
     private final ImageButton new_game;
 
     public GameMenuImpl() {
-        this.new_game = new ImageButton();
-        ImageButton load = new ImageButton();
-        ImageButton options = new ImageButton();
-        this.info = new ImageButton();
-
-        new_game.setText("NEW GAME");
-        new_game.setHorizontalTextPosition(SwingConstants.CENTER);
-        new_game.setFocusable(false);
-
-        new_game.setImage(BACKGROUND_BUTTON.getImage());
-        load.setImage(BACKGROUND_BUTTON.getImage());
-        options.setImage(BACKGROUND_BUTTON.getImage());
-        this.info.setImage(BACKGROUND_BUTTON.getImage());
-
+        this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
+        ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
+        ImageButton options = new ImageButton("OPTIONS", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
+        this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
 
         Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
         GridBagConstraints grid = new GridBagConstraints();
@@ -50,19 +40,16 @@ public class GameMenuImpl implements GameMenu {
 
         grid.gridy = 2;
         load.setFont(font);
-        load.setPreferredSize(new_game.getPreferredSize());
         load.setForeground(Color.BLACK);
         menuPanel.add(load, grid);
 
         grid.gridy = 3;
         options.setFont(font);
-        options.setPreferredSize(new_game.getPreferredSize());
         options.setForeground(Color.BLACK);
         menuPanel.add(options, grid);
 
         grid.gridy = 4;
         info.setFont(font);
-        info.setPreferredSize(new_game.getPreferredSize());
         info.setForeground(Color.BLACK);
         menuPanel.add(info, grid);
 
