@@ -114,8 +114,8 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void update(Integer skip) {
-        battlePanel.updateField(EntityDataImpl.ExOrdered(fightData.get().getPlayerData(), fightData.get().getBotData(), PLAYER).stream().skip(skip).toList(),
-                EntityDataImpl.ExOrdered(fightData.get().getPlayerData(), fightData.get().getBotData(), BOT).stream().skip(skip).toList());
+        battlePanel.updateField(EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData(), PLAYER).stream().skip(skip).toList(),
+                EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData(), BOT).stream().skip(skip).toList());
     }
 
     public void playerLifeDecrease() {

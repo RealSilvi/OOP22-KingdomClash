@@ -20,7 +20,12 @@ public class GameController {
         this.battleController = new BattleControllerImpl(gameModel.getGameData());
         this.baseController = new BaseControllerImpl(gameModel.getGameData());
 
-        this.gameGui = new GameGui();
+        this.gameGui = new GameGui(battleController.getGuiPanel()/*,baseController.getGuiPanel()*/);
+
+    }
+
+    public static void main(final String... args) {
+        new GameController();
 
     }
 
