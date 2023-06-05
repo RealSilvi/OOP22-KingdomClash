@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.panels.api.FieldPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
@@ -13,13 +13,13 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class FieldPanelImpl implements FieldPanel{
+public class FieldPanelImpl implements FieldPanel {
 
-    private static final double LABEL_SCALE=0.1;
-    private static final Dimension LABEL_DIMENSION= new Dimension(
-            (int)(PanelDimensions.getFieldPanel().getHeight() * LABEL_SCALE),
-            (int)(PanelDimensions.getFieldPanel().getHeight() * LABEL_SCALE));
-    private static final int ROWS=2;
+    private static final double LABEL_SCALE = 0.1;
+    private static final Dimension LABEL_DIMENSION = new Dimension(
+            (int) (PanelDimensions.getFieldPanel().getHeight() * LABEL_SCALE),
+            (int) (PanelDimensions.getFieldPanel().getHeight() * LABEL_SCALE));
+    private static final int ROWS = 2;
 
     private final JPanel mainPanel;
 
@@ -27,17 +27,16 @@ public class FieldPanelImpl implements FieldPanel{
     private final List<TroopLabelImpl> armyBot;
 
     /**
-     *
      * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
      */
     public FieldPanelImpl(final int nrOfFieldSpot) {
-        this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,PanelDimensions.getFieldPanel());
-        this.armyPlayer=new ArrayList<>();
-        this.armyBot=new ArrayList<>();
+        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getFieldPanel());
+        this.armyPlayer = new ArrayList<>();
+        this.armyBot = new ArrayList<>();
 
-        this.mainPanel.setLayout(new GridLayout(ROWS,nrOfFieldSpot/ROWS));
-        IntStream.range(0, nrOfFieldSpot).forEach(x-> this.armyBot.add(new TroopLabelImpl(LABEL_DIMENSION)));
-        IntStream.range(0, nrOfFieldSpot).forEach(x-> this.armyPlayer.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        this.mainPanel.setLayout(new GridLayout(ROWS, nrOfFieldSpot / ROWS));
+        IntStream.range(0, nrOfFieldSpot).forEach(x -> this.armyBot.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        IntStream.range(0, nrOfFieldSpot).forEach(x -> this.armyPlayer.add(new TroopLabelImpl(LABEL_DIMENSION)));
 
         this.restart();
         this.armyBot.forEach(this.mainPanel::add);
@@ -46,29 +45,24 @@ public class FieldPanelImpl implements FieldPanel{
     }
 
     @Override
-    public void restart(){
+    public void restart() {
         this.armyBot.forEach(TroopLabelImpl::setEmpty);
         this.armyPlayer.forEach(TroopLabelImpl::setEmpty);
     }
 
     @Override
-    public void redraw(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botTroops) {
+    public void redraw(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botTroops) {
         this.restart();
-        //TODO togli
-        System.out.println("playerTroop"+ playerTroops);
-        System.out.println("playerField"+ armyPlayer.size());
-        System.out.println("botTroop"+ botTroops);
-        System.out.println("botField"+ armyBot.size());
-        System.out.println("\n\n");
-        IntStream.range(0,playerTroops.size()).forEach( x-> {
-            if(playerTroops.get(x).isEmpty()){
+
+        IntStream.range(0, playerTroops.size()).forEach(x -> {
+            if (playerTroops.get(x).isEmpty()) {
                 this.armyPlayer.get(x).setEmpty();
-            }else{
+            } else {
                 this.armyPlayer.get(x).setTroop(playerTroops.get(x).get());
             }
-            if(botTroops.get(x).isEmpty()){
+            if (botTroops.get(x).isEmpty()) {
                 this.armyBot.get(x).setEmpty();
-            }else{
+            } else {
                 this.armyBot.get(x).setTroop(botTroops.get(x).get());
             }
         });

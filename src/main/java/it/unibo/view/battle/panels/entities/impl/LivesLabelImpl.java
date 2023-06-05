@@ -12,23 +12,22 @@ public class LivesLabelImpl extends JLabel implements LivesLabel {
     private boolean alive;
 
     /**
-     *
      * @param size the size of the label
      */
     public LivesLabelImpl(final Dimension size) {
-        super(ImageIconsSupplier.getImageIconLife(true,size));
+        super(ImageIconsSupplier.getImageIconLife(true, size));
 
-        this.size=size;
-        this.alive=true;
+        this.size = size;
+        this.alive = true;
 
         this.setPreferredSize(size);
     }
 
 
     @Override
-    public void changeStatus(){
-        this.alive=!this.alive;
-        this.setIcon(ImageIconsSupplier.getImageIconLife(this.alive,this.size));
+    public void changeStatus() {
+        this.alive = !this.alive;
+        this.setIcon(ImageIconsSupplier.getImageIconLife(this.alive, this.size));
     }
 
     @Override

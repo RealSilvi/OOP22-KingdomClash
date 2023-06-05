@@ -1,5 +1,7 @@
 package it.unibo.view.battle;
 
+import it.unibo.model.data.TroopType;
+
 import javax.swing.*;
 import java.util.List;
 import java.util.Map;
@@ -22,37 +24,41 @@ public interface BattlePanel {
 
     /**
      * Update the player's slot
+     *
      * @param troops Indicate which troop to put in which position.
      */
-    void spinPlayerFreeSlot(final Map<Integer,Troop> troops);
+    void spinPlayerFreeSlot(final Map<Integer, TroopType> troops);
 
     /**
-     * Update the bot's slot
+     * Update the bots slot
+     *
      * @param troops Indicate which troop to put in which position.
      */
-    void spinBotFreeSlot(final Map<Integer,Troop> troops);
+    void spinBotFreeSlot(final Map<Integer, TroopType> troops);
 
     /**
      * Display a power info of the player's troops.
-     * @param troopLv Foreach troop indicates if it's strong enough to defeat corresponding bot's defense.
+     *
+     * @param troopLv Foreach troop indicates if it's strong enough to defeat corresponding bots defense.
      */
-    void drawInfoTable(final Map<Troop,Boolean> troopLv);
+    void drawInfoTable(final Map<TroopType, Boolean> troopLv);
 
     /**
      * Update the Field with all the selected troops on it keeping in mind that can
      * exist empty slots.
-     * @param playerTroops  Sorted List of player's troops.
-     * @param botTroops     Sorted List od bot's tropps
+     *
+     * @param playerTroops Sorted List of player's troops.
+     * @param botTroops    Sorted List od bots troops
      */
-    void updateField(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botTroops);
+    void updateField(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botTroops);
 
     /**
-     * Disable all the bot's slots
+     * Disable all the bots slots
      */
     void disableBotSlots();
 
     /**
-     * Enable all the bot's slots
+     * Enable all the bots slots
      */
     void enableBotSlots();
 

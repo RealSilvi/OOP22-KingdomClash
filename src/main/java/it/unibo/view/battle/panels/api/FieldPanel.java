@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.api;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 import javax.swing.*;
 import java.util.List;
@@ -20,10 +20,11 @@ public interface FieldPanel {
     /**
      * Update the panel setting the troops on it.<br>
      * Note: there's could be empties slots.
-     * @param playerTroops  Ordered list of troops to display.
-     * @param botTroops Ordered list of troops to display
+     *
+     * @param playerTroops Ordered list of troops to display.
+     * @param botTroops    Ordered list of troops to display
      */
-    void redraw(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botTroops);
+    void redraw(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botTroops);
 
     JPanel getPanel();
 }

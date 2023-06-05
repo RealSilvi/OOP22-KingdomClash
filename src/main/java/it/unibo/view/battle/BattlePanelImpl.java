@@ -1,9 +1,11 @@
 package it.unibo.view.battle;
 
+import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
+import it.unibo.view.battle.tutorial.TutorialPanel;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -18,9 +20,10 @@ public final class BattlePanelImpl implements BattlePanel {
     private final static int BORDER_LAYOUT_GAP = 3;
 
 
+    private final CardLayout layoutManager;
     private final JPanel mainPanel;
+    private final TutorialPanel tutorialPanel;
 
-    //private final JPanel MenuPanel;
     private final FieldPanelImpl fieldPanel;
     private final PlayerPanelImpl botPanel;
     private final PlayerPanelImpl playerPanel;
@@ -28,33 +31,46 @@ public final class BattlePanelImpl implements BattlePanel {
     private final CommandPanelImpl buttonsPanel;
 
     /**
-     *
      * param nrOfSlots  How many slots has each player.
      * param nrOfTroops How many troops has the game.
      * param nrOfLives  How many lives has each player
      */
-    public BattlePanelImpl(final int nrOfFieldSpots, final int nrOfSlots, final int nrOfTroops,final int nrOfLives,final Map<Integer,Troop> botTroops,final Map<Integer,Troop> playerTroops){
-        this.mainPanel= new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
-        this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
+    public BattlePanelImpl(final int nrOfFieldSpots, final int nrOfSlots, final int nrOfTroops, final int nrOfLives, final Map<Integer, TroopType> botTroops, final Map<Integer, TroopType> playerTroops) {
+        this.layoutManager = new CardLayout();
+        this.mainPanel = new JPanel(this.layoutManager);
+        this.tutorialPanel = new TutorialPanel();
+        JPanel gamePanel = new DrawPanel(ImageIconsSupplier.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
+        gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
-        final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP,BORDER_LAYOUT_GAP));
+        final JPanel topPanel = new JPanel(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
-        //this.menuPanel = new MenuPanel();
-        this.botPanel = new PlayerPanelImpl(botTroops,nrOfSlots);
-        this.playerPanel = new PlayerPanelImpl(playerTroops,nrOfSlots);
+        this.botPanel = new PlayerPanelImpl(botTroops, nrOfSlots);
+        this.playerPanel = new PlayerPanelImpl(playerTroops, nrOfSlots);
         this.infoPanel = new InfoPanelImpl(nrOfTroops);
         this.buttonsPanel = new CommandPanelImpl(nrOfLives);
         this.fieldPanel = new FieldPanelImpl(nrOfFieldSpots);
 
-        //topPanel.add(menuPanel, BorderLayout.NORTH);
-        topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")),BorderLayout.NORTH);
+        topPanel.add(new JPanel().add(new JButton("QUA CI SARA IL MENU")), BorderLayout.NORTH);
         topPanel.add(botPanel.getPanel(), BorderLayout.SOUTH);
 
-        this.mainPanel.add(topPanel,BorderLayout.NORTH);
-        this.mainPanel.add(playerPanel.getPanel(),BorderLayout.SOUTH);
-        this.mainPanel.add(infoPanel.getPanel(),BorderLayout.WEST);
-        this.mainPanel.add(buttonsPanel.getPanel(),BorderLayout.EAST);
-        this.mainPanel.add(fieldPanel.getPanel(),BorderLayout.CENTER);
+        gamePanel.add(topPanel, BorderLayout.NORTH);
+        gamePanel.add(playerPanel.getPanel(), BorderLayout.SOUTH);
+        gamePanel.add(infoPanel.getPanel(), BorderLayout.WEST);
+        gamePanel.add(buttonsPanel.getPanel(), BorderLayout.EAST);
+        gamePanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
+
+        this.mainPanel.add(gamePanel, "1");
+        this.mainPanel.add(tutorialPanel.getPanel(), "2");
+
+        this.setActionListenerExit();
+    }
+
+    public void showTutorialPanel() {
+        layoutManager.show(mainPanel, "2");
+    }
+
+    public void showGamePanel() {
+        layoutManager.show(mainPanel, "1");
     }
 
     @Override
@@ -68,23 +84,23 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     @Override
-    public void spinPlayerFreeSlot(final Map<Integer,Troop> troops) {
+    public void spinPlayerFreeSlot(final Map<Integer, TroopType> troops) {
         this.playerPanel.update(troops);
     }
 
     @Override
-    public void spinBotFreeSlot(final Map<Integer,Troop> troops) {
+    public void spinBotFreeSlot(final Map<Integer, TroopType> troops) {
         this.botPanel.update(troops);
     }
 
     @Override
-    public void drawInfoTable(final Map<Troop, Boolean> troopLv) {
+    public void drawInfoTable(final Map<TroopType, Boolean> troopLv) {
         this.infoPanel.drawTable(troopLv);
     }
 
     @Override
-    public void updateField(final List<Optional<Troop>> playerTroops,final List<Optional<Troop>> botPlayer) {
-        this.fieldPanel.redraw(playerTroops,botPlayer);
+    public void updateField(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botPlayer) {
+        this.fieldPanel.redraw(playerTroops, botPlayer);
     }
 
     @Override
@@ -132,19 +148,24 @@ public final class BattlePanelImpl implements BattlePanel {
         return this.mainPanel;
     }
 
-    public void setActionListenersPlayerSlot(final ActionListener actionListener){
+    public void setActionListenersPlayerSlot(final ActionListener actionListener) {
         this.playerPanel.setActionListenersSlot(actionListener);
     }
 
-    public void setActionListenerSpinButton(final ActionListener actionListener){
+    public void setActionListenerSpinButton(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerSpin(actionListener);
     }
 
-    public void setActionListenerInfoButton(final ActionListener actionListener){
+    public void setActionListenerInfoButton(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 
-    public void setActionListenerPass(final ActionListener actionListener){
+    public void setActionListenerPass(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerPass(actionListener);
+    }
+
+    private void setActionListenerExit() {
+        ActionListener actionListenerInfo = e -> this.showGamePanel();
+        this.tutorialPanel.addActionListenerExit(actionListenerInfo);
     }
 }

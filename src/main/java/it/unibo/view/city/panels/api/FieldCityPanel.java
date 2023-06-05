@@ -14,5 +14,4 @@ public interface FieldCityPanel {
     /*JTextArea createTextArea(String text);*/
 
 
-
 }

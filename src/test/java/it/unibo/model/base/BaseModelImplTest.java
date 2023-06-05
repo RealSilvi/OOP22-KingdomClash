@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,29 +22,35 @@ public class BaseModelImplTest {
     private BaseModel baseModel;
     private int counter;
 
-    @Test
-    public void testBuildMultipleStructures() {
+    @org.junit.jupiter.api.BeforeEach
+    public void buildAllStructures() {
         initModel();
         float xvariation = 0.0f;
-        for(BuildingTypes currentType : BuildingTypes.values()) {
+        for (BuildingTypes currentType : BuildingTypes.values()) {
             xvariation++;
             Point2D pos = new Point2D.Float(xvariation, 0);
-            Assertions.assertDoesNotThrow(()->baseModel.buildStructure(pos, currentType, 0, true));
+            Assertions.assertDoesNotThrow(() -> baseModel.buildStructure(pos, currentType, 0, true));
         }
     }
+
+    @Test
+    public void testBuildMultipleStructures() {
+        buildAllStructures();
+    }
+
     @Test
     public void testStructureUpgrade() {
         testBuildMultipleStructures();
         Object synchronizationObject = new Object();
         Set<UUID> buildingKeys = baseModel.getBuildingIds();
-        buildingKeys.forEach((buildingIdentifier)->{
+        buildingKeys.forEach((buildingIdentifier) -> {
             baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
                 @Override
                 public void update(UUID buildingId) {
                     if (buildingId.equals(buildingIdentifier)
-                         && !baseModel.getBuildingMap().get(buildingIdentifier).isBeingBuilt()) {
+                            && !baseModel.getBuildingMap().get(buildingIdentifier).isBeingBuilt()) {
                         Assertions.assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
-                        synchronized(synchronizationObject) {
+                        synchronized (synchronizationObject) {
                             synchronizationObject.notifyAll();
                             increaseCounter();
                         }
@@ -51,21 +58,23 @@ public class BaseModelImplTest {
                 }
             });
             BaseTestUtils.applyBuildingResources(
-                gameData, baseModel.getBuildingMap().get(buildingIdentifier).getType(),
-                baseModel.getBuildingMap().get(buildingIdentifier).getLevel()+1);
-            Assertions.assertDoesNotThrow(()->baseModel.upgradeStructure(buildingIdentifier));
+                    gameData, baseModel.getBuildingMap().get(buildingIdentifier).getType(),
+                    baseModel.getBuildingMap().get(buildingIdentifier).getLevel() + 1);
+            Assertions.assertDoesNotThrow(() -> baseModel.upgradeStructure(buildingIdentifier));
         });
-        synchronized(synchronizationObject) {
+        synchronized (synchronizationObject) {
             try {
                 do {
                     synchronizationObject.wait();
                 } while (getCounter() < buildingKeys.size());
-                baseModel.getBuildingMap().forEach((buildingKey, buildingObject)->{
+                baseModel.getBuildingMap().forEach((buildingKey, buildingObject) -> {
                     Assertions.assertEquals(1, buildingObject.getLevel());
                 });
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+            }
         }
     }
+
     @Test
     public void testStructureRelocation() throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
         testBuildMultipleStructures();
@@ -74,19 +83,21 @@ public class BaseModelImplTest {
         for (UUID identifier : identifiers) {
             positionIncrement++;
             baseModel.relocateStructure(
-                new Point2D.Float(positionIncrement, 0.0f), identifier);
+                    new Point2D.Float(positionIncrement, 0.0f), identifier);
             Assertions.assertEquals(baseModel.getBuildingMap()
-                .get(identifier).getStructurePos().getX(), positionIncrement);
+                    .get(identifier).getStructurePos().getX(), positionIncrement);
             Assertions.assertEquals(0.0f, baseModel.getBuildingMap()
-                .get(identifier).getStructurePos().getY());
+                    .get(identifier).getStructurePos().getY());
         }
     }
+
     @Test
     public void testStructureDemolition() {
         testBuildMultipleStructures();
         Set<UUID> buildingKeys = baseModel.getBuildingIds();
-        buildingKeys.forEach((buildingIdentifier)->Assertions.assertDoesNotThrow(()->baseModel.demolishStructure(buildingIdentifier)));
+        buildingKeys.forEach((buildingIdentifier) -> Assertions.assertDoesNotThrow(() -> baseModel.demolishStructure(buildingIdentifier)));
     }
+
     @Test
     public void testGamePause() throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException, InterruptedException {
         Object synchronizationObject = new Object();
@@ -101,36 +112,36 @@ public class BaseModelImplTest {
             public void update(UUID buildingId) {
                 Assertions.assertTrue(baseModel.isClockTicking());
                 if (buildingId.equals(singleBuildingUUID)
-                     && !baseModel.getBuildingMap().get(singleBuildingUUID).isBeingBuilt()) {
+                        && !baseModel.getBuildingMap().get(singleBuildingUUID).isBeingBuilt()) {
                     Assertions.assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
-                    synchronized(synchronizationObject) {
+                    synchronized (synchronizationObject) {
                         synchronizationObject.notifyAll();
                     }
                 }
             }
         });
         BaseTestUtils.applyBuildingResources(gameData,
-            baseModel.getBuildingMap().get(singleBuildingUUID).getType(),
-            baseModel.getBuildingMap().get(singleBuildingUUID).getLevel()+1);
+                baseModel.getBuildingMap().get(singleBuildingUUID).getType(),
+                baseModel.getBuildingMap().get(singleBuildingUUID).getLevel() + 1);
         baseModel.upgradeStructure(singleBuildingUUID);
-        synchronized(synchronizationObject) {
+        synchronized (synchronizationObject) {
             synchronizationObject.wait(initialWaitingTime);
         }
         baseModel.setClockTicking(false);
-        synchronized(synchronizationObject) {
-            synchronizationObject.wait(buildingTime+10000);
+        synchronized (synchronizationObject) {
+            synchronizationObject.wait(buildingTime + 10000);
         }
         long startTime = System.currentTimeMillis();
         baseModel.setClockTicking(true);
-        synchronized(synchronizationObject) {
+        synchronized (synchronizationObject) {
             synchronizationObject.wait();
             long endTime = System.currentTimeMillis();
             long elapsedTime = endTime - startTime;
             Assertions.assertEquals(1,
-                baseModel.getBuildingMap().get(singleBuildingUUID).getLevel());
+                    baseModel.getBuildingMap().get(singleBuildingUUID).getLevel());
             Assertions.assertTrue(BaseTestUtils.checkElapsedTime(elapsedTime,
-                buildingTime-initialWaitingTime,
-                BaseTestUtils.STANDARD_TIME_TOLERANCE));
+                    buildingTime - initialWaitingTime,
+                    BaseTestUtils.STANDARD_TIME_TOLERANCE));
         }
     }
 
@@ -142,7 +153,7 @@ public class BaseModelImplTest {
         return this.counter;
     }
 
-    private void initModel(){
+    private void initModel() {
         this.gameData = new GameData();
         this.baseModel = new BaseModelImpl(this.gameData);
     }

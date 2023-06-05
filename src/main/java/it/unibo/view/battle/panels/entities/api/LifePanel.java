@@ -8,12 +8,11 @@ import javax.swing.*;
 public interface LifePanel {
 
     /**
-     * Dislay that the player lose a health point
+     * Display that the player lose a health point
      */
     void decreaseLife();
 
     /**
-     *
      * @return this panel
      */
     JPanel getPanel();

@@ -1,25 +1,25 @@
 package it.unibo.model.battle;
 
-import it.unibo.model.battle.entitydata.BotData;
-import it.unibo.model.battle.entitydata.PlayerData;
+import it.unibo.model.battle.entitydata.EntityData;
+import it.unibo.model.battle.entitydata.EntityDataImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
-import it.unibo.view.battle.Troop;
-import org.junit.Before;
+import it.unibo.model.data.TroopType;
 import org.junit.jupiter.api.*;
 
-import static org.junit.Assert.*;
+import static it.unibo.controller.battle.BattleControllerImpl.*;
+
 import java.util.*;
 
 public class BattleModelTest {
 
     private BattleModel battleModel;
     private FightData fightData;
-    private BotData botData;
-    private PlayerData playerData;
+    private EntityData botData;
+    private EntityData playerData;
     private GameData gameData;
-    private Map<Integer,CellsImpl> botTroop;
-    private Map<Integer,CellsImpl> playerTroop;
+    private Map<Integer, CellsImpl> botTroop;
+    private Map<Integer, CellsImpl> playerTroop;
 
     @BeforeEach
     public void init() {
@@ -37,35 +37,35 @@ public class BattleModelTest {
         this.botTroop = new HashMap<>();
         this.playerTroop = new HashMap<>();
 
-        this.botTroop.put(0,new CellsImpl(Troop.CATAPULT,false,false));
-        this.botTroop.put(1,new CellsImpl(Troop.SWORD,false,false));
-        this.botTroop.put(2,new CellsImpl(Troop.AXE,false,false));
-        this.botTroop.put(3,new CellsImpl(Troop.SHIELD,false,false));
-        this.botTroop.put(4,new CellsImpl(Troop.SWORD,false,false));
+        this.botTroop.put(0, new CellsImpl(TroopType.HAMMER, false, false));
+        this.botTroop.put(1, new CellsImpl(TroopType.SWORD, false, false));
+        this.botTroop.put(2, new CellsImpl(TroopType.AXE, false, false));
+        this.botTroop.put(3, new CellsImpl(TroopType.SWORD_DEFENCE, false, false));
+        this.botTroop.put(4, new CellsImpl(TroopType.SWORD, false, false));
 
-        this.playerTroop.put(0,new CellsImpl(Troop.HELMET,false,false));
-        this.playerTroop.put(1,new CellsImpl(Troop.HELMET,false,false));
-        this.playerTroop.put(2,new CellsImpl(Troop.AXE,false,false));
-        this.playerTroop.put(3,new CellsImpl(Troop.ARROW,false,false));
-        this.playerTroop.put(4,new CellsImpl(Troop.SWORD,false,false));
+        this.playerTroop.put(0, new CellsImpl(TroopType.AXE_DEFENCE, false, false));
+        this.playerTroop.put(1, new CellsImpl(TroopType.AXE_DEFENCE, false, false));
+        this.playerTroop.put(2, new CellsImpl(TroopType.AXE, false, false));
+        this.playerTroop.put(3, new CellsImpl(TroopType.MACE, false, false));
+        this.playerTroop.put(4, new CellsImpl(TroopType.SWORD, false, false));
 
         //this.botData.setBotTroop(this.botTroop);
         //this.playerData.setPlayerTroop(this.playerTroop);
 
-        System.out.println("player troops:" + this.playerData.getPlayerTroop().values().stream().map(x -> x.getTroop()).toList());
-        System.out.println("bot troops:" + this.botData.getBotTroop().values().stream().map(x -> x.getTroop()).toList());
+        System.out.println("player troops:" + this.playerData.getEntityTroop().values().stream().map(CellsImpl::getTroop).toList());
+        System.out.println("bot troops:" + this.botData.getEntityTroop().values().stream().map(CellsImpl::getTroop).toList());
 
     }
 
     @Test
-    public void getSelected(){
+    public void getSelected() {
 
         System.out.println("entered getSelected");
         this.playerData.getCells(1).setClicked(true);
         this.playerData.getCells(3).setClicked(true);
         this.playerData.getCells(4).setClicked(true);
-        List<Troop> bc = this.fightData.getPlayerData().getSelected();
-        List<Troop> expected = new ArrayList<>();
+        List<TroopType> bc = this.fightData.getPlayerData().getSelected();
+        List<TroopType> expected = new ArrayList<>();
         expected.add(this.playerData.getCells(1).getTroop());
         expected.add(this.playerData.getCells(3).getTroop());
         expected.add(this.playerData.getCells(4).getTroop());
@@ -75,7 +75,7 @@ public class BattleModelTest {
     }
 
     @Test
-    public void getOrderedField(){
+    public void getOrderedField() {
 
         /*this.playerData.getCells(1).setClicked(false);
         this.playerData.getCells(3).setClicked(false);
@@ -86,10 +86,10 @@ public class BattleModelTest {
         this.botData.getCells(0).setClicked(true);
         */
         System.out.println("entered getOrdered");
-        List<Optional<Troop>> bc = this.fightData.getBotData().getOrderedField(this.fightData.getPlayerData());
-        List<Optional<Troop>> pc = this.fightData.getPlayerData().getOrderedField(this.fightData.getBotData());
-        List<Optional<Troop>> expected = new ArrayList<>();
-        expected.add(Optional.of(Troop.SWORD));
+        List<Optional<TroopType>> bc = EntityDataImpl.getOrderedField(this.fightData.getPlayerData(),this.fightData.getBotData(),BOT);
+        List<Optional<TroopType>> pc = EntityDataImpl.getOrderedField(this.fightData.getPlayerData(),this.fightData.getBotData(),PLAYER);
+        List<Optional<TroopType>> expected = new ArrayList<>();
+        expected.add(Optional.of(TroopType.SWORD));
         /*expected.add(Optional.of(Troop.SWORD));
         expected.add(Optional.of(Troop.ARROW));
         expected.add(Optional.of(Troop.HELMET));
@@ -107,9 +107,9 @@ public class BattleModelTest {
     }
 
     @Test
-    public void getPass(){
+    public void getPass() {
 
-        for(int i= 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
 
             /*this.playerData.getCells(1).setClicked(false);
             this.playerData.getCells(3).setClicked(false);
@@ -121,14 +121,14 @@ public class BattleModelTest {
             this.botData.getCells(4).setClicked(false);
              */
             System.out.println("entered getPass");
-            this.battleModel.battlePass();
-            List<Troop> bcp = this.fightData.getPlayerData().getSelected();
-            List<Troop> bcb = this.fightData.getBotData().getSelected();
-            List<Troop> expected1 = new ArrayList<>();
-            expected1.add(Troop.CATAPULT);
-            expected1.add(Troop.AXE);
-            expected1.add(Troop.SHIELD);
-            expected1.add(Troop.SWORD);
+            this.battleModel.battlePass(CONTINUE);
+            List<TroopType> bcp = this.fightData.getPlayerData().getSelected();
+            List<TroopType> bcb = this.fightData.getBotData().getSelected();
+            List<TroopType> expected1 = new ArrayList<>();
+            expected1.add(TroopType.HAMMER);
+            expected1.add(TroopType.AXE);
+            expected1.add(TroopType.SWORD_DEFENCE);
+            expected1.add(TroopType.SWORD);
 
             //Assertions.assertEquals(expected1, bcb);
             //System.out.println("expected:" + expected1.stream().map(Troop::getId).toList());

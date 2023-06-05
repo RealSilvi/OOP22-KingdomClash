@@ -2,48 +2,55 @@
   "name": "config",
   "version": "1.0.0",
   "dependencies": {
-
   },
-
-  "TutorialPanel" : {
-      "NorthPanel": {
-        "title": "TopPanel-Title",
-        "text": "TopPanel-Testo"
+  "BattlePanel": {
+    "TextPanels": {
+      "WinPanel": {
+        "title": "WinPanel - Title",
+        "text": "WinPanel - Text"
       },
-      "SouthPanel": {
-        "title": "BootomPanel-Title",
-        "text": "BottomPanel-Test"
+      "LosePanel": {
+        "title": "Lose - Title",
+        "text": "Lose - Text"
       },
-      "WestPanel": {
-        "title": "LeftPanel-Title",
-        "text": "LeftPanel-Testo"
-      },
-      "EastPanel": {
-        "title": "RightPanel-Title",
-        "text": "RightPanel-Testo"
-      },
-      "CenterPanel": {
-        "title": "CenterPanel-Title",
-        "text": "CenterPanel-Testo"
+      "TutorialPanel": {
+        "NorthPanel": {
+          "title": "TopPanel-Title",
+          "text": "This panel contains the opponent's set of dice."
+        },
+        "SouthPanel": {
+          "title": "BootomPanel-Title",
+          "text": "In this panel, you'll find your set of data, where you can select troops to deploy on the battlefield. The chosen troops are automatically arranged on the battlefield."
+        },
+        "WestPanel": {
+          "title": "LeftPanel-Title",
+          "text": "Here, the combat effectiveness of each troop is compared to the level of the opponent's troops. If two troops of the same level clash, they cancel each other out. However, if one troop has a higher level than the other, it prevails over the other."
+        },
+        "EastPanel": {
+          "title": "RightPanel-Title",
+          "text": "This panel provides information about the troops currently on the battlefield."
+        },
+        "CenterPanel": {
+          "title": "CenterPanel-Title",
+          "text": "Within this panel, you'll find the battlefield,where deployed troops are automatically arranged. The outcome of the combat between one troop and another is displayed in the information panel."
+        }
       }
-  },
-
-  "BaseModelConfig" : {
-    "BuildingConfiguration" : {
-      "MaxLevel" : 3,
-      "MaxBuildings" : 4,
-      "RefundTaxPercentage" : 25,
-      "UpgradeTaxPercentage" : 15,
-      "ProductionIncrementPercentage" : 0,
-      "ProductionTimeReductionPercentage" : 0
-    },
-    "ThreadManagerConfiguration" : {
-      "RefreshRateMilliseconds" : 60
     }
   },
-
-
-  "BotTroopsLv01" : {
+  "BaseModelConfig": {
+    "BuildingConfiguration": {
+      "MaxLevel": 3,
+      "MaxBuildings": 4,
+      "RefundTaxPercentage": 25,
+      "UpgradeTaxPercentage": 15,
+      "ProductionIncrementPercentage": 0,
+      "ProductionTimeReductionPercentage": 0
+    },
+    "ThreadManagerConfiguration": {
+      "RefreshRateMilliseconds": 60
+    }
+  },
+  "BotTroopsLv01": {
     "AXE": 1,
     "Aadscdsv": 1,
     "AXadcvsdavE": 1,
@@ -53,8 +60,7 @@
     "AXcsadcE": 1,
     "AXdavE": 1
   },
-
-  "BotTroopsLv02" : {
+  "BotTroopsLv02": {
     "AXE": 2,
     "Aadscdsv": 2,
     "AXadcvsdavE": 2,
@@ -64,8 +70,7 @@
     "AXcsadcE": 2,
     "AXdavE": 2
   },
-
-  "BotTroopsLv03" : {
+  "BotTroopsLv03": {
     "AXE": 3,
     "Aadscdsv": 3,
     "AXadcvsdavE": 3,
@@ -75,8 +80,7 @@
     "AXcsadcE": 3,
     "AXdavE": 3
   },
-
-  "FightData" : {
+  "FightData": {
     "PLAYERLIFE": 10,
     "BOTLIFE": 10,
     "MAX ROUND": 3,
@@ -85,5 +89,4 @@
     "TOTAL_DIFFERENT_TROOPS": 8,
     "counted_round": 0
   }
-
 }

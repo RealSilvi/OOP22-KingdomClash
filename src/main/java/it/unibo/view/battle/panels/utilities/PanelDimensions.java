@@ -34,8 +34,8 @@ public interface PanelDimensions {
      */
     static Dimension getFieldPanel() {
         return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * FIELD_WIDTH_SCALE) ,
-                (int)(SCREEN_SIZE.getHeight() * FIELD_HEIGHT_SCALE));
+                (int) (SCREEN_SIZE.getWidth() * FIELD_WIDTH_SCALE),
+                (int) (SCREEN_SIZE.getHeight() * FIELD_HEIGHT_SCALE));
     }
 
     /**
@@ -43,8 +43,8 @@ public interface PanelDimensions {
      */
     static Dimension getMenuPanel() {
         return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * MENU_WIDTH_SCALE) ,
-                (int)(SCREEN_SIZE.getHeight() * MENU_HEIGHT_SCALE));
+                (int) (SCREEN_SIZE.getWidth() * MENU_WIDTH_SCALE),
+                (int) (SCREEN_SIZE.getHeight() * MENU_HEIGHT_SCALE));
     }
 
     /**
@@ -52,8 +52,8 @@ public interface PanelDimensions {
      */
     static Dimension getPlayersPanel() {
         return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * PLAYERS_WIDTH_SCALE) ,
-                (int)(SCREEN_SIZE.getHeight() * PLAYERS_HEIGHT_SCALE));
+                (int) (SCREEN_SIZE.getWidth() * PLAYERS_WIDTH_SCALE),
+                (int) (SCREEN_SIZE.getHeight() * PLAYERS_HEIGHT_SCALE));
     }
 
     /**
@@ -61,7 +61,7 @@ public interface PanelDimensions {
      */
     static Dimension getSidePanel() {
         return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * SIDE_WIDTH_SCALE) ,
+                (int) (SCREEN_SIZE.getWidth() * SIDE_WIDTH_SCALE),
                 (int) (SCREEN_SIZE.getHeight() * SIDE_HEIGHT_SCALE));
     }
 
@@ -70,7 +70,7 @@ public interface PanelDimensions {
      */
     static Dimension getSideButtonsPanel() {
         return new Dimension(
-                (int) (getSideLifePanel().getWidth() * SIDE_BUTTONS_WIDTH_SCALE) ,
+                (int) (getSideLifePanel().getWidth() * SIDE_BUTTONS_WIDTH_SCALE),
                 (int) (getSidePanel().getHeight() * SIDE_BUTTONS_HEIGHT_SCALE));
     }
 
@@ -79,7 +79,7 @@ public interface PanelDimensions {
      */
     static Dimension getSideLifePanel() {
         return new Dimension(
-                (int) (getSidePanel().width * SIDE_LIFE_WIDTH_SCALE) ,
+                (int) (getSidePanel().width * SIDE_LIFE_WIDTH_SCALE),
                 (int) (getSidePanel().height * SIDE_LIFE_HEIGHT_SCALE));
     }
 }

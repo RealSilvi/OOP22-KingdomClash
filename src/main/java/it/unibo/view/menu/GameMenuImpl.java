@@ -1,29 +1,21 @@
 package it.unibo.view.menu;
 
-import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.View;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.awt.image.ImageObserver;
+import java.awt.event.ActionListener;
 
-public class GameMenuImpl implements GameMenu{
+public class GameMenuImpl implements GameMenu {
 
-    public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
-    private static final int WIDTH_BUTTON = (int)DIMENSION_SCREEN.getWidth()/20;
-    private static final int HEIGHT_BUTTON = (int)DIMENSION_SCREEN.getHeight()/20;
-    ImageIcon BACKGROUND_BUTTON = new ImageIcon("src/main/resources/it/unibo/game.menu/wood.jpg");
-    ImageIcon BACKGROUND_PANEL = new ImageIcon("src/main/resources/it/unibo/game.menu/RvsH.jpg");
+    private static final int WIDTH_BUTTON = View.WIDTH_BUTTON;
+    private static final int HEIGHT_BUTTON = View.HEIGHT_BUTTON;
+    public static final ImageIcon BACKGROUND_BUTTON = new ImageIcon("src/main/resources/it/unibo/game.menu/wood.jpg");
+    public static final ImageIcon BACKGROUND_PANEL = new ImageIcon("src/main/resources/it/unibo/game.menu/RvsH.jpg");
+    private final JPanel menuPanel;
+    private final JButton info;
 
-    public GameMenuImpl(){
-        JFrame frame = new JFrame("menu game");
-        frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setResizable(false);
-        //frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public GameMenuImpl() {
         JButton ex = new JButton("NEW GAME");
         ex.setHorizontalTextPosition(SwingConstants.CENTER);
         ex.setFocusable(false);
@@ -36,13 +28,16 @@ public class GameMenuImpl implements GameMenu{
         JButton options = new JButton("OPTIONS", BACKGROUND_BUTTON);
         options.setHorizontalTextPosition(SwingConstants.CENTER);
         options.setFocusable(false);
+        this.info = new JButton("INFO", BACKGROUND_BUTTON);
+        info.setHorizontalTextPosition(SwingConstants.CENTER);
+        info.setFocusable(false);
 
-        Font font = new Font("font", Font.ITALIC,((WIDTH_BUTTON)-(HEIGHT_BUTTON)));
+        Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
         ex.setFont(font);
         GridBagConstraints grid = new GridBagConstraints();
 
-        JPanel panel = new ImagePanel(BACKGROUND_PANEL.getImage());
-        panel.setLayout(new GridBagLayout());
+        this.menuPanel = new ImagePanel(BACKGROUND_PANEL.getImage());
+        this.menuPanel.setLayout(new GridBagLayout());
 
         grid.gridx = 1;
         grid.gridy = 1;
@@ -53,29 +48,34 @@ public class GameMenuImpl implements GameMenu{
         new_game.setFont(font);
         new_game.setPreferredSize(ex.getPreferredSize());
         new_game.setForeground(Color.BLACK);
-        panel.add(new_game,grid);
+        menuPanel.add(new_game, grid);
 
         grid.gridy = 2;
         load.setFont(font);
         load.setPreferredSize(ex.getPreferredSize());
         load.setForeground(Color.BLACK);
-        panel.add(load,grid);
+        menuPanel.add(load, grid);
 
         grid.gridy = 3;
         options.setFont(font);
         options.setPreferredSize(ex.getPreferredSize());
         options.setForeground(Color.BLACK);
-        panel.add(options,grid);
+        menuPanel.add(options, grid);
 
-        frame.getContentPane().add(panel);
-
-        frame.setVisible(true);
+        grid.gridy = 4;
+        info.setFont(font);
+        info.setPreferredSize(ex.getPreferredSize());
+        info.setForeground(Color.BLACK);
+        menuPanel.add(info, grid);
 
     }
 
-    public static void main(final String... args) {
-        new GameMenuImpl();
+    public JPanel getPanel(){
+        return this.menuPanel;
+    }
 
+    public void setActionListenerInfo(ActionListener actionListener){
+        this.info.addActionListener(actionListener);
     }
 
 }

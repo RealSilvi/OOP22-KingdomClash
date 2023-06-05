@@ -50,13 +50,14 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'switchbutton'");
     }
-    private JTextArea getInfo( Dimension size) {
-        
+
+    private JTextArea getInfo(Dimension size) {
+
         JTextArea info = new JTextArea();
         info.setSize(size);
         for (Troop itera : Troop.values()) {
             /*info.append("\n"+itera.toString());*/
-            info.append("Name:\n" +itera.name()+ "Level:"+itera.getLevel());
+            info.append("Name:\n" + itera.name() + "Level:" + itera.getLevel());
         }
         info.setEditable(false);
 
@@ -74,27 +75,26 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         type = EnumSet.allOf(Troop.class).forEach(Troop -> System.out.println(""+Troop.name() +""+Troop.getLevel()));*/
         type = EnumSet.allOf(Troop.class);
 
-       Iterator troopsiterator = type.iterator();
-       while (troopsiterator.hasNext()) {
+        Iterator troopsiterator = type.iterator();
+        while (troopsiterator.hasNext()) {
 
-        info.append(""+troopsiterator.toString());
-        System.out.println(troopsiterator);
-        troopsiterator.next();
-        
-       }
+            info.append("" + troopsiterator.toString());
+            System.out.println(troopsiterator);
+            troopsiterator.next();
+
+        }
 
 
-       
     }
 
     @Override
-    public void getPlayerInfo( GameData gamedata) {
-        System.out.println(""+gamedata.getPlayerName());
+    public void getPlayerInfo(GameData gamedata) {
+        System.out.println("" + gamedata.getPlayerName());
         /*aggiungere il tempo trascorso?? */
 
     }
     
+
     public JPanel getPanel(){
         return this.mainpanel;
     }
-}

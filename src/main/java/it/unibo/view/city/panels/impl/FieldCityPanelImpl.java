@@ -12,7 +12,7 @@ import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.city.panels.api.FieldCityPanel;
 
-public class FieldCityPanelImpl implements FieldCityPanel{
+public class FieldCityPanelImpl implements FieldCityPanel {
 
     private GameData data;
     private final JPanel mainpanel;
@@ -35,8 +35,8 @@ public class FieldCityPanelImpl implements FieldCityPanel{
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 /*ognuna di esse ha una determinata posizione -aggiungere un listener per ciascun bottone con la quale possa piazzare la struttura 
+                 * come stracazzo lo faccio
                 */
-
                 final JButton structure= new JButton(""+i+","+j);
                 /*il campo viene creato per caso magari aggiungo un metodo che generi immagini e le piazzi per caso */
                 structure.setIcon(new ImageIcon("C:\\Users\\abdou\\OneDrive\\Immagini\\tiles\\grass.png"));
@@ -55,6 +55,5 @@ public class FieldCityPanelImpl implements FieldCityPanel{
         return this.mainpanel;
     }
 
-  
-    
+
 }

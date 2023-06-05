@@ -2,14 +2,30 @@ package it.unibo.model.base.exceptions;
 
 import it.unibo.model.base.basedata.Building;
 
+/**
+ * An exception usually thrown when the user tries to upgrade a building beyond
+ * a certain limit.
+ */
 public class BuildingMaxedOutException extends BuildingException {
+    /**
+     * Creates the exception stating the max building's level.
+     */
     public BuildingMaxedOutException() {
-        super("Could not further upgrade structure!\nMax level is "+Building.MAXLEVEL+"!");
+        super("Could not further upgrade structure!\nMax level is " + Building.MAXLEVEL + "!");
     }
-    public BuildingMaxedOutException(String msg) {
+    /**
+     * Creates the exception given a message.
+     * @param msg   the message
+     */
+    public BuildingMaxedOutException(final String msg) {
         super(msg);
     }
-    public BuildingMaxedOutException(String msg, Throwable trace) {
+    /**
+     * Creates the exception given a message and a trace.
+     * @param msg   the message
+     * @param trace the trace
+     */
+    public BuildingMaxedOutException(final String msg, final Throwable trace) {
         super(msg, trace);
     }
 }

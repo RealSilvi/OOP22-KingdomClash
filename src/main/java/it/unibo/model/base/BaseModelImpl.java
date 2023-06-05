@@ -31,10 +31,14 @@ import it.unibo.model.base.internal.BuildingBuilderImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
+import it.unibo.model.data.TroopType;
 import it.unibo.model.data.Resource.ResourceType;
-import it.unibo.view.battle.Troop;
 
-public class BaseModelImpl implements BaseModel {
+/**
+ * Easy to use implementation of BaseModel, that uses threads for resources and
+ * construction timing, can also be paused.
+ */
+public final class BaseModelImpl implements BaseModel {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private GameData gameData;
@@ -43,64 +47,80 @@ public class BaseModelImpl implements BaseModel {
     private List<BuildingObserver> buildingStateChangedObservers;
     private List<BuildingObserver> buildingProductionObservers;
 
-    public BaseModelImpl(@NotNull GameData gameData) {
+    /**
+     * Constructs a new instance of BaseModelImpl with the specified
+     * data class as storage.
+     * 
+     * @param gameData data of the game, must not be null
+     */
+    public BaseModelImpl(final @NotNull GameData gameData) {
+        logger.finest("Initializing BaseModel...");
         Objects.requireNonNull(gameData);
         this.gameData = gameData;
         this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         this.buildingStateChangedObservers = new ArrayList<>();
         this.buildingProductionObservers = new ArrayList<>();
         initializeDataStructures();
-        logger.info("Base model succesfully initialized");
+        logger.finest("Base model succesfully initialized!");
     }
 
     @Override
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel, final boolean cheatMode)
-            throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
+    public UUID buildStructure(final Point2D position, final BuildingTypes type,
+    final int startingLevel, final boolean cheatMode)
+        throws NotEnoughResourceException,
+        InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
         if (gameData.getBuildings().size() >= Building.MAXBUILDINGS) {
             throw new MaxBuildingLimitReachedException();
         }
         BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
-        Building newStructure = buildingBuilder.makeStandardBuilding(type, position, startingLevel);
-        if (!cheatMode) {
-            gameData.setResources(subtractResources(gameData.getResources(),
-            BuildingBuilder
-            .applyIncrementToResourceSet(newStructure.getType().getCost(),
-                startingLevel)));
-        }
+        Building newStructure = buildingBuilder
+        .makeStandardBuilding(type, position, startingLevel);
+            if (!cheatMode) {
+                gameData.setResources(subtractResources(gameData.getResources(),
+                        BuildingBuilder
+                                .applyIncrementToResourceSet(newStructure.getType().getCost(),
+                                        startingLevel)));
+            }
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
         return newStructureId;
     }
 
     @Override
-    public UUID buildStructure(final Point2D position, final BuildingTypes type, final int startingLevel)
-            throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
+    public UUID buildStructure(final Point2D position,
+        final BuildingTypes type, final int startingLevel)
+        throws NotEnoughResourceException,
+        InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
         return buildStructure(position, type, startingLevel, false);
     }
 
     @Override
-    public UUID buildStructure(Point2D position, BuildingTypes type)
-            throws NotEnoughResourceException, InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
+    public UUID buildStructure(final Point2D position, final BuildingTypes type)
+        throws NotEnoughResourceException,
+        InvalidBuildingPlacementException,
+        MaxBuildingLimitReachedException {
         return buildStructure(position, type, 0, false);
     }
+
     @Override
-    public void upgradeStructure(UUID structureId, boolean cheatMode)
-            throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException {
+    public void upgradeStructure(final UUID structureId, final boolean cheatMode)
+            throws NotEnoughResourceException,
+            BuildingMaxedOutException, InvalidStructureReferenceException {
         checkAndGetBuilding(structureId);
         if (this.gameData.getBuildings().get(structureId).getLevel() >= Building.MAXLEVEL) {
             throw new BuildingMaxedOutException();
         }
         gameData.setResources(subtractResources(gameData.getResources(),
-            this.gameData.getBuildings().get(structureId).getType().getCost(
-                this.gameData.getBuildings().get(structureId).getLevel()+1)));
+                this.gameData.getBuildings().get(structureId).getType().getCost(
+                        this.gameData.getBuildings().get(structureId).getLevel() + 1)));
         this.gameData.getBuildings().get(structureId).setBeingBuilt(true);
         addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
-            public void update(UUID buildingId) {
-                if (structureId.equals(buildingId) 
-                    && (gameData.getBuildings().get(structureId).getBuildingProgress() == 0
+            public void update(final UUID buildingId) {
+                if (structureId.equals(buildingId)
+                        && (gameData.getBuildings().get(structureId).getBuildingProgress() == 0
                         && !gameData.getBuildings().get(structureId).isBeingBuilt())) {
-                        threadManager.addBuilding(buildingId);
+                    threadManager.addBuilding(buildingId);
                 }
             }
         });
@@ -108,35 +128,39 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public void upgradeStructure(UUID structureId)
-            throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException {
+    public void upgradeStructure(final UUID structureId)
+        throws NotEnoughResourceException,
+        BuildingMaxedOutException, InvalidStructureReferenceException {
         upgradeStructure(structureId, false);
     }
+
     @Override
-    public Set<Resource> demolishStructure(UUID structureId) throws InvalidStructureReferenceException {
+    public Set<Resource> demolishStructure(final UUID structureId)
+    throws InvalidStructureReferenceException {
         checkAndGetBuilding(structureId);
         Set<Resource> refund = this.gameData.getBuildings().get(structureId).getType().getCost(
-            this.gameData.getBuildings().get(structureId).getLevel()+1);
+                this.gameData.getBuildings().get(structureId).getLevel() + 1);
         for (Resource resource : refund) {
-            resource.setAmount(resource.getAmount()%Building.REFUND_TAX_PERCENTAGE);
+            resource.setAmount(resource.getAmount() % Building.REFUND_TAX_PERCENTAGE);
         }
         try {
             applyResources(refund);
         } catch (NotEnoughResourceException e) {
             logger.severe("Not enough resources Exception thrown when adding resources,"
-                        +" this implies a broken state of the player resource set and should be fixed!"
-                        +" dumping stacktrace:\n"+e.getStackTrace());
+                    + " this implies a broken state of the player resource set and should be fixed!"
+                    + " dumping stacktrace:\n" + e.getStackTrace());
         }
         return refund;
     }
 
     @Override
-    public void relocateStructure(Point2D position, UUID structureId)
-            throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
+    public void relocateStructure(final Point2D position, final UUID structureId)
+        throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
         checkAndGetBuilding(structureId);
         Set<UUID> keys = gameData.getBuildings().keySet();
         for (UUID key : keys) {
-            if (gameData.getBuildings().get(key).getStructurePos().equals(position) && !structureId.equals(key)) {
+            if (gameData.getBuildings().get(key)
+                .getStructurePos().equals(position) && !structureId.equals(key)) {
                 throw new InvalidBuildingPlacementException();
             }
         }
@@ -144,24 +168,28 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public Path getStructureTexture(UUID structureId) throws InvalidStructureReferenceException {
+    public Path getStructureTexture(final UUID structureId)
+        throws InvalidStructureReferenceException {
         throw new UnsupportedOperationException("Unimplemented method 'getStructureTexture'");
     }
 
     @Override
-    public int getBuildingProgress(UUID structureId) throws InvalidStructureReferenceException {
+    public int getBuildingProgress(final UUID structureId)
+        throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
         return selectedBuilding.getBuildingProgress();
     }
 
     @Override
-    public Set<Resource> getBuildingProduction(UUID structureId) throws InvalidStructureReferenceException {
+    public Set<Resource> getBuildingProduction(final UUID structureId)
+        throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
         return Collections.unmodifiableSet(selectedBuilding.getProductionAmount());
     }
 
     @Override
-    public boolean isBuildingBeingBuilt(UUID structureId) throws InvalidStructureReferenceException {
+    public boolean isBuildingBeingBuilt(final UUID structureId)
+        throws InvalidStructureReferenceException {
         Building selectedBuilding = checkAndGetBuilding(structureId);
         return selectedBuilding.isBeingBuilt();
     }
@@ -172,10 +200,10 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public int getResourceCount(ResourceType type) {
+    public int getResourceCount(final ResourceType type) {
         Optional<Resource> resourceCounter = gameData
-            .getResources()
-            .stream().filter(x->x.getResource().equals(type)).findFirst();
+                .getResources()
+                .stream().filter(x -> x.getResource().equals(type)).findFirst();
         if (resourceCounter.isEmpty()) {
             return Integer.valueOf(0);
         }
@@ -188,16 +216,18 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public void upgradeTroop(Troop troopToUpgrade) throws InvalidTroopLevelException {
-        upgradeTroop(troopToUpgrade, troopToUpgrade.getLevel()+1);
+    public void upgradeTroop(final TroopType troopToUpgrade)
+        throws InvalidTroopLevelException {
+        upgradeTroop(troopToUpgrade, gameData.getPlayerArmyLevel().get(troopToUpgrade) + 1);
     }
 
     @Override
-    public void upgradeTroop(Troop troopToUpgrade, int level) throws InvalidTroopLevelException {
+    public void upgradeTroop(final TroopType troopToUpgrade, final int level)
+        throws InvalidTroopLevelException {
         //TODO Remove placeholder when limit is implemented and finish this function
         //TODO Implement cost system when battle part is complete
         int placeholderLimit = 3;
-        if (level>=placeholderLimit) {
+        if (level >= placeholderLimit) {
             throw new InvalidTroopLevelException(troopToUpgrade, level);
         }
         if (gameData.getFightData().isEmpty()) {
@@ -206,32 +236,32 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public Map<Troop, Integer> getTroopMap() {
+    public Map<TroopType, Integer> getTroopMap() {
         return Collections.unmodifiableMap(gameData.getPlayerArmyLevel());
     }
 
     @Override
-    public void addBuildingStateChangedObserver(BuildingObserver observer) {
+    public void addBuildingStateChangedObserver(final BuildingObserver observer) {
         this.buildingStateChangedObservers.add(observer);
     }
 
     @Override
-    public void removeBuildingStateChangedObserver(BuildingObserver observer) {
+    public void removeBuildingStateChangedObserver(final BuildingObserver observer) {
         this.buildingProductionObservers.remove(observer);
     }
 
     @Override
-    public void addBuildingProductionObserver(BuildingObserver observer) {
+    public void addBuildingProductionObserver(final BuildingObserver observer) {
         this.buildingProductionObservers.add(observer);
     }
 
     @Override
-    public void removeBuildingProductionObserver(BuildingObserver observer) {
+    public void removeBuildingProductionObserver(final BuildingObserver observer) {
         this.buildingProductionObservers.remove(observer);
     }
 
     @Override
-    public void setClockTicking(boolean ticktime) {
+    public void setClockTicking(final boolean ticktime) {
         if (!ticktime) {
             this.threadManager.pauseThreads();
         } else {
@@ -250,18 +280,21 @@ public class BaseModelImpl implements BaseModel {
     }
 
     @Override
-    public synchronized void applyResources(Set<Resource> resource) throws NotEnoughResourceException {
+    public synchronized void applyResources(final Set<Resource> resource) throws NotEnoughResourceException {
         applyResources(resource, OperationType.ADDITION);
     }
+
     @Override
-    public synchronized void applyResources(Set<Resource> resource, OperationType operation) throws NotEnoughResourceException {
-        switch(operation) {
+    public synchronized void applyResources(final Set<Resource> resource,
+        final OperationType operation) throws NotEnoughResourceException {
+        switch (operation) {
             case SUBTRACTION:
                 this.gameData.setResources(subtractResources(this.gameData.getResources(), resource));
-            break;
+                break;
             case ADDITION:
                 this.gameData.setResources(addResources(this.gameData.getResources(), resource));
-            break;
+                break;
+            default:
         }
     }
 
@@ -275,30 +308,41 @@ public class BaseModelImpl implements BaseModel {
     public String getPlayerName() {
         return gameData.getPlayerName();
     }
-    
+
     @Override
-    public void setPlayerName(String playerName) {
+    public void setPlayerName(final String playerName) {
         gameData.setPlayerName(playerName);
     }
 
     @Override
-    public void notifyBuildingStateChangedObservers(UUID building) {
-        this.buildingStateChangedObservers.forEach(buildingStateObserver->buildingStateObserver.update(building));
+    public void notifyBuildingStateChangedObservers(final UUID building) {
+        this.buildingStateChangedObservers
+            .forEach(buildingStateObserver -> buildingStateObserver.update(building));
     }
+
     @Override
-    public void notifyBuildingProductionObservers(UUID building) {
-        this.buildingProductionObservers.forEach(productionObserver->productionObserver.update(building));
+    public void notifyBuildingProductionObservers(final UUID building) {
+        this.buildingProductionObservers
+            .forEach(productionObserver -> productionObserver.update(building));
+    }
+
+    @Override
+    public void refreshBuildings() {
+        this.gameData.getBuildings().forEach((structureId, structure) ->
+                this.threadManager.addBuilding(structureId));
     }
 
     /**
      * Executes an addition between resources of the same type inside the set
-     * this operation is unsafe because it doesn't check for negative results
+     * this operation is unsafe because it doesn't check for negative results.
+     *
      * @param resourceStorage the resource set that is going to be affected
-     * @param resourceCost the second set that contains resources that will
-     * be used or added
+     * @param resourceCost    the second set that contains resources that will
+     *                        be used or added
      * @return a set with the result of the operation
      */
-    private Set<Resource> unsafeOperation(final Set<Resource> resourceStorage, Set<Resource> resourceCost) {
+    private Set<Resource> unsafeOperation(final Set<Resource> resourceStorage,
+        final Set<Resource> resourceCost) {
         Set<Resource> storageResult = new HashSet<>();
         Iterator<Resource> storageIterator = resourceStorage.iterator();
         while (storageIterator.hasNext()) {
@@ -308,42 +352,49 @@ public class BaseModelImpl implements BaseModel {
                 Resource currentCostResource = costIterator.next();
                 if (currentStorageResource.equals(currentCostResource)) {
                     storageResult.add(new Resource(currentStorageResource.getResource(),
-                    currentStorageResource.getAmount()+currentCostResource.getAmount()));
+                            currentStorageResource.getAmount()
+                            + currentCostResource.getAmount()));
                 }
             }
         }
         return storageResult;
     }
+
     /**
-     * Checks for negative values in the resources inside the resources in the set
+     * Checks for negative values in the resources inside the resources in the set.
+     *
      * @param resourcesToCheck the set that needs to be checked
      * @return the resources with negative values within the set
      */
     private Set<Resource> filterNegativeValues(final Set<Resource> resourcesToCheck) {
         Set<Resource> missingResources = new HashSet<>();
-        resourcesToCheck.forEach(x->{
-            if (x.getAmount()<0) {
+        resourcesToCheck.forEach(x -> {
+            if (x.getAmount() < 0) {
                 missingResources.add(x);
             }
         });
         return missingResources;
     }
+
     /**
-     * Inverts the sign of values inside a set of resources
+     * Inverts the sign of values inside a set of resources.
+     *
      * @param resourceToNegate the set of resources to negate
      * @return a negated set
      */
-    private Set<Resource> negateResources(Set<Resource> resourceToNegate) {
+    private Set<Resource> negateResources(final Set<Resource> resourceToNegate) {
         Set<Resource> negatedResources = Resource.deepCopySet(resourceToNegate);
-        negatedResources.stream().forEach(x->x.setAmount(-x.getAmount()));
+        negatedResources.stream().forEach(x -> x.setAmount(-x.getAmount()));
         return negatedResources;
     }
 
-    private Set<Resource> subtractResources(Set<Resource> resourceStorage, Set<Resource> resourceCost) throws NotEnoughResourceException {
+    private Set<Resource> subtractResources(final Set<Resource> resourceStorage,
+        final Set<Resource> resourceCost) throws NotEnoughResourceException {
         return addResources(resourceStorage, negateResources(resourceCost));
     }
 
-    private Set<Resource> addResources(Set<Resource> resourceStorage, Set<Resource> resourcesAdded)  throws NotEnoughResourceException {
+    private Set<Resource> addResources(final Set<Resource> resourceStorage,
+        final Set<Resource> resourcesAdded) throws NotEnoughResourceException {
         Set<Resource> updatedList = unsafeOperation(resourceStorage, resourcesAdded);
         Set<Resource> missingResources = filterNegativeValues(updatedList);
         if (missingResources.isEmpty()) {
@@ -351,33 +402,39 @@ public class BaseModelImpl implements BaseModel {
         }
         throw new NotEnoughResourceException(missingResources);
     }
+
     /**
      * Checks if the referenced UUID corresponds to a building
-     * and returns a building
+     * and returns a building.
+     *
      * @param structureId the id to check for
      * @return the building with the corresponding UUID
      * @throws InvalidStructureReferenceException thrown when the given UUID
-     * does not correspond to an existing building
+     *                                            does not correspond to an existing building
      */
-    private Building checkAndGetBuilding(UUID structureId) throws InvalidStructureReferenceException {
+    private Building checkAndGetBuilding(final UUID structureId)
+        throws InvalidStructureReferenceException {
         Building selectedBuilding = gameData.getBuildings().get(structureId);
         if (selectedBuilding == null) {
             throw new InvalidStructureReferenceException(structureId);
         }
         return selectedBuilding;
     }
+
     /**
-     * Makes sure that a non-conflicting UUID is generated for a building
+     * Makes sure that a non-conflicting UUID is generated for a building.
+     *
      * @return a freshly generated UUID
      */
     private UUID generateBuildingId() {
         return Stream.generate(UUID::randomUUID)
-        .filter(x->!gameData.getBuildings().containsKey(x)).findFirst()
-        .orElseThrow();
+                .filter(x -> !gameData.getBuildings().containsKey(x)).findFirst()
+                .orElseThrow();
     }
+
     /**
      * Check if data structures in GameData are initialized, if not
-     * this method will correctly initialize the data structures
+     * this method will correctly initialize the data structures.
      */
     private void initializeDataStructures() {
         initializeResourceSet();
@@ -389,12 +446,8 @@ public class BaseModelImpl implements BaseModel {
         }
         if (gameData.getResources().size() != Resource.ResourceType.values().length) {
             Set.of(Resource.ResourceType.values()).forEach(
-                resourceType->gameData.getResources().add(new Resource(resourceType)));
+                    resourceType -> gameData
+                        .getResources().add(new Resource(resourceType)));
         }
-    }
-    @Override
-    public void refreshBuildings() {
-        this.gameData.getBuildings().forEach((structureId, structure)->
-            this.threadManager.addBuilding(structureId));
     }
 }

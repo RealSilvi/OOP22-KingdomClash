@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.api;
 
-import it.unibo.view.battle.Troop;
+import it.unibo.model.data.TroopType;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -15,9 +15,10 @@ public interface PlayerPanel {
 
     /**
      * Update the displayed troops
+     *
      * @param troops define in which position put the new troop
      */
-    void update(Map<Integer, Troop> troops);
+    void update(Map<Integer, TroopType> troops);
 
     /**
      * Disable all the buttons.
@@ -30,7 +31,6 @@ public interface PlayerPanel {
     void enableAllSlots();
 
     /**
-     *
      * @param actionListener gives instruction at all the TroopButtons.
      */
     void setActionListenersSlot(ActionListener actionListener);

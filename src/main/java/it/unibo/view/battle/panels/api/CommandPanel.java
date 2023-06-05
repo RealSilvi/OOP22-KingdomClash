@@ -41,19 +41,16 @@ public interface CommandPanel {
     void decreaseBotLive();
 
     /**
-     *
      * @param actionListener the action listener to set at the Pass button.
      */
     void setActionListenerPass(ActionListener actionListener);
 
     /**
-     *
      * @param actionListener the action listener to set at the Spin button.
      */
     void setActionListenerSpin(ActionListener actionListener);
 
     /**
-     *
      * @param actionListener the action listener to set at the Info button.
      */
     void setActionListenerInfo(ActionListener actionListener);
