@@ -94,7 +94,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
     }
     
-    private JPanel getPanel(){
+    public JPanel getPanel(){
         return this.mainpanel;
     }
 }
