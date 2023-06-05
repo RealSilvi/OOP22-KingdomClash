@@ -1,6 +1,6 @@
 package it.unibo.view.menu;
 
-import it.unibo.view.View;
+import it.unibo.view.GameGui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +10,8 @@ public class InfoMenuPanel {
 
     private static final ImageIcon BACKGROUND_PANEL = GameMenuImpl.BACKGROUND_PANEL;
     private static final ImageIcon BACKGROUND_BUTTON = GameMenuImpl.BACKGROUND_BUTTON;
-    private static final int WIDTH_BUTTON = View.WIDTH_BUTTON;
-    private static final int HEIGHT_BUTTON = View.HEIGHT_BUTTON;
+    private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
+    private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
     private final JPanel infopanel;
     private final JButton exit;
     public InfoMenuPanel(){

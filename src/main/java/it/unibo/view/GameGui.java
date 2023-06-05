@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class View {
+public class GameGui {
 
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
@@ -22,7 +22,7 @@ public class View {
     //private final JPanel newgamePanel;
     //private final JPanel loadPanel;
 
-    public View(){
+    public GameGui(){
         frame = new JFrame();
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -65,7 +65,7 @@ public class View {
     }
 
     public static void main(final String... args) {
-        new View();
+        new GameGui();
 
     }
 

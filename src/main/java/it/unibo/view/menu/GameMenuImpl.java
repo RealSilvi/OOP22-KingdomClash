@@ -1,6 +1,6 @@
 package it.unibo.view.menu;
 
-import it.unibo.view.View;
+import it.unibo.view.GameGui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 
 public class GameMenuImpl implements GameMenu {
 
-    private static final int WIDTH_BUTTON = View.WIDTH_BUTTON;
-    private static final int HEIGHT_BUTTON = View.HEIGHT_BUTTON;
+    private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
+    private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
     public static final ImageIcon BACKGROUND_BUTTON = new ImageIcon("src/main/resources/it/unibo/game.menu/wood.jpg");
     public static final ImageIcon BACKGROUND_PANEL = new ImageIcon("src/main/resources/it/unibo/game.menu/RvsH.jpg");
     private final JPanel menuPanel;
