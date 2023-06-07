@@ -22,7 +22,7 @@ public class GameData implements Serializable {
     private ConcurrentMap<UUID, Building> buildings;
     private Map<TroopType, Integer> playerArmyLevel;
 
-    private transient GameConfiguration configuration;
+    private final transient GameConfiguration configuration;
 
     private Optional<FightData> fightData;
 
@@ -32,7 +32,7 @@ public class GameData implements Serializable {
         this.fightData = Optional.empty();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
         this.configuration = new GameConfiguration();
-        Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 0));
+        Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
     }
     public GameData(GameConfiguration gameConfiguration) {
         this.resources = new HashSet<>();
@@ -41,7 +41,7 @@ public class GameData implements Serializable {
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
         //TODO setConfing
         this.configuration = gameConfiguration;
-        Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 0));
+        Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
     }
 
     public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings, Optional<FightData> fightData, GameConfiguration configuration) {
