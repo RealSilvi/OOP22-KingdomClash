@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 /**
- * A small interface with some utilities to simplify operations with the GUI
+ * A small interface with some utilities to simplify operations with the GUI.
  */
 public interface GraphicUtils {
     /**
@@ -15,7 +15,7 @@ public interface GraphicUtils {
      * @param height    height of the image
      * @return          resized image
      */
-    //The assignment is necessary
+    //The assignment is necessary to avoid an exception
     @SuppressWarnings("java:S1488")
     public static Image resizeImage(Image image, int width, int height) {
         Image changedImage = width == 0 || height == 0 ? image :
@@ -44,21 +44,33 @@ public interface GraphicUtils {
      */
     public static Image overlayImages(final Image backgroundImage,
         final Image overlayImage) {
-        int x = (backgroundImage.getWidth(null)
-            - overlayImage.getWidth(null)) / 2;
-        int y = (backgroundImage.getHeight(null)
-            - overlayImage.getHeight(null)) / 2;
+        Image ovelrayImageTemp = overlayImage;
 
-        BufferedImage processedImages = new BufferedImage(
-            backgroundImage.getWidth(null),
-            backgroundImage.getHeight(null),
-            BufferedImage.TYPE_INT_ARGB);
+        int backgroundWidth = backgroundImage.getWidth(null);
+        int backgroundHeight = backgroundImage.getHeight(null);
+    
+        int overlayWidth = overlayImage.getWidth(null);
+        int overlayHeight = overlayImage.getHeight(null);
 
-        Graphics2D g = processedImages.createGraphics();
-        g.drawImage(backgroundImage, 0, 0, null);
-        g.drawImage(overlayImage, x, y, null);
-        g.dispose();
+        if ((overlayWidth > backgroundWidth)
+            || (overlayHeight > backgroundHeight)) {
+            ovelrayImageTemp = resizeImageWithProportion(overlayImage,
+                backgroundWidth, backgroundHeight);
+            overlayWidth = overlayImage.getWidth(null);
+            overlayHeight = overlayImage.getHeight(null);
+        }
 
-        return processedImages;
+        int xPosition = (backgroundWidth - overlayWidth) / 2;
+        int yPosition = (backgroundHeight - overlayHeight) / 2;
+
+        BufferedImage overlaidImages = new BufferedImage(
+            backgroundWidth, backgroundHeight, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D graphics = overlaidImages.createGraphics();
+        graphics.drawImage(backgroundImage, 0, 0, null);
+        graphics.drawImage(ovelrayImageTemp, xPosition, yPosition, null);
+        graphics.dispose();
+
+        return overlaidImages;
     }
 }
