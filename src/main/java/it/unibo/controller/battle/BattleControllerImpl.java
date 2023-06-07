@@ -100,7 +100,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void end(Integer entity) {
-
+        this.battlePanel.showEndPanel();
     }
 
     public void clickedButtonPlayer(Integer key) {
