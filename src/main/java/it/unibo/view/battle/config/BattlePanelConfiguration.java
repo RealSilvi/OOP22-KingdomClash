@@ -33,7 +33,7 @@ public  class BattlePanelConfiguration {
         return nrOfFieldSpots;
     }
 
-    public TextConfiguration getTutorialPanelConfiguration() {
+    public TextConfiguration getTextConfiguration() {
         return textConfiguration;
     }
 }

@@ -6,6 +6,7 @@ import it.unibo.model.battle.BattleModelImpl;
 import it.unibo.model.battle.entitydata.EntityDataImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
+import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
@@ -77,8 +78,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void battle() {
-        int total = Math.max(EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData(), BOT).size(),
-                EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData(), PLAYER).size());
+        int total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData()).size()/2;
         update(NO_SKIP);
         for (int i = 0; i < total; i++) {
             int value = this.battleModel.battleCombat(i);
@@ -104,9 +104,8 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void end(Integer entity) {
-        if(entity == WIN_PLAYER){
-            this.battleModel.endFight(true);
-        }
+        this.battleModel.endFight(entity == WIN_PLAYER);
+
         //this.battlePanel.showEndPanel();
         this.battlePanel.reset();
     }
@@ -122,8 +121,9 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void update(Integer skip) {
-        battlePanel.updateField(EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData(), PLAYER).stream().skip(skip).toList(),
-                EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData(), BOT).stream().skip(skip).toList());
+        List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
+        battlePanel.updateField(orderedList.subList(0, (orderedList.size()/2)-1).stream().skip(skip).toList(),
+                                orderedList.subList(orderedList.size()/2, orderedList.size()-1).stream().skip(skip).toList());
     }
 
     public void playerLifeDecrease() {

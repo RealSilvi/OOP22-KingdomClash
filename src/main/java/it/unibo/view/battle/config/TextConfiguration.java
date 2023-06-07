@@ -11,7 +11,8 @@ public  class TextConfiguration{
     private final String tutorialWestText;
     private final String tutorialCenterTitle;
     private final String tutorialCenterText;
-    private final String endPanelTitle;
+    private final String endWinPanelTitle;
+    private final String endLosePanelTitle;
     private final String endPanelText;
 
 
@@ -26,7 +27,8 @@ public  class TextConfiguration{
         this.tutorialWestText = "Here, the combat effectiveness of each troop is compared to the level of the opponent's troops. If two troops of the same level clash, they cancel each other out. However, if one troop has a higher level than the other, it prevails over the other. ";
         this.tutorialCenterTitle = " ";
         this.tutorialCenterText = "Within this panel, you'll find the battlefield,where deployed troops are automatically arranged. The outcome of the combat between one troop and another is displayed in the information panel. ";
-        this.endPanelTitle = " ";
+        this.endWinPanelTitle = "YOU WIN";
+        this.endLosePanelTitle = "YOU LOSE ";
         this.endPanelText = " ";
     }
 
@@ -70,8 +72,12 @@ public  class TextConfiguration{
         return tutorialCenterText;
     }
 
-    public String getEndPanelTitle() {
-        return endPanelTitle;
+    public String getEndWinPanelTitle() {
+        return endWinPanelTitle;
+    }
+
+    public String getEndLosePanelTitle() {
+        return endLosePanelTitle;
     }
 
     public String getEndPanelText() {
