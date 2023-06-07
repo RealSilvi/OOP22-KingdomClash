@@ -48,8 +48,15 @@ public interface MapPanel {
 
     /**
      * Sets the number of beaten levels in order to display it to the player.
-     * @param beatenLevels the number of beaten levels, must be less than
-     * max levels
+     * @param beatenLevels  the number of beaten levels, must be less than
+     *                      max levels
      */
     void setBeatenLevels(int beatenLevels);
+    /**
+     * Sets what enemy battle button is currently active.
+     * @param battleIndex   the index of the button, values greater than 0
+     *                      represent an enemy, less or equal than 0 represents
+     *                      all enemies
+     */
+    void setActiveBattle(int battleIndex);
 }
