@@ -12,7 +12,6 @@ import it.unibo.model.data.Resource.ResourceType;
  * A very simple builder to easily create standardized buildings.
  */
 public interface BuildingBuilder {
-    //TODO: Tweak values for balance
     /**
      * Defines what type of building should be built.
      */
@@ -80,30 +79,42 @@ public interface BuildingBuilder {
         /**
          * Returns the base production of a type of building given a level.
          * @param level level of the building
-         * @return The initial resource set that the building
-         * will produce
+         * @return      The initial resource set that the building
+         *              will produce
          */
         public Set<Resource> getBaseProduction(final int level) {
             return BuildingBuilder.applyIncrementToResourceSet(
                     baseProduction, Building.PRODUCTION_MULTIPLIER_PERCENTAGE * level);
         }
+        /**
+         * Returns the base production of a type of building given a level.
+         * @param level     level of the building
+         *                  increase by every level
+         * @param increment A percentage that represents by how much the troop cost
+         * @return      The initial resource set that the building
+         *              will produce
+         */
+        public Set<Resource> getBaseProduction(final int level, final int increment) {
+            return BuildingBuilder.applyIncrementToResourceSet(
+                    baseProduction, increment * level);
+        }
 
         /**
-         * @return The time that should take the building
-         * to be ready
+         * @return  The time that should take the building
+         *          to be ready
          */
         public long getBuildTime() {
             return defaultBuildTime;
         }
         /**
-         * @return The time that the building will wait
-         * before producing a resource set
+         * @return  The time that the building will wait
+         *          before producing a resource set
          */
         public long getProductionTime() {
             return defaultProductionTime;
         }
         /**
-         * @return The cost as a resource set of the building
+         * @return      The cost as a resource set of the building
          */
         public Set<Resource> getCost() {
             return Collections.unmodifiableSet(cost);
@@ -111,11 +122,22 @@ public interface BuildingBuilder {
         /**
          * Returns the cost of a type of building given a level.
          * @param level level of the building
-         * @return The cost as a resource set of the building
+         * @return      The cost as a resource set of the building
          */
         public Set<Resource> getCost(final int level) {
             return BuildingBuilder.applyIncrementToResourceSet(
                     cost, Building.UPGRADE_TAX_PERCENTAGE * level);
+        }
+        /**
+         * Returns the cost of a type of building given a level.
+         * @param level     level of the building
+         * @param increment A percentage that represents by how much the troop cost
+         *                  increase by every level
+         * @return          The cost as a resource set of the building
+         */
+        public Set<Resource> getCost(final int level, final int increment) {
+            return BuildingBuilder.applyIncrementToResourceSet(
+                    cost, increment * level);
         }
     }
 
