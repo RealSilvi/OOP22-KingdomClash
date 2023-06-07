@@ -90,9 +90,11 @@ public class BattleControllerImpl implements BattleController, Controller {
             } else if (value == WIN_BOT) {
                 System.out.println("win bot");
                 end(WIN_BOT);
+                i = total;
             } else if (value == WIN_PLAYER) {
                 System.out.println("win player");
                 end(WIN_PLAYER);
+                i = total;
             }
             update(i + 1);
         }
@@ -122,8 +124,8 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void update(Integer skip) {
         List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
-        battlePanel.updateField(orderedList.subList(0, (orderedList.size()/2)-1).stream().skip(skip).toList(),
-                                orderedList.subList(orderedList.size()/2, orderedList.size()-1).stream().skip(skip).toList());
+        battlePanel.updateField(orderedList.subList(0, (orderedList.size()/2)).stream().skip(skip).toList(),
+                                orderedList.subList(orderedList.size()/2, orderedList.size()).stream().skip(skip).toList());
     }
 
     public void playerLifeDecrease() {
