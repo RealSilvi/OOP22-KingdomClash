@@ -131,11 +131,10 @@ public class EntityDataImpl implements EntityData{
      *                   which we want to compare with those of the bot
      * @param botData    the data of the bot,
      *                   and therefore the corresponding troops chosen,
-     *                   which we want to compare with those of the player
-     * @param entity     the entity which we want the return list.
+     *                   which we want to compare with those of the player.
      * @return the corrected entity's field.
      */
-    public static List<Optional<TroopType>> getOrderedField(EntityData playerData, EntityData botData, Integer entity) {
+    public static List<Optional<TroopType>> getOrderedField(EntityData playerData, EntityData botData) {
         List<Optional<TroopType>> playerOptionalList = new ArrayList<>();
         List<Optional<TroopType>> botOptionalList = new ArrayList<>();
         int difference_size;
@@ -168,11 +167,8 @@ public class EntityDataImpl implements EntityData{
 
         }
 
-        if(entity == PLAYER){
-            return playerOptionalList;
-        }else{
-            return botOptionalList;
-        }
+        playerOptionalList.addAll(botOptionalList);
+        return playerOptionalList;
     }
 
 
@@ -182,9 +178,10 @@ public class EntityDataImpl implements EntityData{
 
     }
 
-    public static List<Optional<TroopType>> ExOrdered(EntityData botData, EntityData playerData, Integer entity) {
-        List<Optional<TroopType>> playerOrdered = EntityDataImpl.getOrderedField(playerData, botData, PLAYER);
-        List<Optional<TroopType>> botOrdered = EntityDataImpl.getOrderedField(playerData, botData, BOT);
+    public static List<Optional<TroopType>> ExOrdered(EntityData botData, EntityData playerData) {
+        List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(playerData,botData);
+        List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0,(bothOrdered.size()/2)-1);
+        List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size()-1);
         List<Optional<TroopType>> finalPlayer = new ArrayList<>(TOTAL_TROOPS);
         List<Optional<TroopType>> finalBot = new ArrayList<>(TOTAL_TROOPS);
         int max_position = TOTAL_TROOPS - 1;
@@ -222,11 +219,8 @@ public class EntityDataImpl implements EntityData{
             }
         }
 
-        if(entity == PLAYER){
-            return finalPlayer;
-        }else{
-            return finalBot;
-        }
+        finalPlayer.addAll(finalBot);
+        return finalPlayer;
     }
 
 }
