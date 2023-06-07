@@ -6,6 +6,7 @@ import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
+import it.unibo.view.battle.tutorial.TextPanel;
 import it.unibo.view.battle.tutorial.TutorialPanel;
 
 import java.awt.*;
@@ -58,10 +59,13 @@ public final class BattlePanelImpl implements BattlePanel {
 
         this.mainPanel.add(gamePanel, "1");
         this.mainPanel.add(tutorialPanel.getPanel(), "2");
+        this.mainPanel.add(new TextPanel(configuration.getTutorialPanelConfiguration().getEndPanelTitle(),configuration.getTutorialPanelConfiguration().getEndPanelText(),this.getPanel().getSize()),"3");
 
         this.setActionListenerExitButton();
         this.setActionListenerInfoButton();
     }
+
+    public void showEndPanel(){layoutManager.show(mainPanel,"3");}
 
     public void showTutorialPanel() {
         layoutManager.show(mainPanel, "2");
