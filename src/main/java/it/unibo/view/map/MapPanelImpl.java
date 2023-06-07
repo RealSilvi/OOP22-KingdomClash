@@ -22,9 +22,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import it.unibo.controller.GameController;
-import it.unibo.view.map.MapPanel.ButtonIdentification;
 import it.unibo.view.map.internal.GraphicUtils;
 
+/**
+ * A simple panel made of tiles that can be of different types and
+ * can have different behaviours.
+ */
 public final class MapPanelImpl extends JPanel implements MapPanel {
 
     private transient Logger logger = Logger.getLogger(this.getClass().getName());
