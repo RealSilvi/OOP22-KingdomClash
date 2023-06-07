@@ -57,7 +57,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     private MapPanelImpl() {
         JPanel internalMapPanel = new JPanel();
         try {
-            imageMap.put(ButtonIdentification.TILE, ImageIO.read(this.getClass().getResource("/it/unibo/textures/map/tile_isometric.png")));
+            imageMap.put(ButtonIdentification.TILE, ImageIO.read(this.getClass().getResource("/it/unibo/textures/map/tile_grass.png")));
             imageMap.put(ButtonIdentification.PLAYER, ImageIO.read(this.getClass().getResource("/it/unibo/textures/map/base_player.png")));
             imageMap.put(ButtonIdentification.ENEMY, ImageIO.read(this.getClass().getResource("/it/unibo/textures/map/base_enemy.png")));
             imageMap.put(ButtonIdentification.DEATH, ImageIO.read(this.getClass().getResource("/it/unibo/textures/map/base_enemy_defeated.png")));
@@ -91,6 +91,17 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
         populateMap();
     }
 
+    /**
+     * Opens the panel inside a JFrame, for manual testing purposes only.
+     */
+    public void showInJFrame() {
+        JFrame frame = new JFrame("MapPanelTestGUI");
+        frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        frame.setSize(1920, 1080);
+        frame.add(this);
+        frame.setVisible(true);
+    }
+
     @Override
     public JPanel getAsJPanel() {
         return this;
@@ -102,16 +113,6 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
             tiles.get(specialTileIndexes.get(index))
                 .setActionCommand(ButtonIdentification.DEATH.getActionCommand());
         }
-    }
-    /**
-     * Opens the panel inside a JFrame, for manual testing purposes only.
-     */
-    public void showInJFrame() {
-        JFrame frame = new JFrame("MapPanelTestGUI");
-        frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
-        frame.add(this);
-        frame.setVisible(true);
     }
 
     private Dimension calculateCellSize() {
