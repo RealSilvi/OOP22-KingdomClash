@@ -101,7 +101,7 @@ public class BattleModelImpl implements BattleModel {
         Optional<TroopType> botField = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size()).get(position);
 
         if (botField.isPresent() && playerField.isPresent()) {
-            if (troopLevel.get(playerField.get()) > troopLevel.get(botField.get())) {
+            if (troopLevel.get(playerField.get()) > troopBotLevel.get(botField.get())) {
                 if (!TroopType.isDefense(playerField.get())) {
                     if (botLife == 1) {
                         botLife--;
@@ -111,7 +111,7 @@ public class BattleModelImpl implements BattleModel {
                         return BOT;
                     }
                 }
-            } else if (troopLevel.get(playerField.get()) < troopLevel.get(botField.get())) {
+            } else if (troopLevel.get(playerField.get()) < troopBotLevel.get(botField.get())) {
                 if (TroopType.isDefense(playerField.get())) {
                     if (playerLife == 1) {
                         playerLife--;
@@ -161,5 +161,11 @@ public class BattleModelImpl implements BattleModel {
         }
     }
 
+    public Map<TroopType,Boolean> getInfoTable(){
+        Map<TroopType,Boolean> infoTable = new HashMap<>();
+        Arrays.stream(TroopType.values()).forEach(troopType ->
+                infoTable.put(troopType, this.troopLevel.get(troopType) > this.troopBotLevel.get(troopType)));
+        return infoTable;
+    }
 
 }

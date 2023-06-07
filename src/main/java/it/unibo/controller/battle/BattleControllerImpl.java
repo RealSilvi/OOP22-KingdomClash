@@ -41,6 +41,8 @@ public class BattleControllerImpl implements BattleController, Controller {
         this.battleModel = new BattleModelImpl(gameData);
         this.battlePanel = new BattlePanelImpl(fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop(), gameData.getGameConfiguration().getBattleControllerConfiguration());
         this.battlePanel.disableSpinButton();
+        this.battlePanel.disableBotSlots();
+        this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
         this.setActionListenerSpin();
         this.setActionListenerPass();
         this.setActionListenerSlots();
@@ -107,9 +109,9 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void end(Integer entity) {
         this.battleModel.endFight(entity == WIN_PLAYER);
-
-        //this.battlePanel.showEndPanel();
+        this.battlePanel.showEndPanel();
         this.battlePanel.reset();
+        this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
     }
 
     public void clickedButtonPlayer(Integer key) {
