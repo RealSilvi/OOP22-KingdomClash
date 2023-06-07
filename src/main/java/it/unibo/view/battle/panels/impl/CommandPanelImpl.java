@@ -79,6 +79,11 @@ public class CommandPanelImpl implements CommandPanel {
         this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 
+    public void reset(){
+        this.botLivesPanel.reset();
+        this.playerLivesPanel.reset();
+    }
+
     @Override
     public JPanel getPanel() {
         return this.mainPanel;

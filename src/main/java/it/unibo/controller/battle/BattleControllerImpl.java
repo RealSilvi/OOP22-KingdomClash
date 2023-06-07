@@ -107,7 +107,8 @@ public class BattleControllerImpl implements BattleController, Controller {
         if(entity == WIN_PLAYER){
             this.battleModel.endFight(true);
         }
-        this.battlePanel.showEndPanel();
+        //this.battlePanel.showEndPanel();
+        this.battlePanel.reset();
     }
 
     public void clickedButtonPlayer(Integer key) {

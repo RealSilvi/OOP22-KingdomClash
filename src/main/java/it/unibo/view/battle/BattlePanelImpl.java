@@ -59,7 +59,7 @@ public final class BattlePanelImpl implements BattlePanel {
 
         this.mainPanel.add(gamePanel, "1");
         this.mainPanel.add(tutorialPanel.getPanel(), "2");
-        this.mainPanel.add(new TextPanel(configuration.getTutorialPanelConfiguration().getEndPanelTitle(),configuration.getTutorialPanelConfiguration().getEndPanelText(),this.getPanel().getSize()),"3");
+        this.mainPanel.add(new TextPanel(configuration.getTutorialPanelConfiguration().getEndPanelTitle(),configuration.getTutorialPanelConfiguration().getEndPanelText(),PanelDimensions.SCREEN_SIZE),"3");
 
         this.setActionListenerExitButton();
         this.setActionListenerInfoButton();
@@ -170,6 +170,10 @@ public final class BattlePanelImpl implements BattlePanel {
     private void setActionListenerInfoButton() {
         ActionListener actionListenerInfo = e -> this.showTutorialPanel();
         this.buttonsPanel.setActionListenerInfo(actionListenerInfo);
+    }
+
+    public void reset(){
+        this.buttonsPanel.reset();
     }
 
 
