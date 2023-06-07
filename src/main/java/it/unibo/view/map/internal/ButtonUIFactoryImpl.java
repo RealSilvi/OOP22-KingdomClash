@@ -10,23 +10,29 @@ import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicButtonUI;
 
-public class ButtonUIFactoryImpl implements ButtonUIFactory {
+/**
+ * Implementation of ButtonUIFactory.
+ */
+public final class ButtonUIFactoryImpl implements ButtonUIFactory {
     @Override
     public BasicButtonUI buttonUINoGrayOut() {
         return new BasicButtonUI() {
             @Override
-            protected void paintIcon(Graphics g, JComponent c, Rectangle iconRect) {
-                AbstractButton button = (AbstractButton) c;
+            protected void paintIcon(Graphics graphics,
+                JComponent componentToPaint, Rectangle iconRectangle) {
+                AbstractButton button = (AbstractButton) componentToPaint;
                 ButtonModel model = button.getModel();
                 Icon icon = button.getIcon();
 
                 if (icon != null) {
-                    icon.paintIcon(c, g, iconRect.x, iconRect.y);
+                    icon.paintIcon(componentToPaint,
+                        graphics, iconRectangle.x, iconRectangle.y);
                 }
 
                 if (button.isContentAreaFilled() && model.isArmed()) {
-                    g.setColor(UIManager.getColor("Button.focus"));
-                    g.fillRect(iconRect.x, iconRect.y, iconRect.width, iconRect.height);
+                    graphics.setColor(UIManager.getColor("Button.focus"));
+                    graphics.fillRect(iconRectangle.x, iconRectangle.y,
+                        iconRectangle.width, iconRectangle.height);
                 }
             }
         };
