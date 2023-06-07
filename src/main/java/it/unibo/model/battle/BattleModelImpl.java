@@ -96,8 +96,9 @@ public class BattleModelImpl implements BattleModel {
     public Integer battleCombat(Integer position) {
 
         System.out.println("botLife: " +botLife + "playerLife:  " + playerLife);
-        Optional<TroopType> playerField = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).get(position);
-        Optional<TroopType> botField = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).get(position);
+        List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData());
+        Optional<TroopType> playerField = bothOrdered.subList(0,(bothOrdered.size()/2)-1).get(position);
+        Optional<TroopType> botField = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size()-1).get(position);
 
         if (botField.isPresent() && playerField.isPresent()) {
             if (troopLevel.get(playerField.get()) > troopLevel.get(botField.get())) {
