@@ -30,4 +30,6 @@ public interface BattleModel {
 
     void reset();
 
+    void endFight(Boolean increment);
+
 }

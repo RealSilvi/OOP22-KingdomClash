@@ -19,6 +19,7 @@ public class BattleModelImpl implements BattleModel {
     public static final int MAX_ROUND = FightData.MAX_ROUND;
     private Optional<FightData> fightData;
     private Map<TroopType, Integer> troopLevel;
+    private Map<TroopType, Integer> troopBotLevel;
 
     int counted_round = 0;
     int botLife = FightData.BOT_LIFE;
@@ -30,6 +31,8 @@ public class BattleModelImpl implements BattleModel {
             this.fightData = gameData.getFightData();
         }
         this.troopLevel = gameData.getPlayerArmyLevel();
+        this.troopBotLevel = new HashMap<>();
+        Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
     }
 
     public BattleModelImpl(Optional<FightData> fightData) {
@@ -147,6 +150,14 @@ public class BattleModelImpl implements BattleModel {
             fightData.get().getBotData().removeEntityTroop(i);
         }
 
+    }
+
+    public void endFight(Boolean increment){
+        botLife = BOT_LIFE;
+        playerLife = PLAYER_LIFE;
+        if(increment){
+            this.troopBotLevel.values().stream().map(x -> ++x);
+        }
     }
 
 
