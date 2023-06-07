@@ -180,8 +180,8 @@ public class EntityDataImpl implements EntityData{
 
     public static List<Optional<TroopType>> ExOrdered(EntityData botData, EntityData playerData) {
         List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(playerData,botData);
-        List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0,(bothOrdered.size()/2)-1);
-        List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size()-1);
+        List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0,(bothOrdered.size()/2));
+        List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size());
         List<Optional<TroopType>> finalPlayer = new ArrayList<>(TOTAL_TROOPS);
         List<Optional<TroopType>> finalBot = new ArrayList<>(TOTAL_TROOPS);
         int max_position = TOTAL_TROOPS - 1;
