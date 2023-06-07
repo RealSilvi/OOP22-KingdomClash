@@ -9,7 +9,7 @@ import it.unibo.model.data.TroopType;
 import java.util.*;
 
 import static it.unibo.controller.battle.BattleControllerImpl.*;
-import static it.unibo.model.data.FightData.PLAYER_TROOPS;
+import static it.unibo.model.data.FightData.*;
 
 public class BattleModelImpl implements BattleModel {
 
@@ -92,6 +92,7 @@ public class BattleModelImpl implements BattleModel {
     @Override
     public Integer battleCombat(Integer position) {
 
+        System.out.println("botLife: " +botLife + "playerLife:  " + playerLife);
         Optional<TroopType> playerField = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).get(position);
         Optional<TroopType> botField = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).get(position);
 
@@ -99,34 +100,41 @@ public class BattleModelImpl implements BattleModel {
             if (troopLevel.get(playerField.get()) > troopLevel.get(botField.get())) {
                 if (!TroopType.isDefense(playerField.get())) {
                     if (botLife == 1) {
+                        botLife--;
                         return WIN_PLAYER;
                     } else {
+                        botLife--;
                         return BOT;
                     }
                 }
             } else if (troopLevel.get(playerField.get()) < troopLevel.get(botField.get())) {
                 if (TroopType.isDefense(playerField.get())) {
                     if (playerLife == 1) {
+                        playerLife--;
                         return WIN_BOT;
                     } else {
+                        playerLife--;
                         return PLAYER;
                     }
                 }
             }
         } else if (botField.isEmpty() && playerField.isPresent() && (!TroopType.isDefense(playerField.get()))) {
             if (botLife == 1) {
+                botLife--;
                 return WIN_PLAYER;
             } else {
+                botLife--;
                 return BOT;
             }
         } else if (playerField.isEmpty() && botField.isPresent() && (!TroopType.isDefense(botField.get()))) {
             if (playerLife == 1) {
+                playerLife--;
                 return WIN_BOT;
             } else {
+                playerLife--;
                 return PLAYER;
             }
         }
-
         return -1;
     }
 

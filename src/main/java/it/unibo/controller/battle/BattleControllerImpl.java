@@ -81,13 +81,17 @@ public class BattleControllerImpl implements BattleController, Controller {
                 EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData(), PLAYER).size());
         update(NO_SKIP);
         for (int i = 0; i < total; i++) {
-            if (this.battleModel.battleCombat(i) == BOT) {
+            int value = this.battleModel.battleCombat(i);
+            System.out.println("total: " + total);
+            if (value == BOT) {
                 botLifeDecrease();
-            } else if (this.battleModel.battleCombat(i) == PLAYER) {
+            } else if (value == PLAYER) {
                 playerLifeDecrease();
-            } else if (this.battleModel.battleCombat(i) == WIN_BOT) {
+            } else if (value == WIN_BOT) {
+                System.out.println("win bot");
                 end(WIN_BOT);
-            } else if (this.battleModel.battleCombat(i) == WIN_PLAYER) {
+            } else if (value == WIN_PLAYER) {
+                System.out.println("win player");
                 end(WIN_PLAYER);
             }
             update(i + 1);

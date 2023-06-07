@@ -6,8 +6,8 @@ import it.unibo.model.battle.entitydata.*;
 
 public class FightData implements Serializable {
 
-    public static final int PLAYER_LIFE = 10;
-    public static final int BOT_LIFE = 10;
+    public static final int PLAYER_LIFE = 8;
+    public static final int BOT_LIFE = 8;
     public static final int MAX_ROUND = 3;
     public static final int BOT_TROOPS = 5;
     public static final int PLAYER_TROOPS = 5;
