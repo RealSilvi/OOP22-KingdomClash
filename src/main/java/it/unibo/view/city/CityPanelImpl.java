@@ -35,6 +35,7 @@ public class CityPanelImpl implements CityPanel{
 
        cityPanel.add(barPanel.getPanel(),BorderLayout.NORTH); 
        cityPanel.add(fieldPanel.getpanel(),BorderLayout.CENTER);
+       this.mainPanel.add(cityPanel);
         
     }
     
