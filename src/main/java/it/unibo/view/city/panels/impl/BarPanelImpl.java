@@ -17,12 +17,12 @@ import it.unibo.view.city.panels.api.BarPanel;
 public class BarPanelImpl extends JLabel implements BarPanel {
 
     private final JPanel mainpanel;
-    Troop baseTroop;
-    GameData gameData;
+    private Troop baseTroop;
+    private GameData gameData;
 
     public BarPanelImpl(Set<Resource> resources, Set<Troop> type){
         this.mainpanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, getSize());
-        this.gameData= new GameData();
+        this.gameData= gameData;
 
         this.mainpanel.setLayout(new FlowLayout());
 
@@ -98,3 +98,4 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     public JPanel getPanel(){
         return this.mainpanel;
     }
+}
