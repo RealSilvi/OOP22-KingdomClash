@@ -23,7 +23,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
 
         this.mainpanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, size);
         this.data=data;
-        this.function= new BaseModelImpl(data);
+        this.function= function;
 
         this.mainpanel.setLayout(new BorderLayout());
 
