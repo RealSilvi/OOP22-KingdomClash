@@ -22,7 +22,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     public FieldCityPanelImpl(int width, int height, Dimension size){
 
         this.mainpanel= new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, size);
-        this.data=new GameData();
+        this.data=data;
         this.function= new BaseModelImpl(data);
 
         this.mainpanel.setLayout(new BorderLayout());
@@ -35,7 +35,6 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 /*ognuna di esse ha una determinata posizione -aggiungere un listener per ciascun bottone con la quale possa piazzare la struttura 
-                 * come stracazzo lo faccio
                 */
                 final JButton structure= new JButton(""+i+","+j);
                 /*il campo viene creato per caso magari aggiungo un metodo che generi immagini e le piazzi per caso */
