@@ -44,8 +44,7 @@ public class CityPanelImpl implements CityPanel{
 
     @Override
     public void resources() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resources'");
+       this.fieldPanel.showresources();
     }
 
     @Override
