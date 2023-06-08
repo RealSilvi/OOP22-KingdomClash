@@ -9,7 +9,7 @@ import it.unibo.model.data.TroopType;
 import java.util.*;
 
 import static it.unibo.controller.battle.BattleControllerImpl.*;
-import static it.unibo.model.data.FightData.PLAYER_TROOPS;
+import static it.unibo.model.data.FightData.*;
 
 public class BattleModelImpl implements BattleModel {
 
@@ -19,6 +19,7 @@ public class BattleModelImpl implements BattleModel {
     public static final int MAX_ROUND = FightData.MAX_ROUND;
     private Optional<FightData> fightData;
     private Map<TroopType, Integer> troopLevel;
+    private Map<TroopType, Integer> troopBotLevel;
 
     int counted_round = 0;
     int botLife = FightData.BOT_LIFE;
@@ -30,6 +31,8 @@ public class BattleModelImpl implements BattleModel {
             this.fightData = gameData.getFightData();
         }
         this.troopLevel = gameData.getPlayerArmyLevel();
+        this.troopBotLevel = new HashMap<>();
+        Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
     }
 
     public BattleModelImpl(Optional<FightData> fightData) {
@@ -92,41 +95,50 @@ public class BattleModelImpl implements BattleModel {
     @Override
     public Integer battleCombat(Integer position) {
 
-        Optional<TroopType> playerField = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).get(position);
-        Optional<TroopType> botField = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).get(position);
+        System.out.println("botLife: " +botLife + "playerLife:  " + playerLife);
+        List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData());
+        Optional<TroopType> playerField = bothOrdered.subList(0,(bothOrdered.size()/2)).get(position);
+        Optional<TroopType> botField = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size()).get(position);
 
         if (botField.isPresent() && playerField.isPresent()) {
-            if (troopLevel.get(playerField.get()) > troopLevel.get(botField.get())) {
+            if (troopLevel.get(playerField.get()) > troopBotLevel.get(botField.get())) {
                 if (!TroopType.isDefense(playerField.get())) {
                     if (botLife == 1) {
+                        botLife--;
                         return WIN_PLAYER;
                     } else {
+                        botLife--;
                         return BOT;
                     }
                 }
-            } else if (troopLevel.get(playerField.get()) < troopLevel.get(botField.get())) {
+            } else if (troopLevel.get(playerField.get()) < troopBotLevel.get(botField.get())) {
                 if (TroopType.isDefense(playerField.get())) {
                     if (playerLife == 1) {
+                        playerLife--;
                         return WIN_BOT;
                     } else {
+                        playerLife--;
                         return PLAYER;
                     }
                 }
             }
         } else if (botField.isEmpty() && playerField.isPresent() && (!TroopType.isDefense(playerField.get()))) {
             if (botLife == 1) {
+                botLife--;
                 return WIN_PLAYER;
             } else {
+                botLife--;
                 return BOT;
             }
         } else if (playerField.isEmpty() && botField.isPresent() && (!TroopType.isDefense(botField.get()))) {
             if (playerLife == 1) {
+                playerLife--;
                 return WIN_BOT;
             } else {
+                playerLife--;
                 return PLAYER;
             }
         }
-
         return -1;
     }
 
@@ -141,5 +153,19 @@ public class BattleModelImpl implements BattleModel {
 
     }
 
+    public void endFight(Boolean increment){
+        botLife = BOT_LIFE;
+        playerLife = PLAYER_LIFE;
+        if(increment){
+            this.troopBotLevel.values().stream().map(x -> ++x);
+        }
+    }
+
+    public Map<TroopType,Boolean> getInfoTable(){
+        Map<TroopType,Boolean> infoTable = new HashMap<>();
+        Arrays.stream(TroopType.values()).forEach(troopType ->
+                infoTable.put(troopType, this.troopLevel.get(troopType) > this.troopBotLevel.get(troopType)));
+        return infoTable;
+    }
 
 }

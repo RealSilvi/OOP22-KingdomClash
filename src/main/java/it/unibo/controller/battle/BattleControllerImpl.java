@@ -6,6 +6,7 @@ import it.unibo.model.battle.BattleModelImpl;
 import it.unibo.model.battle.entitydata.EntityDataImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
+import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
@@ -19,12 +20,6 @@ import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
 public class BattleControllerImpl implements BattleController, Controller {
 
-    private JFrame frame;
-    private final static int nrOfSlots = 5;
-    private final static int nrOfTroops = 8;
-    private final static int nrOfLives = 8;
-    private final static int nrOfFieldSpots = nrOfSlots * 2;
-
     public static final int PLAYER = 1;
     public static final int BOT = 0;
     public static final int NO_SKIP = 0;
@@ -35,32 +30,25 @@ public class BattleControllerImpl implements BattleController, Controller {
     private Optional<FightData> fightData;
     private final BattlePanelImpl battlePanel;
 
-    public BattleControllerImpl(BattleModel battleModel, GameData gameData) {
-        if (gameData.getFightData().isPresent()) {
-            this.fightData = gameData.getFightData();
-        }
-        this.battleModel = battleModel;
-        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots, nrOfTroops, nrOfLives, fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop());
-    }
 
     public BattleControllerImpl(GameData gameData) {
-        this.battleModel = new BattleModelImpl(gameData);
-        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots, nrOfTroops, nrOfLives, fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop());
         if (gameData.getFightData().isPresent()) {
             this.fightData = gameData.getFightData();
+        }else{
+            this.fightData= Optional.of(new FightData());
+            gameData.setFightData(this.fightData);
         }
-    }
-
-    public BattleControllerImpl(Optional<FightData> fightData) {
-        this.battleModel = new BattleModelImpl(fightData);
-        this.battlePanel = new BattlePanelImpl(nrOfFieldSpots, nrOfSlots, nrOfTroops, nrOfLives, fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop());
+        this.battleModel = new BattleModelImpl(gameData);
+        this.battlePanel = new BattlePanelImpl(fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop(), gameData.getGameConfiguration().getBattleControllerConfiguration());
         this.battlePanel.disableSpinButton();
-        this.setActionListenerInfo();
+        this.battlePanel.disableBotSlots();
+        this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
         this.setActionListenerSpin();
         this.setActionListenerPass();
         this.setActionListenerSlots();
-        this.fightData = fightData;
+
     }
+
 
     public void pass() {
         this.battlePanel.enableBotSlots();
@@ -92,18 +80,23 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void battle() {
-        int total = Math.max(EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData(), BOT).size(),
-                EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData(), PLAYER).size());
+        int total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData()).size()/2;
         update(NO_SKIP);
         for (int i = 0; i < total; i++) {
-            if (this.battleModel.battleCombat(i) == BOT) {
+            int value = this.battleModel.battleCombat(i);
+            System.out.println("total: " + total);
+            if (value == BOT) {
                 botLifeDecrease();
-            } else if (this.battleModel.battleCombat(i) == PLAYER) {
+            } else if (value == PLAYER) {
                 playerLifeDecrease();
-            } else if (this.battleModel.battleCombat(i) == WIN_BOT) {
+            } else if (value == WIN_BOT) {
+                System.out.println("win bot");
                 end(WIN_BOT);
-            } else if (this.battleModel.battleCombat(i) == WIN_PLAYER) {
+                i = total;
+            } else if (value == WIN_PLAYER) {
+                System.out.println("win player");
                 end(WIN_PLAYER);
+                i = total;
             }
             update(i + 1);
         }
@@ -115,7 +108,10 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void end(Integer entity) {
-
+        this.battleModel.endFight(entity == WIN_PLAYER);
+        this.battlePanel.showEndPanel();
+        this.battlePanel.reset();
+        this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
     }
 
     public void clickedButtonPlayer(Integer key) {
@@ -129,8 +125,9 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void update(Integer skip) {
-        battlePanel.updateField(EntityDataImpl.ExOrdered(fightData.get().getPlayerData(),fightData.get().getBotData(),PLAYER).stream().skip(skip).toList(),
-                EntityDataImpl.ExOrdered(fightData.get().getPlayerData(),fightData.get().getBotData(),BOT).stream().skip(skip).toList());
+        List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
+        battlePanel.updateField(orderedList.subList(0, (orderedList.size()/2)).stream().skip(skip).toList(),
+                                orderedList.subList(orderedList.size()/2, orderedList.size()).stream().skip(skip).toList());
     }
 
     public void playerLifeDecrease() {
@@ -155,12 +152,6 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public JPanel getGuiPanel() {
         return this.battlePanel.getPanel();
-    }
-
-
-    private void setActionListenerInfo() {
-        ActionListener actionListenerInfo = e -> this.battlePanel.showTutorialPanel();
-        this.battlePanel.setActionListenerInfoButton(actionListenerInfo);
     }
 
 

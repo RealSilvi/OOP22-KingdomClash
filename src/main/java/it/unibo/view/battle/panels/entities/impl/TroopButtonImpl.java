@@ -2,6 +2,7 @@ package it.unibo.view.battle.panels.entities.impl;
 
 import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
@@ -87,9 +88,9 @@ public class TroopButtonImpl implements TroopButton {
         public void updateBorder() {
             this.selectedBorder = !this.selectedBorder;
             if (!selectedBorder) {
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR, 4, true));
+                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, 4, true));
             } else {
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.SECONDARY_COLOR, 4, true));
+                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.SECONDARY_COLOR, 4, true));
             }
         }
 
@@ -98,9 +99,9 @@ public class TroopButtonImpl implements TroopButton {
             super.setEnabled(b);
             this.selectedBorder = false;
             if (b) {
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR, 4, true));
+                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, 4, true));
             } else {
-                this.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.DEFAULT_COLOR, 4, true));
+                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.DEFAULT_COLOR, 4, true));
             }
         }
     }

@@ -1,5 +1,7 @@
 package it.unibo.view.battle.panels.entities;
 
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,7 +17,6 @@ public class DrawPanel extends JPanel {
     private static final int HEIGHT_IMAGE_FILL_PATTERN = 200;
     private static final int H_GAP = 20;
     private static final int V_GAP = 10;
-    private static final Color DEFAULT_COLOR = Color.darkGray;
 
     private final Image backgroundImage;
     private final Dimension size;
@@ -66,7 +67,7 @@ public class DrawPanel extends JPanel {
      * @param size The dimension of the Panel.
      */
     public DrawPanel(final Dimension size) {
-        this(DEFAULT_COLOR, size);
+        this(BattlePanelStyle.DEFAULT_COLOR, size);
     }
 
 

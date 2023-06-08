@@ -1,6 +1,8 @@
 package it.unibo.view.battle.tutorial;
 
+import it.unibo.view.battle.config.TextConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
@@ -15,9 +17,7 @@ public final class TutorialPanel {
 
     private final JPanel mainPanel;
 
-    private final JPanel backPanel;
     private final JButton turnBack;
-    private final TextPanelFactoryImpl panelFactory;
 
 
     //TODO interfacce e commenti
@@ -25,26 +25,24 @@ public final class TutorialPanel {
     //TODO tutti i punti alla fine dei comenti
     //TODO tutti i commenti dei costruttori
     //TODO tutti i commenti delle interfacce da rivedere
-    //TODO aggiungi roba in json e fai i metodi per averli
-    public TutorialPanel() {
+    public TutorialPanel(TextConfiguration configuration) {
         this.turnBack = new JButton(ImageIconsSupplier.getImageExitIndicator(EXIT_DIMENSION));
-        this.panelFactory = new TextPanelFactoryImpl();
-        this.backPanel = panelFactory.getTutorialSouthPanelDefault();
+        JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel());
 
         this.turnBack.setPreferredSize(EXIT_DIMENSION);
         this.turnBack.setOpaque(false);
-        this.turnBack.setBorder(BorderFactory.createLineBorder(ImageIconsSupplier.PRIMARY_COLOR, 2, true));
+        this.turnBack.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, 2, true));
 
-        this.backPanel.add(this.turnBack);
+        backPanel.add(this.turnBack);
 
         this.mainPanel = new DrawPanel(Color.darkGray, PanelDimensions.SCREEN_SIZE);
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
-        this.mainPanel.add(this.backPanel, BorderLayout.SOUTH);
-        this.mainPanel.add(this.panelFactory.getTutorialNorthPanelDefault(), BorderLayout.NORTH);
-        this.mainPanel.add(this.panelFactory.getTutorialWestPanelDefault(), BorderLayout.WEST);
-        this.mainPanel.add(this.panelFactory.getTutorialEastPanelDefault(), BorderLayout.EAST);
-        this.mainPanel.add(this.panelFactory.getTutorialCenterPanelDefault(), BorderLayout.CENTER);
+        this.mainPanel.add(backPanel, BorderLayout.SOUTH);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialNorthTitle(),configuration.getTutorialNorthText(),PanelDimensions.getPlayersPanel()), BorderLayout.NORTH);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialWestTitle(),configuration.getTutorialWestText(),PanelDimensions.getSidePanel()), BorderLayout.WEST);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialEastTitle(),configuration.getTutorialEastText(),PanelDimensions.getSidePanel()), BorderLayout.EAST);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialCenterTitle(),configuration.getTutorialCenterText(),PanelDimensions.getFieldPanel()), BorderLayout.CENTER);
     }
 
     public void addActionListenerExit(ActionListener actionListener) {
@@ -54,5 +52,7 @@ public final class TutorialPanel {
     public JPanel getPanel() {
         return this.mainPanel;
     }
+
+
 
 }

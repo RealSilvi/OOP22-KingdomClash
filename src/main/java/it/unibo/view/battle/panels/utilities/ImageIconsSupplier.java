@@ -5,39 +5,49 @@ import it.unibo.model.data.TroopType;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 public interface ImageIconsSupplier {
-    //TODO usa system.getProprieties
-    Color PRIMARY_COLOR = new Color(168, 19, 48);
-    Color SECONDARY_COLOR = new Color(250, 160, 21);
-    Color DEFAULT_COLOR = Color.darkGray;
 
-    ImageIcon BACKGROUND_FILL_PATTERN = new ImageIcon("src/main/resources/it/unibo/icons/battle/Background.png");
+    String iconsDirectory = System.getProperty("user.dir")
+            + File.separator + "src"
+            + File.separator + "main"
+            + File.separator + "resources"
+            + File.separator + "it"
+            + File.separator + "unibo"
+            + File.separator + "textures"
+            + File.separator + "battle"
+            + File.separator;
+
+    String troopsDirectory = iconsDirectory + "troops" + File.separator;
+
+    String labelDirectory = iconsDirectory + "labels" + File.separator;
+    String buttonsDirectory = iconsDirectory + "buttons" + File.separator;
+
+    ImageIcon BACKGROUND_FILL_PATTERN = new ImageIcon(iconsDirectory + "Background.png");
 
     Map<TroopType, String> troopUrl = Map.of(
-            TroopType.AXE, "src/main/resources/it/unibo/icons/battle/Axe.png",
-            TroopType.SWORD, "src/main/resources/it/unibo/icons/battle/Sword.png",
-            TroopType.HAMMER, "src/main/resources/it/unibo/icons/battle/Hammer.png",
-            TroopType.MACE, "src/main/resources/it/unibo/icons/battle/Mace.png",
-            TroopType.AXE_DEFENCE, "src/main/resources/it/unibo/icons/battle/Shield01.png",
-            TroopType.SWORD_DEFENCE, "src/main/resources/it/unibo/icons/battle/Shield02.png",
-            TroopType.HAMMER_DEFENCE, "src/main/resources/it/unibo/icons/battle/Shield03.png",
-            TroopType.MACE_DEFENCE, "src/main/resources/it/unibo/icons/battle/Helmet.png");
+            TroopType.AXE, troopsDirectory+"Axe.png",
+            TroopType.SWORD,   troopsDirectory+"Sword.png",
+            TroopType.HAMMER,  troopsDirectory +"Hammer.png",
+            TroopType.MACE,   troopsDirectory+"Mace.png",
+            TroopType.AXE_DEFENCE,  troopsDirectory +"Shield01.png",
+            TroopType.SWORD_DEFENCE,  troopsDirectory +"Shield02.png",
+            TroopType.HAMMER_DEFENCE, troopsDirectory  +"Shield03.png",
+            TroopType.MACE_DEFENCE,   troopsDirectory+"Helmet.png");
 
-    ImageIcon LIFE = new ImageIcon("src/main/resources/it/unibo/icons/battle/Life.png");
-    ImageIcon DEATH = new ImageIcon("src/main/resources/it/unibo/icons/battle/Death.png");
+    ImageIcon PASS = new ImageIcon( buttonsDirectory +"Pass.png");
+    ImageIcon SPIN = new ImageIcon( buttonsDirectory +"Spin.png");
+    ImageIcon INFO = new ImageIcon( buttonsDirectory +"Info.png");
+    ImageIcon EXIT = new ImageIcon( buttonsDirectory +"Exit.png");
 
-    ImageIcon PASS = new ImageIcon("src/main/resources/it/unibo/icons/battle/Pass.png");
-    ImageIcon SPIN = new ImageIcon("src/main/resources/it/unibo/icons/battle/Spin.png");
-    ImageIcon INFO = new ImageIcon("src/main/resources/it/unibo/icons/battle/Info.png");
+    ImageIcon CHECK = new ImageIcon( labelDirectory +"Check.png");
+    ImageIcon X = new ImageIcon( labelDirectory +"X.png");
+    ImageIcon INDICATOR = new ImageIcon( labelDirectory +"Indicator.png");
 
-    ImageIcon CHECK = new ImageIcon("src/main/resources/it/unibo/icons/battle/Check.png");
-    ImageIcon X = new ImageIcon("src/main/resources/it/unibo/icons/battle/X.png");
+    ImageIcon LIFE = new ImageIcon( labelDirectory +"Life.png");
+    ImageIcon DEATH = new ImageIcon( labelDirectory +"Death.png");
 
-    ImageIcon INDICATOR = new ImageIcon("src/main/resources/it/unibo/icons/battle/Indicator.png");
-    ImageIcon EXIT = new ImageIcon("src/main/resources/it/unibo/icons/battle/Exit.png");
 
     static ImageIcon getImageIconFromTroop(final TroopType troop, Dimension size) {
         return new ImageIcon(getImageFromTroop(troop, size));
@@ -84,19 +94,6 @@ public interface ImageIconsSupplier {
 
     static ImageIcon getImageExitIndicator(Dimension size) {
         return new ImageIcon(EXIT.getImage().getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
-    }
-
-    static Font getPrimaryFont() {
-        Font font;
-        try {
-            font = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/it/unibo/icons/battle/armalite.ttf"));
-            GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            g.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/it/unibo/icons/battle/armalite.ttf")));
-            return font.deriveFont(40f);
-        } catch (IOException | FontFormatException e) {
-            font = Font.getFont("arial");
-            return font.deriveFont(40f);
-        }
     }
 
 }

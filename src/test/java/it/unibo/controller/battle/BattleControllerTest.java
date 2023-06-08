@@ -1,6 +1,7 @@
 package it.unibo.controller.battle;
 
 import it.unibo.model.data.FightData;
+import it.unibo.model.data.GameData;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.tutorial.TutorialPanel;
@@ -14,7 +15,7 @@ public class BattleControllerTest {
     public static void main(String[] args) {
 
         FightData fightData = new FightData();
-        BattleControllerImpl battleController=new BattleControllerImpl(Optional.of(fightData));
+        //BattleControllerImpl battleController=new BattleControllerImpl(new GameData());
 
     }
 }

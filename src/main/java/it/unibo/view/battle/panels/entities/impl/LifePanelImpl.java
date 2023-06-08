@@ -41,9 +41,47 @@ public class LifePanelImpl implements LifePanel {
                 .ifPresent(LivesLabel::changeStatus);
     }
 
+    public void reset(){
+        this.lives.forEach(LivesLabelImpl::reset);
+    }
+
     @Override
     public JPanel getPanel() {
         return this.mainPanel;
     }
 
+    private static class LivesLabelImpl extends JLabel implements LivesLabel {
+
+        private final Dimension size;
+        private boolean alive;
+
+        /**
+         * @param size the size of the label
+         */
+        public LivesLabelImpl(final Dimension size) {
+            super(ImageIconsSupplier.getImageIconLife(true, size));
+
+            this.size = size;
+            this.alive = true;
+
+            this.setPreferredSize(size);
+        }
+
+
+        @Override
+        public void changeStatus() {
+            this.alive = !this.alive;
+            this.setIcon(ImageIconsSupplier.getImageIconLife(this.alive, this.size));
+        }
+
+        @Override
+        public boolean isAlive() {
+            return this.alive;
+        }
+
+        public void reset(){
+            this.alive=true;
+            this.setIcon(ImageIconsSupplier.getImageIconLife(this.alive, this.size));
+        }
+    }
 }

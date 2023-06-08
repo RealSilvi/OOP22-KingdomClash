@@ -30,4 +30,8 @@ public interface BattleModel {
 
     void reset();
 
+    void endFight(Boolean increment);
+
+    Map<TroopType,Boolean> getInfoTable();
+
 }

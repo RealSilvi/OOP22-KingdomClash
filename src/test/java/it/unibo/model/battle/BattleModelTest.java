@@ -86,8 +86,9 @@ public class BattleModelTest {
         this.botData.getCells(0).setClicked(true);
         */
         System.out.println("entered getOrdered");
-        List<Optional<TroopType>> bc = EntityDataImpl.getOrderedField(this.fightData.getPlayerData(),this.fightData.getBotData(),BOT);
-        List<Optional<TroopType>> pc = EntityDataImpl.getOrderedField(this.fightData.getPlayerData(),this.fightData.getBotData(),PLAYER);
+        List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(this.playerData,this.botData);
+        List<Optional<TroopType>> pc = bothOrdered.subList(0,(bothOrdered.size()/2)-1);
+        List<Optional<TroopType>> bc = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size()-1);
         List<Optional<TroopType>> expected = new ArrayList<>();
         expected.add(Optional.of(TroopType.SWORD));
         /*expected.add(Optional.of(Troop.SWORD));

@@ -28,13 +28,13 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
      * @param size The dimension of the JLabel.
      */
     public TroopLabelImpl(final Dimension size) {
-        super(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
+        super();
         this.size = size;
     }
 
     @Override
     public void setEmpty() {
-        this.setIcon(ImageIconsSupplier.BACKGROUND_FILL_PATTERN);
+        this.setIcon(null);
     }
 
     @Override
