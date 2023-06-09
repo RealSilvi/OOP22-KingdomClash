@@ -80,8 +80,8 @@ public class SoundManager {
         this.setTheme(Themes.MENU);
     }
 
-    public void setEnable(boolean enable) {
-        this.enable=enable;
+    public void changeMute() {
+        this.enable=!this.enable;
         if(enable){
             this.currentTheme.ifPresent(theme -> {
                 theme.start();
