@@ -1,6 +1,7 @@
 package it.unibo.view.menu;
 
 import it.unibo.view.GameGui;
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,20 +27,20 @@ public class InfoMenuPanel {
         grid1.insets = new Insets(30, 0, 0, 0);
 
         Font font2 = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON))/2);
-        Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
+        Font font = BattlePanelStyle.getPrimaryFont();
         ex.setFont(font);
 
-        ImageTextArea label = new ImageTextArea();
-        label.setImage(BACKGROUND_BUTTON.getImage());
-        label.setFont(font2);
-        label.setWrapStyleWord(true);
-        label.setLineWrap(true);
-        label.setText("ciaooooooooooooooooooooooooooooooooooooo");
-        label.setEditable(false);
-        label.setForeground(Color.BLACK);
-        label.setPreferredSize(ex.getPreferredSize());
-        label.setFocusable(false);
-        infopanel.add(label, grid1);
+        ImageTextArea textArea = new ImageTextArea();
+        textArea.setImage(BACKGROUND_BUTTON.getImage());
+        textArea.setFont(font2);
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(true);
+        textArea.setText("ciaooooooooooooooooooooooooooooooooooooo");
+        textArea.setEditable(false);
+        textArea.setForeground(Color.WHITE);
+        textArea.setPreferredSize(ex.getPreferredSize());
+        textArea.setFocusable(false);
+        infopanel.add(textArea, grid1);
 
         this.exit = new JButton("EXIT", BACKGROUND_BUTTON);
         exit.setHorizontalTextPosition(SwingConstants.CENTER);

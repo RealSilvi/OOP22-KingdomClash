@@ -1,6 +1,7 @@
 package it.unibo.view.menu;
 
 import it.unibo.view.GameGui;
+import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +23,8 @@ public class GameMenuImpl implements GameMenu {
         ImageButton options = new ImageButton("OPTIONS", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
         this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
 
-        Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
+        Font font = BattlePanelStyle.getPrimaryFont();
+        //Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
         GridBagConstraints grid = new GridBagConstraints();
 
         this.menuPanel = new ImagePanel(BACKGROUND_PANEL.getImage());
