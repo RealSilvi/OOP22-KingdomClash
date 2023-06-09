@@ -25,7 +25,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import it.unibo.controller.GameController;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.internal.GraphicUtils;
 import it.unibo.view.map.mapdata.MapConfiguration;
@@ -46,8 +45,8 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     
     private List<JButton> tiles = new ArrayList<>();
     private Random randomGen = new Random(RANDOM_SEED);
-
-    private transient GameController controller;
+    @SuppressWarnings("unused")
+    //Used to get global configuration
     private transient GameConfiguration configuration;
     private transient MapConfiguration mapConfiguration;
 
@@ -56,22 +55,12 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     /**
      * Constructs a MapPanel, a GUI composed of different types of tiles
      * and assigns a controller to fire events to.
-     * @param controller    the controller that will be assigned to this GUI
-     * @param configuration the configuration of this type of GUI
+     * @param controller the controller that will be assigned to this GUI
      */
-    public MapPanelImpl(GameController controller, GameConfiguration configuration) {
-        this.controller = controller;
+    public MapPanelImpl(GameConfiguration configuration) {
         this.configuration = configuration;
         this.mapConfiguration = configuration.getMapConfiguration();
         initialize();
-    }
-    /**
-     * Constructs a MapPanel, a GUI composed of different types of tiles
-     * and assigns a controller to fire events to.
-     * @param controller the controller that will be assigned to this GUI
-     */
-    public MapPanelImpl(GameController controller) {
-        this(controller, new GameConfiguration());
     }
 
     private void initialize() {
