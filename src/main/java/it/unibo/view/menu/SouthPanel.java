@@ -17,10 +17,12 @@ public class SouthPanel {
     private JButton cityButton;
     private JButton mapButton;
     private JButton menuButton;
+    private JButton musicButton;
 
     public SouthPanel(){
         this.battleButton = new JButton("BATTLE");
         this.menuButton = new JButton("MENU");
+        this.musicButton = new JButton("MUSIC");
         this.battleButton.setVisible(false);
         this.cityButton = new JButton("CITY");
         this.mapButton = new JButton("MAP");
@@ -29,6 +31,7 @@ public class SouthPanel {
         this.southPanel.setBackground(Color.blue);
         this.southPanel.setPreferredSize(getMenuPanel());
         this.southPanel.add(this.battleButton);
+        this.southPanel.add(this.musicButton);
         this.southPanel.add(this.menuButton);
         this.southPanel.add(this.cityButton);
         this.southPanel.add(this.mapButton);
@@ -47,6 +50,9 @@ public class SouthPanel {
     public void setActionListenerBattle(ActionListener actionListener){
         this.battleButton.addActionListener(actionListener);
     }
+    public void setActionListenerMusic(ActionListener actionListener){
+        this.musicButton.addActionListener(actionListener);
+    }
     public void setActionListenerMenu(ActionListener actionListener){
         this.menuButton.addActionListener(actionListener);
     }
@@ -61,24 +67,21 @@ public class SouthPanel {
         this.menuButton.setVisible(true);
         this.cityButton.setVisible(true);
         this.mapButton.setVisible(false);
+        this.musicButton.setVisible(true);
     }
 
     public void showButtonsCity(){
         this.menuButton.setVisible(true);
         this.cityButton.setVisible(false);
         this.mapButton.setVisible(true);
+        this.musicButton.setVisible(true);
     }
 
     public void showButtonsBattle(){
         this.menuButton.setVisible(false);
         this.cityButton.setVisible(false);
         this.mapButton.setVisible(false);
-    }
-
-    public void showButtonsMenu(){
-        this.menuButton.setVisible(false);
-        this.cityButton.setVisible(true);
-        this.mapButton.setVisible(true);
+        this.musicButton.setVisible(true);
     }
 
 }

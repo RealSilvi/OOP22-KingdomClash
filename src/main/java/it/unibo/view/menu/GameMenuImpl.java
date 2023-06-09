@@ -16,11 +16,12 @@ public class GameMenuImpl implements GameMenu {
     private final JPanel menuPanel;
     private final ImageButton info;
     private final ImageButton new_game;
+    private final ImageButton music;
 
     public GameMenuImpl() {
         this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
         ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
-        ImageButton options = new ImageButton("OPTIONS", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
+        this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
         this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
 
         Font font = BattlePanelStyle.getPrimaryFont();
@@ -46,9 +47,9 @@ public class GameMenuImpl implements GameMenu {
         menuPanel.add(load, grid);
 
         grid.gridy = 3;
-        options.setFont(font);
-        options.setForeground(Color.BLACK);
-        menuPanel.add(options, grid);
+        music.setFont(font);
+        music.setForeground(Color.BLACK);
+        menuPanel.add(music, grid);
 
         grid.gridy = 4;
         info.setFont(font);
@@ -67,6 +68,10 @@ public class GameMenuImpl implements GameMenu {
 
     public void setActionListenerNewGame(ActionListener actionListener){
         this.new_game.addActionListener(actionListener);
+    }
+
+    public void setActionListenerMusic(ActionListener actionListener){
+        this.music.addActionListener(actionListener);
     }
 
 }

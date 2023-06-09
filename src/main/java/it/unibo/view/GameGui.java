@@ -74,6 +74,7 @@ public class GameGui {
         setActionListenerInfo();
         setActionListenerExit();
         setActionListenerNewGame();
+        setActionListenerMusic();
         setActionListenerBattle();
         setActionListenerMenu();
         setActionListenerCity();
@@ -84,7 +85,6 @@ public class GameGui {
 
     public void showMenuPanel() {
         this.soundManager.startMenuTheme();
-        this.southPanel.showButtonsMenu();
         SwitchLayout.show(this.mainPanel, "1");
     }
 
@@ -116,6 +116,12 @@ public class GameGui {
     private void setActionListenerNewGame() {
         ActionListener actionListener = e -> showCity();
         this.menuPanel.setActionListenerNewGame(actionListener);
+    }
+
+    private void setActionListenerMusic() {
+        ActionListener actionListener = e -> this.soundManager.changeMute();
+        this.menuPanel.setActionListenerMusic(actionListener);
+        this.southPanel.setActionListenerMusic(actionListener);
     }
 
     private void setActionListenerInfo() {
