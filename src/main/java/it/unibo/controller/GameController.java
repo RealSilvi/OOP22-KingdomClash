@@ -4,6 +4,7 @@ package it.unibo.controller;
 import it.unibo.controller.base.BaseControllerImpl;
 import it.unibo.controller.battle.BattleControllerImpl;
 import it.unibo.model.GameModel;
+import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.GameGui;
 
 public class GameController {
@@ -20,7 +21,7 @@ public class GameController {
         this.battleController = new BattleControllerImpl(gameModel.getGameData());
         this.baseController = new BaseControllerImpl(gameModel.getGameData());
 
-        this.gameGui = new GameGui(battleController.getGuiPanel()/*,baseController.getGuiPanel()*/);
+        this.gameGui = new GameGui(battleController.getGuiPanel(),baseController.getGuiPanel(), this.gameModel.getGameData().getGameConfiguration());
 
     }
 

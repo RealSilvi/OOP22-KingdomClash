@@ -1,5 +1,9 @@
 package it.unibo.view;
 
+import it.unibo.controller.GameController;
+import it.unibo.model.data.GameConfiguration;
+import it.unibo.view.map.MapPanel;
+import it.unibo.view.map.MapPanelImpl;
 import it.unibo.view.menu.*;
 
 import javax.swing.*;
@@ -20,15 +24,23 @@ public class GameGui {
     private final SouthPanel southPanel;
     private final GameMenu menuPanel;
     private final InfoMenuPanel infoPanel;
+    private JPanel currentPanel;
+    private final MapPanel mapPanel;
+    private final JPanel cityPanel;
+    private final JPanel battlePanel;
     //private final JPanel newgamePanel;
     //private final JPanel loadPanel;
 
-    public GameGui(JPanel battlePanel/*, JPanel cityPanel*/){
+    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration){
         frame = new JFrame();
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.currentPanel = new JPanel();
+        this.mapPanel = new MapPanelImpl(null, gameConfiguration);
+        this.cityPanel = cityPanel;
+        this.battlePanel = battlePanel;
 
         this.SwitchLayout = new CardLayout();
         this.mainPanel = new JPanel(this.SwitchLayout);
@@ -42,7 +54,9 @@ public class GameGui {
         this.infoPanel = new InfoMenuPanel();
         this.southPanel = new SouthPanel();
 
-        this.allPanel.add(battlePanel,"1");
+        this.allPanel.add(this.battlePanel,"1");
+        this.allPanel.add(this.cityPanel,"2");
+        this.allPanel.add(this.mapPanel.getAsJPanel(),"3");
 
         this.BorderPanel.add(this.allPanel, BorderLayout.CENTER);
         this.BorderPanel.add(this.southPanel.getPanel(),BorderLayout.SOUTH);
@@ -58,6 +72,9 @@ public class GameGui {
         setActionListenerInfo();
         setActionListenerExit();
         setActionListenerNewGame();
+        setActionListenerBattle();
+        setActionListenerCity();
+        setActionListenerMap();
         showMenuPanel();
 
     }
@@ -70,13 +87,26 @@ public class GameGui {
         SwitchLayout.show(this.mainPanel, "2");
     }
 
-    public void showNewGame(){
+    public void showBattle(){
+        setCurrentPanel(this.battlePanel);
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "1");
     }
 
+    public void showCity(){
+        setCurrentPanel(this.cityPanel);
+        SwitchLayout.show(this.mainPanel, "3");
+        SwitchLayout2.show(this.allPanel, "2");
+    }
+
+    public void showMap(){
+        setCurrentPanel(this.mapPanel.getAsJPanel());
+        SwitchLayout.show(this.mainPanel, "3");
+        SwitchLayout2.show(this.allPanel, "3");
+    }
+
     private void setActionListenerNewGame() {
-        ActionListener actionListener = e -> showNewGame();
+        ActionListener actionListener = e -> showCity();
         this.menuPanel.setActionListenerNewGame(actionListener);
     }
 
@@ -90,10 +120,33 @@ public class GameGui {
         this.infoPanel.setActionListenerExit(actionListener);
     }
 
+    private void setActionListenerBattle() {
+        ActionListener actionListener = e -> showBattle();
+        this.southPanel.setActionListenerBattle(actionListener);
+    }
+
+    private void setActionListenerCity() {
+        ActionListener actionListener = e -> showCity();
+        this.southPanel.setActionListenerCity(actionListener);
+    }
+
+    private void setActionListenerMap() {
+        ActionListener actionListener = e -> showMap();
+        this.southPanel.setActionListenerMap(actionListener);
+    }
+
     public static Dimension getAllPanel(){
         double width = SouthPanel.getMenuPanel().getWidth();
         double height = DIMENSION_SCREEN.getHeight() - SouthPanel.getMenuPanel().getHeight();
         return new Dimension((int)width, (int)height);
+    }
+
+    public void setCurrentPanel(JPanel currentPanel){
+        this.currentPanel = currentPanel;
+    }
+
+    public JPanel getCurrentPanel(){
+        return this.currentPanel;
     }
 
 }
