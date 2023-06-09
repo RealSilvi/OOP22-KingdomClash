@@ -102,7 +102,14 @@ public final class BattlePanelImpl implements BattlePanel {
 
     @Override
     public void updateField(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botPlayer) {
-        this.fieldPanel.redraw(playerTroops, botPlayer);
+        this.fieldPanel.redraw(playerTroops,botPlayer);
+    }
+
+    public void updateFieldBattle(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botPlayer) {
+        int delay = 500;
+        Timer timer = new Timer(delay, e -> this.fieldPanel.redraw(playerTroops, botPlayer));
+        timer.setRepeats(false);
+        timer.start();
     }
 
     @Override
@@ -175,7 +182,5 @@ public final class BattlePanelImpl implements BattlePanel {
     public void reset(){
         this.buttonsPanel.reset();
     }
-
-
 
 }
