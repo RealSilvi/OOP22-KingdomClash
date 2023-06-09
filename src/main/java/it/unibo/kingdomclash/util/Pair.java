@@ -3,6 +3,11 @@ package it.unibo.kingdomclash.util;
 import java.io.Serializable;
 
 public class Pair<X extends Serializable, Y extends Serializable> implements Serializable {
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 14724610L;
+
     private X first;
     private Y second;
 

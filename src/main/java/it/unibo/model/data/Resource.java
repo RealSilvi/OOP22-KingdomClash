@@ -7,7 +7,12 @@ import java.util.stream.Collectors;
 /**
  * A simple data class that stores a type of resource and it's corresponding amount
  */
-public class Resource implements Serializable {
+public class Resource implements Serializable, Cloneable {
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 142745963L;
+
     /**
      * An enum containing all type of resources
      */
@@ -65,7 +70,7 @@ public class Resource implements Serializable {
         }
         return super.equals(otherResource);
     }
-
+    
     public Resource clone() {
         return new Resource(this.resource, this.amount);
     }
