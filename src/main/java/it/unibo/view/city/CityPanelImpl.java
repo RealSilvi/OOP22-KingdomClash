@@ -3,8 +3,8 @@ package it.unibo.view.city;
 import it.unibo.model.base.BaseModel;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
+import it.unibo.model.data.TroopType;
 import it.unibo.model.data.Resource.ResourceType;
-import it.unibo.view.battle.Troop;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.city.panels.impl.BarPanelImpl;
@@ -24,7 +24,7 @@ public class CityPanelImpl implements CityPanel{
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
 
-    public CityPanelImpl(GameData gameData, Set<Troop> type,Dimension size, int width, int height){
+    public CityPanelImpl(GameData gameData, Set<TroopType> type,Dimension size, int width, int height){
         /*find a background image for the wallpaper of the panel */
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, size);
         this.barPanel=new BarPanelImpl(gameData.getResources(), type);
@@ -35,6 +35,7 @@ public class CityPanelImpl implements CityPanel{
 
        cityPanel.add(barPanel.getPanel(),BorderLayout.NORTH); 
        cityPanel.add(fieldPanel.getpanel(),BorderLayout.CENTER);
+       this.mainPanel.add(cityPanel);
         
     }
     
@@ -44,8 +45,7 @@ public class CityPanelImpl implements CityPanel{
 
     @Override
     public void resources() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resources'");
+       this.fieldPanel.showresources();
     }
 
     @Override

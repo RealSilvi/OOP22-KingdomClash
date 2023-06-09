@@ -25,14 +25,14 @@ public class ThreadManagerImplTest {
     private GameData gameData;
     private BaseModel baseModel;
 
-    private void initModel() {
+    @org.junit.jupiter.api.BeforeEach
+    public void initModel() {
         this.gameData = new GameData();
         this.baseModel = new BaseModelImpl(this.gameData);
     }
 
     @Test
     public void testBuildingAndProductionCycle() throws NotEnoughResourceException, InvalidBuildingPlacementException, BuildingMaxedOutException, InvalidStructureReferenceException, MaxBuildingLimitReachedException {
-        initModel();
         Object lock = new Object();
         if (gameData.getResources().add(new Resource(ResourceType.WHEAT, 30)) == false) {
             gameData.getResources().remove(new Resource(ResourceType.WHEAT, 30));

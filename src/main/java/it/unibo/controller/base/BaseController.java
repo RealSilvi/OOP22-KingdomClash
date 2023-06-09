@@ -15,7 +15,7 @@ import it.unibo.model.data.TroopType;
  * Standard and easy to use interface for making a controller
  * related to the "Base Building" part of the game.
  */
-interface BaseController {
+public interface BaseController {
     /**
      * Attemtpts the construction of a building.
      *

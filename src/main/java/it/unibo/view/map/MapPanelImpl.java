@@ -1,6 +1,6 @@
 package it.unibo.view.map;
 
-import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -15,17 +15,17 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.IntConsumer;
+import java.util.function.IntPredicate;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.plaf.ButtonUI;
 
 import it.unibo.controller.GameController;
-import it.unibo.view.map.internal.ButtonUIFactory;
-import it.unibo.view.map.internal.ButtonUIFactoryImpl;
+import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.internal.GraphicUtils;
 import it.unibo.view.map.mapdata.MapConfiguration;
 
@@ -38,61 +38,51 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     private transient Logger logger = Logger.getLogger(this.getClass().getName());
 
     public static final int BATTLE_LEVELS = 55;
-    public static final int RANDOM_SEED = 123545;
-    public static final int ROWS = 10;
-    public static final int COLS = 10;
+    public static final int RANDOM_SEED = 65455;
 
-    private transient Map<ButtonIdentification, Image> imageMap = new EnumMap<>(ButtonIdentification.class);
+    private transient Map<ButtonIdentification, Image> imageMap = 
+        new EnumMap<>(ButtonIdentification.class);
+    
     private List<JButton> tiles = new ArrayList<>();
     private Random randomGen = new Random(RANDOM_SEED);
+
     private transient GameController controller;
-    private transient MapConfiguration configuration = new MapConfiguration();
+    private transient GameConfiguration configuration;
+    private transient MapConfiguration mapConfiguration;
 
     private List<Integer> specialTileIndexes = new ArrayList<>();
 
     /**
      * Constructs a MapPanel, a GUI composed of different types of tiles
      * and assigns a controller to fire events to.
+     * @param controller    the controller that will be assigned to this GUI
+     * @param configuration the configuration of this type of GUI
+     */
+    public MapPanelImpl(GameController controller, GameConfiguration configuration) {
+        this.controller = controller;
+        this.configuration = configuration;
+        this.mapConfiguration = configuration.getMapConfiguration();
+        initialize();
+    }
+    /**
+     * Constructs a MapPanel, a GUI composed of different types of tiles
+     * and assigns a controller to fire events to.
      * @param controller the controller that will be assigned to this GUI
      */
     public MapPanelImpl(GameController controller) {
-        this();
-        this.controller = controller;
+        this(controller, new GameConfiguration());
     }
 
-    private MapPanelImpl() {
-        Arrays.stream(ButtonIdentification.values()).forEach(identification -> {
-            try {
-                imageMap.put(identification, ImageIO.read(this.getClass().getResource(configuration.getImageMap().get(identification))));
-            } catch (IOException | IllegalArgumentException e) {
-                logger.severe("Error loading resources for: "+identification.name());
-            }
-        });
+    private void initialize() {
+        loadAssets();
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                MapPanelImpl.this.setPreferredSize(new Dimension(300, 100));
                 updateButtonIcons();
             }
         });
-        Dimension cellSize = calculateCellSize();
-        //ButtonUI tileUI = new ButtonUIFactoryImpl().buttonUINoGrayOut();
-        setLayout(new GridLayout(ROWS, COLS));
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLS; col++) {
-                JButton button = new JButton();
-                button.setBorderPainted(false);
-                button.setPreferredSize(cellSize);
-                button.setActionCommand(ButtonIdentification.TILE.getActionCommand());
-                button.setIcon(new ImageIcon(imageMap.get(ButtonIdentification.TILE)));
-                //button.setUI(tileUI);
-                button.setBorderPainted(false);
-                button.setContentAreaFilled(false);
-                tiles.add(button);
-                this.add(button);
-            }
-        }
+        generateTileGrid();
         populateMap();
     }
 
@@ -114,53 +104,91 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
 
     @Override
     public void setBeatenLevels(final int beatenLevels) {
-        for (int index = 1; index<beatenLevels+1; index++) {
-            tiles.get(specialTileIndexes.get(index))
-                .setActionCommand(ButtonIdentification.DEATH.getActionCommand());
-        }
+        IntConsumer setBeatenAction = tileIndex -> {
+            JButton tile = tiles.get(specialTileIndexes.get(tileIndex));
+            if (tileIndex > beatenLevels) {
+                tile.setDisabledIcon(null);
+                tile.setEnabled(true);
+                tile.setActionCommand(ButtonIdentification.ENEMY.getActionCommand());
+            } else {
+                tile.setEnabled(false);
+                tile.setActionCommand(ButtonIdentification.DEATH.getActionCommand());
+            }
+        };
+
+        getNonbeatenLevelsStream(true).forEach(setBeatenAction);
+
+        getNonbeatenLevelsStream(false).forEach(setBeatenAction);
+
+        updateButtonIcons();
     }
 
     @Override
     public void setActiveBattle(final int battleIndex) {
-        int selectedIndex = battleIndex>0 ? battleIndex : 0;
-        IntStream.range(1, specialTileIndexes.size()).forEach(specialIndex -> 
-            tiles.get(specialTileIndexes.get(specialIndex))
-                .setEnabled(specialTileIndexes.get(specialIndex) == selectedIndex));
+        IntConsumer setActiveAction = tileIndex -> {
+            JButton tile = tiles.get(specialTileIndexes.get(tileIndex));
+            if (tileIndex == battleIndex) {
+                tile.setEnabled(true);
+                tile.setActionCommand(ButtonIdentification.ENEMY.getActionCommand());
+            } else {
+                tile.setEnabled(false);
+            }
+        };
+        //Creates a stream of non-beaten levels
+        getNonbeatenLevelsStream(false).forEach(setActiveAction);
+
+        updateButtonIcons();
     }
 
     private Dimension calculateCellSize() {
         int width = getWidth();
         int height = getHeight();
 
-        int cellWidth = width / COLS;
-        int cellHeight = height / ROWS;
+        int cellWidth = width / mapConfiguration.getColumns();
+        int cellHeight = height / mapConfiguration.getRows();
 
         return new Dimension(cellWidth, cellHeight);
     }
-
+    /**
+     * Updates the icons of the buttons.
+     */
     private void updateButtonIcons() {
         JButton newBtnDim = tiles.get(0);
         Arrays.stream(ButtonIdentification.values()).forEach(identifier ->{
             ImageIcon temporaryIcon = new ImageIcon(
             GraphicUtils.resizeImage(
                 imageMap.get(identifier), newBtnDim.getWidth(), newBtnDim.getHeight()));
+
             tiles.stream()
                 .filter(tile -> tile.getActionCommand().equals(identifier.getActionCommand()))
-                .forEach(tile -> tile.setIcon(temporaryIcon));
+                .forEach(tile -> {
+                    tile.setIcon(temporaryIcon);
+                    if (tile.getActionCommand()
+                        .equals(ButtonIdentification.TILE.getActionCommand())
+                        || tile.getActionCommand()
+                            .equals(ButtonIdentification.DEATH.getActionCommand())) {
+
+                        tile.setDisabledIcon(temporaryIcon);
+                    }
+                });
         });
     }
-
+    /**
+     * Populates the map with the player's base and the enemies.
+     */
     private void populateMap() {
         for (int index = 0; index<=BATTLE_LEVELS; index++) {
             ImageIcon imageReference;
             ButtonIdentification command;
+            Cursor tempCursor = new Cursor(Cursor.HAND_CURSOR);
             int temporaryIndex = 11;
             if (index == 0) {
                 imageReference = new ImageIcon(imageMap.get(ButtonIdentification.PLAYER));
                 command = ButtonIdentification.PLAYER;
+                tiles.get(temporaryIndex).setEnabled(true);
             } else {
                 do {
-                    temporaryIndex = randomGen.nextInt()%(ROWS*COLS);
+                    temporaryIndex = randomGen.nextInt()%(mapConfiguration.getRows()*mapConfiguration.getColumns());
                 } while (specialTileIndexes.contains(temporaryIndex) || temporaryIndex < 0);
                 imageReference = new ImageIcon(imageMap.get(ButtonIdentification.ENEMY));
                 command = ButtonIdentification.ENEMY;
@@ -168,6 +196,73 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
             specialTileIndexes.add(temporaryIndex);
             tiles.get(temporaryIndex).setIcon(imageReference);
             tiles.get(temporaryIndex).setActionCommand(command.getActionCommand());
+            tiles.get(temporaryIndex).setDisabledIcon(null);
+            tiles.get(temporaryIndex).setCursor(tempCursor);
         }
+    }
+    /**
+     * Loads game assets.
+     */
+    private void loadAssets() {
+        Arrays.stream(ButtonIdentification.values()).forEach(identification -> {
+            try {
+                imageMap.put(identification, ImageIO.read(this.getClass().getResource(mapConfiguration.getImageMap().get(identification))));
+                bakeTiles();
+            } catch (IOException | IllegalArgumentException e) {
+                logger.severe("Error loading resources!");
+            }
+        });
+    }
+
+    private void bakeTiles() {
+        imageMap.keySet().stream().skip(1).forEach(elementTile ->
+            imageMap.put(elementTile,
+                GraphicUtils.overlayImages(
+                    imageMap.get(ButtonIdentification.TILE), imageMap.get(elementTile))));
+    }
+
+    /**
+     * Generates the tile map.
+     */
+    private void generateTileGrid() {
+        Dimension cellSize = calculateCellSize();
+        this.setLayout(new GridLayout(mapConfiguration.getRows(), mapConfiguration.getColumns()));
+        for (int rowIndex = 0; rowIndex < mapConfiguration.getRows(); rowIndex++) {
+            for (int columnIndex = 0;
+                columnIndex < mapConfiguration.getColumns(); columnIndex++) {
+                JButton button = new JButton();
+                button.setBorderPainted(false);
+                button.setPreferredSize(cellSize);
+                button.setActionCommand(ButtonIdentification.TILE.getActionCommand());
+                button.setIcon(new ImageIcon(imageMap.get(ButtonIdentification.TILE)));
+                button.setDisabledIcon(new ImageIcon(imageMap.get(ButtonIdentification.TILE)));
+                button.setBorderPainted(false);
+                button.setContentAreaFilled(false);
+                button.setEnabled(false);
+                tiles.add(button);
+                this.add(button);
+            }
+        }
+    }
+
+    private IntStream getSpecialTileStream() {
+        return IntStream.range(0, specialTileIndexes.size());
+    }
+
+    /**
+     * @param invertBehaviour   inverts the function's behaviour
+     * @return                  a stream of non-beaten levels
+     */
+    private IntStream getNonbeatenLevelsStream(boolean invertBehaviour) {
+        IntPredicate beatenLevelCondition = tileIndex -> 
+                tiles.get(specialTileIndexes.get(tileIndex))
+                    .getActionCommand()
+                    .equals(ButtonIdentification.ENEMY.getActionCommand());
+
+            if (invertBehaviour) {
+                beatenLevelCondition = beatenLevelCondition.negate();
+            }
+
+        return getSpecialTileStream().skip(1).filter(beatenLevelCondition);
     }
 }

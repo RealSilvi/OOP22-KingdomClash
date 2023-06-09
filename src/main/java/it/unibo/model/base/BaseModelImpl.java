@@ -18,7 +18,9 @@ import java.util.stream.Stream;
 import org.jetbrains.annotations.NotNull;
 
 import it.unibo.model.base.api.BuildingObserver;
+import it.unibo.model.base.basedata.BaseConfiguration;
 import it.unibo.model.base.basedata.Building;
+import it.unibo.model.base.basedata.BuildingConfiguration;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
@@ -28,7 +30,7 @@ import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.base.internal.BuildingBuilderImpl;
-import it.unibo.model.data.FightData;
+import it.unibo.model.data.GameConfiguration;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.TroopType;
@@ -42,6 +44,9 @@ public final class BaseModelImpl implements BaseModel {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
     private GameData gameData;
+    private GameConfiguration configuration;
+    private BuildingConfiguration buildingConfiguration;
+    private BaseConfiguration baseModelConfiguration;
     private ThreadManager threadManager;
 
     private List<BuildingObserver> buildingStateChangedObservers;
@@ -51,17 +56,30 @@ public final class BaseModelImpl implements BaseModel {
      * Constructs a new instance of BaseModelImpl with the specified
      * data class as storage.
      * 
-     * @param gameData data of the game, must not be null
+     * @param gameData      data of the game, must not be null
+     * @param configuration the configuration of the game
      */
-    public BaseModelImpl(final @NotNull GameData gameData) {
+    public BaseModelImpl(final @NotNull GameData gameData, final GameConfiguration configuration) {
         logger.finest("Initializing BaseModel...");
         Objects.requireNonNull(gameData);
         this.gameData = gameData;
+        this.configuration = configuration;
+        this.buildingConfiguration = this.configuration.getBuildingConfig();
+        this.baseModelConfiguration = this.configuration.getBaseConfiguration();
         this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         this.buildingStateChangedObservers = new ArrayList<>();
         this.buildingProductionObservers = new ArrayList<>();
         initializeDataStructures();
         logger.finest("Base model succesfully initialized!");
+    }
+    /**
+     * Constructs a new instance of BaseModelImpl with the specified
+     * data class as storage and standard configuration.
+     * 
+     * @param gameData      data of the game, must not be null
+     */
+    public BaseModelImpl(final @NotNull GameData gameData) {
+        this(gameData, new GameConfiguration());
     }
 
     @Override
@@ -69,7 +87,7 @@ public final class BaseModelImpl implements BaseModel {
     final int startingLevel, final boolean cheatMode)
         throws NotEnoughResourceException,
         InvalidBuildingPlacementException, MaxBuildingLimitReachedException {
-        if (gameData.getBuildings().size() >= Building.MAXBUILDINGS) {
+        if (gameData.getBuildings().size() >= buildingConfiguration.getMaxBuildings()) {
             throw new MaxBuildingLimitReachedException();
         }
         BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
@@ -77,9 +95,9 @@ public final class BaseModelImpl implements BaseModel {
         .makeStandardBuilding(type, position, startingLevel);
             if (!cheatMode) {
                 gameData.setResources(subtractResources(gameData.getResources(),
-                        BuildingBuilder
-                                .applyIncrementToResourceSet(newStructure.getType().getCost(),
-                                        startingLevel)));
+                    BuildingBuilder
+                        .applyIncrementToResourceSet(newStructure
+                        .getType().getCost(), startingLevel)));
             }
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
@@ -107,7 +125,7 @@ public final class BaseModelImpl implements BaseModel {
             throws NotEnoughResourceException,
             BuildingMaxedOutException, InvalidStructureReferenceException {
         checkAndGetBuilding(structureId);
-        if (this.gameData.getBuildings().get(structureId).getLevel() >= Building.MAXLEVEL) {
+        if (this.gameData.getBuildings().get(structureId).getLevel() >= buildingConfiguration.getMaxLevel()) {
             throw new BuildingMaxedOutException();
         }
         gameData.setResources(subtractResources(gameData.getResources(),
@@ -141,7 +159,7 @@ public final class BaseModelImpl implements BaseModel {
         Set<Resource> refund = this.gameData.getBuildings().get(structureId).getType().getCost(
                 this.gameData.getBuildings().get(structureId).getLevel() + 1);
         for (Resource resource : refund) {
-            resource.setAmount(resource.getAmount() % Building.REFUND_TAX_PERCENTAGE);
+            resource.setAmount(resource.getAmount() % buildingConfiguration.getRefundTaxPercentage());
         }
         try {
             applyResources(refund);
@@ -224,15 +242,10 @@ public final class BaseModelImpl implements BaseModel {
     @Override
     public void upgradeTroop(final TroopType troopToUpgrade, final int level)
         throws InvalidTroopLevelException {
-        //TODO Remove placeholder when limit is implemented and finish this function
-        //TODO Implement cost system when battle part is complete
-        int placeholderLimit = 3;
-        if (level >= placeholderLimit) {
+        if (level >= baseModelConfiguration.getMaximumTroopLevel()) {
             throw new InvalidTroopLevelException(troopToUpgrade, level);
         }
-        if (gameData.getFightData().isEmpty()) {
-            gameData.setFightData(Optional.of(new FightData()));
-        }
+        gameData.getPlayerArmyLevel().put(troopToUpgrade, level);
     }
 
     @Override

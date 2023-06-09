@@ -48,17 +48,13 @@ public interface GraphicUtils {
 
         int backgroundWidth = backgroundImage.getWidth(null);
         int backgroundHeight = backgroundImage.getHeight(null);
-    
-        int overlayWidth = overlayImage.getWidth(null);
-        int overlayHeight = overlayImage.getHeight(null);
 
-        if ((overlayWidth > backgroundWidth)
-            || (overlayHeight > backgroundHeight)) {
-            ovelrayImageTemp = resizeImageWithProportion(overlayImage,
-                backgroundWidth, backgroundHeight);
-            overlayWidth = overlayImage.getWidth(null);
-            overlayHeight = overlayImage.getHeight(null);
-        }
+
+        ovelrayImageTemp = resizeImageWithProportion(ovelrayImageTemp,
+            backgroundWidth, backgroundHeight);
+
+        int overlayWidth = ovelrayImageTemp.getWidth(null);
+        int overlayHeight = ovelrayImageTemp.getHeight(null);
 
         int xPosition = (backgroundWidth - overlayWidth) / 2;
         int yPosition = (backgroundHeight - overlayHeight) / 2;

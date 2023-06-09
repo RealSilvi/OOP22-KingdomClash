@@ -19,41 +19,41 @@ public final class BuildingConfiguration {
     private int productionTimeReductionPercentage;
 
     /**
-     * @return The max level that the buildings can reach
+     * @return  The max level that the buildings can reach
      */
     public int getMaxLevel() {
         return maxLevel;
     }
     /**
-     * @return The maximum number of buildings that the player can build
+     * @return  The maximum number of buildings that the player can build
      */
     public int getMaxBuildings() {
         return maxBuildings;
     }
     /**
-     * @return The percentage of resources that will be returned when
-     * demolishing a building
+     * @return  The percentage of resources that will be returned when
+     *          demolishing a building
      */
     public int getRefundTaxPercentage() {
         return refundTaxPercentage;
     }
     /**
-     * @return A percentage that represent by how much the cost of the building
-     * increasaes by every level
+     * @return  A percentage that represent by how much the cost of the building
+     *          increasaes by every level
      */
     public int getUpgradeTaxPercentage() {
         return upgradeTaxPercentage;
     }
     /**
-     * @return A percentage that represents by how much the resources produced
-     * increase by every level
+     * @return  A percentage that represents by how much the resources produced
+     *          increase by every level
      */
     public int getProductionIncrementPercentage() {
         return productionMultiplierPercentage;
     }
     /**
-     * @return A percentage that represents by how much the time that it takes
-     * to produce some resources decreases by every level
+     * @return  A percentage that represents by how much the time that it takes
+     *          to produce some resources decreases by every level
      */
     public int getProductionTimeReductionPercentage() {
         return productionTimeReductionPercentage;
