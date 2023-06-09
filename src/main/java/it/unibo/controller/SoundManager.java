@@ -31,7 +31,7 @@ public class SoundManager {
         MENU,
         BATTLE,
         CITY,
-        MAP;
+        MAP
     }
 
     private final Map<Themes, Optional<Clip>> themesClips;
@@ -51,7 +51,7 @@ public class SoundManager {
 
     private void setTheme(final Themes theme) {
 
-        this.currentTheme.ifPresent(Line::close);
+        this.currentTheme.ifPresent(DataLine::stop);
         this.currentTheme=Optional.empty();
 
         this.themesClips.get(theme).ifPresent( t ->{
