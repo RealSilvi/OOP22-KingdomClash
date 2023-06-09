@@ -24,7 +24,7 @@ public class GameController {
         this.battleController = new BattleControllerImpl(gameModel.getGameData());
         this.baseController = new BaseControllerImpl(gameModel.getGameData());
 
-        this.gameGui = new GameGui(battleController.getGuiPanel(),baseController.getGuiPanel(),gameModel.getGameData().getGameConfiguration()/*,soundmanage*/);
+        this.gameGui = new GameGui(battleController.getGuiPanel(),baseController.getGuiPanel(),gameModel.getGameData().getGameConfiguration(),this.soundManager);
 
     }
 

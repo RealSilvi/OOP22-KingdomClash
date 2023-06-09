@@ -1,6 +1,7 @@
 package it.unibo.view;
 
 import it.unibo.controller.GameController;
+import it.unibo.controller.SoundManager;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.MapPanel;
 import it.unibo.view.map.MapPanelImpl;
@@ -27,15 +28,17 @@ public class GameGui {
     private final MapPanel mapPanel;
     private final JPanel cityPanel;
     private final JPanel battlePanel;
+    private final SoundManager soundManager;
     //private final JPanel newgamePanel;
     //private final JPanel loadPanel;
 
-    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration){
+    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration, SoundManager soundManager){
         frame = new JFrame();
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.soundManager = soundManager;
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
         this.cityPanel = cityPanel;
@@ -80,6 +83,7 @@ public class GameGui {
     }
 
     public void showMenuPanel() {
+        this.soundManager.startMenuTheme();
         this.southPanel.showButtonsMenu();
         SwitchLayout.show(this.mainPanel, "1");
     }
@@ -89,18 +93,21 @@ public class GameGui {
     }
 
     public void showBattle(){
+        this.soundManager.startBattleTheme();
         this.southPanel.showButtonsBattle();
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "1");
     }
 
     public void showCity(){
+        this.soundManager.startCityTheme();
         this.southPanel.showButtonsCity();
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "2");
     }
 
     public void showMap(){
+        this.soundManager.startMapTheme();
         this.southPanel.showButtonsMap();
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "3");
