@@ -24,7 +24,7 @@ public class CityConfiguration {
     private int height;
 
     public CityConfiguration(){
-        
+
         this.width=10;
         this.height=10;
 
@@ -34,6 +34,19 @@ public class CityConfiguration {
         textureMap.put(BuildingTypes.LUMBERJACK, Map.of(0, "", 1, "", 2, ""));
 
     }
+
+    public Map<BuildingBuilder.BuildingTypes, Map<Integer, String>> getTextureMap() {
+        return textureMap;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+    
     
 }
 
