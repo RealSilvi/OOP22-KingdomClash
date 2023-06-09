@@ -1,5 +1,7 @@
 package it.unibo.view.map;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 
 /**
@@ -59,4 +61,24 @@ public interface MapPanel {
      *                      all enemies
      */
     void setActiveBattle(int battleIndex);
+    /**
+     * Sets an action listener linked to the enemy base's buttons.
+     * @param listener      the listener to add
+     */
+    void setBattleActionListener(ActionListener battleActionListener);
+    /**
+     * Removes the action listener linked to the enemy base's buttons.
+     * @param listener      the listener to remove
+     */
+    void clearBattleActionListener(ActionListener battleActionListenerToRemove);
+    /**
+     * Sets an action listener linked to the player's base buttons.
+     * @param listener      the listener to add
+     */
+    void setBaseActionListener(ActionListener baseActionListener);
+    /**
+     * Removes the action listener linked to the player's base buttons.
+     * @param listener      the listener to remove
+     */
+    void clearBaseActionListener(ActionListener baseActionListenerToRemove);
 }

@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.IOException;
@@ -24,7 +25,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import it.unibo.controller.GameController;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.internal.GraphicUtils;
 import it.unibo.view.map.mapdata.MapConfiguration;
@@ -37,7 +37,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
 
     private transient Logger logger = Logger.getLogger(this.getClass().getName());
 
-    public static final int BATTLE_LEVELS = 55;
+    public static final int BATTLE_LEVELS = 3;
     public static final int RANDOM_SEED = 65455;
 
     private transient Map<ButtonIdentification, Image> imageMap = 
@@ -45,8 +45,8 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     
     private List<JButton> tiles = new ArrayList<>();
     private Random randomGen = new Random(RANDOM_SEED);
-
-    private transient GameController controller;
+    @SuppressWarnings("unused")
+    //Used to get global configuration
     private transient GameConfiguration configuration;
     private transient MapConfiguration mapConfiguration;
 
@@ -55,22 +55,12 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     /**
      * Constructs a MapPanel, a GUI composed of different types of tiles
      * and assigns a controller to fire events to.
-     * @param controller    the controller that will be assigned to this GUI
-     * @param configuration the configuration of this type of GUI
+     * @param controller the controller that will be assigned to this GUI
      */
-    public MapPanelImpl(GameController controller, GameConfiguration configuration) {
-        this.controller = controller;
+    public MapPanelImpl(GameConfiguration configuration) {
         this.configuration = configuration;
         this.mapConfiguration = configuration.getMapConfiguration();
         initialize();
-    }
-    /**
-     * Constructs a MapPanel, a GUI composed of different types of tiles
-     * and assigns a controller to fire events to.
-     * @param controller the controller that will be assigned to this GUI
-     */
-    public MapPanelImpl(GameController controller) {
-        this(controller, new GameConfiguration());
     }
 
     private void initialize() {
@@ -138,6 +128,25 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
         getNonbeatenLevelsStream(false).forEach(setActiveAction);
 
         updateButtonIcons();
+    }
+
+    @Override
+    public void setBattleActionListener(final ActionListener battleActionListener) {
+        tiles.get(specialTileIndexes.get(0)).addActionListener(battleActionListener);
+    }
+    @Override
+    public void clearBattleActionListener(final ActionListener battleActionListenerToRemove) {
+        tiles.get(specialTileIndexes.get(0)).removeActionListener(battleActionListenerToRemove);
+    }
+    @Override
+    public void setBaseActionListener(final ActionListener baseActionListener) {
+        getSpecialTileStream().skip(1).forEach(enemyTileIndex -> 
+            tiles.get(enemyTileIndex).addActionListener(baseActionListener));
+    }
+    @Override
+    public void clearBaseActionListener(final ActionListener baseActionListenerToRemove) {
+        getSpecialTileStream().skip(1).forEach(enemyTileIndex -> 
+            tiles.get(enemyTileIndex).removeActionListener(baseActionListenerToRemove));
     }
 
     private Dimension calculateCellSize() {
@@ -250,8 +259,9 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     }
 
     /**
-     * @param invertBehaviour   inverts the function's behaviour
+     * @param invertBehaviour   true to invert the function's behaviour
      * @return                  a stream of non-beaten levels
+     *                          if the parameter is true
      */
     private IntStream getNonbeatenLevelsStream(boolean invertBehaviour) {
         IntPredicate beatenLevelCondition = tileIndex -> 
