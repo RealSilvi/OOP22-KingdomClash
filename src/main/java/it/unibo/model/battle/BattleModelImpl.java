@@ -164,7 +164,8 @@ public class BattleModelImpl implements BattleModel {
     public Map<TroopType,Boolean> getInfoTable(){
         Map<TroopType,Boolean> infoTable = new HashMap<>();
         Arrays.stream(TroopType.values()).forEach(troopType ->
-                infoTable.put(troopType, this.troopLevel.get(troopType) > this.troopBotLevel.get(troopType)));
+                infoTable.put(troopType, (this.troopLevel.get(troopType) > this.troopBotLevel.get(troopType) && !TroopType.isDefense(troopType))
+                || (this.troopLevel.get(troopType) >= this.troopBotLevel.get(troopType) && TroopType.isDefense(troopType))));
         return infoTable;
     }
 
