@@ -105,8 +105,7 @@ public final class BattlePanelImpl implements BattlePanel {
         this.fieldPanel.redraw(playerTroops,botPlayer);
     }
 
-    public void updateFieldBattle(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botPlayer) {
-        int delay = 500;
+    public void updateFieldBattle(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botPlayer,int delay) {
         Timer timer = new Timer(delay, e -> this.fieldPanel.redraw(playerTroops, botPlayer));
         timer.setRepeats(false);
         timer.start();
