@@ -10,8 +10,10 @@ import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.util.*;
 
@@ -106,6 +108,7 @@ public class BattleControllerImpl implements BattleController, Controller {
         update(NO_SKIP);
 
     }
+
 
     public void end(Integer entity) {
         this.battleModel.endFight(entity == WIN_PLAYER);
