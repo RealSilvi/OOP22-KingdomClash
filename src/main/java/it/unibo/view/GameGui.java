@@ -24,7 +24,6 @@ public class GameGui {
     private final SouthPanel southPanel;
     private final GameMenu menuPanel;
     private final InfoMenuPanel infoPanel;
-    private JPanel currentPanel;
     private final MapPanel mapPanel;
     private final JPanel cityPanel;
     private final JPanel battlePanel;
@@ -37,8 +36,8 @@ public class GameGui {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.currentPanel = new JPanel();
-        this.mapPanel = new MapPanelImpl(null, gameConfiguration);
+
+        this.mapPanel = new MapPanelImpl(gameConfiguration);
         this.cityPanel = cityPanel;
         this.battlePanel = battlePanel;
 
@@ -73,6 +72,7 @@ public class GameGui {
         setActionListenerExit();
         setActionListenerNewGame();
         setActionListenerBattle();
+        setActionListenerMenu();
         setActionListenerCity();
         setActionListenerMap();
         showMenuPanel();
@@ -80,6 +80,7 @@ public class GameGui {
     }
 
     public void showMenuPanel() {
+        this.southPanel.showButtonsMenu();
         SwitchLayout.show(this.mainPanel, "1");
     }
 
@@ -88,19 +89,19 @@ public class GameGui {
     }
 
     public void showBattle(){
-        setCurrentPanel(this.battlePanel);
+        this.southPanel.showButtonsBattle();
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "1");
     }
 
     public void showCity(){
-        setCurrentPanel(this.cityPanel);
+        this.southPanel.showButtonsCity();
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "2");
     }
 
     public void showMap(){
-        setCurrentPanel(this.mapPanel.getAsJPanel());
+        this.southPanel.showButtonsMap();
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "3");
     }
@@ -125,6 +126,11 @@ public class GameGui {
         this.southPanel.setActionListenerBattle(actionListener);
     }
 
+    private void setActionListenerMenu() {
+        ActionListener actionListener = e -> showMenuPanel();
+        this.southPanel.setActionListenerMenu(actionListener);
+    }
+
     private void setActionListenerCity() {
         ActionListener actionListener = e -> showCity();
         this.southPanel.setActionListenerCity(actionListener);
@@ -139,14 +145,6 @@ public class GameGui {
         double width = SouthPanel.getMenuPanel().getWidth();
         double height = DIMENSION_SCREEN.getHeight() - SouthPanel.getMenuPanel().getHeight();
         return new Dimension((int)width, (int)height);
-    }
-
-    public void setCurrentPanel(JPanel currentPanel){
-        this.currentPanel = currentPanel;
-    }
-
-    public JPanel getCurrentPanel(){
-        return this.currentPanel;
     }
 
 }

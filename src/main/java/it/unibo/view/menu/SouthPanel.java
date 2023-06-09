@@ -16,11 +16,11 @@ public class SouthPanel {
     private JButton battleButton;
     private JButton cityButton;
     private JButton mapButton;
-    private JButton lastSelected;
+    private JButton menuButton;
 
     public SouthPanel(){
-        this.lastSelected = new JButton();
         this.battleButton = new JButton("BATTLE");
+        this.menuButton = new JButton("MENU");
         this.battleButton.setVisible(false);
         this.cityButton = new JButton("CITY");
         this.mapButton = new JButton("MAP");
@@ -29,6 +29,7 @@ public class SouthPanel {
         this.southPanel.setBackground(Color.blue);
         this.southPanel.setPreferredSize(getMenuPanel());
         this.southPanel.add(this.battleButton);
+        this.southPanel.add(this.menuButton);
         this.southPanel.add(this.cityButton);
         this.southPanel.add(this.mapButton);
     }
@@ -44,30 +45,40 @@ public class SouthPanel {
     }
 
     public void setActionListenerBattle(ActionListener actionListener){
-        lastSelected(this.battleButton);
         this.battleButton.addActionListener(actionListener);
-        //this.southPanel.remove(this.battleButton);
-        //this.southPanel.revalidate();
-        System.out.println("dasfasdasddsa");
+    }
+    public void setActionListenerMenu(ActionListener actionListener){
+        this.menuButton.addActionListener(actionListener);
     }
     public void setActionListenerCity(ActionListener actionListener){
-        this.southPanel.add(this.lastSelected);
-        lastSelected(this.cityButton);
         this.cityButton.addActionListener(actionListener);
-        this.southPanel.remove(this.cityButton);
-        //this.southPanel.revalidate();
-        System.out.println("dasfasdasddsa");
     }
     public void setActionListenerMap(ActionListener actionListener){
-        this.southPanel.add(this.lastSelected);
-        lastSelected(this.mapButton);
         this.mapButton.addActionListener(actionListener);
-        this.southPanel.remove(this.mapButton);
-        //this.southPanel.revalidate();
     }
 
-    public void lastSelected(JButton lastButton){
-        this.lastSelected = lastButton;
+    public void showButtonsMap(){
+        this.menuButton.setVisible(true);
+        this.cityButton.setVisible(true);
+        this.mapButton.setVisible(false);
+    }
+
+    public void showButtonsCity(){
+        this.menuButton.setVisible(true);
+        this.cityButton.setVisible(false);
+        this.mapButton.setVisible(true);
+    }
+
+    public void showButtonsBattle(){
+        this.menuButton.setVisible(false);
+        this.cityButton.setVisible(false);
+        this.mapButton.setVisible(false);
+    }
+
+    public void showButtonsMenu(){
+        this.menuButton.setVisible(false);
+        this.cityButton.setVisible(true);
+        this.mapButton.setVisible(true);
     }
 
 }
