@@ -7,6 +7,8 @@ import it.unibo.model.data.GameData;
 import it.unibo.model.data.TroopType;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static it.unibo.controller.battle.BattleControllerImpl.*;
 import static it.unibo.model.data.FightData.*;
@@ -31,7 +33,7 @@ public class BattleModelImpl implements BattleModel {
             this.fightData = gameData.getFightData();
         }
         this.troopLevel = gameData.getPlayerArmyLevel();
-        this.troopBotLevel = new HashMap<>();
+        this.troopBotLevel = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
     }
 
@@ -162,7 +164,7 @@ public class BattleModelImpl implements BattleModel {
     }
 
     public Map<TroopType,Boolean> getInfoTable(){
-        Map<TroopType,Boolean> infoTable = new HashMap<>();
+        Map<TroopType,Boolean> infoTable = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType ->
                 infoTable.put(troopType, (this.troopLevel.get(troopType) > this.troopBotLevel.get(troopType) && !TroopType.isDefense(troopType))
                 || (this.troopLevel.get(troopType) >= this.troopBotLevel.get(troopType) && TroopType.isDefense(troopType))));
