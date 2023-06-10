@@ -24,6 +24,8 @@ import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.TroopType;
 import it.unibo.model.data.Resource.ResourceType;
+import it.unibo.view.city.CityPanel;
+import it.unibo.view.city.CityPanelImpl;
 
 /**
  * A simple BaseController implementation.
@@ -31,25 +33,8 @@ import it.unibo.model.data.Resource.ResourceType;
 public final class BaseControllerImpl implements Controller, BaseController {
 
     private BaseModel baseModel;
+    private CityPanel baseView;
 
-//    private boolean controllerActive = false;
-
-//    @Override
-//    public void setActive(final boolean currentControllerActive) {
-//        this.setTimeRunning(currentControllerActive);
-//    }
-//
-//    @Override
-//    public boolean isActive() {
-//        return this.controllerActive;
-//    }
-//
-//    @Override
-//    public void disable() {
-//        setActive(false);
-//    }
-
-    //TODO: Remove below comments in this constructor once BaseView is implemented
     /**
      * Builds a controller for the Base part of the game using the provided
      * game data.
@@ -58,7 +43,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
      */
     public BaseControllerImpl(final @Nonnull GameData gameData) {
         this.baseModel = new BaseModelImpl(gameData);
-        /*this.baseView = new BaseView(this, gameData.getConfiguration())*/
+        this.baseView = new CityPanelImpl(this, gameData.getGameConfiguration());
         this.baseModel.refreshBuildings();
     }
 
@@ -193,6 +178,6 @@ public final class BaseControllerImpl implements Controller, BaseController {
 
     @Override
     public JPanel getGuiPanel() {
-        return null;
+        return this.baseView.getPanel();
     }
 }
