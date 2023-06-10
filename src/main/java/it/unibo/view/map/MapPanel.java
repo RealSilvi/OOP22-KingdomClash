@@ -11,7 +11,7 @@ public interface MapPanel {
     /**
      * Defines the type of tile that the button represents.
      */
-    enum ButtonIdentification{
+    enum ButtonIdentification {
         /**
          * A normal tile.
          */
@@ -31,7 +31,7 @@ public interface MapPanel {
 
         private String actionCommand;
 
-        private ButtonIdentification(String actionCommand) {
+        ButtonIdentification(final String actionCommand) {
             this.actionCommand = actionCommand;
         }
 
@@ -63,22 +63,22 @@ public interface MapPanel {
     void setActiveBattle(int battleIndex);
     /**
      * Sets an action listener linked to the enemy base's buttons.
-     * @param listener      the listener to add
+     * @param battleActionListener      the listener to add
      */
     void setBattleActionListener(ActionListener battleActionListener);
     /**
      * Removes the action listener linked to the enemy base's buttons.
-     * @param listener      the listener to remove
+     * @param battleActionListenerToRemove      the listener to remove
      */
     void clearBattleActionListener(ActionListener battleActionListenerToRemove);
     /**
      * Sets an action listener linked to the player's base buttons.
-     * @param listener      the listener to add
+     * @param baseActionListener      the listener to add
      */
     void setBaseActionListener(ActionListener baseActionListener);
     /**
      * Removes the action listener linked to the player's base buttons.
-     * @param listener      the listener to remove
+     * @param baseActionListenerToRemove      the listener to remove
      */
     void clearBaseActionListener(ActionListener baseActionListenerToRemove);
 }

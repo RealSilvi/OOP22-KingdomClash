@@ -26,7 +26,7 @@ public class GameConfiguration {
         this.baseConfiguration = new BaseConfiguration();
         this.cityConfiguration = new CityConfiguration();
 
-        this.battleControllerConfiguration= new BattlePanelConfiguration();
+        this.battleControllerConfiguration = new BattlePanelConfiguration();
 
         this.mapConfiguration = new MapConfiguration();
     }
@@ -62,6 +62,4 @@ public class GameConfiguration {
     public CityConfiguration getCityConfiguration() {
         return cityConfiguration;
     }
-
-    
 }

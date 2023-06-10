@@ -10,21 +10,44 @@ import java.util.Random;
  * utility functions that help handle troop types.
  */
 public enum TroopType {
+    /**
+     * Axe troop.
+     */
     AXE,
+    /**
+     * Sword troop.
+     */
     SWORD,
+    /**
+     * Hammer troop.
+     */
     HAMMER,
+    /**
+     * Mace troop.
+     */
     MACE,
+    /**
+     * Axe defence troop.
+     */
     AXE_DEFENCE,
+    /**
+     * Sword defence troop.
+     */
     SWORD_DEFENCE,
+    /**
+     * Hammer defence troop.
+     */
     HAMMER_DEFENCE,
+    /**
+     * Mace defence troop.
+     */
     MACE_DEFENCE;
 
     private static final Map<TroopType, TroopType> counterList =
-            Map.of(
-                    TroopType.AXE, TroopType.AXE_DEFENCE,
-                    TroopType.SWORD, TroopType.SWORD_DEFENCE,
-                    TroopType.HAMMER, TroopType.HAMMER_DEFENCE,
-                    TroopType.MACE, TroopType.MACE_DEFENCE);
+        Map.of(TroopType.AXE, TroopType.AXE_DEFENCE,
+            TroopType.SWORD, TroopType.SWORD_DEFENCE,
+            TroopType.HAMMER, TroopType.HAMMER_DEFENCE,
+            TroopType.MACE, TroopType.MACE_DEFENCE);
 
     private static final Random rnGenerator = new Random();
 
@@ -43,7 +66,7 @@ public enum TroopType {
      * @param troopToCheck A specific troop type to check for
      * @return the other troop that counters the given troop
      */
-    public static Optional<TroopType> getNullable(TroopType troopToCheck) {
+    public static Optional<TroopType> getNullable(final TroopType troopToCheck) {
         if (counterList.containsKey(troopToCheck)) {
             return Optional.of(counterList.get(troopToCheck));
         }
@@ -52,8 +75,12 @@ public enum TroopType {
         .map(Map.Entry::getKey)
         .findFirst();
     }
-
-    public static boolean isDefense(TroopType troopType){
+    /**
+     * Checks if the given troop is a defence.
+     * @param troopType troop to check
+     * @return          true if is a defence
+     */
+    public static boolean isDefense(final TroopType troopType) {
         return !counterList.containsKey(troopType);
     }
 }

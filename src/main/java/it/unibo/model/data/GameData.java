@@ -14,9 +14,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.basedata.Building;
 
 /**
- * A simple data class to store all the game's information
+ * A simple data class to store all the game's information.
  */
-public class GameData implements Serializable {
+public final class GameData implements Serializable {
     private String playerName;
     private Set<Resource> resources;
     private ConcurrentMap<UUID, Building> buildings;
