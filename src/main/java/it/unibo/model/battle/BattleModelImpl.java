@@ -7,8 +7,6 @@ import it.unibo.model.data.GameData;
 import it.unibo.model.data.TroopType;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static it.unibo.controller.battle.BattleControllerImpl.*;
 import static it.unibo.model.data.FightData.*;
@@ -19,7 +17,7 @@ public class BattleModelImpl implements BattleModel {
     public static final int WIN_BOT = 2;
     public static final int WIN_PLAYER = 3;
     public static final int MAX_ROUND = FightData.MAX_ROUND;
-    private Optional<FightData> fightData;
+    private FightData fightData;
     private Map<TroopType, Integer> troopLevel;
     private Map<TroopType, Integer> troopBotLevel;
 
@@ -29,15 +27,18 @@ public class BattleModelImpl implements BattleModel {
 
 
     public BattleModelImpl(GameData gameData) {
-        if (gameData.getFightData().isPresent()) {
+        if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
+        }else{
+            this.fightData = new FightData();
+            gameData.setFightData(this.fightData);
         }
         this.troopLevel = gameData.getPlayerArmyLevel();
         this.troopBotLevel = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
     }
 
-    public BattleModelImpl(Optional<FightData> fightData) {
+    public BattleModelImpl(FightData fightData) {
         this.fightData = fightData;
     }
 
@@ -48,37 +49,37 @@ public class BattleModelImpl implements BattleModel {
     @Override
     public void battlePass(Integer finished) {
 
-        fightData.get().getPlayerData().setClickedToChosen();
+        fightData.getPlayerData().setClickedToChosen();
 
-        if (fightData.get().getPlayerData().getSelected().size() > 0) {
-            fightData.get().getPlayerData().getSelected().forEach(x -> {
+        if (fightData.getPlayerData().getSelected().size() > 0) {
+            fightData.getPlayerData().getSelected().forEach(x -> {
                 int key;
-                if (!fightData.get().getBotData().isMatch(x)) {
-                    if (fightData.get().getBotData().getNotSelected().contains(TroopType.getNullable(x).get())) {
-                        key = fightData.get().getBotData().getKeyFromTroop(TroopType.getNullable(x).get());
-                        fightData.get().getBotData().addEntityTroop(key);
+                if (!fightData.getBotData().isMatch(x)) {
+                    if (fightData.getBotData().getNotSelected().contains(TroopType.getNullable(x).get())) {
+                        key = fightData.getBotData().getKeyFromTroop(TroopType.getNullable(x).get());
+                        fightData.getBotData().addEntityTroop(key);
                     } else {
                         if (finished == CONTINUE) {
-                            if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                                fightData.get().getBotData().addEntityTroop(fightData.get().getBotData().selectRandomTroop());
+                            if (fightData.getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                                fightData.getBotData().addEntityTroop(fightData.getBotData().selectRandomTroop());
                             }
                         }
                     }
                 }
             });
         } else {
-            if (fightData.get().getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                int key = fightData.get().getBotData().selectRandomTroop();
-                fightData.get().getBotData().addEntityTroop(key);
+            if (fightData.getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                int key = fightData.getBotData().selectRandomTroop();
+                fightData.getBotData().addEntityTroop(key);
             }
         }
 
         counted_round++;
         if (counted_round >= MAX_ROUND) {
-            fightData.get().getBotData().setAllChosen();
-            fightData.get().getPlayerData().setAllChosen();
+            fightData.getBotData().setAllChosen();
+            fightData.getPlayerData().setAllChosen();
         } else {
-            fightData.get().getBotData().setClickedToChosen();
+            fightData.getBotData().setClickedToChosen();
         }
 
     }
@@ -87,9 +88,9 @@ public class BattleModelImpl implements BattleModel {
     public Map<Integer, TroopType> battleSpin(Integer entity) {
 
         if (entity == PLAYER) {
-            return fightData.get().getPlayerData().changeNotSelectedTroop();
+            return fightData.getPlayerData().changeNotSelectedTroop();
         } else {
-            return fightData.get().getBotData().changeNotSelectedTroop();
+            return fightData.getBotData().changeNotSelectedTroop();
         }
 
     }
@@ -98,7 +99,7 @@ public class BattleModelImpl implements BattleModel {
     public Integer battleCombat(Integer position) {
 
         System.out.println("botLife: " +botLife + "playerLife:  " + playerLife);
-        List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData());
+        List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData());
         Optional<TroopType> playerField = bothOrdered.subList(0,(bothOrdered.size()/2)).get(position);
         Optional<TroopType> botField = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size()).get(position);
 
@@ -149,8 +150,8 @@ public class BattleModelImpl implements BattleModel {
         counted_round = 0;
 
         for (int i = 0; i < PLAYER_TROOPS; i++) {
-            fightData.get().getPlayerData().removeEntityTroop(i);
-            fightData.get().getBotData().removeEntityTroop(i);
+            fightData.getPlayerData().removeEntityTroop(i);
+            fightData.getBotData().removeEntityTroop(i);
         }
 
     }
