@@ -97,8 +97,6 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
         IntConsumer setBeatenAction = tileIndex -> {
             JButton tile = tiles.get(specialTileIndexes.get(tileIndex));
             if (tileIndex > beatenLevels) {
-                tile.setDisabledIcon(null);
-                tile.setEnabled(true);
                 tile.setActionCommand(ButtonIdentification.ENEMY.getActionCommand());
             } else {
                 tile.setEnabled(false);
@@ -141,12 +139,12 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     @Override
     public void setBattleActionListener(final ActionListener battleActionListener) {
         getSpecialTileStream().skip(1).forEach(enemyTileIndex -> 
-            tiles.get(enemyTileIndex).addActionListener(battleActionListener));
+            tiles.get(specialTileIndexes.get(enemyTileIndex)).addActionListener(battleActionListener));
     }
     @Override
     public void clearBattleActionListener(final ActionListener battleActionListenerToRemove) {
         getSpecialTileStream().skip(1).forEach(enemyTileIndex -> 
-            tiles.get(enemyTileIndex).removeActionListener(battleActionListenerToRemove));
+            tiles.get(specialTileIndexes.get(enemyTileIndex)).removeActionListener(battleActionListenerToRemove));
     }
 
     private Dimension calculateCellSize() {
