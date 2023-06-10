@@ -1,6 +1,7 @@
 package it.unibo.view.city;
 
 import it.unibo.controller.GameController;
+import it.unibo.controller.base.BaseControllerImpl;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
@@ -17,7 +18,7 @@ public class CityPanelImpl implements CityPanel{
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
 
-    public CityPanelImpl(GameController controller, GameConfiguration configuration){
+    public CityPanelImpl(BaseControllerImpl controller, GameConfiguration configuration){
        
         this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN,
             new Dimension(configuration.getCityConfiguration().getWidth(),
