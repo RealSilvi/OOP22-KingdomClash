@@ -6,7 +6,9 @@ import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.city.panels.impl.BarPanelImpl;
+import it.unibo.view.city.panels.impl.CityConfiguration;
 import it.unibo.view.city.panels.impl.FieldCityPanelImpl;
+import it.unibo.view.city.panels.impl.CityConfiguration;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +28,7 @@ public class CityPanelImpl implements CityPanel{
         this.mainPanel.setLayout(new BorderLayout());
 
         this.barPanel=new BarPanelImpl();
-        this.fieldPanel=new FieldCityPanelImpl();
+        this.fieldPanel=new FieldCityPanelImpl(configuration.getCityConfiguration());
 
         
        this.mainPanel.add(barPanel.getPanel(),BorderLayout.NORTH);
@@ -36,16 +38,18 @@ public class CityPanelImpl implements CityPanel{
     }
     
     public CityPanelImpl() {
+        
         this.mainPanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, new Dimension(10, 10));
         this.mainPanel.setLayout(new BorderLayout());
 
         this.barPanel=new BarPanelImpl();
-        this.fieldPanel=new FieldCityPanelImpl();
+        this.fieldPanel=new FieldCityPanelImpl(new CityConfiguration());
         
        
        this.mainPanel.add(barPanel.getPanel(),BorderLayout.NORTH);
        this.mainPanel.add(fieldPanel.getPanel(),BorderLayout.CENTER);
     }
+    
 
     public JPanel getPanel(){
         return this.mainPanel;
