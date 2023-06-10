@@ -128,6 +128,12 @@ public class BattleControllerImpl implements BattleController, Controller {
         List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
         List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2).stream().skip(skip).toList());
         List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()).stream().skip(skip).toList());
+        if(skip > 0){
+            for(int a = 0; a < skip; a++){
+                pList.add(Optional.empty());
+                bList.add(Optional.empty());
+            }
+        }
         bList.addAll(pList);
         System.out.println("\n\nORDERED LIST" +orderedList + "\n\n");
         //Collections.reverse(orderedList);
