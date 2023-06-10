@@ -25,7 +25,8 @@ public class GameController {
         this.baseController = new BaseControllerImpl(gameModel.getGameData());
 
         this.gameGui = new GameGui(battleController.getGuiPanel(),baseController.getGuiPanel(),gameModel.getGameData().getGameConfiguration(),this.soundManager);
-
+        this.gameGui.setBeatenLevels(0);
+        this.gameGui.setActivateBattle(1);
     }
 
     public static void main(final String... args) {

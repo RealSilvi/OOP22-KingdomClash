@@ -23,7 +23,7 @@ public class SouthPanel {
         this.battleButton = new JButton("BATTLE");
         this.menuButton = new JButton("MENU");
         this.musicButton = new JButton("MUSIC");
-        this.battleButton.setVisible(false);
+        this.battleButton.setVisible(true);
         this.cityButton = new JButton("CITY");
         this.mapButton = new JButton("MAP");
 

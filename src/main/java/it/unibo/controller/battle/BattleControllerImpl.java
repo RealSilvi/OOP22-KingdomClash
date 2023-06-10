@@ -14,6 +14,7 @@ import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import javax.swing.Timer;
+import javax.swing.text.html.Option;
 import java.awt.event.ActionListener;
 import java.util.*;
 
@@ -83,7 +84,7 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void battle() {
         int total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData()).size()/2;
-        update(NO_SKIP);
+        //update(NO_SKIP);
         for (int i = 0; i < total; i++) {
             int value = this.battleModel.battleCombat(i);
             System.out.println("total: " + total);
@@ -106,7 +107,6 @@ public class BattleControllerImpl implements BattleController, Controller {
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
         spin();
         update(NO_SKIP);
-
     }
 
 
@@ -129,8 +129,12 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void update(Integer skip) {
         List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
-        battlePanel.updateField(orderedList.subList(0, (orderedList.size()/2)).stream().skip(skip).toList(),
-                                orderedList.subList(orderedList.size()/2, orderedList.size()).stream().skip(skip).toList());
+        List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, (orderedList.size() / 2)).stream().skip(skip).toList());
+        List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()).stream().skip(skip).toList());
+
+        battlePanel.updateField(pList,bList);
+        /*battlePanel.updateFieldBattle(orderedList.subList(0, (orderedList.size()/2)).stream().skip(skip).toList(),
+                                orderedList.subList(orderedList.size()/2, orderedList.size()).stream().skip(skip).toList());*/
     }
 
     public void playerLifeDecrease() {

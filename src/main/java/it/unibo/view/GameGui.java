@@ -79,6 +79,8 @@ public class GameGui {
         setActionListenerMenu();
         setActionListenerCity();
         setActionListenerMap();
+        setMapBaseActionListener();
+        setMapBattleActionListener();
         showMenuPanel();
 
     }
@@ -152,6 +154,25 @@ public class GameGui {
     private void setActionListenerMap() {
         ActionListener actionListener = e -> showMap();
         this.southPanel.setActionListenerMap(actionListener);
+    }
+
+    private void setMapBaseActionListener(){
+        ActionListener actionListener = e -> showCity();
+        this.mapPanel.setBaseActionListener(actionListener);
+    }
+
+    private void setMapBattleActionListener(){
+        ActionListener actionListener = e -> showBattle();
+        this.mapPanel.setBattleActionListener(actionListener);
+    }
+
+    public void setActivateBattle(Integer level){
+        //this.mapPanel.setBeatenLevels(level-1);
+        this.mapPanel.setActiveBattle(level);
+    }
+
+    public void setBeatenLevels(Integer levels){
+        this.mapPanel.setBeatenLevels(levels);
     }
 
     public static Dimension getAllPanel(){
