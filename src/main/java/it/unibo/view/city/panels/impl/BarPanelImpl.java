@@ -1,5 +1,6 @@
 package it.unibo.view.city.panels.impl;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),(int)(GameGui.getAllPanel().getHeight()*0.1));
     private final JPanel mainpanel;
     private BaseControllerImpl basedata;
-    private final JPanel secondaryPanel;
+    private JPanel secondaryPanel;
     private PopupFactory popupFactory;
     private Popup popup;
     
@@ -27,12 +28,13 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.basedata=basedata;
         this.secondaryPanel= new JPanel();
         this.popupFactory=new PopupFactory();
-        /*popup = popupFactory.getPopup(mainpanel, labelFor, NEXT, ABORT); */
+        this.secondaryPanel=new JPanel(new BorderLayout());
         
         
         
         JButton troop= new JButton("troops button");
         JButton playerinfo= new JButton("player info");
+        
        
 
         
@@ -77,6 +79,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
        
         info.setEditable(false);
 
+
         
         return info;
 
@@ -93,6 +96,23 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
     public JPanel getPanel(){
         return this.mainpanel;
+    }
+
+    public JFrame windFrame(){
+        final JFrame frame= new JFrame();
+        popup = popupFactory.getPopup(secondaryPanel, getInfo(size), 10, 10);
+        popup.show();
+        JButton close = new JButton("close");
+        secondaryPanel.add(close, BorderLayout.PAGE_END);
+        close.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a){
+                System.exit(0);
+            }
+        });
+        frame.getContentPane().add(secondaryPanel);
+        frame.setVisible(true);
+        return frame;
+
     }
 }
 
