@@ -1,17 +1,12 @@
 package it.unibo.view.battle.panels.utilities;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 public interface BattlePanelStyle {
 
-    String fontsDirectory = File.separator + "it"
-            + File.separator + "unibo"
-            + File.separator + "fonts"
-            + File.separator + "battle"
-            + File.separator;
+    String fontsDirectory = "/it/unibo/fonts/battle/";
 
     String primaryFontName = "armalite";
 
