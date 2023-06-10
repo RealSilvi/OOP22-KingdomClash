@@ -39,12 +39,15 @@ public class GameData implements Serializable {
         this.buildings = new ConcurrentHashMap<>();
         this.fightData = Optional.empty();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
-        //TODO setConfing
         this.configuration = gameConfiguration;
         Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
     }
-
-    public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings, Optional<FightData> fightData, GameConfiguration configuration) {
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+    @SuppressWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
+    public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings,
+        Optional<FightData> fightData, GameConfiguration configuration) {
         this.resources = resources;
         this.buildings = buildings;
         this.fightData = fightData;
@@ -76,6 +79,10 @@ public class GameData implements Serializable {
      *
      * @return a set of resources owned by the player
      */
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+    @SuppressWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public Set<Resource> getResources() {
         return resources;
     }
@@ -85,6 +92,10 @@ public class GameData implements Serializable {
      *
      * @param resources A set representing the resources owned
      */
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+    @SuppressWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public void setResources(Set<Resource> resources) {
         this.resources = resources;
     }
@@ -94,6 +105,10 @@ public class GameData implements Serializable {
      *
      * @return a map containing all the buildings and their corresponding identifier
      */
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+    @SuppressWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public ConcurrentMap<UUID, Building> getBuildings() {
         return buildings;
     }
@@ -104,6 +119,10 @@ public class GameData implements Serializable {
      * @param buildings a map containing all buildings owned by the player and
      *                  their corresponding identifier
      */
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+    @SuppressWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public void setBuildings(ConcurrentMap<UUID, Building> buildings) {
         this.buildings = buildings;
     }
@@ -113,6 +132,10 @@ public class GameData implements Serializable {
      *
      * @return a map with the troop and the level of the troop as an integer
      */
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+    @SuppressWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public Map<TroopType, Integer> getPlayerArmyLevel() {
         return this.playerArmyLevel;
     }
@@ -122,6 +145,10 @@ public class GameData implements Serializable {
      *
      * @param playerArmyLevel a map with the troop and the level of the troop as an integer
      */
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+    @SuppressWarnings("PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     public void setPlayerArmyLevel(Map<TroopType, Integer> playerArmyLevel) {
         this.playerArmyLevel = playerArmyLevel;
     }

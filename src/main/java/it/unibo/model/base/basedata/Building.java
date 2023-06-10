@@ -7,12 +7,16 @@ import it.unibo.kingdomclash.util.Pair;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
 /**
  * A simple data class that stores information about a building in the game.
  */
+@SuppressFBWarnings(value = "EI2",
+    justification = "No encapsulation needed as BaseModel handles everything")
 public class Building implements Serializable {
 
     /**
