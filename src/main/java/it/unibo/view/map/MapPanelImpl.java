@@ -131,22 +131,22 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     }
 
     @Override
-    public void setBattleActionListener(final ActionListener battleActionListener) {
-        tiles.get(specialTileIndexes.get(0)).addActionListener(battleActionListener);
-    }
-    @Override
-    public void clearBattleActionListener(final ActionListener battleActionListenerToRemove) {
-        tiles.get(specialTileIndexes.get(0)).removeActionListener(battleActionListenerToRemove);
-    }
-    @Override
     public void setBaseActionListener(final ActionListener baseActionListener) {
-        getSpecialTileStream().skip(1).forEach(enemyTileIndex -> 
-            tiles.get(enemyTileIndex).addActionListener(baseActionListener));
+        tiles.get(specialTileIndexes.get(0)).addActionListener(baseActionListener);
     }
     @Override
     public void clearBaseActionListener(final ActionListener baseActionListenerToRemove) {
+        tiles.get(specialTileIndexes.get(0)).removeActionListener(baseActionListenerToRemove);
+    }
+    @Override
+    public void setBattleActionListener(final ActionListener battleActionListener) {
         getSpecialTileStream().skip(1).forEach(enemyTileIndex -> 
-            tiles.get(enemyTileIndex).removeActionListener(baseActionListenerToRemove));
+            tiles.get(enemyTileIndex).addActionListener(battleActionListener));
+    }
+    @Override
+    public void clearBattleActionListener(final ActionListener battleActionListenerToRemove) {
+        getSpecialTileStream().skip(1).forEach(enemyTileIndex -> 
+            tiles.get(enemyTileIndex).removeActionListener(battleActionListenerToRemove));
     }
 
     private Dimension calculateCellSize() {
