@@ -63,8 +63,9 @@ public class BattleControllerImpl implements BattleController, Controller {
             }
         } else {
             this.battleModel.battlePass(CONTINUE);
+            update(NO_SKIP);
         }
-        update(NO_SKIP);
+
         if (this.battleModel.getCountedRound() == MAX_ROUND) {
             battle();
         } else if (fightData.get().getPlayerData().getSelected().size() < PLAYER_TROOPS) {
@@ -81,7 +82,7 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void battle() {
         int total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData()).size()/2;
-        //update(NO_SKIP);
+        update(NO_SKIP);
         for (int i = 0; i < total; i++) {
             int value = this.battleModel.battleCombat(i);
             System.out.println("total: " + total);
@@ -125,9 +126,12 @@ public class BattleControllerImpl implements BattleController, Controller {
 
     public void update(Integer skip) {
         List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
+        List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2).stream().skip(skip).toList());
+        List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()).stream().skip(skip).toList());
+        bList.addAll(pList);
         System.out.println("\n\nORDERED LIST" +orderedList + "\n\n");
-        Collections.reverse(orderedList);
-        battlePanel.updateField(orderedList);
+        //Collections.reverse(orderedList);
+        battlePanel.updateField(bList);
     }
 
     public void playerLifeDecrease() {
