@@ -47,22 +47,16 @@ public class FieldPanelImpl implements FieldPanel {
 
     @Override
     public void redraw( final List<Optional<TroopType>> fieldTroops) {
-        this.restart();
+
 
         final int delay=1500;
         IntStream.range(0, fieldTroops.size()).forEach(x -> {
             if (fieldTroops.get(x).isEmpty()) {
                 this.field.get(x).setEmpty();
             } else {
-                this.field.get(x).setTroop(fieldTroops.get(x).get(),0);
-            }
-            if (fieldTroops.get(x).isEmpty()) {
-                this.field.get(x).setEmpty();
-            } else {
-                this.field.get(x).setTroop(fieldTroops.get(x).get(),0);
+                this.field.get(x).setTroop(fieldTroops.get(x).get());
             }
         });
-
     }
 
     @Override
