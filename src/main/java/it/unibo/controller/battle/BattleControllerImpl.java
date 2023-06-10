@@ -17,7 +17,7 @@ import java.util.*;
 import static it.unibo.model.battle.BattleModelImpl.*;
 import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
-public class BattleControllerImpl implements BattleController, Controller {
+public final class BattleControllerImpl implements BattleController, Controller {
 
     public static final int PLAYER = 1;
     public static final int BOT = 0;
@@ -124,7 +124,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void update(Integer skip) {
-        List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.getBotData(), fightData.getPlayerData());
+        List<Optional<TroopType>> orderedList = EntityDataImpl.exOrdered(fightData.getBotData(), fightData.getPlayerData());
         List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2));
         List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()));
         if(skip > 0){

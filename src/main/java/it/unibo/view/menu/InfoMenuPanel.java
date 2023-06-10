@@ -1,5 +1,6 @@
 package it.unibo.view.menu;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 
@@ -56,6 +57,8 @@ public class InfoMenuPanel {
 
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "I need changes to the panel in its references")
     public JPanel getPanel(){
         return this.infoPanel;
     }

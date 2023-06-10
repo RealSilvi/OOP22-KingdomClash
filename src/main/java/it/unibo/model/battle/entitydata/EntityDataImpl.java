@@ -1,5 +1,6 @@
 package it.unibo.model.battle.entitydata;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.battle.CellsImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.TroopType;
@@ -14,6 +15,7 @@ public class EntityDataImpl implements EntityData{
     public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
 
     private final Map<Integer, CellsImpl> entityTroop;
+    private final Random random = new Random();
 
     public EntityDataImpl() {
         this.entityTroop = new HashMap<>();
@@ -22,6 +24,8 @@ public class EntityDataImpl implements EntityData{
         }
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "I want to get the object to modify it and all the references")
     public Map<Integer, CellsImpl> getEntityTroop() {
         return this.entityTroop;
     }
@@ -85,7 +89,6 @@ public class EntityDataImpl implements EntityData{
                 keys.add(i);
             }
         }
-        Random random = new Random();
         int chosen_key;
         chosen_key = random.nextInt(keys.size());
         return keys.get(chosen_key);
@@ -166,7 +169,7 @@ public class EntityDataImpl implements EntityData{
 
     }
 
-    public static List<Optional<TroopType>> ExOrdered(EntityData botData, EntityData playerData) {
+    public static List<Optional<TroopType>> exOrdered(EntityData botData, EntityData playerData) {
         List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(playerData,botData);
         List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0,(bothOrdered.size()/2));
         List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size()/2,bothOrdered.size());

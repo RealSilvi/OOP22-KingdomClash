@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class GameGui {
+public final class GameGui {
 
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
@@ -25,13 +25,13 @@ public class GameGui {
     private final MapPanel mapPanel;
     private final SoundManager soundManager;
 
-    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration, SoundManager soundManager){
+    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration){
         JFrame frame = new JFrame();
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.soundManager = soundManager;
+        this.soundManager = new SoundManager();
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
 

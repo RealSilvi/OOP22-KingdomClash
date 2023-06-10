@@ -1,5 +1,6 @@
 package it.unibo.view.menu;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 
@@ -58,6 +59,9 @@ public class GameMenuImpl implements GameMenu {
 
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "I need changes to the panel in its references, " +
+                    "so I want to get the reference of the Object")
     public JPanel getPanel(){
         return this.menuPanel;
     }

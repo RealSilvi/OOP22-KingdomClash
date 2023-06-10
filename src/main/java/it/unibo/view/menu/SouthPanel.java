@@ -1,5 +1,6 @@
 package it.unibo.view.menu;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
 
 import javax.swing.*;
@@ -37,6 +38,8 @@ public class SouthPanel {
         this.southPanel.add(this.mapButton);
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "I need changes to the panel in its references")
     public JPanel getPanel(){
         return this.southPanel;
     }
