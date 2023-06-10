@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+import it.unibo.controller.base.BaseControllerImpl;
 import it.unibo.model.base.BaseModelImpl;
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.data.GameData;
@@ -13,23 +14,25 @@ import it.unibo.view.city.panels.api.FieldCityPanel;
 
 public class FieldCityPanelImpl implements FieldCityPanel {
 
-    private GameData data;
     private final JPanel mainpanel;
     private BaseModelImpl function;
     private Map<BuildingBuilder.BuildingTypes,Image> buildingmap;
     private Set<Set<Integer>> coordinate;
     private List<List<JButton>> buttonmap;
+    private CityConfiguration cityConfiguration;
+    private BaseControllerImpl basedata;
 
    
 
-    public FieldCityPanelImpl(int width, int height, Dimension size){
+    public FieldCityPanelImpl(){
 
         this.mainpanel= new DrawPanel(new ImageIcon("C:\\Users\\abdou\\OneDrive\\Immagini\\tiles\\grass.png"), size);
-        this.data=data;
-        this.function= function;
+        this.function = function;
+        this.cityConfiguration = new CityConfiguration();
+        this.basedata = basedata;
 
-        this.mainpanel.setLayout(new GridLayout(width,height));
-        this.setfield(width, height);
+        this.mainpanel.setLayout(new GridLayout(cityConfiguration.getWidth(),cityConfiguration.getHeight()));
+        this.setfield(cityConfiguration.getWidth(), cityConfiguration.getHeight());
         buildingmap=new EnumMap<>(BuildingBuilder.BuildingTypes.class);
         buttonmap= new ArrayList<>();
        
@@ -58,17 +61,10 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     }
         
         }
-    @Override
-    public void showresources() {
-        this.data.getResources();
 
-    }
-
-    public JPanel getpanel(){
+    public JPanel getPanel(){
         return this.mainpanel;
     }
 
-    public void getImage(){
 
-    }
 }
