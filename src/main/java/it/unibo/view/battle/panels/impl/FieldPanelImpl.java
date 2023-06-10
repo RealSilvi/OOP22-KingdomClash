@@ -23,49 +23,46 @@ public class FieldPanelImpl implements FieldPanel {
 
     private final JPanel mainPanel;
 
-    private final List<TroopLabelImpl> armyPlayer;
-    private final List<TroopLabelImpl> armyBot;
+    private final List<TroopLabelImpl> field;
 
     /**
      * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
      */
     public FieldPanelImpl(final int nrOfFieldSpot) {
+        this.field=new ArrayList<>();
         this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getFieldPanel());
-        this.armyPlayer = new ArrayList<>();
-        this.armyBot = new ArrayList<>();
 
         this.mainPanel.setLayout(new GridLayout(ROWS, nrOfFieldSpot / ROWS));
-        IntStream.range(0, nrOfFieldSpot).forEach(x -> this.armyBot.add(new TroopLabelImpl(LABEL_DIMENSION)));
-        IntStream.range(0, nrOfFieldSpot).forEach(x -> this.armyPlayer.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        IntStream.range(0, nrOfFieldSpot*2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION)));
+
 
         this.restart();
-        this.armyBot.forEach(this.mainPanel::add);
-        this.armyPlayer.forEach(this.mainPanel::add);
-
+        this.field.forEach(this.mainPanel::add);
     }
 
     @Override
     public void restart() {
-        this.armyBot.forEach(TroopLabelImpl::setEmpty);
-        this.armyPlayer.forEach(TroopLabelImpl::setEmpty);
+        this.field.forEach(TroopLabelImpl::setEmpty);
     }
 
     @Override
-    public void redraw(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botTroops) {
+    public void redraw( final List<Optional<TroopType>> fieldTroops) {
         this.restart();
 
-        IntStream.range(0, playerTroops.size()).forEach(x -> {
-            if (playerTroops.get(x).isEmpty()) {
-                this.armyPlayer.get(x).setEmpty();
+        final int delay=1500;
+        IntStream.range(0, fieldTroops.size()).forEach(x -> {
+            if (fieldTroops.get(x).isEmpty()) {
+                this.field.get(x).setEmpty();
             } else {
-                this.armyPlayer.get(x).setTroop(playerTroops.get(x).get());
+                this.field.get(x).setTroop(fieldTroops.get(x).get(),0);
             }
-            if (botTroops.get(x).isEmpty()) {
-                this.armyBot.get(x).setEmpty();
+            if (fieldTroops.get(x).isEmpty()) {
+                this.field.get(x).setEmpty();
             } else {
-                this.armyBot.get(x).setTroop(botTroops.get(x).get());
+                this.field.get(x).setTroop(fieldTroops.get(x).get(),0);
             }
         });
+
     }
 
     @Override

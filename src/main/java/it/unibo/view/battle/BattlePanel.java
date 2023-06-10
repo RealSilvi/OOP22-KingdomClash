@@ -47,10 +47,8 @@ public interface BattlePanel {
      * Update the Field with all the selected troops on it keeping in mind that can
      * exist empty slots.
      *
-     * @param playerTroops Sorted List of player's troops.
-     * @param botTroops    Sorted List od bots troops
      */
-    void updateField(final List<Optional<TroopType>> playerTroops, final List<Optional<TroopType>> botTroops);
+    void updateField(final List<Optional<TroopType>> field);
 
     /**
      * Disable all the bots slots

@@ -37,8 +37,16 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
         this.setIcon(null);
     }
 
-    @Override
-    public void setTroop(final TroopType troop) {
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop, this.size));
+//    @Override
+//    public void setTroop(final TroopType troop) {
+//        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop, this.size));
+//    }
+
+
+    public void setTroop(final TroopType troop,int delay) {
+        Timer timer = new Timer(delay, e -> this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop, this.size)));
+        timer.setRepeats(false);
+        timer.start();
+
     }
 }

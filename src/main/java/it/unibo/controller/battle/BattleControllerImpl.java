@@ -10,11 +10,8 @@ import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
-import javax.swing.Timer;
-import javax.swing.text.html.Option;
 import java.awt.event.ActionListener;
 import java.util.*;
 
@@ -30,7 +27,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     public static final int CONTINUE = 0;
 
     private final BattleModel battleModel;
-    private Optional<FightData> fightData;
+    private final Optional<FightData> fightData;
     private final BattlePanelImpl battlePanel;
 
 
@@ -120,21 +117,17 @@ public class BattleControllerImpl implements BattleController, Controller {
     public void clickedButtonPlayer(Integer key) {
         if (fightData.get().getPlayerData().getCells(key).getClicked()) {
             fightData.get().getPlayerData().removeEntityTroop(key);
-            update(NO_SKIP);
         } else {
             fightData.get().getPlayerData().addEntityTroop(key);
-            update(NO_SKIP);
         }
+        update(NO_SKIP);
     }
 
     public void update(Integer skip) {
         List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
-        List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, (orderedList.size() / 2)).stream().skip(skip).toList());
-        List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()).stream().skip(skip).toList());
-
-        battlePanel.updateField(pList,bList);
-        /*battlePanel.updateFieldBattle(orderedList.subList(0, (orderedList.size()/2)).stream().skip(skip).toList(),
-                                orderedList.subList(orderedList.size()/2, orderedList.size()).stream().skip(skip).toList());*/
+        System.out.println("\n\nORDERED LIST" +orderedList + "\n\n");
+        Collections.reverse(orderedList);
+        battlePanel.updateField(orderedList);
     }
 
     public void playerLifeDecrease() {
