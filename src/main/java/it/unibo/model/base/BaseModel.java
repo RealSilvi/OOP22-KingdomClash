@@ -9,7 +9,6 @@ import it.unibo.model.base.exceptions.InvalidTroopLevelException;
 import it.unibo.model.base.exceptions.MaxBuildingLimitReachedException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
-import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.TroopType;
 
@@ -273,18 +272,6 @@ public interface BaseModel {
      * @return true if time is passing, false if stopped
      */
     boolean isClockTicking();
-
-    /**
-     * Returns the instance of GameData.
-     * Be careful! directly manipulating data inside of the returned object
-     * might result in uncontrolled behaviour, use it carefully!.
-     *
-     * @return game data object that contains every information of the current game
-     * @deprecated This method will soon be removed because it is unsafe and it'not the
-     * BaseModel's responsibility to directly return GameData
-     */
-    @Deprecated
-    GameData obtainGameData();
 
     /**
      * Returns an unmodifiable map of Buildings.

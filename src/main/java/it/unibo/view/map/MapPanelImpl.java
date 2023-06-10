@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.internal.GraphicUtils;
 import it.unibo.view.map.mapdata.MapConfiguration;
@@ -33,6 +34,8 @@ import it.unibo.view.map.mapdata.MapConfiguration;
  * A simple panel made of tiles that can be of different types and
  * can have different behaviours.
  */
+@SuppressFBWarnings(value = "Se",
+    justification = "This class will never be serialized")
 public final class MapPanelImpl extends JPanel implements MapPanel {
 
     private transient Logger logger = Logger.getLogger(this.getClass().getName());
@@ -43,7 +46,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     private transient Map<ButtonIdentification, Image> imageMap = 
         new EnumMap<>(ButtonIdentification.class);
     
-    private List<JButton> tiles = new ArrayList<>();
+    private transient List<JButton> tiles = new ArrayList<>();
     private Random randomGen = new Random(RANDOM_SEED);
     @SuppressWarnings("unused")
     //Used to get global configuration

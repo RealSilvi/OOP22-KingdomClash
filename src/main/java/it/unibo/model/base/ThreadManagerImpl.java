@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nonnull;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder;
@@ -23,6 +24,8 @@ import it.unibo.model.base.internal.BuildingBuilderImpl;
  */
 //threadsRuning boolean map is always initialized
 @SuppressWarnings("java:S5411")
+@SuppressFBWarnings(value = "DCN",
+    justification = "NullPointerExceptions are purposely thrown to skip non existing threads")
 public final class ThreadManagerImpl implements ThreadManager {
     private boolean keepAliveThreads = true;
 
@@ -42,6 +45,8 @@ public final class ThreadManagerImpl implements ThreadManager {
      * @param baseModel the base model to interact with
      * @param buildingMapRef a concurrent map of buildings
      */
+    @SuppressFBWarnings(value = "EI2",
+    justification = "All data in here is always safely handled")
     public ThreadManagerImpl(final @Nonnull BaseModel baseModel,
         final ConcurrentMap<UUID, Building> buildingMapRef) {
         this.baseModel = baseModel;
@@ -248,6 +253,8 @@ public final class ThreadManagerImpl implements ThreadManager {
         }
 
         @Override
+        @SuppressFBWarnings(value = "UW",
+        justification = "Not an unconditional wait as the thread can be woken up using the wait object")
         public void run() {
             while (isThreadRunning()) {
                 long operationStartTime = System.currentTimeMillis();

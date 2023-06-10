@@ -4,6 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.Collections;
 import java.util.Set;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
@@ -73,6 +74,8 @@ public interface BuildingBuilder {
          * @return The initial resource set that the building
          * will produce
          */
+        @SuppressFBWarnings(value = "EI",
+        justification = "No encapsulation needed as BaseModel handles everything")
         public Set<Resource> getBaseProduction() {
             return baseProduction;
         }
