@@ -25,12 +25,12 @@ public class GameData implements Serializable {
 
     private final transient GameConfiguration configuration;
 
-    private Optional<FightData> fightData;
+    private FightData fightData;
 
     public GameData() {
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
-        this.fightData = Optional.empty();
+        this.fightData = new FightData();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
         this.configuration = new GameConfiguration();
         Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
@@ -38,7 +38,7 @@ public class GameData implements Serializable {
     public GameData(GameConfiguration gameConfiguration) {
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
-        this.fightData = Optional.empty();
+        this.fightData = new FightData();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
         this.configuration = gameConfiguration;
         Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
@@ -49,14 +49,12 @@ public class GameData implements Serializable {
     @SuppressFBWarnings(value = "EI2",
     justification = "No encapsulation needed as BaseModel handles everything")
     public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings,
-        Optional<FightData> fightData, GameConfiguration configuration) {
+        FightData fightData, GameConfiguration configuration) {
         this.resources = resources;
         this.buildings = buildings;
         this.fightData = fightData;
         this.configuration = configuration;
     }
-
-    //TODO: Add data for battle
 
     /**
      * Gets the player's name
@@ -161,11 +159,11 @@ public class GameData implements Serializable {
         this.playerArmyLevel = playerArmyLevel;
     }
 
-    public Optional<FightData> getFightData() {
+    public FightData getFightData() {
         return fightData;
     }
 
-    public void setFightData(Optional<FightData> fightData) {
+    public void setFightData(FightData fightData) {
         this.fightData = fightData;
     }
 
