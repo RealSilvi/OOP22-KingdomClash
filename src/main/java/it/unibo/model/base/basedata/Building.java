@@ -1,7 +1,6 @@
 package it.unibo.model.base.basedata;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import it.unibo.kingdomclash.util.Pair;
