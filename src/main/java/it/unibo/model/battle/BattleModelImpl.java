@@ -17,7 +17,7 @@ public class BattleModelImpl implements BattleModel {
     public static final int WIN_BOT = 2;
     public static final int WIN_PLAYER = 3;
     public static final int MAX_ROUND = FightData.MAX_ROUND;
-    private FightData fightData;
+    private final FightData fightData;
     private Map<TroopType, Integer> troopLevel;
     private Map<TroopType, Integer> troopBotLevel;
 
@@ -55,13 +55,15 @@ public class BattleModelImpl implements BattleModel {
             fightData.getPlayerData().getSelected().forEach(x -> {
                 int key;
                 if (!fightData.getBotData().isMatch(x)) {
-                    if (fightData.getBotData().getNotSelected().contains(TroopType.getNullable(x).get())) {
-                        key = fightData.getBotData().getKeyFromTroop(TroopType.getNullable(x).get());
-                        fightData.getBotData().addEntityTroop(key);
-                    } else {
-                        if (finished == CONTINUE) {
-                            if (fightData.getBotData().getSelected().size() < FightData.BOT_TROOPS) {
-                                fightData.getBotData().addEntityTroop(fightData.getBotData().selectRandomTroop());
+                    if(TroopType.getNullable(x).isPresent()) {
+                        if (fightData.getBotData().getNotSelected().contains(TroopType.getNullable(x).get())) {
+                            key = fightData.getBotData().getKeyFromTroop(TroopType.getNullable(x).get());
+                            fightData.getBotData().addEntityTroop(key);
+                        } else {
+                            if (finished == CONTINUE) {
+                                if (fightData.getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                                    fightData.getBotData().addEntityTroop(fightData.getBotData().selectRandomTroop());
+                                }
                             }
                         }
                     }
@@ -160,7 +162,7 @@ public class BattleModelImpl implements BattleModel {
         botLife = BOT_LIFE;
         playerLife = PLAYER_LIFE;
         if(increment){
-            this.troopBotLevel.values().stream().map(x -> ++x);
+            this.troopBotLevel.values().forEach(x -> ++x);
         }
     }
 

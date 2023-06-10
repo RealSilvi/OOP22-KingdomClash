@@ -1,6 +1,5 @@
 package it.unibo.model.battle.entitydata;
 
-import it.unibo.controller.battle.BattleControllerImpl;
 import it.unibo.model.battle.CellsImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.TroopType;
@@ -14,9 +13,10 @@ public class EntityDataImpl implements EntityData{
     public static final int HAND_TROOPS = FightData.HAND_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
 
-    private Map<Integer, CellsImpl> entityTroop = new HashMap<>();
+    private final Map<Integer, CellsImpl> entityTroop;
 
     public EntityDataImpl() {
+        this.entityTroop = new HashMap<>();
         for (int i = 0; i < HAND_TROOPS; i++) {
             this.entityTroop.put(i, new CellsImpl(TroopType.getRandomTroop(), false, false));
         }
@@ -24,10 +24,6 @@ public class EntityDataImpl implements EntityData{
 
     public Map<Integer, CellsImpl> getEntityTroop() {
         return this.entityTroop;
-    }
-
-    public void setEntityTroop(Map<Integer, CellsImpl> entityTroop) {
-        this.entityTroop = entityTroop;
     }
 
     public void addEntityTroop(Integer key) {
@@ -63,16 +59,6 @@ public class EntityDataImpl implements EntityData{
         return notSelectedTroop;
     }
 
-    public List<TroopType> getChosen() {
-        List<TroopType> chosenTroop = new ArrayList<>();
-        for (int i = 0; i < HAND_TROOPS; i++) {
-            if (this.entityTroop.get(i).getChosen()) {
-                chosenTroop.add(this.entityTroop.get(i).getTroop());
-            }
-        }
-        return chosenTroop;
-    }
-
     public Map<Integer, TroopType> changeNotSelectedTroop() {
         Map<Integer, TroopType> troopChanged = new HashMap<>();
         for (int i = 0; i < HAND_TROOPS; i++) {
@@ -106,7 +92,11 @@ public class EntityDataImpl implements EntityData{
     }
 
     public Boolean isMatch(TroopType troop) {
-        return getSelected().contains(TroopType.getNullable(troop).get());
+        if(TroopType.getNullable(troop).isPresent()){
+            return getSelected().contains(TroopType.getNullable(troop).get());
+        }else{
+            return false;
+        }
     }
 
     public Integer getKeyFromTroop(TroopType troop) {
@@ -146,7 +136,7 @@ public class EntityDataImpl implements EntityData{
                                     Arrays.stream(TroopType.values())
                                             .filter(z -> z.ordinal() == a)
                                             .iterator()
-                                            .next()).get())
+                                            .next()).orElse(null))
                     )
                     .map(Optional::of)
                     .toList());

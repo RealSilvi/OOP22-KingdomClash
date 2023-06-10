@@ -15,20 +15,12 @@ public class FightData implements Serializable {
     public static final int TOTAL_TROOPS = PLAYER_TROOPS + BOT_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = 8;
 
-    private EntityData botData;
-    private EntityData playerData;
+    private final EntityData botData;
+    private final EntityData playerData;
 
     public FightData() {
         this.botData = new EntityDataImpl();
         this.playerData = new EntityDataImpl();
-    }
-
-    public void setPlayerData(EntityData playerData) {
-        this.playerData = playerData;
-    }
-
-    public void setBotData(EntityData botData) {
-        this.botData = botData;
     }
 
     public EntityData getPlayerData() {

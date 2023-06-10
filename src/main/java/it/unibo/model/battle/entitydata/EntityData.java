@@ -15,14 +15,6 @@ public interface EntityData {
     Map<Integer, CellsImpl> getEntityTroop();
 
     /**
-     * set the hand
-     *
-     * @param entityTroop troops to set
-     */
-
-    void setEntityTroop(Map<Integer, CellsImpl> entityTroop);
-
-    /**
      * Adds the clicked troop into the field
      *
      * @param key represents the position of the clicked troop
@@ -63,15 +55,6 @@ public interface EntityData {
      */
 
     List<TroopType> getNotSelected();
-
-    /**
-     * Selects all the troops chosen.
-     *
-     * @return all the chosen troops, that is,
-     * only the troops that cannot be taken back in hand.
-     */
-
-    List<TroopType> getChosen();
 
     /**
      * Change all the troops in the hand, which are not clicked.
