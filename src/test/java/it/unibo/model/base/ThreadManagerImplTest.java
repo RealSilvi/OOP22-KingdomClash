@@ -25,14 +25,14 @@ public class ThreadManagerImplTest {
     private GameData gameData;
     private BaseModel baseModel;
 
-    private void initModel() {
+    @org.junit.jupiter.api.BeforeEach
+    public void initModel() {
         this.gameData = new GameData();
         this.baseModel = new BaseModelImpl(this.gameData);
     }
 
     @Test
     public void testBuildingAndProductionCycle() throws NotEnoughResourceException, InvalidBuildingPlacementException, BuildingMaxedOutException, InvalidStructureReferenceException, MaxBuildingLimitReachedException {
-        initModel();
         Object lock = new Object();
         if (gameData.getResources().add(new Resource(ResourceType.WHEAT, 30)) == false) {
             gameData.getResources().remove(new Resource(ResourceType.WHEAT, 30));
@@ -82,11 +82,22 @@ public class ThreadManagerImplTest {
         baseModel.addBuildingProductionObserver(new BuildingObserver() {
             @Override
             public void update(UUID buildingId) {
-                if (buildingId.equals(builtStructureId)) {
-                    Assertions.assertEquals(gameData.getBuildings().get(builtStructureId)
-                            .getProductionAmount(), gameData.getResources());
+                if (buildingId.equals(builtStructureId) && gameData.getBuildings().get(builtStructureId).getProductionProgress() == 99) {
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
                 }
             }
         });
+        synchronized (lock) {
+            try {
+                lock.wait();
+                Thread.sleep(1000L);
+                Assertions.assertEquals(gameData.getBuildings().get(builtStructureId)
+                            .getProductionAmount(), gameData.getResources());
+                Assertions.assertEquals(1, baseModel.getBuildingMap().get(builtStructureId).getLevel());
+            } catch (InterruptedException e) {
+            }
+        }
     }
 }

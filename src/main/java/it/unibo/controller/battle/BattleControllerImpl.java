@@ -27,7 +27,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     public static final int CONTINUE = 0;
 
     private final BattleModel battleModel;
-    private Optional<FightData> fightData;
+    private final Optional<FightData> fightData;
     private final BattlePanelImpl battlePanel;
 
 
@@ -63,8 +63,9 @@ public class BattleControllerImpl implements BattleController, Controller {
             }
         } else {
             this.battleModel.battlePass(CONTINUE);
+            update(NO_SKIP);
         }
-        update(NO_SKIP);
+
         if (this.battleModel.getCountedRound() == MAX_ROUND) {
             battle();
         } else if (fightData.get().getPlayerData().getSelected().size() < PLAYER_TROOPS) {
@@ -104,8 +105,8 @@ public class BattleControllerImpl implements BattleController, Controller {
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
         spin();
         update(NO_SKIP);
-
     }
+
 
     public void end(Integer entity) {
         this.battleModel.endFight(entity == WIN_PLAYER);
@@ -117,17 +118,20 @@ public class BattleControllerImpl implements BattleController, Controller {
     public void clickedButtonPlayer(Integer key) {
         if (fightData.get().getPlayerData().getCells(key).getClicked()) {
             fightData.get().getPlayerData().removeEntityTroop(key);
-            update(NO_SKIP);
         } else {
             fightData.get().getPlayerData().addEntityTroop(key);
-            update(NO_SKIP);
         }
+        update(NO_SKIP);
     }
 
     public void update(Integer skip) {
         List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
-        battlePanel.updateField(orderedList.subList(0, (orderedList.size()/2)).stream().skip(skip).toList(),
-                                orderedList.subList(orderedList.size()/2, orderedList.size()).stream().skip(skip).toList());
+        List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2).stream().skip(skip).toList());
+        List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()).stream().skip(skip).toList());
+        bList.addAll(pList);
+        System.out.println("\n\nORDERED LIST" +orderedList + "\n\n");
+        //Collections.reverse(orderedList);
+        battlePanel.updateField(bList);
     }
 
     public void playerLifeDecrease() {

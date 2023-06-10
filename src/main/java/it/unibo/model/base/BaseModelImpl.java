@@ -101,6 +101,7 @@ public final class BaseModelImpl implements BaseModel {
             }
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
+        threadManager.addBuilding(newStructureId);
         return newStructureId;
     }
 
@@ -128,6 +129,7 @@ public final class BaseModelImpl implements BaseModel {
         if (this.gameData.getBuildings().get(structureId).getLevel() >= buildingConfiguration.getMaxLevel()) {
             throw new BuildingMaxedOutException();
         }
+        threadManager.removeBuilding(structureId);
         gameData.setResources(subtractResources(gameData.getResources(),
                 this.gameData.getBuildings().get(structureId).getType().getCost(
                         this.gameData.getBuildings().get(structureId).getLevel() + 1)));

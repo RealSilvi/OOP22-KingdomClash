@@ -1,5 +1,10 @@
 package it.unibo.view;
 
+import it.unibo.controller.GameController;
+import it.unibo.controller.SoundManager;
+import it.unibo.model.data.GameConfiguration;
+import it.unibo.view.map.MapPanel;
+import it.unibo.view.map.MapPanelImpl;
 import it.unibo.view.menu.*;
 
 import javax.swing.*;
@@ -20,15 +25,24 @@ public class GameGui {
     private final SouthPanel southPanel;
     private final GameMenu menuPanel;
     private final InfoMenuPanel infoPanel;
+    private final MapPanel mapPanel;
+    private final JPanel cityPanel;
+    private final JPanel battlePanel;
+    private final SoundManager soundManager;
     //private final JPanel newgamePanel;
     //private final JPanel loadPanel;
 
-    public GameGui(JPanel battlePanel/*, JPanel cityPanel*/){
+    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration, SoundManager soundManager){
         frame = new JFrame();
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.soundManager = soundManager;
+
+        this.mapPanel = new MapPanelImpl(gameConfiguration);
+        this.cityPanel = cityPanel;
+        this.battlePanel = battlePanel;
 
         this.SwitchLayout = new CardLayout();
         this.mainPanel = new JPanel(this.SwitchLayout);
@@ -42,7 +56,9 @@ public class GameGui {
         this.infoPanel = new InfoMenuPanel();
         this.southPanel = new SouthPanel();
 
-        this.allPanel.add(battlePanel,"1");
+        this.allPanel.add(this.battlePanel,"1");
+        this.allPanel.add(this.cityPanel,"2");
+        this.allPanel.add(this.mapPanel.getAsJPanel(),"3");
 
         this.BorderPanel.add(this.allPanel, BorderLayout.CENTER);
         this.BorderPanel.add(this.southPanel.getPanel(),BorderLayout.SOUTH);
@@ -58,11 +74,19 @@ public class GameGui {
         setActionListenerInfo();
         setActionListenerExit();
         setActionListenerNewGame();
+        setActionListenerMusic();
+        setActionListenerBattle();
+        setActionListenerMenu();
+        setActionListenerCity();
+        setActionListenerMap();
+        setMapBaseActionListener();
+        setMapBattleActionListener();
         showMenuPanel();
 
     }
 
     public void showMenuPanel() {
+        this.soundManager.startMenuTheme();
         SwitchLayout.show(this.mainPanel, "1");
     }
 
@@ -70,14 +94,36 @@ public class GameGui {
         SwitchLayout.show(this.mainPanel, "2");
     }
 
-    public void showNewGame(){
+    public void showBattle(){
+        this.soundManager.startBattleTheme();
+        this.southPanel.showButtonsBattle();
         SwitchLayout.show(this.mainPanel, "3");
         SwitchLayout2.show(this.allPanel, "1");
     }
 
+    public void showCity(){
+        this.soundManager.startCityTheme();
+        this.southPanel.showButtonsCity();
+        SwitchLayout.show(this.mainPanel, "3");
+        SwitchLayout2.show(this.allPanel, "2");
+    }
+
+    public void showMap(){
+        this.soundManager.startMapTheme();
+        this.southPanel.showButtonsMap();
+        SwitchLayout.show(this.mainPanel, "3");
+        SwitchLayout2.show(this.allPanel, "3");
+    }
+
     private void setActionListenerNewGame() {
-        ActionListener actionListener = e -> showNewGame();
+        ActionListener actionListener = e -> showCity();
         this.menuPanel.setActionListenerNewGame(actionListener);
+    }
+
+    private void setActionListenerMusic() {
+        ActionListener actionListener = e -> this.soundManager.changeMute();
+        this.menuPanel.setActionListenerMusic(actionListener);
+        this.southPanel.setActionListenerMusic(actionListener);
     }
 
     private void setActionListenerInfo() {
@@ -88,6 +134,45 @@ public class GameGui {
     private void setActionListenerExit() {
         ActionListener actionListener = e -> showMenuPanel();
         this.infoPanel.setActionListenerExit(actionListener);
+    }
+
+    private void setActionListenerBattle() {
+        ActionListener actionListener = e -> showBattle();
+        this.southPanel.setActionListenerBattle(actionListener);
+    }
+
+    private void setActionListenerMenu() {
+        ActionListener actionListener = e -> showMenuPanel();
+        this.southPanel.setActionListenerMenu(actionListener);
+    }
+
+    private void setActionListenerCity() {
+        ActionListener actionListener = e -> showCity();
+        this.southPanel.setActionListenerCity(actionListener);
+    }
+
+    private void setActionListenerMap() {
+        ActionListener actionListener = e -> showMap();
+        this.southPanel.setActionListenerMap(actionListener);
+    }
+
+    private void setMapBaseActionListener(){
+        ActionListener actionListener = e -> showCity();
+        this.mapPanel.setBaseActionListener(actionListener);
+    }
+
+    private void setMapBattleActionListener(){
+        ActionListener actionListener = e -> showBattle();
+        this.mapPanel.setBattleActionListener(actionListener);
+    }
+
+    public void setActivateBattle(Integer level){
+        //this.mapPanel.setBeatenLevels(level-1);
+        this.mapPanel.setActiveBattle(level);
+    }
+
+    public void setBeatenLevels(Integer levels){
+        this.mapPanel.setBeatenLevels(levels);
     }
 
     public static Dimension getAllPanel(){

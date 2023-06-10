@@ -119,10 +119,14 @@ public final class ThreadManagerImpl implements ThreadManager {
             return;
         }
         threadMap.forEach((selection, mapOfThreads) -> {
-            mapOfThreads.get(buildingToRemove).setThreadRunning(false);
             try {
+                mapOfThreads.get(buildingToRemove).setThreadRunning(false);
                 mapOfThreads.get(buildingToRemove).join();
-            } catch (InterruptedException e) {
+                mapOfThreads.remove(buildingToRemove);
+            } catch (NullPointerException exc) {
+                logger.log(Level.FINE, 
+                "Skipping non-existing thread in {0}", selection.name());
+            } catch (InterruptedException exc) {
                 Thread.currentThread().interrupt();
             }
         });
@@ -184,6 +188,7 @@ public final class ThreadManagerImpl implements ThreadManager {
                             .getProductionProgress();
                     productionPercentage++;
                     buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(productionPercentage);
+                    logger.log(Level.INFO, "productionPercentage {0}", productionPercentage);
                     if (productionPercentage == 100) {
                         buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(0);
                         try {
@@ -208,7 +213,7 @@ public final class ThreadManagerImpl implements ThreadManager {
             };
             return new WorkerThread(ThreadSelector.CONSTRUCTION,
                     () -> buildingMapRef.get(identifier).getProductionTime(),
-                    time -> buildingMapRef.get(identifier).setBuildingTime(time),
+                    time -> buildingMapRef.get(identifier).setProductionTime(time),
                     productionOperation,
                     identifier);
         }

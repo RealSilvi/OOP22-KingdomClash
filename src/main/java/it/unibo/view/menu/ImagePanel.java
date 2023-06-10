@@ -1,5 +1,7 @@
 package it.unibo.view.menu;
 
+import it.unibo.view.map.internal.GraphicUtils;
+
 import javax.swing.*;
 import java.awt.*;
 

@@ -1,7 +1,6 @@
 package it.unibo.model.battle;
 
 import it.unibo.model.data.TroopType;
-import it.unibo.view.battle.Troop;
 
 import java.util.Map;
 

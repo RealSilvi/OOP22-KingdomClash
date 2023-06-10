@@ -14,6 +14,12 @@ import java.io.Serializable;
  * A simple data class that stores information about a building in the game.
  */
 public class Building implements Serializable {
+
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 211022001L;
+
     /**
      * Maximum level that the buildings can reach.
      */

@@ -14,19 +14,23 @@ public class GameController {
     private Controller baseController;
     private Controller battleController;
 
+    private SoundManager soundManager;
+
     public GameController() {
+
+        this.soundManager= new SoundManager();
         this.gameModel = new GameModel();
 
         this.battleController = new BattleControllerImpl(gameModel.getGameData());
         this.baseController = new BaseControllerImpl(gameModel.getGameData());
 
-        this.gameGui = new GameGui(battleController.getGuiPanel()/*,baseController.getGuiPanel()*/);
-
+        this.gameGui = new GameGui(battleController.getGuiPanel(),baseController.getGuiPanel(),gameModel.getGameData().getGameConfiguration(),this.soundManager);
+        this.gameGui.setBeatenLevels(0);
+        this.gameGui.setActivateBattle(1);
     }
 
     public static void main(final String... args) {
         new GameController();
-
     }
 
 }

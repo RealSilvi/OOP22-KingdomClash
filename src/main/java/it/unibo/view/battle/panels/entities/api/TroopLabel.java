@@ -18,5 +18,5 @@ public interface TroopLabel {
      *
      * @param troop the troop to display.
      */
-    void setTroop(TroopType troop);
+    void setTroop(TroopType troop,final int delay);
 }
