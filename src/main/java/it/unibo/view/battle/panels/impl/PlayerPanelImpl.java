@@ -40,17 +40,8 @@ public class PlayerPanelImpl implements PlayerPanel {
 
     @Override
     public void update(final Map<Integer, TroopType> troops) {
-        IntStream.range(0, this.slots.size()).forEach(x -> {
-            if (troops.containsKey(x)) {
-                slots.get(x).setEnabled(true);
-                slots.get(x).setTroop(troops.get(x));
-            } else {
-                slots.get(x).setEnabled(false);
-            }
-        });
-
-        //TODO fai spin
         int delay=600;
+
         for (int x = 0; x < this.slots.size(); x++) {
             if (troops.containsKey(x)) {
                 this.slots.get(x).setEnabled(true);

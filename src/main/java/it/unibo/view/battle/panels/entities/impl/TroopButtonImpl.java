@@ -37,12 +37,6 @@ public class TroopButtonImpl implements TroopButton {
         return this.troop;
     }
 
-    @Override
-    public void setTroop(TroopType troop) {
-
-    }
-
-//TODO fai il timer come spin effect
     public void setTroop(final TroopType troop, final int delay) {
         this.troop = troop;
         Timer timer = new Timer(delay, e -> {
