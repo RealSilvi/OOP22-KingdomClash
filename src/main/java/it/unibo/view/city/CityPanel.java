@@ -3,11 +3,14 @@ package it.unibo.view.city;
 import javax.swing.JPanel;
 
 public interface CityPanel {
-    public void resources();
+     void resources();
 
-    public void setBuildings();
+     void setBuildings();
 
-    public void setfield();
+     void setfield();
 
-    public JPanel getPanel();
+     JPanel getPanel();
+     
+
 }
+
