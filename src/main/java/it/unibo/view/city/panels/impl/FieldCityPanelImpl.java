@@ -28,7 +28,6 @@ public class FieldCityPanelImpl implements FieldCityPanel {
 
         this.mainpanel= new DrawPanel(new ImageIcon("C:\\Users\\abdou\\OneDrive\\Immagini\\tiles\\grass.png"), new Dimension(cityConfiguration.getWidth(), cityConfiguration.getHeight()));
         this.function = function;
-        this.cityConfiguration = new CityConfiguration();
         this.basedata = basedata;
 
         this.mainpanel.setLayout(new GridLayout(cityConfiguration.getWidth(),cityConfiguration.getHeight()));
