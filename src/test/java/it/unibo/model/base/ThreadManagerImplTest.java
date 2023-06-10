@@ -82,11 +82,22 @@ public class ThreadManagerImplTest {
         baseModel.addBuildingProductionObserver(new BuildingObserver() {
             @Override
             public void update(UUID buildingId) {
-                if (buildingId.equals(builtStructureId)) {
-                    Assertions.assertEquals(gameData.getBuildings().get(builtStructureId)
-                            .getProductionAmount(), gameData.getResources());
+                if (buildingId.equals(builtStructureId) && gameData.getBuildings().get(builtStructureId).getProductionProgress() == 99) {
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
                 }
             }
         });
+        synchronized (lock) {
+            try {
+                lock.wait();
+                Thread.sleep(1000L);
+                Assertions.assertEquals(gameData.getBuildings().get(builtStructureId)
+                            .getProductionAmount(), gameData.getResources());
+                Assertions.assertEquals(1, baseModel.getBuildingMap().get(builtStructureId).getLevel());
+            } catch (InterruptedException e) {
+            }
+        }
     }
 }
