@@ -27,19 +27,19 @@ public class BattleControllerImpl implements BattleController, Controller {
     public static final int CONTINUE = 0;
 
     private final BattleModel battleModel;
-    private final Optional<FightData> fightData;
+    private final FightData fightData;
     private final BattlePanelImpl battlePanel;
 
 
     public BattleControllerImpl(GameData gameData) {
-        if (gameData.getFightData().isPresent()) {
+        if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
         }else{
-            this.fightData= Optional.of(new FightData());
+            this.fightData= new FightData();
             gameData.setFightData(this.fightData);
         }
         this.battleModel = new BattleModelImpl(gameData);
-        this.battlePanel = new BattlePanelImpl(fightData.get().getBotData().changeNotSelectedTroop(), fightData.get().getPlayerData().changeNotSelectedTroop(), gameData.getGameConfiguration().getBattleControllerConfiguration());
+        this.battlePanel = new BattlePanelImpl(fightData.getBotData().changeNotSelectedTroop(), fightData.getPlayerData().changeNotSelectedTroop(), gameData.getGameConfiguration().getBattleControllerConfiguration());
         this.battlePanel.disableSpinButton();
         this.battlePanel.disableBotSlots();
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
@@ -56,7 +56,7 @@ public class BattleControllerImpl implements BattleController, Controller {
         this.battlePanel.disablePlayerSlots();
         this.battlePanel.disableSpinButton();
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
-        if (fightData.get().getPlayerData().getSelected().size() == PLAYER_TROOPS) {
+        if (fightData.getPlayerData().getSelected().size() == PLAYER_TROOPS) {
             for (int i = this.battleModel.getCountedRound(); i < MAX_ROUND; i++) {
                 this.battleModel.battlePass(PLAYER_FINISH);
                 update(NO_SKIP);
@@ -68,7 +68,7 @@ public class BattleControllerImpl implements BattleController, Controller {
 
         if (this.battleModel.getCountedRound() == MAX_ROUND) {
             battle();
-        } else if (fightData.get().getPlayerData().getSelected().size() < PLAYER_TROOPS) {
+        } else if (fightData.getPlayerData().getSelected().size() < PLAYER_TROOPS) {
             this.battlePanel.enableSpinButton();
         }
         this.battlePanel.disableBotSlots();
@@ -81,7 +81,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void battle() {
-        int total = EntityDataImpl.getOrderedField(fightData.get().getPlayerData(), fightData.get().getBotData()).size()/2;
+        int total = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData()).size()/2;
         update(NO_SKIP);
         for (int i = 0; i < total; i++) {
             int value = this.battleModel.battleCombat(i);
@@ -116,16 +116,16 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     public void clickedButtonPlayer(Integer key) {
-        if (fightData.get().getPlayerData().getCells(key).getClicked()) {
-            fightData.get().getPlayerData().removeEntityTroop(key);
+        if (fightData.getPlayerData().getCells(key).getClicked()) {
+            fightData.getPlayerData().removeEntityTroop(key);
         } else {
-            fightData.get().getPlayerData().addEntityTroop(key);
+            fightData.getPlayerData().addEntityTroop(key);
         }
         update(NO_SKIP);
     }
 
     public void update(Integer skip) {
-        List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.get().getBotData(), fightData.get().getPlayerData());
+        List<Optional<TroopType>> orderedList = EntityDataImpl.ExOrdered(fightData.getBotData(), fightData.getPlayerData());
         List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2));
         List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()));
         if(skip > 0){
@@ -152,7 +152,7 @@ public class BattleControllerImpl implements BattleController, Controller {
         return battleModel;
     }
 
-    public Optional<FightData> getFightData() {
+    public FightData getFightData() {
         return fightData;
     }
 

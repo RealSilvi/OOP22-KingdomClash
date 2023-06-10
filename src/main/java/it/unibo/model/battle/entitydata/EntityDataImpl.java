@@ -13,8 +13,6 @@ public class EntityDataImpl implements EntityData{
 
     public static final int HAND_TROOPS = FightData.HAND_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
-    public static final int PLAYER = BattleControllerImpl.PLAYER;
-    public static final int BOT = BattleControllerImpl.BOT;
 
     private Map<Integer, CellsImpl> entityTroop = new HashMap<>();
 

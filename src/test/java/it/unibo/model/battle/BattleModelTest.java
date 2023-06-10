@@ -30,8 +30,8 @@ public class BattleModelTest {
         this.botData = this.fightData.getBotData();
 
         this.playerData = this.fightData.getPlayerData();
-        this.gameData.setFightData(Optional.of(this.fightData));
-        this.battleModel = new BattleModelImpl(Optional.of(this.fightData));
+        this.gameData.setFightData(this.fightData);
+        this.battleModel = new BattleModelImpl(this.fightData);
 
 
         this.botTroop = new HashMap<>();
