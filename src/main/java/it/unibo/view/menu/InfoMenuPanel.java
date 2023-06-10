@@ -13,12 +13,12 @@ public class InfoMenuPanel {
     private static final ImageIcon BACKGROUND_BUTTON = GameMenuImpl.BACKGROUND_BUTTON;
     private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
-    private final JPanel infopanel;
+    private final JPanel infoPanel;
     private final JButton exit;
     public InfoMenuPanel(){
         JButton ex = new JButton("EXIT");
-        this.infopanel = new ImagePanel(BACKGROUND_PANEL.getImage());
-        infopanel.setLayout(new GridBagLayout());
+        this.infoPanel = new ImagePanel(BACKGROUND_PANEL.getImage());
+        infoPanel.setLayout(new GridBagLayout());
         GridBagConstraints grid1 = new GridBagConstraints();
         grid1.gridx = 1;
         grid1.gridy = 1;
@@ -40,7 +40,7 @@ public class InfoMenuPanel {
         textArea.setForeground(Color.WHITE);
         textArea.setPreferredSize(ex.getPreferredSize());
         textArea.setFocusable(false);
-        infopanel.add(textArea, grid1);
+        infoPanel.add(textArea, grid1);
 
         this.exit = new JButton("EXIT", BACKGROUND_BUTTON);
         exit.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -51,13 +51,13 @@ public class InfoMenuPanel {
         exit.setFont(font);
         exit.setPreferredSize(ex.getPreferredSize());
         exit.setForeground(Color.BLACK);
-        infopanel.add(exit, grid1);
+        infoPanel.add(exit, grid1);
 
 
     }
 
     public JPanel getPanel(){
-        return this.infopanel;
+        return this.infoPanel;
     }
 
     public void setActionListenerExit(ActionListener actionListener){

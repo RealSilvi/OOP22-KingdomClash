@@ -7,7 +7,6 @@ import it.unibo.model.battle.entitydata.EntityDataImpl;
 import it.unibo.model.data.FightData;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.TroopType;
-import it.unibo.view.battle.BattlePanel;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 
@@ -148,18 +147,6 @@ public class BattleControllerImpl implements BattleController, Controller {
         battlePanel.hitBot();
     }
 
-    public BattleModel getBattleModel() {
-        return battleModel;
-    }
-
-    public FightData getFightData() {
-        return fightData;
-    }
-
-    public BattlePanel getBattlePanel() {
-        return battlePanel;
-    }
-
     public JPanel getGuiPanel() {
         return this.battlePanel.getPanel();
     }
@@ -171,9 +158,7 @@ public class BattleControllerImpl implements BattleController, Controller {
     }
 
     private void setActionListenerSpin() {
-        ActionListener actionListenerInfo = e -> {
-            spin();
-        };
+        ActionListener actionListenerInfo = e -> spin();
         this.battlePanel.setActionListenerSpinButton(actionListenerInfo);
     }
 
