@@ -1,42 +1,58 @@
 package it.unibo.view.city.panels.impl;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
-
-import it.unibo.model.data.GameData;
-import it.unibo.model.data.Resource;
-import it.unibo.model.data.TroopType;
-import it.unibo.model.data.Resource.ResourceType;
+import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanel;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.city.panels.api.BarPanel;
 import it.unibo.controller.base.BaseControllerImpl;
 
 public class BarPanelImpl extends JLabel implements BarPanel {
 
+    private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),(int)(GameGui.getAllPanel().getHeight()*0.1));
     private final JPanel mainpanel;
-    private TroopType baseTroop;
-    private GameData gameData;
     private BaseControllerImpl basedata;
+    private JPanel secondaryPanel;
+    private PopupFactory popupFactory;
+    private Popup popup;
+    
 
-    public BarPanelImpl(Set<Resource> resources, Set<TroopType> type){
-        this.mainpanel=new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, getSize());
-        this.gameData= gameData;
+    public BarPanelImpl(){
+        this.mainpanel=new DrawPanel(Color.BLACK, size);
         this.basedata=basedata;
-
-        this.mainpanel.setLayout(new FlowLayout());
-
+        this.secondaryPanel= new JPanel();
+        this.popupFactory=new PopupFactory();
+        this.secondaryPanel=new JPanel(new BorderLayout());
+        
+        
+        
         JButton troop= new JButton("troops button");
         JButton playerinfo= new JButton("player info");
-        JButton switchbutton = new JButton("change screen");
+        
+       
 
+        
         this.mainpanel.add(troop);
         this.mainpanel.add(playerinfo);
-        this.mainpanel.add(switchbutton);
+        
+         
 
+        troop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                
+                /*secondaryPanel.add(getInfo(size));
+                *a way to close the panel on a second click 
+                secondaryPanel.setVisible(false);*/
+                popup= popupFactory.getPopup(troop, playerinfo, 10, 10);
+            }
+        });
+        
 
 
 
@@ -47,12 +63,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
     
 
-    @Override
-    public void switchbutton() {
-        /*classe da implementare a sè */
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'switchbutton'");
-    }
 
     public JTextArea getInfo(Dimension size) {
 
@@ -68,6 +78,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         
        
         info.setEditable(false);
+
 
         
         return info;
@@ -86,4 +97,23 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     public JPanel getPanel(){
         return this.mainpanel;
     }
+
+    public JFrame windFrame(){
+        final JFrame frame= new JFrame();
+        popup = popupFactory.getPopup(secondaryPanel, getInfo(size), 10, 10);
+        popup.show();
+        JButton close = new JButton("close");
+        secondaryPanel.add(close, BorderLayout.PAGE_END);
+        close.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a){
+                System.exit(0);
+            }
+        });
+        frame.getContentPane().add(secondaryPanel);
+        frame.setVisible(true);
+        return frame;
+
+    }
 }
+
+    
