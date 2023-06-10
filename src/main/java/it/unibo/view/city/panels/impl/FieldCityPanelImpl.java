@@ -28,9 +28,10 @@ public class FieldCityPanelImpl implements FieldCityPanel {
 
         this.mainpanel= new DrawPanel(new ImageIcon("C:\\Users\\abdou\\OneDrive\\Immagini\\tiles\\grass.png"), new Dimension(cityConfiguration.getWidth(), cityConfiguration.getHeight()));
         this.mainpanel.setLayout(new GridLayout(cityConfiguration.getWidth(),cityConfiguration.getHeight()));
+        buttonmap= new ArrayList<>(cityConfiguration.getWidth()* cityConfiguration.getHeight());
         this.setfield(cityConfiguration.getWidth(), cityConfiguration.getHeight());
         buildingmap=new EnumMap<>(BuildingBuilder.BuildingTypes.class);
-        buttonmap= new ArrayList<>();
+        
        
 
     }
