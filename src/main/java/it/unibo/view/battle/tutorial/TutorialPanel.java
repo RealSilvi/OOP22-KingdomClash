@@ -26,7 +26,7 @@ public final class TutorialPanel {
     //TODO tutti i commenti dei costruttori
     //TODO tutti i commenti delle interfacce da rivedere
     public TutorialPanel(TextConfiguration configuration) {
-        this.turnBack = new JButton(ImageIconsSupplier.getImageExitIndicator(EXIT_DIMENSION));
+        this.turnBack = new JButton(ImageIconsSupplier.getImageIconExit(EXIT_DIMENSION));
         JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel());
 
         this.turnBack.setPreferredSize(EXIT_DIMENSION);
