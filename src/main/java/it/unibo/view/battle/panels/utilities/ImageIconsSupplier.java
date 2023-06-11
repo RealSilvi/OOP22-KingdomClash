@@ -100,6 +100,4 @@ public interface ImageIconsSupplier {
     static ImageIcon getImageIconBackground(Dimension size) {
         return loadPngImageIcon(BACKGROUND_FILL_PATTERN,size);
     }
-
-
 }
