@@ -162,6 +162,10 @@ public final class GameGui {
         this.mapPanel.setActiveBattle(level);
     }
 
+    public SoundManager getSoundManager(){
+        return this.soundManager;
+    }
+
     public void setBeatenLevels(Integer levels){
         this.mapPanel.setBeatenLevels(levels);
     }
