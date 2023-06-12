@@ -157,7 +157,8 @@ public class EntityDataImpl implements EntityData{
             }
 
         }
-        for(int a = 0; a < TOTAL_TROOPS-playerOptionalList.size(); a++){
+        int troopsToFill = TOTAL_TROOPS-playerOptionalList.size();
+        for(int a = 0; a < troopsToFill; a++){
             playerOptionalList.add(Optional.empty());
             botOptionalList.add(Optional.empty());
         }
