@@ -35,7 +35,7 @@ public final class EntityDataImpl implements EntityData {
     public EntityDataImpl() {
         this.entityTroop = new HashMap<>();
         for (int i = 0; i < HAND_TROOPS; i++) {
-            this.entityTroop.put(i, new CellsImpl(TroopType.getRandomTroop(), false, false));
+            this.entityTroop.put(i, new CellsImpl(TroopType.getRandomTroop(), false));
         }
     }
 
