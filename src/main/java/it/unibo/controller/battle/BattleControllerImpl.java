@@ -10,35 +10,54 @@ import it.unibo.model.data.TroopType;
 import it.unibo.view.battle.BattlePanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import static it.unibo.model.battle.BattleModelImpl.*;
+import static it.unibo.model.battle.BattleModelImpl.WIN_BOT;
+import static it.unibo.model.battle.BattleModelImpl.WIN_PLAYER;
+import static it.unibo.model.data.FightData.MAX_ROUND;
 import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
+/**
+ * The class implements BattleController methods.
+ */
 public final class BattleControllerImpl implements BattleController, Controller {
 
+    /**Constant use to represent the PLAYER.*/
     public static final int PLAYER = 1;
+    /**Constant use to represent the BOT.*/
     public static final int BOT = 0;
+    /**NO_SKIP means to update all the troops in the field.*/
     public static final int NO_SKIP = 0;
+    /**PLAYER_FINISH It's used to indicate to the bot that the player has clicked all the troops.*/
     public static final int PLAYER_FINISH = 1;
+    /**CONTINUE let the bot know that the player has not yet chosen all the troops.*/
     public static final int CONTINUE = 0;
 
     private final BattleModel battleModel;
     private final FightData fightData;
     private final BattlePanelImpl battlePanel;
 
-
-    public BattleControllerImpl(GameData gameData) {
+    /**
+     * The constructor takes care to create Objects, disable buttons in panel,
+     * and call actionListeners to set functionality to the buttons.
+     * @param gameData data of the game.
+     */
+    public BattleControllerImpl(final GameData gameData) {
         if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
-        }else{
-            this.fightData= new FightData();
+        } else {
+            this.fightData = new FightData();
             gameData.setFightData(this.fightData);
         }
+
         this.battleModel = new BattleModelImpl(gameData);
-        this.battlePanel = new BattlePanelImpl(fightData.getBotData().changeNotSelectedTroop(), fightData.getPlayerData().changeNotSelectedTroop(), gameData.getGameConfiguration().getBattleControllerConfiguration());
+        this.battlePanel = new BattlePanelImpl(fightData.getBotData().changeNotSelectedTroop(),
+                fightData.getPlayerData().changeNotSelectedTroop(),
+                gameData.getGameConfiguration().getBattleControllerConfiguration());
         this.battlePanel.disableSpinButton();
         this.battlePanel.disableBotSlots();
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
@@ -48,7 +67,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     }
 
-
+    @Override
     public void pass() {
         this.battlePanel.enableBotSlots();
         this.battlePanel.disablePassButton();
@@ -73,28 +92,27 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.disableBotSlots();
     }
 
+    @Override
     public void spin() {
         battlePanel.disableSpinButton();
         this.battlePanel.enablePassButton();
         battlePanel.spinPlayerFreeSlot(this.battleModel.battleSpin(PLAYER));
     }
 
+    @Override
     public void battle() {
-        int total = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData()).size()/2;
+        int total = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData()).size() / 2;
         update(NO_SKIP);
         for (int i = 0; i < total; i++) {
             int value = this.battleModel.battleCombat(i);
-            System.out.println("total: " + total);
             if (value == BOT) {
                 botLifeDecrease();
             } else if (value == PLAYER) {
                 playerLifeDecrease();
             } else if (value == WIN_BOT) {
-                System.out.println("win bot");
                 end(WIN_BOT);
                 i = total;
             } else if (value == WIN_PLAYER) {
-                System.out.println("win player");
                 end(WIN_PLAYER);
                 i = total;
             }
@@ -106,15 +124,16 @@ public final class BattleControllerImpl implements BattleController, Controller 
         update(NO_SKIP);
     }
 
-
-    public void end(Integer entity) {
+    @Override
+    public void end(final Integer entity) {
         this.battleModel.endFight(entity == WIN_PLAYER);
         this.battlePanel.showEndPanel();
         this.battlePanel.reset();
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
     }
 
-    public void clickedButtonPlayer(Integer key) {
+    @Override
+    public void clickedButtonPlayer(final Integer key) {
         if (fightData.getPlayerData().getCells(key).getClicked()) {
             fightData.getPlayerData().removeEntityTroop(key);
         } else {
@@ -123,30 +142,34 @@ public final class BattleControllerImpl implements BattleController, Controller 
         update(NO_SKIP);
     }
 
-    public void update(Integer skip) {
+    @Override
+    public void update(final Integer skip) {
         List<Optional<TroopType>> orderedList = EntityDataImpl.exOrdered(fightData.getBotData(), fightData.getPlayerData());
         List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2));
         List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()));
-        if(skip > 0){
-            for(int a = 0; a < skip; a++){
-                pList.set(a,Optional.empty());
-                bList.set(a,Optional.empty());
+        if (skip > 0) {
+            for (int a = 0; a < skip; a++) {
+                pList.set(a, Optional.empty());
+                bList.set(a, Optional.empty());
             }
         }
         bList.addAll(pList);
-        System.out.println("\n\nORDERED LIST" +orderedList + "\n\n");
+        System.out.println("\n\nORDERED LIST" + orderedList + "\n\n");
         //Collections.reverse(orderedList);
         battlePanel.updateField(bList);
     }
 
+    @Override
     public void playerLifeDecrease() {
         battlePanel.hitPlayer();
     }
 
+    @Override
     public void botLifeDecrease() {
         battlePanel.hitBot();
     }
 
+    @Override
     public JPanel getGuiPanel() {
         return this.battlePanel.getPanel();
     }
