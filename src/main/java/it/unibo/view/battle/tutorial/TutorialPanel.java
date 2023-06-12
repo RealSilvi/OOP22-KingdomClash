@@ -26,7 +26,7 @@ public final class TutorialPanel {
     //TODO tutti i commenti dei costruttori
     //TODO tutti i commenti delle interfacce da rivedere
     public TutorialPanel(TextConfiguration configuration) {
-        this.turnBack = new JButton(ImageIconsSupplier.getImageExitIndicator(EXIT_DIMENSION));
+        this.turnBack = new JButton(ImageIconsSupplier.getImageIconExit(EXIT_DIMENSION));
         JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel());
 
         this.turnBack.setPreferredSize(EXIT_DIMENSION);
@@ -35,7 +35,7 @@ public final class TutorialPanel {
 
         backPanel.add(this.turnBack);
 
-        this.mainPanel = new DrawPanel(Color.darkGray, PanelDimensions.SCREEN_SIZE);
+        this.mainPanel = new DrawPanel(Color.darkGray, PanelDimensions.MAIN_PANEL_SIZE);
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
         this.mainPanel.add(backPanel, BorderLayout.SOUTH);
