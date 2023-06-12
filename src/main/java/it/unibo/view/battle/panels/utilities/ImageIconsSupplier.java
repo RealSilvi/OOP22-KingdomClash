@@ -11,7 +11,8 @@ import java.util.Objects;
 
 public interface ImageIconsSupplier {
 
-    String IMAGE_EXTENSION = ".png";
+    String IMAGE_EXTENSION_PNG = ".png";
+    String IMAGE_EXTENSION_JPG = ".jpg";
 
     String TEXTURES_DIRECTORY = "/it/unibo/textures/battle/";
 
@@ -20,84 +21,90 @@ public interface ImageIconsSupplier {
     String BUTTONS_DIRECTORY = TEXTURES_DIRECTORY + "buttons/";
 
     Map<TroopType, String> TROOP_FILES_NAME = Map.of(
-            TroopType.AXE, TROOPS_DIRECTORY + "Axe",
-            TroopType.SWORD, TROOPS_DIRECTORY + "Sword",
-            TroopType.HAMMER, TROOPS_DIRECTORY + "Hammer",
-            TroopType.MACE, TROOPS_DIRECTORY + "Mace",
-            TroopType.AXE_DEFENCE, TROOPS_DIRECTORY + "Shield01",
-            TroopType.SWORD_DEFENCE, TROOPS_DIRECTORY + "Shield02",
-            TroopType.HAMMER_DEFENCE, TROOPS_DIRECTORY + "Shield03",
-            TroopType.MACE_DEFENCE, TROOPS_DIRECTORY + "Helmet");
+            TroopType.AXE, "Axe",
+            TroopType.SWORD, "Sword",
+            TroopType.HAMMER, "Hammer",
+            TroopType.MACE, "Mace",
+            TroopType.AXE_DEFENCE, "Shield01",
+            TroopType.SWORD_DEFENCE, "Shield02",
+            TroopType.HAMMER_DEFENCE, "Shield03",
+            TroopType.MACE_DEFENCE, "Helmet");
 
-    Image BACKGROUND_FILL_PATTERN = loadPngImage(TEXTURES_DIRECTORY + "Background");
+    Image BACKGROUND_FILL_PATTERN = loadPngImage(TEXTURES_DIRECTORY , "Background");
 
-    Image PASS = loadPngImage(BUTTONS_DIRECTORY + "Pass");
-    Image SPIN = loadPngImage(BUTTONS_DIRECTORY + "Spin");
-    Image INFO = loadPngImage(BUTTONS_DIRECTORY + "Info");
-    Image EXIT = loadPngImage(BUTTONS_DIRECTORY + "Exit");
+    Image PASS = loadPngImage(BUTTONS_DIRECTORY , "Pass");
+    Image SPIN = loadPngImage(BUTTONS_DIRECTORY , "Spin");
+    Image INFO = loadPngImage(BUTTONS_DIRECTORY , "Info");
+    Image EXIT = loadPngImage(BUTTONS_DIRECTORY , "Exit");
 
-    Image CHECK = loadPngImage(LABEL_DIRECTORY + "Check");
-    Image X = loadPngImage(LABEL_DIRECTORY + "X");
-    Image INDICATOR = loadPngImage(LABEL_DIRECTORY + "Indicator");
+    Image CHECK = loadPngImage(LABEL_DIRECTORY , "Check");
+    Image X = loadPngImage(LABEL_DIRECTORY , "X");
+    Image INDICATOR = loadPngImage(LABEL_DIRECTORY , "Indicator");
 
-    Image LIFE = loadPngImage(LABEL_DIRECTORY + "Life");
-    Image DEATH = loadPngImage(LABEL_DIRECTORY + "Death");
+    Image LIFE = loadPngImage(LABEL_DIRECTORY , "Life");
+    Image DEATH = loadPngImage(LABEL_DIRECTORY , "Death");
 
     @Nonnull
-    static Image loadPngImage(final String pathToFile) {
+    static Image loadPngImage(final String pathToFileDirectory, String filename) {
         try {
-            return ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFile + IMAGE_EXTENSION)));
+            return ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFileDirectory + filename + IMAGE_EXTENSION_PNG)));
         } catch (Exception e) {
-            //TODO metti un imagine di default
             return new ImageIcon().getImage();
         }
     }
 
-    static ImageIcon loadPngImageIcon(@Nonnull Image image, final Dimension size) {
+    @Nonnull
+    static Image loadJpgImage(final String pathToFileDirectory, String filename) {
+        try {
+            return ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFileDirectory + filename + IMAGE_EXTENSION_JPG)));
+        } catch (Exception e) {
+            return new ImageIcon().getImage();
+        }
+    }
+
+
+    static ImageIcon getScaledImageIcon(@Nonnull Image image, final Dimension size) {
         return new ImageIcon(image.getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
     }
 
     static ImageIcon getImageIconFromTroop(final TroopType troop, final Dimension size) {
-        return loadPngImageIcon(
-                loadPngImage(TROOP_FILES_NAME.get(troop)),
+        return getScaledImageIcon(
+                loadPngImage(TROOPS_DIRECTORY,TROOP_FILES_NAME.get(troop)),
                 size);
     }
 
     static ImageIcon getImageIconLife(final boolean alive, final Dimension size) {
         return (alive) ?
-                loadPngImageIcon(LIFE,size) :
-                loadPngImageIcon(DEATH,size);
+                getScaledImageIcon(LIFE,size) :
+                getScaledImageIcon(DEATH,size);
     }
 
     static ImageIcon getImageIconPass(Dimension size) {
-        return loadPngImageIcon(PASS,size);
+        return getScaledImageIcon(PASS,size);
     }
 
     static ImageIcon getImageIconSpin(Dimension size) {
-        return loadPngImageIcon(SPIN,size);
+        return getScaledImageIcon(SPIN,size);
     }
 
     static ImageIcon getImageIconX(Dimension size) {
-        return loadPngImageIcon(X,size);
+        return getScaledImageIcon(X,size);
     }
 
     static ImageIcon getImageIconInfo(Dimension size) {
-        return loadPngImageIcon(INFO,size);
+        return getScaledImageIcon(INFO,size);
     }
 
     static ImageIcon getImageIconCheck(Dimension size) {
-        return loadPngImageIcon(CHECK,size);
+        return getScaledImageIcon(CHECK,size);
     }
 
     static ImageIcon getImageIconIndicator(Dimension size) {
-        return loadPngImageIcon(INDICATOR,size);
+        return getScaledImageIcon(INDICATOR,size);
     }
 
     static ImageIcon getImageIconExit(Dimension size) {
-        return loadPngImageIcon(EXIT,size);
+        return getScaledImageIcon(EXIT,size);
     }
 
-    static ImageIcon getImageIconBackground(Dimension size) {
-        return loadPngImageIcon(BACKGROUND_FILL_PATTERN,size);
-    }
 }
