@@ -18,11 +18,19 @@ import static it.unibo.model.data.FightData.BOT_LIFE;
 import static it.unibo.model.data.FightData.PLAYER_LIFE;
 import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
+/**
+ * Class used to implements methods in Battle Model
+ * to manage the battle.
+ */
 public final class BattleModelImpl implements BattleModel {
 
+    /**This variable it is used to represent the bot.*/
     public static final int BOT = BattleControllerImpl.BOT;
+    /**This variable it is used to represent when the bot wins.*/
     public static final int WIN_BOT = 2;
+    /**This variable it is used to represent when the player wins.*/
     public static final int WIN_PLAYER = 3;
+    /**MAX_ROUND represents the max rounds available during one match of the battle.*/
     public static final int MAX_ROUND = FightData.MAX_ROUND;
     private final FightData fightData;
     private Map<TroopType, Integer> troopLevel;
@@ -65,7 +73,7 @@ public final class BattleModelImpl implements BattleModel {
     }
 
     @Override
-    public void battlePass(Integer finished) {
+    public void battlePass(final Integer finished) {
 
         fightData.getPlayerData().setClickedToChosen();
 

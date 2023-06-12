@@ -6,35 +6,37 @@ import it.unibo.model.data.TroopType;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class used to contain and manipulate
+ * player data and bot data, during the battle.
+ */
 public interface EntityData {
 
     /**
+     * Used to ask the troops in the hand.
      * @return entity's troops
      */
 
     Map<Integer, CellsImpl> getEntityTroop();
 
     /**
-     * Adds the clicked troop into the field
-     *
-     * @param key represents the position of the clicked troop
+     * Adds the clicked troop into the field.
+     * @param key represents the position of the clicked troop.
      */
 
     void addEntityTroop(Integer key);
 
     /**
-     * Removes the clicked troop from the field
-     *
-     * @param key represents the position of the clicked troop
+     * Removes the clicked troop from the field.
+     * @param key represents the position of the clicked troop.
      */
 
     void removeEntityTroop(Integer key);
 
     /**
-     * take the key and return its status
-     *
-     * @param key the position which I need to get the status
-     * @return CellsImpl, it means all the information about that position
+     * take the key and return its status.
+     * @param key the position which I need to get the status.
+     * @return CellsImpl, it means all the information about that position,
      * (troop, clicked or not, chosen or not).
      */
 
@@ -42,7 +44,6 @@ public interface EntityData {
 
     /**
      * Selects only the clicked troops.
-     *
      * @return the selected troops. It means all the troops in the field.
      */
 
@@ -50,7 +51,6 @@ public interface EntityData {
 
     /**
      * Selects all the troops which are not clicked yet.
-     *
      * @return the not selected troops. It means all the troops not clicked.
      */
 
@@ -58,7 +58,6 @@ public interface EntityData {
 
     /**
      * Change all the troops in the hand, which are not clicked.
-     *
      * @return a Map of the troop with the current values (eventually modified) and the right position.
      */
 
@@ -72,7 +71,6 @@ public interface EntityData {
 
     /**
      * Selects a random troop between the not clicked troops.
-     *
      * @return the key, it means the position of the troop randomly selected.
      */
 
@@ -80,10 +78,9 @@ public interface EntityData {
 
     /**
      * Sees if a specific troop exist.
-     *
      * @param troop the troop to find.
-     * @return true, if the troop exist between the selected ones.
-     * Or false, if not.
+     * @return true, if the troop exist between the selected ones,
+     * or false if not.
      */
 
     Boolean isMatch(TroopType troop);
@@ -91,7 +88,6 @@ public interface EntityData {
     /**
      * Finds the right key of the troop given in input,
      * searching this troop between the not clicked.
-     *
      * @param troop the not clicked troop that we want to find the key to.
      * @return the key, or position, of the troop.
      */
