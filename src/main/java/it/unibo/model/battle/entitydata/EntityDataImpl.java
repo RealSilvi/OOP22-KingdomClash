@@ -208,9 +208,6 @@ public class EntityDataImpl implements EntityData{
             } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isPresent() && TroopType.isDefense(botOrdered.get(i).get())) {
                 finalBot.set(i, botOrdered.get(i));
                 finalPlayer.set(i, Optional.empty());
-            } else if (playerOrdered.get(i).isEmpty() && botOrdered.get(i).isEmpty()) {
-                finalPlayer.set(i, Optional.empty());
-                finalBot.set(i, Optional.empty());
             }
         }
 
