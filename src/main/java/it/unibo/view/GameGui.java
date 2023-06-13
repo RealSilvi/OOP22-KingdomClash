@@ -4,19 +4,34 @@ import it.unibo.controller.SoundManager;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.MapPanel;
 import it.unibo.view.map.MapPanelImpl;
-import it.unibo.view.menu.*;
+import it.unibo.view.menu.GameMenu;
+import it.unibo.view.menu.GameMenuImpl;
+import it.unibo.view.menu.InfoMenuPanel;
+import it.unibo.view.menu.SouthPanel;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.CardLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 
-public final class GameGui {
+/**
+ * This class is the principal GUI, which takes
+ * care about switch all the panels in the game,
+ * and incorporate action listeners to the buttons.
+ */
+public final class GameGui implements GameGuiInt {
 
+    /** Dimension of the screen.*/
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
+    /** Width of the buttons.*/
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
+    /** Height of the buttons.*/
     public static final int HEIGHT_BUTTON = (int) DIMENSION_SCREEN.getHeight() / 20;
-    private final CardLayout SwitchLayout;
-    private final CardLayout SwitchLayout2;
+    private final CardLayout switchLayout;
+    private final CardLayout switchLayout2;
     private final JPanel allPanel;
     private final JPanel mainPanel;
     private final SouthPanel southPanel;
@@ -25,7 +40,14 @@ public final class GameGui {
     private final MapPanel mapPanel;
     private final SoundManager soundManager;
 
-    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration){
+    /**
+     * The constructor initialize all the panels,
+     * and creates a system to switch panels.
+     * @param battlePanel Panel of the battle.
+     * @param cityPanel Panel of the city.
+     * @param gameConfiguration Configuration of the game.
+     */
+    public GameGui(final JPanel battlePanel, final JPanel cityPanel, final GameConfiguration gameConfiguration) {
         JFrame frame = new JFrame();
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -35,28 +57,28 @@ public final class GameGui {
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
 
-        this.SwitchLayout = new CardLayout();
-        this.mainPanel = new JPanel(this.SwitchLayout);
+        this.switchLayout = new CardLayout();
+        this.mainPanel = new JPanel(this.switchLayout);
 
-        this.SwitchLayout2 = new CardLayout();
-        this.allPanel = new JPanel(this.SwitchLayout2);
+        this.switchLayout2 = new CardLayout();
+        this.allPanel = new JPanel(this.switchLayout2);
 
-        JPanel BorderPanel = new JPanel(new BorderLayout());
+        JPanel borderPanel = new JPanel(new BorderLayout());
 
         this.menuPanel = new GameMenuImpl();
         this.infoPanel = new InfoMenuPanel();
         this.southPanel = new SouthPanel();
 
-        this.allPanel.add(battlePanel,"1");
-        this.allPanel.add(cityPanel,"2");
-        this.allPanel.add(this.mapPanel.getAsJPanel(),"3");
+        this.allPanel.add(battlePanel, "1");
+        this.allPanel.add(cityPanel, "2");
+        this.allPanel.add(this.mapPanel.getAsJPanel(), "3");
 
-        BorderPanel.add(this.allPanel, BorderLayout.CENTER);
-        BorderPanel.add(this.southPanel.getPanel(),BorderLayout.SOUTH);
+        borderPanel.add(this.allPanel, BorderLayout.CENTER);
+        borderPanel.add(this.southPanel.getPanel(), BorderLayout.SOUTH);
 
         this.mainPanel.add(this.menuPanel.getPanel(), "1");
         this.mainPanel.add(this.infoPanel.getPanel(), "2");
-        this.mainPanel.add(BorderPanel, "3");
+        this.mainPanel.add(borderPanel, "3");
 
         frame.setContentPane(this.mainPanel);
         frame.setVisible(true);
@@ -76,34 +98,39 @@ public final class GameGui {
 
     }
 
+    @Override
     public void showMenuPanel() {
         this.soundManager.startMenuTheme();
-        SwitchLayout.show(this.mainPanel, "1");
+        switchLayout.show(this.mainPanel, "1");
     }
 
+    @Override
     public void showInfoPanel() {
-        SwitchLayout.show(this.mainPanel, "2");
+        switchLayout.show(this.mainPanel, "2");
     }
 
-    public void showBattle(){
+    @Override
+    public void showBattle() {
         this.soundManager.startBattleTheme();
         this.southPanel.showButtonsBattle();
-        SwitchLayout.show(this.mainPanel, "3");
-        SwitchLayout2.show(this.allPanel, "1");
+        switchLayout.show(this.mainPanel, "3");
+        switchLayout2.show(this.allPanel, "1");
     }
 
-    public void showCity(){
+    @Override
+    public void showCity() {
         this.soundManager.startCityTheme();
         this.southPanel.showButtonsCity();
-        SwitchLayout.show(this.mainPanel, "3");
-        SwitchLayout2.show(this.allPanel, "2");
+        switchLayout.show(this.mainPanel, "3");
+        switchLayout2.show(this.allPanel, "2");
     }
 
-    public void showMap(){
+    @Override
+    public void showMap() {
         this.soundManager.startMapTheme();
         this.southPanel.showButtonsMap();
-        SwitchLayout.show(this.mainPanel, "3");
-        SwitchLayout2.show(this.allPanel, "3");
+        switchLayout.show(this.mainPanel, "3");
+        switchLayout2.show(this.allPanel, "3");
     }
 
     private void setActionListenerNewGame() {
@@ -147,33 +174,39 @@ public final class GameGui {
         this.southPanel.setActionListenerMap(actionListener);
     }
 
-    private void setMapBaseActionListener(){
+    private void setMapBaseActionListener() {
         ActionListener actionListener = e -> showCity();
         this.mapPanel.setBaseActionListener(actionListener);
     }
 
-    private void setMapBattleActionListener(){
+    private void setMapBattleActionListener() {
         ActionListener actionListener = e -> showBattle();
         this.mapPanel.setBattleActionListener(actionListener);
     }
 
-    public void setActivateBattle(Integer level){
-        //this.mapPanel.setBeatenLevels(level-1);
+    @Override
+    public void setActivateBattle(final Integer level) {
         this.mapPanel.setActiveBattle(level);
     }
 
-    public SoundManager getSoundManager(){
+    @Override
+    public SoundManager getSoundManager() {
         return this.soundManager;
     }
 
-    public void setBeatenLevels(Integer levels){
+    @Override
+    public void setBeatenLevels(final Integer levels) {
         this.mapPanel.setBeatenLevels(levels);
     }
 
-    public static Dimension getAllPanel(){
+    /**
+     * Takes the dimension of the main panel.
+     * @return The dimension of the panel.
+     */
+    public static Dimension getAllPanel() {
         double width = SouthPanel.getMenuPanel().getWidth();
         double height = DIMENSION_SCREEN.getHeight() - SouthPanel.getMenuPanel().getHeight();
-        return new Dimension((int)width, (int)height);
+        return new Dimension((int) width, (int) height);
     }
 
 }
