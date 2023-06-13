@@ -59,6 +59,8 @@ public final class ThreadManagerImpl implements ThreadManager {
             this.threadsRunning.put(selection, true);
             this.threadLocks.put(selection, new Object());
         }
+        buildingMapRef.forEach((id, building) -> 
+            this.addBuilding(id));
     }
 
     @Override
