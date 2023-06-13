@@ -1,4 +1,4 @@
-package it.unibo.view.menu;
+package it.unibo.view.menu.extensiveclasses;
 
 import javax.swing.*;
 import java.awt.*;

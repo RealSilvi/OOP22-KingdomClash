@@ -1,4 +1,4 @@
-package it.unibo.view.menu;
+package it.unibo.view.menu.extensiveclasses;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

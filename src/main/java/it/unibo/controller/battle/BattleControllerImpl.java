@@ -13,8 +13,10 @@ import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.List;
 
 import static it.unibo.model.battle.BattleModelImpl.WIN_BOT;
 import static it.unibo.model.battle.BattleModelImpl.WIN_PLAYER;
@@ -144,6 +146,8 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     @Override
     public void update(final Integer skip) {
+        long delay = 500L * skip;
+        Timer timer = new Timer();
         List<Optional<TroopType>> orderedList = EntityDataImpl.exOrdered(fightData.getBotData(), fightData.getPlayerData());
         List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2));
         List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()));
@@ -154,9 +158,14 @@ public final class BattleControllerImpl implements BattleController, Controller 
             }
         }
         bList.addAll(pList);
-        System.out.println("\n\nORDERED LIST" + orderedList + "\n\n");
-        //Collections.reverse(orderedList);
-        battlePanel.updateField(bList);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                battlePanel.updateField(bList);
+            }
+        }, delay);
+
     }
 
     @Override
