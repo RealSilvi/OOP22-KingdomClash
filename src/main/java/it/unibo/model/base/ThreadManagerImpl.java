@@ -197,6 +197,7 @@ public final class ThreadManagerImpl implements ThreadManager {
                     buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(productionPercentage);
                     logger.log(Level.INFO, "productionPercentage {0}", productionPercentage);
                     if (productionPercentage == 100) {
+                        baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
                         buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(0);
                         try {
                             baseModel.applyResources(
@@ -211,7 +212,6 @@ public final class ThreadManagerImpl implements ThreadManager {
                                         buildingMapRef
                                                 .get(buildingForProductionIdentifier).getLevel())
                                         .getProductionTime());
-                        baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
                         return 0;
                     }
                     baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
