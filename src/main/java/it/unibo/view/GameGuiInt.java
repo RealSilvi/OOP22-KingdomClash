@@ -2,6 +2,8 @@ package it.unibo.view;
 
 import it.unibo.controller.SoundManager;
 
+import java.awt.event.ActionListener;
+
 /**
  * This class shows public methods of the GameGui.
  */
@@ -31,6 +33,12 @@ public interface GameGuiInt {
      * Shows the map Panel.
      */
     void showMap();
+
+    /**
+     * Takes the action listener to show the map.
+     * @return The action listener which shows the map.
+     */
+    ActionListener getActionListenerMap();
 
     /**
      * Used to activate the next battle

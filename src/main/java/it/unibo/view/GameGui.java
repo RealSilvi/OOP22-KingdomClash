@@ -174,6 +174,11 @@ public final class GameGui implements GameGuiInt {
         this.southPanel.setActionListenerMap(actionListener);
     }
 
+    @Override
+    public ActionListener getActionListenerMap() {
+        return e -> showMap();
+    }
+
     private void setMapBaseActionListener() {
         ActionListener actionListener = e -> showCity();
         this.mapPanel.setBaseActionListener(actionListener);
