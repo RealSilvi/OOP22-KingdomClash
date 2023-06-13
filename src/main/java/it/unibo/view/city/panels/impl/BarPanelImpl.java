@@ -12,7 +12,7 @@ import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.panels.api.BarPanel;
 import it.unibo.controller.base.BaseControllerImpl;
-
+import it.unibo.view.city.NewWindow;
 public class BarPanelImpl extends JLabel implements BarPanel {
 
     private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),(int)(GameGui.getAllPanel().getHeight()*0.1));
@@ -21,6 +21,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     private JPanel secondaryPanel;
     private PopupFactory popupFactory;
     private Popup popup;
+    private NewWindow window;
     
 
     public BarPanelImpl(){
@@ -29,6 +30,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.secondaryPanel= new JPanel();
         this.popupFactory=new PopupFactory();
         this.secondaryPanel=new JPanel(new BorderLayout());
+        
         
         
         
@@ -43,15 +45,18 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         
          
 
-        troop.addActionListener(new ActionListener() {
+        /*troop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 
-                /*secondaryPanel.add(getInfo(size));
+                secondaryPanel.add(getInfo(size));
                 *a way to close the panel on a second click 
-                secondaryPanel.setVisible(false);*/
+                secondaryPanel.setVisible(false);
                 popup= popupFactory.getPopup(troop, playerinfo, 10, 10);
             }
         });
+        */
+        window= new NewWindow(getInfo(size));
+        troop.addActionListener(window);
         
 
 
