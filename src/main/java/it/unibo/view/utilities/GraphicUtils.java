@@ -1,4 +1,4 @@
-package it.unibo.view.map.internal;
+package it.unibo.view.utilities;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
