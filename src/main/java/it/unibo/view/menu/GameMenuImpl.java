@@ -3,6 +3,7 @@ package it.unibo.view.menu;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
+import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;
 
@@ -14,8 +15,8 @@ public class GameMenuImpl implements GameMenu {
 
     private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
-    public static final ImageIcon BACKGROUND_BUTTON = new ImageIcon("src/main/resources/it/unibo/game.menu/wood.jpg");
-    public static final ImageIcon BACKGROUND_PANEL = new ImageIcon("src/main/resources/it/unibo/game.menu/RvsH.jpg");
+    public static final ImageIcon BACKGROUND_BUTTON = new ImageIcon(ImageIconsSupplier.loadJpgImage("src/main/resources/it/unibo/game.menu/","wood"));
+    public static final ImageIcon BACKGROUND_PANEL = new ImageIcon(ImageIconsSupplier.loadJpgImage("src/main/resources/it/unibo/game.menu/","RvsH"));
     private final JPanel menuPanel;
     private final ImageButton info;
     private final ImageButton new_game;

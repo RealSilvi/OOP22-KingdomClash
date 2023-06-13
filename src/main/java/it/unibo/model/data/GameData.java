@@ -30,7 +30,7 @@ public final class GameData implements Serializable {
 
     private final transient GameConfiguration configuration;
 
-    private FightData fightData;
+    private transient FightData fightData;
 
     public GameData() {
         this(new GameConfiguration());
