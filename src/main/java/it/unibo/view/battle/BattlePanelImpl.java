@@ -41,7 +41,7 @@ public final class BattlePanelImpl implements BattlePanel {
         this.layoutManager = new CardLayout();
         this.mainPanel = new JPanel(this.layoutManager);
         this.tutorialPanel = new TutorialPanel(configuration.getTextConfiguration());
-        JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.SCREEN_SIZE);
+        JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
         gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
 
@@ -59,7 +59,7 @@ public final class BattlePanelImpl implements BattlePanel {
 
         this.mainPanel.add(gamePanel, "1");
         this.mainPanel.add(tutorialPanel.getPanel(), "2");
-        this.mainPanel.add(new TextPanel(configuration.getTextConfiguration().getEndWinPanelTitle(),configuration.getTextConfiguration().getEndPanelText(),PanelDimensions.SCREEN_SIZE),"3");
+        this.mainPanel.add(new TextPanel(configuration.getTextConfiguration().getEndWinPanelTitle(),configuration.getTextConfiguration().getEndPanelText(),PanelDimensions.MAIN_PANEL_SIZE),"3");
 
         this.setActionListenerExitButton();
         this.setActionListenerInfoButton();

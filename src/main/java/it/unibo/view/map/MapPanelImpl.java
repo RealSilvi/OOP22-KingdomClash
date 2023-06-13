@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.internal.GraphicUtils;
 import it.unibo.view.map.mapdata.MapConfiguration;
@@ -33,17 +34,19 @@ import it.unibo.view.map.mapdata.MapConfiguration;
  * A simple panel made of tiles that can be of different types and
  * can have different behaviours.
  */
+@SuppressFBWarnings(value = "Se",
+    justification = "This class will never be serialized")
 public final class MapPanelImpl extends JPanel implements MapPanel {
 
     private transient Logger logger = Logger.getLogger(this.getClass().getName());
 
     public static final int BATTLE_LEVELS = 3;
-    public static final int RANDOM_SEED = 65455;
+    private static final int RANDOM_SEED = 65455;
 
     private transient Map<ButtonIdentification, Image> imageMap = 
         new EnumMap<>(ButtonIdentification.class);
-    
-    private List<JButton> tiles = new ArrayList<>();
+
+    private transient List<JButton> tiles = new ArrayList<>();
     private Random randomGen = new Random(RANDOM_SEED);
     @SuppressWarnings("unused")
     //Used to get global configuration
@@ -67,7 +70,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
         loadAssets();
         this.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e) {
+            public void componentResized(final ComponentEvent e) {
                 super.componentResized(e);
                 updateButtonIcons();
             }
@@ -161,7 +164,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
      */
     private void updateButtonIcons() {
         JButton newBtnDim = tiles.get(0);
-        Arrays.stream(ButtonIdentification.values()).forEach(identifier ->{
+        Arrays.stream(ButtonIdentification.values()).forEach(identifier -> {
             ImageIcon temporaryIcon = new ImageIcon(
             GraphicUtils.resizeImage(
                 imageMap.get(identifier), newBtnDim.getWidth(), newBtnDim.getHeight()));
@@ -184,7 +187,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
      * Populates the map with the player's base and the enemies.
      */
     private void populateMap() {
-        for (int index = 0; index<=BATTLE_LEVELS; index++) {
+        for (int index = 0; index <= BATTLE_LEVELS; index++) {
             ImageIcon imageReference;
             ButtonIdentification command;
             Cursor tempCursor = new Cursor(Cursor.HAND_CURSOR);
@@ -195,7 +198,8 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
                 tiles.get(temporaryIndex).setEnabled(true);
             } else {
                 do {
-                    temporaryIndex = randomGen.nextInt()%(mapConfiguration.getRows()*mapConfiguration.getColumns());
+                    temporaryIndex = randomGen.nextInt()
+                         % (mapConfiguration.getRows() * mapConfiguration.getColumns());
                 } while (specialTileIndexes.contains(temporaryIndex) || temporaryIndex < 0);
                 imageReference = new ImageIcon(imageMap.get(ButtonIdentification.ENEMY));
                 command = ButtonIdentification.ENEMY;
@@ -213,7 +217,9 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     private void loadAssets() {
         Arrays.stream(ButtonIdentification.values()).forEach(identification -> {
             try {
-                imageMap.put(identification, ImageIO.read(this.getClass().getResource(mapConfiguration.getImageMap().get(identification))));
+                imageMap.put(identification, ImageIO.read(
+                    this.getClass()
+                    .getResource(mapConfiguration.getImageMap().get(identification))));
                 bakeTiles();
             } catch (IOException | IllegalArgumentException e) {
                 logger.severe("Error loading resources!");
@@ -261,7 +267,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
      * @return                  a stream of non-beaten levels
      *                          if the parameter is true
      */
-    private IntStream getNonbeatenLevelsStream(boolean invertBehaviour) {
+    private IntStream getNonbeatenLevelsStream(final boolean invertBehaviour) {
         IntPredicate beatenLevelCondition = tileIndex -> 
                 tiles.get(specialTileIndexes.get(tileIndex))
                     .getActionCommand()

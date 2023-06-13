@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public interface PanelDimensions {
 
-    Dimension SCREEN_SIZE = GameGui.getAllPanel();
+    Dimension MAIN_PANEL_SIZE = GameGui.getAllPanel();
 
     double FIELD_WIDTH_SCALE = 0.6;
     double FIELD_HEIGHT_SCALE = 0.6;
@@ -21,7 +21,6 @@ public interface PanelDimensions {
 
     double PLAYERS_WIDTH_SCALE = 1;
     double PLAYERS_HEIGHT_SCALE = 0.2;
-
 
     double SIDE_LIFE_WIDTH_SCALE = 1;
     double SIDE_LIFE_HEIGHT_SCALE = 0.3;
@@ -34,8 +33,8 @@ public interface PanelDimensions {
      */
     static Dimension getFieldPanel() {
         return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * FIELD_WIDTH_SCALE),
-                (int) (SCREEN_SIZE.getHeight() * FIELD_HEIGHT_SCALE));
+                (int) (MAIN_PANEL_SIZE.getWidth() * FIELD_WIDTH_SCALE),
+                (int) (MAIN_PANEL_SIZE.getHeight() * FIELD_HEIGHT_SCALE));
     }
 
     /**
@@ -43,8 +42,8 @@ public interface PanelDimensions {
      */
     static Dimension getPlayersPanel() {
         return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * PLAYERS_WIDTH_SCALE),
-                (int) (SCREEN_SIZE.getHeight() * PLAYERS_HEIGHT_SCALE));
+                (int) (MAIN_PANEL_SIZE.getWidth() * PLAYERS_WIDTH_SCALE),
+                (int) (MAIN_PANEL_SIZE.getHeight() * PLAYERS_HEIGHT_SCALE));
     }
 
     /**
@@ -52,8 +51,8 @@ public interface PanelDimensions {
      */
     static Dimension getSidePanel() {
         return new Dimension(
-                (int) (SCREEN_SIZE.getWidth() * SIDE_WIDTH_SCALE),
-                (int) (SCREEN_SIZE.getHeight() * SIDE_HEIGHT_SCALE));
+                (int) (MAIN_PANEL_SIZE.getWidth() * SIDE_WIDTH_SCALE),
+                (int) (MAIN_PANEL_SIZE.getHeight() * SIDE_HEIGHT_SCALE));
     }
 
     /**

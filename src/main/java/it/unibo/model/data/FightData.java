@@ -1,10 +1,9 @@
 package it.unibo.model.data;
 
-import java.io.Serializable;
-
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.battle.entitydata.*;
 
-public class FightData implements Serializable {
+public class FightData{
 
     public static final int PLAYER_LIFE = 8;
     public static final int BOT_LIFE = 8;
@@ -15,26 +14,20 @@ public class FightData implements Serializable {
     public static final int TOTAL_TROOPS = PLAYER_TROOPS + BOT_TROOPS;
     public static final int TOTAL_DIFFERENT_TROOP = 8;
 
-    private EntityData botData;
-    private EntityData playerData;
+    private final EntityData botData;
+    private final EntityData playerData;
 
     public FightData() {
         this.botData = new EntityDataImpl();
         this.playerData = new EntityDataImpl();
     }
 
-    public void setPlayerData(EntityData playerData) {
-        this.playerData = playerData;
-    }
-
-    public void setBotData(EntityData botData) {
-        this.botData = botData;
-    }
-
+    @SuppressFBWarnings(value = "EI", justification = "I need changes to playerData to be reflected on all references")
     public EntityData getPlayerData() {
         return this.playerData;
     }
 
+    @SuppressFBWarnings(value = "EI", justification = "I need changes to botData to be reflected on all references")
     public EntityData getBotData() {
         return this.botData;
     }

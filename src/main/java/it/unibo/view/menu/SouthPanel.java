@@ -1,5 +1,6 @@
 package it.unibo.view.menu;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
 
 import javax.swing.*;
@@ -12,12 +13,12 @@ public class SouthPanel {
     public static final Dimension DIMENSION_SCREEN = GameGui.DIMENSION_SCREEN;
     private static final double MENU_WIDTH_SCALE = 1;
     private static final double MENU_HEIGHT_SCALE = 0.05;
-    private JPanel southPanel;
-    private JButton battleButton;
-    private JButton cityButton;
-    private JButton mapButton;
-    private JButton menuButton;
-    private JButton musicButton;
+    private final JPanel southPanel;
+    private final JButton battleButton;
+    private final JButton cityButton;
+    private final JButton mapButton;
+    private final JButton menuButton;
+    private final JButton musicButton;
 
     public SouthPanel(){
         this.battleButton = new JButton("BATTLE");
@@ -37,6 +38,8 @@ public class SouthPanel {
         this.southPanel.add(this.mapButton);
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "I need changes to the panel in its references")
     public JPanel getPanel(){
         return this.southPanel;
     }

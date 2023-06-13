@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 import org.jetbrains.annotations.NotNull;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.basedata.BaseConfiguration;
 import it.unibo.model.base.basedata.Building;
@@ -59,6 +60,8 @@ public final class BaseModelImpl implements BaseModel {
      * @param gameData      data of the game, must not be null
      * @param configuration the configuration of the game
      */
+    @SuppressFBWarnings(value = "EI2",
+    justification = "No encapsulation needed as BaseModel handles everything")
     public BaseModelImpl(final @NotNull GameData gameData, final GameConfiguration configuration) {
         logger.finest("Initializing BaseModel...");
         Objects.requireNonNull(gameData);
@@ -287,11 +290,6 @@ public final class BaseModelImpl implements BaseModel {
     @Override
     public boolean isClockTicking() {
         return this.threadManager.areThreadsRunning();
-    }
-
-    @Override
-    public GameData obtainGameData() {
-        return this.gameData;
     }
 
     @Override

@@ -17,37 +17,34 @@ public class BattleModelTest {
     private FightData fightData;
     private EntityData botData;
     private EntityData playerData;
-    private GameData gameData;
-    private Map<Integer, CellsImpl> botTroop;
-    private Map<Integer, CellsImpl> playerTroop;
 
     @BeforeEach
     public void init() {
 
         System.out.println("entered init");
-        this.gameData = new GameData();
+        GameData gameData = new GameData();
         this.fightData = new FightData();
         this.botData = this.fightData.getBotData();
 
         this.playerData = this.fightData.getPlayerData();
-        this.gameData.setFightData(Optional.of(this.fightData));
-        this.battleModel = new BattleModelImpl(Optional.of(this.fightData));
+        gameData.setFightData(this.fightData);
+        this.battleModel = new BattleModelImpl(this.fightData);
 
 
-        this.botTroop = new HashMap<>();
-        this.playerTroop = new HashMap<>();
+        Map<Integer, CellsImpl> botTroop = new HashMap<>();
+        Map<Integer, CellsImpl> playerTroop = new HashMap<>();
 
-        this.botTroop.put(0, new CellsImpl(TroopType.HAMMER, false, false));
-        this.botTroop.put(1, new CellsImpl(TroopType.SWORD, false, false));
-        this.botTroop.put(2, new CellsImpl(TroopType.AXE, false, false));
-        this.botTroop.put(3, new CellsImpl(TroopType.SWORD_DEFENCE, false, false));
-        this.botTroop.put(4, new CellsImpl(TroopType.SWORD, false, false));
+        botTroop.put(0, new CellsImpl(TroopType.HAMMER, false));
+        botTroop.put(1, new CellsImpl(TroopType.SWORD, false));
+        botTroop.put(2, new CellsImpl(TroopType.AXE, false));
+        botTroop.put(3, new CellsImpl(TroopType.SWORD_DEFENCE, false));
+        botTroop.put(4, new CellsImpl(TroopType.SWORD, false));
 
-        this.playerTroop.put(0, new CellsImpl(TroopType.AXE_DEFENCE, false, false));
-        this.playerTroop.put(1, new CellsImpl(TroopType.AXE_DEFENCE, false, false));
-        this.playerTroop.put(2, new CellsImpl(TroopType.AXE, false, false));
-        this.playerTroop.put(3, new CellsImpl(TroopType.MACE, false, false));
-        this.playerTroop.put(4, new CellsImpl(TroopType.SWORD, false, false));
+        playerTroop.put(0, new CellsImpl(TroopType.AXE_DEFENCE, false));
+        playerTroop.put(1, new CellsImpl(TroopType.AXE_DEFENCE, false));
+        playerTroop.put(2, new CellsImpl(TroopType.AXE, false));
+        playerTroop.put(3, new CellsImpl(TroopType.MACE, false));
+        playerTroop.put(4, new CellsImpl(TroopType.SWORD, false));
 
         //this.botData.setBotTroop(this.botTroop);
         //this.playerData.setPlayerTroop(this.playerTroop);
@@ -131,7 +128,7 @@ public class BattleModelTest {
             expected1.add(TroopType.SWORD_DEFENCE);
             expected1.add(TroopType.SWORD);
 
-            //Assertions.assertEquals(expected1, bcb);
+            Assertions.assertEquals(expected1, bcb);
             //System.out.println("expected:" + expected1.stream().map(Troop::getId).toList());
             //System.out.println("bcb:" + bcb.stream().map(Troop::getName).toList());
             getOrderedField();

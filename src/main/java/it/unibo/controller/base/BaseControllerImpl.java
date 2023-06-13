@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import it.unibo.controller.Controller;
 import it.unibo.model.base.BaseModel;
 import it.unibo.model.base.BaseModelImpl;
+import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.exceptions.BuildingException;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
@@ -179,5 +180,25 @@ public final class BaseControllerImpl implements Controller, BaseController {
     @Override
     public JPanel getGuiPanel() {
         return this.baseView.getPanel();
+    }
+
+    @Override
+    public void addBuildingStateChangedObserver(BuildingObserver stateChangedObserver) {
+        baseModel.addBuildingStateChangedObserver(stateChangedObserver);
+    }
+
+    @Override
+    public void removeBuildingStateChangedObserver(BuildingObserver stateChangedObserver) {
+        baseModel.removeBuildingStateChangedObserver(stateChangedObserver);
+    }
+
+    @Override
+    public void addBuildingProductionObserver(BuildingObserver productionObserver) {
+        baseModel.addBuildingProductionObserver(productionObserver);
+    }
+
+    @Override
+    public void removeBuildingProductionObserver(BuildingObserver productionObserver) {
+        baseModel.removeBuildingProductionObserver(productionObserver);
     }
 }

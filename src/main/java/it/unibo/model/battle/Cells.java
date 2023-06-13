@@ -2,6 +2,10 @@ package it.unibo.model.battle;
 
 import it.unibo.model.data.TroopType;
 
+/**
+ * Interface with 2 variables, used to represents
+ * data of one slot (troop, clicked, chosen).
+ */
 public interface Cells {
 
     /**
@@ -47,14 +51,5 @@ public interface Cells {
      */
 
     Boolean getClicked();
-
-    /**
-     * Takes the status.
-     *
-     * @return the status, true if chosen, false if not.
-     */
-
-    Boolean getChosen();
-
 
 }

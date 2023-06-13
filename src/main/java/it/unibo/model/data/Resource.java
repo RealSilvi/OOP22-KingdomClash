@@ -5,47 +5,68 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A simple data class that stores a type of resource and it's corresponding amount
+ * A simple data class that stores a type of resource and it's corresponding amount.
  */
-public class Resource implements Serializable, Cloneable {
+public final class Resource implements Serializable, Cloneable {
     /**
      * Serial version UID.
      */
     private static final long serialVersionUID = 142745963L;
 
     /**
-     * An enum containing all type of resources
+     * An enum containing all type of resources.
      */
     public enum ResourceType {
+        /**
+         * Wheat resource type.
+         */
         WHEAT,
+        /**
+         * Wood resource type.
+         */
         WOOD
     }
 
     private ResourceType resource;
     private int amount;
-
-    public Resource(ResourceType resource, int amount) {
+    /**
+     * Constructs a new resource with a given amount and type.
+     * @param resource  the type of resource
+     * @param amount    the amount of the resource
+     */
+    public Resource(final ResourceType resource, final int amount) {
         this.resource = resource;
         this.amount = amount;
     }
-
-    public Resource(ResourceType resource) {
+    /**
+     * Constructs a new resource with a given type and 0 amount.
+     * @param resource  the type of resource
+     */
+    public Resource(final ResourceType resource) {
         this(resource, 0);
     }
-
+    /**
+     * @return          the type of this resource
+     */
     public ResourceType getResource() {
         return resource;
     }
-
-    public void setResource(ResourceType resource) {
+    /**
+     * @param resource  the type of this resource
+     */
+    public void setResource(final ResourceType resource) {
         this.resource = resource;
     }
-
+    /**
+     * @return          the amount of this resource
+     */
     public int getAmount() {
         return amount;
     }
-
-    public void setAmount(int amount) {
+    /**
+     * @param amount    the amount of this resource
+     */
+    public void setAmount(final int amount) {
         this.amount = amount;
     }
 
@@ -60,28 +81,31 @@ public class Resource implements Serializable, Cloneable {
     }
 
     @Override
-    public boolean equals(Object otherResource) {
+    public boolean equals(final Object otherResource) {
         if (otherResource == null) {
             return false;
         }
-        if ((getClass() == otherResource.getClass()) &&
-                (this.getResource() == ((Resource) otherResource).getResource())) {
+        if ((getClass() == otherResource.getClass()) 
+            && (this.getResource() == ((Resource) otherResource).getResource())) {
             return true;
         }
         return super.equals(otherResource);
     }
-    
+    /**
+     * Constructs a copy of this resource.
+     * @return a deep copy of this resource
+     */
     public Resource clone() {
         return new Resource(this.resource, this.amount);
     }
 
     /**
-     * Performs a deep copy of a given resource set
+     * Performs a deep copy of a given resource set.
      *
      * @param resourceSet the set to be copy
      * @return a deep copy of the given set
      */
-    public static Set<Resource> deepCopySet(Set<Resource> resourceSet) {
+    public static Set<Resource> deepCopySet(final Set<Resource> resourceSet) {
         return resourceSet.stream()
                 .map(Resource::clone)
                 .collect(Collectors.toSet());

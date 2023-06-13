@@ -29,11 +29,11 @@ public class FieldPanelImpl implements FieldPanel {
      * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
      */
     public FieldPanelImpl(final int nrOfFieldSpot) {
-        this.field=new ArrayList<>();
+        this.field = new ArrayList<>();
         this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getFieldPanel());
 
         this.mainPanel.setLayout(new GridLayout(ROWS, nrOfFieldSpot / ROWS));
-        IntStream.range(0, nrOfFieldSpot*2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        IntStream.range(0, nrOfFieldSpot * 2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION)));
 
 
         this.restart();
@@ -46,24 +46,16 @@ public class FieldPanelImpl implements FieldPanel {
     }
 
     @Override
-    public void redraw( final List<Optional<TroopType>> fieldTroops) {
-        this.restart();
-
-        final int delay=1500;
+    public void redraw(final List<Optional<TroopType>> fieldTroops) {
         IntStream.range(0, fieldTroops.size()).forEach(x -> {
             if (fieldTroops.get(x).isEmpty()) {
                 this.field.get(x).setEmpty();
             } else {
-                this.field.get(x).setTroop(fieldTroops.get(x).get(),0);
-            }
-            if (fieldTroops.get(x).isEmpty()) {
-                this.field.get(x).setEmpty();
-            } else {
-                this.field.get(x).setTroop(fieldTroops.get(x).get(),0);
+                this.field.get(x).setTroop(fieldTroops.get(x).get());
             }
         });
-
     }
+
 
     @Override
     public JPanel getPanel() {

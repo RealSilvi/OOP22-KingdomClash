@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.Resource;
@@ -155,4 +156,34 @@ public interface BaseController {
      * @return true if time is passing, false if stopped
      */
     boolean isTimeRunning();
+
+    /**
+     * Registers an observer object that gets notified whenever a building state changes.
+     *
+     * @param observer the object that needs to be registered
+     */
+    void addBuildingStateChangedObserver(BuildingObserver observer);
+
+    /**
+     * Unregisters an observer that gets notified whenever a building state changes.
+     *
+     * @param observer the object that needs to be unregistered
+     * @see {@link #addBuildingStateChangedObserver()}
+     */
+    void removeBuildingStateChangedObserver(BuildingObserver observer);
+
+    /**
+     * Registers an observer object that gets notified whenever a building generates resources.
+     *
+     * @param observer the object that needs to be registered
+     */
+    void addBuildingProductionObserver(BuildingObserver observer);
+
+    /**
+     * Unregisters an observer that gets notified whenever a building generates resources.
+     *
+     * @param observer the object that needs to be unregistered
+     * @see {@link #addBuildingProductionObserver()}
+     */
+    void removeBuildingProductionObserver(BuildingObserver observer);
 }

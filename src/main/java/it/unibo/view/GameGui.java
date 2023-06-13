@@ -1,6 +1,5 @@
 package it.unibo.view;
 
-import it.unibo.controller.GameController;
 import it.unibo.controller.SoundManager;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.MapPanel;
@@ -11,38 +10,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class GameGui {
+public final class GameGui {
 
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
     public static final int HEIGHT_BUTTON = (int) DIMENSION_SCREEN.getHeight() / 20;
-    private final JFrame frame;
     private final CardLayout SwitchLayout;
     private final CardLayout SwitchLayout2;
     private final JPanel allPanel;
     private final JPanel mainPanel;
-    private final JPanel BorderPanel;
     private final SouthPanel southPanel;
     private final GameMenu menuPanel;
     private final InfoMenuPanel infoPanel;
     private final MapPanel mapPanel;
-    private final JPanel cityPanel;
-    private final JPanel battlePanel;
     private final SoundManager soundManager;
-    //private final JPanel newgamePanel;
-    //private final JPanel loadPanel;
 
-    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration, SoundManager soundManager){
-        frame = new JFrame();
+    public GameGui(JPanel battlePanel, JPanel cityPanel, GameConfiguration gameConfiguration){
+        JFrame frame = new JFrame();
         frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.soundManager = soundManager;
+        this.soundManager = new SoundManager();
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
-        this.cityPanel = cityPanel;
-        this.battlePanel = battlePanel;
 
         this.SwitchLayout = new CardLayout();
         this.mainPanel = new JPanel(this.SwitchLayout);
@@ -50,22 +41,22 @@ public class GameGui {
         this.SwitchLayout2 = new CardLayout();
         this.allPanel = new JPanel(this.SwitchLayout2);
 
-        this.BorderPanel = new JPanel(new BorderLayout());
+        JPanel BorderPanel = new JPanel(new BorderLayout());
 
         this.menuPanel = new GameMenuImpl();
         this.infoPanel = new InfoMenuPanel();
         this.southPanel = new SouthPanel();
 
-        this.allPanel.add(this.battlePanel,"1");
-        this.allPanel.add(this.cityPanel,"2");
+        this.allPanel.add(battlePanel,"1");
+        this.allPanel.add(cityPanel,"2");
         this.allPanel.add(this.mapPanel.getAsJPanel(),"3");
 
-        this.BorderPanel.add(this.allPanel, BorderLayout.CENTER);
-        this.BorderPanel.add(this.southPanel.getPanel(),BorderLayout.SOUTH);
+        BorderPanel.add(this.allPanel, BorderLayout.CENTER);
+        BorderPanel.add(this.southPanel.getPanel(),BorderLayout.SOUTH);
 
         this.mainPanel.add(this.menuPanel.getPanel(), "1");
         this.mainPanel.add(this.infoPanel.getPanel(), "2");
-        this.mainPanel.add(this.BorderPanel, "3");
+        this.mainPanel.add(BorderPanel, "3");
 
         frame.setContentPane(this.mainPanel);
         frame.setVisible(true);
@@ -169,6 +160,10 @@ public class GameGui {
     public void setActivateBattle(Integer level){
         //this.mapPanel.setBeatenLevels(level-1);
         this.mapPanel.setActiveBattle(level);
+    }
+
+    public SoundManager getSoundManager(){
+        return this.soundManager;
     }
 
     public void setBeatenLevels(Integer levels){

@@ -5,6 +5,7 @@ import it.unibo.controller.base.BaseControllerImpl;
 import it.unibo.controller.battle.BattleControllerImpl;
 import it.unibo.model.GameModel;
 import it.unibo.view.GameGui;
+import it.unibo.view.menu.SouthPanel;
 
 public class GameController {
 
@@ -18,13 +19,12 @@ public class GameController {
 
     public GameController() {
 
-        this.soundManager= new SoundManager();
         this.gameModel = new GameModel();
 
         this.battleController = new BattleControllerImpl(gameModel.getGameData());
         this.baseController = new BaseControllerImpl(gameModel.getGameData());
 
-        this.gameGui = new GameGui(battleController.getGuiPanel(),baseController.getGuiPanel(),gameModel.getGameData().getGameConfiguration(),this.soundManager);
+        this.gameGui = new GameGui(battleController.getGuiPanel(),baseController.getGuiPanel(),gameModel.getGameData().getGameConfiguration());
         this.gameGui.setBeatenLevels(0);
         this.gameGui.setActivateBattle(1);
     }

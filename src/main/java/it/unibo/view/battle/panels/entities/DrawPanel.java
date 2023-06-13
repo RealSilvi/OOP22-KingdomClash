@@ -1,7 +1,5 @@
 package it.unibo.view.battle.panels.entities;
 
-import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -40,15 +38,6 @@ public class DrawPanel extends JPanel {
     public DrawPanel(final ImageIcon backgroundImageIcon, final Dimension size) {
         this(backgroundImageIcon.getImage(), size);
     }
-
-    /**
-     * @param backgroundUrl The url of the image to replicate as background.
-     * @param size          The dimension of the Panel.
-     */
-    public DrawPanel(final String backgroundUrl, final Dimension size) {
-        this(new ImageIcon(backgroundUrl), size);
-    }
-
     /**
      * @param color The color to set as background.
      * @param size  The dimension of the Panel.
@@ -59,15 +48,6 @@ public class DrawPanel extends JPanel {
 
         this.setPreferredSize(size);
         this.setBackground(color);
-    }
-
-    /**
-     * Create a JPanel with the default color.
-     *
-     * @param size The dimension of the Panel.
-     */
-    public DrawPanel(final Dimension size) {
-        this(BattlePanelStyle.DEFAULT_COLOR, size);
     }
 
 
