@@ -27,8 +27,8 @@ import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.GameConfiguration;
-import it.unibo.view.map.internal.GraphicUtils;
 import it.unibo.view.map.mapdata.MapConfiguration;
+import it.unibo.view.utilities.GraphicUtils;
 
 /**
  * A simple panel made of tiles that can be of different types and
