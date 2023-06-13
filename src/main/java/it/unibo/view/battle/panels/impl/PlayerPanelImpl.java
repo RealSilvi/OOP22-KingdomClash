@@ -1,10 +1,11 @@
 package it.unibo.view.battle.panels.impl;
 
 import it.unibo.model.data.TroopType;
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.PlayerPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopButtonImpl;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
@@ -23,15 +24,18 @@ public class PlayerPanelImpl implements PlayerPanel {
 
     private final JPanel mainPanel;
     private final List<TroopButtonImpl> slots;
+    private final PathIconsConfiguration pathIconsConfiguration;
 
     /**
-     * @param troops    defines which buttons have which troop displayed it on
      * @param nrOfSlots how many buttons to display
      */
-    public PlayerPanelImpl(final Map<Integer, TroopType> troops, final Integer nrOfSlots) {
-        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getPlayersPanel());
+    public PlayerPanelImpl(final Integer nrOfSlots , PathIconsConfiguration pathIconsConfiguration) {
+        this.pathIconsConfiguration=pathIconsConfiguration;
+        this.mainPanel = new DrawPanel(
+                ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundFillPattern())
+                , PanelDimensions.getPlayersPanel());
         this.slots = new ArrayList<>();
-        IntStream.range(0, nrOfSlots).forEach(x -> this.slots.add(new TroopButtonImpl(troops.get(x), BUTTON_DIMENSION, x)/*new TroopButtonImpl(troops.get(x),true)*/));
+        IntStream.range(0, nrOfSlots).forEach(position -> this.slots.add(new TroopButtonImpl(TroopType.getRandomTroop(), BUTTON_DIMENSION, position, this.pathIconsConfiguration)));
 
         this.slots.forEach(x -> mainPanel.add(x.getButton()));
 

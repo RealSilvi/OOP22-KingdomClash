@@ -1,9 +1,10 @@
 package it.unibo.view.battle.tutorial;
 
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.config.TextConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import java.awt.*;
@@ -25,9 +26,9 @@ public final class TutorialPanel {
     //TODO tutti i punti alla fine dei comenti
     //TODO tutti i commenti dei costruttori
     //TODO tutti i commenti delle interfacce da rivedere
-    public TutorialPanel(TextConfiguration configuration) {
-        this.turnBack = new JButton(ImageIconsSupplier.getImageIconExit(EXIT_DIMENSION));
-        JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel());
+    public TutorialPanel(TextConfiguration configuration, PathIconsConfiguration pathIconsConfiguration) {
+        this.turnBack = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(),EXIT_DIMENSION));
+        JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel(),pathIconsConfiguration);
 
         this.turnBack.setPreferredSize(EXIT_DIMENSION);
         this.turnBack.setOpaque(false);
@@ -39,10 +40,10 @@ public final class TutorialPanel {
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
         this.mainPanel.add(backPanel, BorderLayout.SOUTH);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialNorthTitle(),configuration.getTutorialNorthText(),PanelDimensions.getPlayersPanel()), BorderLayout.NORTH);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialWestTitle(),configuration.getTutorialWestText(),PanelDimensions.getSidePanel()), BorderLayout.WEST);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialEastTitle(),configuration.getTutorialEastText(),PanelDimensions.getSidePanel()), BorderLayout.EAST);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialCenterTitle(),configuration.getTutorialCenterText(),PanelDimensions.getFieldPanel()), BorderLayout.CENTER);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialNorthTitle(),configuration.getTutorialNorthText(),PanelDimensions.getPlayersPanel(),pathIconsConfiguration), BorderLayout.NORTH);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialWestTitle(),configuration.getTutorialWestText(),PanelDimensions.getSidePanel(),pathIconsConfiguration), BorderLayout.WEST);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialEastTitle(),configuration.getTutorialEastText(),PanelDimensions.getSidePanel(),pathIconsConfiguration), BorderLayout.EAST);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialCenterTitle(),configuration.getTutorialCenterText(),PanelDimensions.getFieldPanel(),pathIconsConfiguration), BorderLayout.CENTER);
     }
 
     public void addActionListenerExit(ActionListener actionListener) {

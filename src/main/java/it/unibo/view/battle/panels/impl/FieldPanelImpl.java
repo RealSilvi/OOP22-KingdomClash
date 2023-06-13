@@ -1,10 +1,11 @@
 package it.unibo.view.battle.panels.impl;
 
 import it.unibo.model.data.TroopType;
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.FieldPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
@@ -28,12 +29,12 @@ public class FieldPanelImpl implements FieldPanel {
     /**
      * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
      */
-    public FieldPanelImpl(final int nrOfFieldSpot) {
+    public FieldPanelImpl(final int nrOfFieldSpot, PathIconsConfiguration pathIconsConfiguration) {
         this.field = new ArrayList<>();
-        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getFieldPanel());
+        this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getFieldPanel());
 
         this.mainPanel.setLayout(new GridLayout(ROWS, nrOfFieldSpot / ROWS));
-        IntStream.range(0, nrOfFieldSpot * 2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION)));
+        IntStream.range(0, nrOfFieldSpot * 2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION,pathIconsConfiguration)));
 
 
         this.restart();

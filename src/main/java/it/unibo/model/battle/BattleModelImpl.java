@@ -52,14 +52,14 @@ public final class BattleModelImpl implements BattleModel {
         if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
         } else {
-            this.fightData = new FightData(gameData.getGameConfiguration().getBattleControllerConfiguration());
+            this.fightData = new FightData(gameData.getGameConfiguration().getBattleConfiguration());
             gameData.setFightData(this.fightData);
         }
-        this.botLife = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
-        this.playerLife = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
-        this.botTroops = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfSlots();
-        this.playerTroops = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfSlots();
-        this.maxRound = gameData.getGameConfiguration().getBattleControllerConfiguration().getMaxRound();
+        this.botLife = gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
+        this.playerLife = gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
+        this.botTroops = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
+        this.playerTroops = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
+        this.maxRound = gameData.getGameConfiguration().getBattleConfiguration().getMaxRound();
         this.troopLevel = gameData.getPlayerArmyLevel();
         this.troopBotLevel = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
@@ -184,8 +184,8 @@ public final class BattleModelImpl implements BattleModel {
 
     @Override
     public void endFight(final Boolean increment) {
-        botLife = this.gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
-        playerLife = this.gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
+        botLife = this.gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
+        playerLife = this.gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
         if (increment) {
             this.troopBotLevel.values().forEach(x -> ++x);
         }

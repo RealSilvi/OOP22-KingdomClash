@@ -1,8 +1,9 @@
 package it.unibo.view.battle.tutorial;
 
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -15,8 +16,8 @@ public class TextPanel extends DrawPanel {
     private final static float TITLE_FONT_SIZE = 30f;
     private final static float CONTENT_FONT_SIZE = 20f;
 
-    public TextPanel(final String title, final String content, final Dimension size) {
-        super(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, size);
+    public TextPanel(final String title, final String content, final Dimension size, PathIconsConfiguration pathIconsConfiguration) {
+        super(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), size);
 
         JLabel title1 = new JLabel(title);
         JTextArea content1 = new JTextArea(content);

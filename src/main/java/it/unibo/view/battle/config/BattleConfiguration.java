@@ -1,8 +1,6 @@
 package it.unibo.view.battle.config;
 
-import it.unibo.model.data.TroopType;
-
-public  class BattlePanelConfiguration {
+public class BattleConfiguration {
 
     private final TextConfiguration textConfiguration;
 
@@ -11,12 +9,12 @@ public  class BattlePanelConfiguration {
     private final int nrOfFieldSpots;
     private final int maxRound;
 
-    public BattlePanelConfiguration() {
+    public BattleConfiguration() {
         nrOfSlots = 5;
         nrOfLives = 8;
         nrOfFieldSpots = nrOfSlots * 2;
         maxRound = 3;
-        this.textConfiguration=new TextConfiguration();
+        this.textConfiguration = new TextConfiguration();
     }
 
     public int getNrOfSlots() {

@@ -53,15 +53,18 @@ public final class BattleControllerImpl implements BattleController, Controller 
         if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
         } else {
-            this.fightData = new FightData(gameData.getGameConfiguration().getBattleControllerConfiguration());
+            this.fightData = new FightData(gameData.getGameConfiguration().getBattleConfiguration());
             gameData.setFightData(this.fightData);
         }
-        this.playerTroops = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfSlots();
-        this.maxRound = gameData.getGameConfiguration().getBattleControllerConfiguration().getMaxRound();
+        this.playerTroops = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
+        this.maxRound = gameData.getGameConfiguration().getBattleConfiguration().getMaxRound();
         this.battleModel = new BattleModelImpl(gameData);
-        this.battlePanel = new BattlePanelImpl(fightData.getBotData().changeNotSelectedTroop(),
-                fightData.getPlayerData().changeNotSelectedTroop(),
-                gameData.getGameConfiguration().getBattleControllerConfiguration());
+
+        this.battlePanel = new BattlePanelImpl(
+                gameData.getGameConfiguration().getBattleConfiguration(),
+                gameData.getGameConfiguration().getPathIconsConfiguration());
+        this.battlePanel.spinBotFreeSlot(fightData.getBotData().changeNotSelectedTroop());
+        this.battlePanel.spinPlayerFreeSlot(fightData.getPlayerData().changeNotSelectedTroop());
         this.battlePanel.disableSpinButton();
         this.battlePanel.disableBotSlots();
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());

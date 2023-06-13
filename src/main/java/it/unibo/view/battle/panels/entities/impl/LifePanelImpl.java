@@ -1,9 +1,10 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.api.LifePanel;
 import it.unibo.view.battle.panels.entities.api.LivesLabel;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
@@ -24,12 +25,12 @@ public class LifePanelImpl implements LifePanel {
     /**
      * @param nrOfLives how many health points has the player.
      */
-    public LifePanelImpl(final int nrOfLives) {
+    public LifePanelImpl(final int nrOfLives, PathIconsConfiguration pathIconsConfiguration) {
         this.lives = new ArrayList<>();
-        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getSideLifePanel());
+        this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSideLifePanel());
 
 
-        IntStream.range(0, nrOfLives).forEach(i -> lives.add(new LivesLabelImpl(LABEL_DIMENSION)));
+        IntStream.range(0, nrOfLives).forEach(i -> lives.add(new LivesLabelImpl(LABEL_DIMENSION,pathIconsConfiguration)));
         this.lives.forEach(this.mainPanel::add);
     }
 
@@ -54,15 +55,17 @@ public class LifePanelImpl implements LifePanel {
 
         private final Dimension size;
         private boolean alive;
+        private final PathIconsConfiguration pathIconsConfiguration;
 
         /**
          * @param size the size of the label
          */
-        public LivesLabelImpl(final Dimension size) {
-            super(ImageIconsSupplier.getImageIconLife(true, size));
+        public LivesLabelImpl(final Dimension size,PathIconsConfiguration pathIconsConfiguration) {
+            super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true),size));
 
             this.size = size;
             this.alive = true;
+            this.pathIconsConfiguration=pathIconsConfiguration;
 
             this.setPreferredSize(size);
         }
@@ -71,7 +74,7 @@ public class LifePanelImpl implements LifePanel {
         @Override
         public void changeStatus() {
             this.alive = !this.alive;
-            this.setIcon(ImageIconsSupplier.getImageIconLife(this.alive, this.size));
+            this.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(this.alive),size));
         }
 
         @Override
@@ -81,7 +84,7 @@ public class LifePanelImpl implements LifePanel {
 
         public void reset(){
             this.alive=true;
-            this.setIcon(ImageIconsSupplier.getImageIconLife(this.alive, this.size));
+            this.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true),size));
         }
     }
 }

@@ -1,7 +1,8 @@
 package it.unibo.view.battle;
 
 import it.unibo.model.data.TroopType;
-import it.unibo.view.battle.config.BattlePanelConfiguration;
+import it.unibo.view.battle.config.BattleConfiguration;
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.impl.*;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
@@ -37,19 +38,19 @@ public final class BattlePanelImpl implements BattlePanel {
      * param nrOfTroops How many troops has the game.
      * param nrOfLives  How many lives has each player
      */
-    public BattlePanelImpl(final Map<Integer, TroopType> botTroops, final Map<Integer, TroopType> playerTroops,final BattlePanelConfiguration configuration) {
+    public BattlePanelImpl(final BattleConfiguration battleConfiguration, final PathIconsConfiguration pathIconsConfiguration) {
         this.layoutManager = new CardLayout();
         this.mainPanel = new JPanel(this.layoutManager);
-        this.tutorialPanel = new TutorialPanel(configuration.getTextConfiguration());
+        this.tutorialPanel = new TutorialPanel(battleConfiguration.getTextConfiguration(),pathIconsConfiguration);
         JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
         gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
 
-        this.botPanel = new PlayerPanelImpl(botTroops, configuration.getNrOfSlots());
-        this.playerPanel = new PlayerPanelImpl(playerTroops,configuration.getNrOfSlots());
-        this.infoPanel = new InfoPanelImpl(configuration.getNrOfTroops() );
-        this.buttonsPanel = new CommandPanelImpl(configuration.getNrOfLives());
-        this.fieldPanel = new FieldPanelImpl(configuration.getNrOfFieldSpots());
+        this.botPanel = new PlayerPanelImpl(battleConfiguration.getNrOfSlots(),pathIconsConfiguration);
+        this.playerPanel = new PlayerPanelImpl(battleConfiguration.getNrOfSlots(),pathIconsConfiguration);
+        this.infoPanel = new InfoPanelImpl(TroopType.values().length,pathIconsConfiguration);
+        this.buttonsPanel = new CommandPanelImpl(battleConfiguration.getNrOfLives(),pathIconsConfiguration);
+        this.fieldPanel = new FieldPanelImpl(battleConfiguration.getNrOfFieldSpots(),pathIconsConfiguration);
 
         gamePanel.add(botPanel.getPanel(), BorderLayout.NORTH);
         gamePanel.add(playerPanel.getPanel(), BorderLayout.SOUTH);
@@ -59,7 +60,7 @@ public final class BattlePanelImpl implements BattlePanel {
 
         this.mainPanel.add(gamePanel, "1");
         this.mainPanel.add(tutorialPanel.getPanel(), "2");
-        this.mainPanel.add(new TextPanel(configuration.getTextConfiguration().getEndWinPanelTitle(),configuration.getTextConfiguration().getEndPanelText(),PanelDimensions.MAIN_PANEL_SIZE),"3");
+        this.mainPanel.add(new TextPanel(battleConfiguration.getTextConfiguration().getEndWinPanelTitle(),battleConfiguration.getTextConfiguration().getEndPanelText(),PanelDimensions.MAIN_PANEL_SIZE,pathIconsConfiguration),"3");
 
         this.setActionListenerExitButton();
         this.setActionListenerInfoButton();

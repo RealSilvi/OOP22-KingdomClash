@@ -1,8 +1,9 @@
 package it.unibo.view.battle.panels.entities.impl;
 
 import it.unibo.model.data.TroopType;
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.api.TroopLabel;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,13 +11,15 @@ import java.awt.*;
 public class TroopLabelImpl extends JLabel implements TroopLabel {
 
     private final Dimension size;
+    private final PathIconsConfiguration pathIconsConfiguration;
 
     /**
      * @param troop The troop to display.
      * @param size  The size of the JLabel.
      */
-    public TroopLabelImpl(final TroopType troop, final Dimension size) {
-        super(ImageIconsSupplier.getImageIconFromTroop(troop, size));
+    public TroopLabelImpl(final TroopType troop, final Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
+        super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(troop),size));
+        this.pathIconsConfiguration=pathIconsConfiguration;
         this.size = size;
         this.setPreferredSize(this.size);
 
@@ -27,9 +30,10 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
      *
      * @param size The dimension of the JLabel.
      */
-    public TroopLabelImpl(final Dimension size) {
+    public TroopLabelImpl(final Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
         super();
         this.size = size;
+        this.pathIconsConfiguration=pathIconsConfiguration;
     }
 
     @Override
@@ -39,6 +43,6 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
     }
 
     public void setTroop(final TroopType troop) {
-        this.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop, this.size));
+        this.setIcon(ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop),size));
     }
 }

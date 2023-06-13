@@ -1,9 +1,10 @@
 package it.unibo.view.battle.panels.entities.impl;
 
 import it.unibo.model.data.TroopType;
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +14,14 @@ public class TroopButtonImpl implements TroopButton {
     private TroopType troop;
     private final Dimension size;
     private final PositionJbutton button;
+    private final PathIconsConfiguration pathIconsConfiguration;
 
     /**
      * @param troop  the troop to set on this button
      * @param size   the dimension of this button
      */
-    public TroopButtonImpl(final TroopType troop, final Dimension size, final int position) {
+    public TroopButtonImpl(final TroopType troop, final Dimension size, final int position, final PathIconsConfiguration pathIconsConfiguration) {
+        this.pathIconsConfiguration=pathIconsConfiguration;
         this.button = new PositionJbutton(position);
         this.troop = troop;
         this.size = size;
@@ -26,8 +29,8 @@ public class TroopButtonImpl implements TroopButton {
 
         this.button.setPreferredSize(size);
 
-        this.button.setIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop, this.size));
-        this.button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(this.troop, this.size));
+        this.button.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(this.troop),this.size));
+        this.button.setDisabledIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(this.troop),this.size));
         this.button.setBackground(Color.BLACK);
         this.button.setOpaque(true);
     }
@@ -41,8 +44,8 @@ public class TroopButtonImpl implements TroopButton {
         this.troop = troop;
         Timer timer = new Timer(delay, e -> {
             // the actionPerformed call-back code
-            button.setIcon(ImageIconsSupplier.getImageIconFromTroop(troop, size));
-            button.setDisabledIcon(ImageIconsSupplier.getImageIconFromTroop(troop, size));
+            button.setIcon(
+                    ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop),size));
         });
         timer.setRepeats(false);
         timer.start();

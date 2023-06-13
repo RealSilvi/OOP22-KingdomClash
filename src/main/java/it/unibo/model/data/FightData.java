@@ -3,7 +3,7 @@ package it.unibo.model.data;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.battle.entitydata.EntityData;
 import it.unibo.model.battle.entitydata.EntityDataImpl;
-import it.unibo.view.battle.config.BattlePanelConfiguration;
+import it.unibo.view.battle.config.BattleConfiguration;
 
 /**
  * This class contains the player data and
@@ -14,7 +14,7 @@ public class FightData {
     private final EntityData botData;
     private final EntityData playerData;
 
-    public FightData(final BattlePanelConfiguration battlePanelConfiguration) {
+    public FightData(final BattleConfiguration battlePanelConfiguration) {
         this.botData = new EntityDataImpl(battlePanelConfiguration);
         this.playerData = new EntityDataImpl(battlePanelConfiguration);
     }

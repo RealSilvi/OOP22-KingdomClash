@@ -1,9 +1,10 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.api.ButtonsPanel;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
-import it.unibo.view.battle.panels.utilities.ImageIconsSupplier;
+import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.utilities.PanelDimensions;
 
 import javax.swing.*;
@@ -27,11 +28,12 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     private final JButton info;
     private final JPanel mainPanel;
 
-    public ButtonsPanelImpl() {
-        this.mainPanel = new DrawPanel(ImageIconsSupplier.BACKGROUND_FILL_PATTERN, PanelDimensions.getSideButtonsPanel());
-        this.spin = this.getCostumeButton(ImageIconsSupplier.getImageIconSpin(GAME_BUTTON_DIMENSION), GAME_BUTTON_DIMENSION);
-        this.pass = this.getCostumeButton(ImageIconsSupplier.getImageIconPass(GAME_BUTTON_DIMENSION), GAME_BUTTON_DIMENSION);
-        this.info = this.getCostumeButton(ImageIconsSupplier.getImageIconInfo(INFO_BUTTON_DIMENSION), INFO_BUTTON_DIMENSION);
+    public ButtonsPanelImpl(PathIconsConfiguration pathIconsConfiguration) {
+        this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSideButtonsPanel());
+        this.spin = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getSpin(),GAME_BUTTON_DIMENSION)
+                , GAME_BUTTON_DIMENSION);
+        this.pass = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getPass(),GAME_BUTTON_DIMENSION), GAME_BUTTON_DIMENSION);
+        this.info = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getInfo(),INFO_BUTTON_DIMENSION), INFO_BUTTON_DIMENSION);
 
         this.mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         this.mainPanel.add(spin);

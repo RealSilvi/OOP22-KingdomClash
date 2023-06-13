@@ -1,5 +1,6 @@
 package it.unibo.model.data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -21,6 +22,7 @@ public final class GameData implements Serializable {
     /**
      * Serial version UID.
      */
+    @Serial
     private static final long serialVersionUID = 164372586L;
 
     private String playerName;
@@ -35,17 +37,20 @@ public final class GameData implements Serializable {
     public GameData() {
         this(new GameConfiguration());
     }
+
     public GameData(GameConfiguration gameConfiguration) {
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
         this.configuration = gameConfiguration;
-        this.fightData = new FightData(this.configuration.getBattleControllerConfiguration());
+        this.fightData = new FightData(this.configuration.getBattleConfiguration());
         Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
     }
+
     /**
      * Constructs a GameData instance given an already existing GameData
      * and a configuration in order easily restore transient fields.
+     *
      * @param gameData      an already existing GameData object
      * @param configuration the configuration for the game
      */
@@ -57,13 +62,14 @@ public final class GameData implements Serializable {
         this.configuration = configuration;
         this.fightData = gameData.getFightData();
     }
+
     /* No defensive copy needed because the base model already
      * handles data integrity
      */
     @SuppressFBWarnings(value = "EI2",
-    justification = "No encapsulation needed as BaseModel handles everything")
+            justification = "No encapsulation needed as BaseModel handles everything")
     public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings,
-        FightData fightData, GameConfiguration configuration) {
+                    FightData fightData, GameConfiguration configuration) {
         this.resources = resources;
         this.buildings = buildings;
         this.fightData = fightData;
@@ -97,7 +103,7 @@ public final class GameData implements Serializable {
      * handles data integrity
      */
     @SuppressFBWarnings(value = "EI2",
-    justification = "No encapsulation needed as BaseModel handles everything")
+            justification = "No encapsulation needed as BaseModel handles everything")
     public Set<Resource> getResources() {
         return resources;
     }
@@ -111,7 +117,7 @@ public final class GameData implements Serializable {
      * handles data integrity
      */
     @SuppressFBWarnings(value = "EI2",
-    justification = "No encapsulation needed as BaseModel handles everything")
+            justification = "No encapsulation needed as BaseModel handles everything")
     public void setResources(Set<Resource> resources) {
         this.resources = resources;
     }
@@ -125,7 +131,7 @@ public final class GameData implements Serializable {
      * handles data integrity
      */
     @SuppressFBWarnings(value = "EI2",
-    justification = "No encapsulation needed as BaseModel handles everything")
+            justification = "No encapsulation needed as BaseModel handles everything")
     public ConcurrentMap<UUID, Building> getBuildings() {
         return buildings;
     }
@@ -140,7 +146,7 @@ public final class GameData implements Serializable {
      * handles data integrity
      */
     @SuppressFBWarnings(value = "EI2",
-    justification = "No encapsulation needed as BaseModel handles everything")
+            justification = "No encapsulation needed as BaseModel handles everything")
     public void setBuildings(ConcurrentMap<UUID, Building> buildings) {
         this.buildings = buildings;
     }
@@ -154,7 +160,7 @@ public final class GameData implements Serializable {
      * handles data integrity
      */
     @SuppressFBWarnings(value = "EI2",
-    justification = "No encapsulation needed as BaseModel handles everything")
+            justification = "No encapsulation needed as BaseModel handles everything")
     public Map<TroopType, Integer> getPlayerArmyLevel() {
         return this.playerArmyLevel;
     }
@@ -168,7 +174,7 @@ public final class GameData implements Serializable {
      * handles data integrity
      */
     @SuppressFBWarnings(value = "EI2",
-    justification = "No encapsulation needed as BaseModel handles everything")
+            justification = "No encapsulation needed as BaseModel handles everything")
     public void setPlayerArmyLevel(Map<TroopType, Integer> playerArmyLevel) {
         this.playerArmyLevel = playerArmyLevel;
     }
