@@ -17,11 +17,11 @@ public class TroopButtonImpl implements TroopButton {
     private final PathIconsConfiguration pathIconsConfiguration;
 
     /**
-     * @param troop  the troop to set on this button
-     * @param size   the dimension of this button
+     * @param troop the troop to set on this button
+     * @param size  the dimension of this button
      */
     public TroopButtonImpl(final TroopType troop, final Dimension size, final int position, final PathIconsConfiguration pathIconsConfiguration) {
-        this.pathIconsConfiguration=pathIconsConfiguration;
+        this.pathIconsConfiguration = pathIconsConfiguration;
         this.button = new PositionJbutton(position);
         this.troop = troop;
         this.size = size;
@@ -29,8 +29,7 @@ public class TroopButtonImpl implements TroopButton {
 
         this.button.setPreferredSize(size);
 
-        this.button.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(this.troop),this.size));
-        this.button.setDisabledIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(this.troop),this.size));
+        this.button.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(this.troop), this.size));
         this.button.setBackground(Color.BLACK);
         this.button.setOpaque(true);
     }
@@ -42,11 +41,8 @@ public class TroopButtonImpl implements TroopButton {
 
     public void setTroop(final TroopType troop, final int delay) {
         this.troop = troop;
-        Timer timer = new Timer(delay, e -> {
-            // the actionPerformed call-back code
-            button.setIcon(
-                    ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop),size));
-        });
+        Timer timer = new Timer(delay, e -> button.setIcon(
+                ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop), size)));
         timer.setRepeats(false);
         timer.start();
     }
@@ -89,6 +85,12 @@ public class TroopButtonImpl implements TroopButton {
             } else {
                 this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.SECONDARY_COLOR, 4, true));
             }
+        }
+
+        @Override
+        public void setIcon(Icon defaultIcon) {
+            super.setIcon(defaultIcon);
+            this.setDisabledIcon(defaultIcon);
         }
 
         @Override
