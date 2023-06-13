@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.basedata.Building;
 
@@ -17,6 +18,11 @@ import it.unibo.model.base.basedata.Building;
  * A simple data class to store all the game's information.
  */
 public final class GameData implements Serializable {
+    /**
+     * Serial version UID.
+     */
+    private static final long serialVersionUID = 164372586L;
+
     private String playerName;
     private Set<Resource> resources;
     private ConcurrentMap<UUID, Building> buildings;
@@ -27,12 +33,7 @@ public final class GameData implements Serializable {
     private FightData fightData;
 
     public GameData() {
-        this.resources = new HashSet<>();
-        this.buildings = new ConcurrentHashMap<>();
-        this.fightData = new FightData();
-        this.playerArmyLevel = new EnumMap<>(TroopType.class);
-        this.configuration = new GameConfiguration();
-        Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
+        this(new GameConfiguration());
     }
     public GameData(GameConfiguration gameConfiguration) {
         this.resources = new HashSet<>();
@@ -41,6 +42,20 @@ public final class GameData implements Serializable {
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
         this.configuration = gameConfiguration;
         Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
+    }
+    /**
+     * Constructs a GameData instance given an already existing GameData
+     * and a configuration in order easily restore transient fields.
+     * @param gameData      an already existing GameData object
+     * @param configuration the configuration for the game
+     */
+    public GameData(@NonNull GameData gameData, @NonNull GameConfiguration configuration) {
+        this.playerName = gameData.getPlayerName();
+        this.resources = gameData.getResources();
+        this.buildings = gameData.getBuildings();
+        this.playerArmyLevel = gameData.getPlayerArmyLevel();
+        this.configuration = configuration;
+        this.fightData = gameData.getFightData();
     }
     /* No defensive copy needed because the base model already
      * handles data integrity
