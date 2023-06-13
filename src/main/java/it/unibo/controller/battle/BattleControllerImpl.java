@@ -26,15 +26,25 @@ import static it.unibo.model.battle.BattleModelImpl.WIN_PLAYER;
  */
 public final class BattleControllerImpl implements BattleController, Controller {
 
-    /**Constant use to represent the PLAYER.*/
+    /**
+     * Constant use to represent the PLAYER.
+     */
     public static final int PLAYER = 1;
-    /**Constant use to represent the BOT.*/
+    /**
+     * Constant use to represent the BOT.
+     */
     public static final int BOT = 0;
-    /**NO_SKIP means to update all the troops in the field.*/
+    /**
+     * NO_SKIP means to update all the troops in the field.
+     */
     public static final int NO_SKIP = 0;
-    /**PLAYER_FINISH It's used to indicate to the bot that the player has clicked all the troops.*/
+    /**
+     * PLAYER_FINISH It's used to indicate to the bot that the player has clicked all the troops.
+     */
     public static final int PLAYER_FINISH = 1;
-    /**CONTINUE let the bot know that the player has not yet chosen all the troops.*/
+    /**
+     * CONTINUE let the bot know that the player has not yet chosen all the troops.
+     */
     public static final int CONTINUE = 0;
 
     private final BattleModel battleModel;
@@ -47,6 +57,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
     /**
      * The constructor takes care to create Objects, disable buttons in panel,
      * and call actionListeners to set functionality to the buttons.
+     *
      * @param gameData data of the game.
      */
     public BattleControllerImpl(final GameData gameData) {
@@ -126,8 +137,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
             update(i + 1);
         }
         this.battleModel.reset();
-        battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
-        spin();
+        this.battlePanel.enableSpinButton();
         update(NO_SKIP);
     }
 
