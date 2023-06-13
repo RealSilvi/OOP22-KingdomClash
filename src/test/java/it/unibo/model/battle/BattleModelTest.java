@@ -23,12 +23,13 @@ public class BattleModelTest {
 
         System.out.println("entered init");
         GameData gameData = new GameData();
-        this.fightData = new FightData();
+        this.fightData = new FightData(gameData.getGameConfiguration().getBattleControllerConfiguration());
+        gameData.setFightData(this.fightData);
         this.botData = this.fightData.getBotData();
 
         this.playerData = this.fightData.getPlayerData();
         gameData.setFightData(this.fightData);
-        this.battleModel = new BattleModelImpl(this.fightData);
+        this.battleModel = new BattleModelImpl(gameData);
 
 
         Map<Integer, CellsImpl> botTroop = new HashMap<>();

@@ -14,9 +14,6 @@ import java.util.Optional;
 
 import static it.unibo.controller.battle.BattleControllerImpl.CONTINUE;
 import static it.unibo.controller.battle.BattleControllerImpl.PLAYER;
-import static it.unibo.model.data.FightData.BOT_LIFE;
-import static it.unibo.model.data.FightData.PLAYER_LIFE;
-import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
 /**
  * Class used to implements methods in Battle Model
@@ -30,15 +27,19 @@ public final class BattleModelImpl implements BattleModel {
     public static final int WIN_BOT = 2;
     /**This variable it is used to represent when the player wins.*/
     public static final int WIN_PLAYER = 3;
-    /**MAX_ROUND represents the max rounds available during one match of the battle.*/
-    public static final int MAX_ROUND = FightData.MAX_ROUND;
-    private final FightData fightData;
-    private Map<TroopType, Integer> troopLevel;
-    private Map<TroopType, Integer> troopBotLevel;
 
+    private final FightData fightData;
+    private final GameData gameData;
+    private final Map<TroopType, Integer> troopLevel;
+    private final Map<TroopType, Integer> troopBotLevel;
+
+    /**MAX_ROUND represents the max rounds available during one match of the battle.*/
+    private final int maxRound;
+    private final int botTroops;
+    private final int playerTroops;
     private int countedRound = 0;
-    private int botLife = BOT_LIFE;
-    private int playerLife = PLAYER_LIFE;
+    private int botLife;
+    private int playerLife;
 
 
     /**
@@ -51,20 +52,18 @@ public final class BattleModelImpl implements BattleModel {
         if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
         } else {
-            this.fightData = new FightData();
+            this.fightData = new FightData(gameData.getGameConfiguration().getBattleControllerConfiguration());
             gameData.setFightData(this.fightData);
         }
+        this.botLife = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
+        this.playerLife = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
+        this.botTroops = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfSlots();
+        this.playerTroops = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfSlots();
+        this.maxRound = gameData.getGameConfiguration().getBattleControllerConfiguration().getMaxRound();
         this.troopLevel = gameData.getPlayerArmyLevel();
         this.troopBotLevel = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
-    }
-
-    /**
-     * Use to initialize only fight data.
-     * @param fightData The data of the fight.
-     */
-    public BattleModelImpl(final FightData fightData) {
-        this.fightData = fightData;
+        this.gameData = gameData;
     }
 
     @Override
@@ -87,7 +86,7 @@ public final class BattleModelImpl implements BattleModel {
                             fightData.getBotData().addEntityTroop(key);
                         } else {
                             if (finished == CONTINUE) {
-                                if (fightData.getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+                                if (fightData.getBotData().getSelected().size() < this.botTroops) {
                                     fightData.getBotData().addEntityTroop(fightData.getBotData().selectRandomTroop());
                                 }
                             }
@@ -96,14 +95,14 @@ public final class BattleModelImpl implements BattleModel {
                 }
             });
         } else {
-            if (fightData.getBotData().getSelected().size() < FightData.BOT_TROOPS) {
+            if (fightData.getBotData().getSelected().size() < this.botTroops) {
                 int key = fightData.getBotData().selectRandomTroop();
                 fightData.getBotData().addEntityTroop(key);
             }
         }
 
         countedRound++;
-        if (countedRound >= MAX_ROUND) {
+        if (countedRound >= maxRound) {
             fightData.getBotData().setAllChosen();
             fightData.getPlayerData().setAllChosen();
         } else {
@@ -176,7 +175,7 @@ public final class BattleModelImpl implements BattleModel {
     public void reset() {
         countedRound = 0;
 
-        for (int i = 0; i < PLAYER_TROOPS; i++) {
+        for (int i = 0; i < this.playerTroops; i++) {
             fightData.getPlayerData().removeEntityTroop(i);
             fightData.getBotData().removeEntityTroop(i);
         }
@@ -185,8 +184,8 @@ public final class BattleModelImpl implements BattleModel {
 
     @Override
     public void endFight(final Boolean increment) {
-        botLife = BOT_LIFE;
-        playerLife = PLAYER_LIFE;
+        botLife = this.gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
+        playerLife = this.gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfLives();
         if (increment) {
             this.troopBotLevel.values().forEach(x -> ++x);
         }

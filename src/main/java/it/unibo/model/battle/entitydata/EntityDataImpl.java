@@ -2,8 +2,8 @@ package it.unibo.model.battle.entitydata;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.battle.CellsImpl;
-import it.unibo.model.data.FightData;
 import it.unibo.model.data.TroopType;
+import it.unibo.view.battle.config.BattlePanelConfiguration;
 
 
 import java.util.HashMap;
@@ -14,17 +14,17 @@ import java.util.Random;
 import java.util.Optional;
 import java.util.Arrays;
 
-import static it.unibo.model.data.FightData.TOTAL_TROOPS;
-
 /**
  * Class used to implement methods of EntityData.
  */
 public final class EntityDataImpl implements EntityData {
 
+    /** The number of total troops (player + bot)*/
+    private static int totalTroops = 0;
     /** Variable used to indicate the number of troops in the hand.*/
-    public static final int HAND_TROOPS = FightData.HAND_TROOPS;
+    private final int handTroops;
     /** Indicates all the different troops present in the game.*/
-    public static final int TOTAL_DIFFERENT_TROOP = FightData.TOTAL_DIFFERENT_TROOP;
+    public static final int TOTAL_DIFFERENT_TROOP = TroopType.values().length;
 
     private final Map<Integer, CellsImpl> entityTroop;
     private final Random random = new Random();
@@ -32,9 +32,11 @@ public final class EntityDataImpl implements EntityData {
     /**
      * The constructor initializes the troops in the hand.
      */
-    public EntityDataImpl() {
+    public EntityDataImpl(final BattlePanelConfiguration battlePanelConfiguration) {
         this.entityTroop = new HashMap<>();
-        for (int i = 0; i < HAND_TROOPS; i++) {
+        this.handTroops = battlePanelConfiguration.getNrOfSlots();
+        totalTroops = battlePanelConfiguration.getNrOfFieldSpots();
+        for (int i = 0; i < handTroops; i++) {
             this.entityTroop.put(i, new CellsImpl(TroopType.getRandomTroop(), false));
         }
     }
@@ -65,7 +67,7 @@ public final class EntityDataImpl implements EntityData {
     @Override
     public List<TroopType> getSelected() {
         List<TroopType> selectedTroop = new ArrayList<>();
-        for (int i = 0; i < HAND_TROOPS; i++) {
+        for (int i = 0; i < handTroops; i++) {
             if (this.entityTroop.get(i).getClicked()) {
                 selectedTroop.add(this.entityTroop.get(i).getTroop());
             }
@@ -76,7 +78,7 @@ public final class EntityDataImpl implements EntityData {
     @Override
     public List<TroopType> getNotSelected() {
         List<TroopType> notSelectedTroop = new ArrayList<>();
-        for (int i = 0; i < HAND_TROOPS; i++) {
+        for (int i = 0; i < handTroops; i++) {
             if (!this.entityTroop.get(i).getClicked()) {
                 notSelectedTroop.add(this.entityTroop.get(i).getTroop());
             }
@@ -87,7 +89,7 @@ public final class EntityDataImpl implements EntityData {
     @Override
     public Map<Integer, TroopType> changeNotSelectedTroop() {
         Map<Integer, TroopType> troopChanged = new HashMap<>();
-        for (int i = 0; i < HAND_TROOPS; i++) {
+        for (int i = 0; i < handTroops; i++) {
             if (!entityTroop.get(i).getClicked()) {
                 entityTroop.get(i).setTroop(TroopType.getRandomTroop());
                 troopChanged.put(i, entityTroop.get(i).getTroop());
@@ -98,7 +100,7 @@ public final class EntityDataImpl implements EntityData {
 
     @Override
     public void setClickedToChosen() {
-        for (int i = 0; i < HAND_TROOPS; i++) {
+        for (int i = 0; i < handTroops; i++) {
             if (entityTroop.get(i).getClicked()) {
                 entityTroop.get(i).setChosen(true);
             }
@@ -108,7 +110,7 @@ public final class EntityDataImpl implements EntityData {
     @Override
     public Integer selectRandomTroop() {
         List<Integer> keys = new ArrayList<>();
-        for (int i = 0; i < HAND_TROOPS; i++) {
+        for (int i = 0; i < handTroops; i++) {
             if (!entityTroop.get(i).getClicked()) {
                 keys.add(i);
             }
@@ -130,7 +132,7 @@ public final class EntityDataImpl implements EntityData {
     @Override
     public Integer getKeyFromTroop(final TroopType troop) {
         if (getNotSelected().contains(troop)) {
-            for (int i = 0; i < HAND_TROOPS; i++) {
+            for (int i = 0; i < handTroops; i++) {
                 if (entityTroop.get(i).getTroop().equals(troop) && !entityTroop.get(i).getClicked()) {
                     return i;
                 }
@@ -183,7 +185,7 @@ public final class EntityDataImpl implements EntityData {
             }
 
         }
-        int troopsToFill = TOTAL_TROOPS - playerOptionalList.size();
+        int troopsToFill = totalTroops - playerOptionalList.size();
         for (int a = 0; a < troopsToFill; a++) {
             playerOptionalList.add(Optional.empty());
             botOptionalList.add(Optional.empty());
@@ -194,9 +196,7 @@ public final class EntityDataImpl implements EntityData {
 
     @Override
     public void setAllChosen() {
-
         this.entityTroop.values().forEach(x -> x.setChosen(true));
-
     }
 
     /**
@@ -209,11 +209,11 @@ public final class EntityDataImpl implements EntityData {
         List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(playerData, botData);
         List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0, (bothOrdered.size() / 2));
         List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size());
-        List<Optional<TroopType>> finalPlayer = new ArrayList<>(TOTAL_TROOPS);
-        List<Optional<TroopType>> finalBot = new ArrayList<>(TOTAL_TROOPS);
-        int maxPosition = TOTAL_TROOPS - 1;
+        List<Optional<TroopType>> finalPlayer = new ArrayList<>(totalTroops);
+        List<Optional<TroopType>> finalBot = new ArrayList<>(totalTroops);
+        int maxPosition = totalTroops - 1;
 
-        for (int a = 0; a < TOTAL_TROOPS; a++) {
+        for (int a = 0; a < totalTroops; a++) {
             finalPlayer.add(Optional.empty());
             finalBot.add(Optional.empty());
         }

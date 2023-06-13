@@ -14,7 +14,8 @@ public class BattleControllerTest {
 
     public static void main(String[] args) {
 
-        FightData fightData = new FightData();
+        GameData gameData = new GameData();
+        FightData fightData = new FightData(gameData.getGameConfiguration().getBattleControllerConfiguration());
         //BattleControllerImpl battleController=new BattleControllerImpl(new GameData());
 
     }

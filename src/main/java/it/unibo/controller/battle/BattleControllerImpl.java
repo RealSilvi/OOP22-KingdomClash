@@ -20,8 +20,6 @@ import java.util.List;
 
 import static it.unibo.model.battle.BattleModelImpl.WIN_BOT;
 import static it.unibo.model.battle.BattleModelImpl.WIN_PLAYER;
-import static it.unibo.model.data.FightData.MAX_ROUND;
-import static it.unibo.model.data.FightData.PLAYER_TROOPS;
 
 /**
  * The class implements BattleController methods.
@@ -43,6 +41,9 @@ public final class BattleControllerImpl implements BattleController, Controller 
     private final FightData fightData;
     private final BattlePanelImpl battlePanel;
 
+    private final int playerTroops;
+    private final int maxRound;
+
     /**
      * The constructor takes care to create Objects, disable buttons in panel,
      * and call actionListeners to set functionality to the buttons.
@@ -52,10 +53,11 @@ public final class BattleControllerImpl implements BattleController, Controller 
         if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
         } else {
-            this.fightData = new FightData();
+            this.fightData = new FightData(gameData.getGameConfiguration().getBattleControllerConfiguration());
             gameData.setFightData(this.fightData);
         }
-
+        this.playerTroops = gameData.getGameConfiguration().getBattleControllerConfiguration().getNrOfSlots();
+        this.maxRound = gameData.getGameConfiguration().getBattleControllerConfiguration().getMaxRound();
         this.battleModel = new BattleModelImpl(gameData);
         this.battlePanel = new BattlePanelImpl(fightData.getBotData().changeNotSelectedTroop(),
                 fightData.getPlayerData().changeNotSelectedTroop(),
@@ -76,8 +78,8 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.disablePlayerSlots();
         this.battlePanel.disableSpinButton();
         battlePanel.spinBotFreeSlot(this.battleModel.battleSpin(BOT));
-        if (fightData.getPlayerData().getSelected().size() == PLAYER_TROOPS) {
-            for (int i = this.battleModel.getCountedRound(); i < MAX_ROUND; i++) {
+        if (fightData.getPlayerData().getSelected().size() == playerTroops) {
+            for (int i = this.battleModel.getCountedRound(); i < this.maxRound; i++) {
                 this.battleModel.battlePass(PLAYER_FINISH);
                 update(NO_SKIP);
             }
@@ -86,9 +88,9 @@ public final class BattleControllerImpl implements BattleController, Controller 
             update(NO_SKIP);
         }
 
-        if (this.battleModel.getCountedRound() == MAX_ROUND) {
+        if (this.battleModel.getCountedRound() == this.maxRound) {
             battle();
-        } else if (fightData.getPlayerData().getSelected().size() < PLAYER_TROOPS) {
+        } else if (fightData.getPlayerData().getSelected().size() < playerTroops) {
             this.battlePanel.enableSpinButton();
         }
         this.battlePanel.disableBotSlots();

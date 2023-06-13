@@ -38,9 +38,9 @@ public final class GameData implements Serializable {
     public GameData(GameConfiguration gameConfiguration) {
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
-        this.fightData = new FightData();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
         this.configuration = gameConfiguration;
+        this.fightData = new FightData(this.configuration.getBattleControllerConfiguration());
         Arrays.stream(TroopType.values()).forEach(troopType -> this.playerArmyLevel.put(troopType, 1));
     }
     /**
