@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -20,7 +19,6 @@ import java.util.Random;
 import java.util.function.IntConsumer;
 import java.util.function.IntPredicate;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +28,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.mapdata.MapConfiguration;
 import it.unibo.view.utilities.GraphicUtils;
+import it.unibo.view.utilities.ImageIconsSupplier;
 
 /**
  * A simple panel made of tiles that can be of different types and
@@ -224,11 +223,12 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     private void loadAssets() {
         Arrays.stream(ButtonIdentification.values()).forEach(identification -> {
             try {
-                rawImageMap.put(identification, ImageIO.read(
-                    this.getClass()
-                    .getResource(mapConfiguration.getImageMap().get(identification))));
+                rawImageMap.put(identification,
+                    ImageIconsSupplier
+                    .loadImage(mapConfiguration
+                        .getImageMap().get(identification)));
                 bakeTiles();
-            } catch (IOException | IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 logger.severe("Error loading resources!");
             }
         });
@@ -243,7 +243,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
                     GraphicUtils.overlayImages(rawImageMap.get(ButtonIdentification.TILE) ,
                         GraphicUtils
                             .applyColorFilterToImage(
-                                rawImageMap.get(elementTile), Color.gray)));
+                                rawImageMap.get(elementTile), Color.BLACK)));
         });
     }
 
