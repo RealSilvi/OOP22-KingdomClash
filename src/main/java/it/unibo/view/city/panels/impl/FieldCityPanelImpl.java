@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+
+import it.unibo.view.GameGui;
 import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
@@ -24,8 +26,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         //GraphicUtils.resizeImage(new ImageIcon(),JButton.WIDTH,JButton.HEIGHT);
         this.gameConfiguration=gameConfiguration;
         this.pathIconsConfiguration=pathIconsConfiguration;
-        this.mainpanel= new DrawPanel(ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundCity()),
-            new Dimension(gameConfiguration.getWidth(), gameConfiguration.getHeight()));
+        this.mainpanel= new DrawPanel(ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundCity()),GameGui.getAllPanel()
+            );
         this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(),gameConfiguration.getHeight()));
         buttonmap= new ArrayList<>(gameConfiguration.getWidth()* gameConfiguration.getHeight());
         this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());

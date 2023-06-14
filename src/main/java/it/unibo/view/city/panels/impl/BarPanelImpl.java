@@ -15,8 +15,7 @@ import it.unibo.controller.base.BaseController;
 import it.unibo.controller.base.BaseControllerImpl;
 public class BarPanelImpl extends JLabel implements BarPanel {
 
-    private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),
-        (int)(GameGui.getAllPanel().getHeight()*0.1));
+    
     private final JPanel mainpanel;
     private BaseController basedata;
     private ResourcePopupPanel resourcepopup;
@@ -24,10 +23,10 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     
     
 
-    public BarPanelImpl(BaseController controller){
+    public BarPanelImpl(BaseController controller, Dimension size){
         this.mainpanel=new DrawPanel(Color.BLACK, size);
         this.basedata=controller;
-        this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0);
+        this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0, new ResourcePanelImpl(controller));
         this.trooppopup = new TroopPopupPanel(mainpanel, 500, 0);
         
         //this.isclicked= false;
@@ -37,18 +36,15 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         
         JButton troop= new JButton("troops button");
         JButton playerinfo= new JButton("player info");
-        JButton button = new JButton("Show Popup");
-
-        button.addActionListener(e -> {
-            JOptionPane.showMessageDialog(mainpanel, "You can't do this", "ERROR", JOptionPane.ERROR_MESSAGE);
-        });
+        JButton resourcebutton = new JButton("resources");
+        
         
        
 
         
         this.mainpanel.add(troop);
         this.mainpanel.add(playerinfo);
-        this.mainpanel.add(button);
+        this.mainpanel.add(resourcebutton);
         
         
         troop.addActionListener(new ActionListener() {
@@ -58,6 +54,15 @@ public class BarPanelImpl extends JLabel implements BarPanel {
                 trooppopup.changeVisibility();
                 
             }
+        });
+
+        resourcebutton.addActionListener( new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+               resourcepopup.changeVisibility();
+            }
+            
         });
         
         //playerinfo

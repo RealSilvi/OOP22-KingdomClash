@@ -14,11 +14,18 @@ public class TroopPopupPanel {
     private final int height;
     private JPanel contentpanel;
     private boolean visibility;
+    private Component container;
+    private int xposition;
+    private int yposition;
+
 
     public TroopPopupPanel(Component container, int xposition,int yposition) {
-        this.width = 200;
-        this.height = 200;
+        this.width = 500;
+        this.height = 500;
         this.visibility = false;
+        this.container = container;
+        this.xposition = xposition;
+        this.yposition = yposition;
         this.contentpanel = new JPanel();
         this.contentpanel.add(new JLabel("ResourcePopupPanel"));
         this.contentpanel.setPreferredSize(new Dimension(this.width, this.height));
@@ -31,6 +38,7 @@ public class TroopPopupPanel {
             popup.show();
         } else {
             popup.hide();
+            this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
         }
     }
 }
