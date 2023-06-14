@@ -2,17 +2,19 @@
 package it.unibo.view.city.panels.impl;
 
 
-import java.awt.Dimension;
-import java.util.ArrayList;
+import java.awt.Image;
+import java.io.IOException;
 import java.util.EnumMap;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
+import javax.imageio.ImageIO;
+
 
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
-import it.unibo.model.data.GameData;
+
+
 
 
 public class CityConfiguration {
@@ -20,6 +22,7 @@ public class CityConfiguration {
     
    
     private Map<BuildingBuilder.BuildingTypes,Map<Integer,String>> textureMap;
+    private Map<BuildingBuilder.BuildingTypes,Map<Integer,Image>> loadCityImage;
     private int width;
     private int height;
 
@@ -39,6 +42,8 @@ public class CityConfiguration {
              1,"KingdomClash\\src\\main\\resources\\it\\unibo\\textures\\city\\wooden_buildings_01_14.png",
               2,"KingdomClash\\src\\main\\resources\\it\\unibo\\textures\\city\\wooden_buildings_01_15.png"));
 
+       loadCityImage= new EnumMap<>(BuildingBuilder.BuildingTypes.class);
+
     }
 
     public Map<BuildingBuilder.BuildingTypes, Map<Integer, String>> getTextureMap() {
@@ -52,7 +57,23 @@ public class CityConfiguration {
     public int getHeight() {
         return height;
     }
-    
+
+
+    private void loadAssets() {
+        try
+        { 
+            for (BuildingTypes type : BuildingTypes.values()) {
+            Map<Integer,Image> tempImageLevel = new HashMap<>();
+            for(int i=0; i<= 3; i++){
+                
+                tempImageLevel.put(i, ImageIO.read(this.getClass().getResource(this.getTextureMap().get(type).get(i))));
+            }
+            loadCityImage.put(type, tempImageLevel);
+        }} catch(IOException e){
+
+        }
+               
+    }
     
 }
 
