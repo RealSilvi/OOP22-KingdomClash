@@ -1,5 +1,7 @@
 package it.unibo.view.utilities;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -17,7 +19,7 @@ public interface GraphicUtils {
      */
     //The assignment is necessary to avoid an exception
     @SuppressWarnings("java:S1488")
-    public static Image resizeImage(Image image, int width, int height) {
+    public static Image resizeImage(final Image image, final int width, final int height) {
         Image changedImage = width == 0 || height == 0 ? image :
             image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return changedImage;
@@ -68,5 +70,27 @@ public interface GraphicUtils {
         graphics.dispose();
 
         return overlaidImages;
+    }
+
+    /**
+     * Applies a color filter to a given image.
+     * @param img           the image to apply the color filter
+     * @param colorFilter   the color filter to apply
+     * @return              an image with the applied color filter
+     */
+    public static Image applyColorFilterToImage(Image img, Color colorFilter) {
+        int width = img.getWidth(null);
+        int height = img.getHeight(null);
+
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+
+        g2d.drawImage(img, 0, 0, null);
+        g2d.setComposite(AlphaComposite.SrcAtop);
+        g2d.setColor(colorFilter);
+        g2d.fillRect(0, 0, width, height);
+        g2d.dispose();
+
+        return bufferedImage;
     }
 }

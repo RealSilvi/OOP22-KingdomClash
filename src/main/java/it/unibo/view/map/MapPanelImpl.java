@@ -1,5 +1,6 @@
 package it.unibo.view.map;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -43,7 +44,11 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     public static final int BATTLE_LEVELS = 3;
     private static final int RANDOM_SEED = 65455;
 
+    private transient Map<ButtonIdentification, Image> rawImageMap = 
+        new EnumMap<>(ButtonIdentification.class);
     private transient Map<ButtonIdentification, Image> imageMap = 
+        new EnumMap<>(ButtonIdentification.class);
+    private transient Map<ButtonIdentification, Image> grayImageMap = 
         new EnumMap<>(ButtonIdentification.class);
 
     private transient List<JButton> tiles = new ArrayList<>();
@@ -165,21 +170,23 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     private void updateButtonIcons() {
         JButton newBtnDim = tiles.get(0);
         Arrays.stream(ButtonIdentification.values()).forEach(identifier -> {
-            ImageIcon temporaryIcon = new ImageIcon(
-            GraphicUtils.resizeImage(
-                imageMap.get(identifier), newBtnDim.getWidth(), newBtnDim.getHeight()));
-
-            tiles.stream()
-                .filter(tile -> tile.getActionCommand().equals(identifier.getActionCommand()))
+            Image activeVariantResized;
+            Image inactiveVariantResized;
+            if (identifier.equals(ButtonIdentification.TILE)) {
+                activeVariantResized = GraphicUtils.resizeImage(rawImageMap.get(identifier),
+                    newBtnDim.getWidth(), newBtnDim.getHeight());
+                inactiveVariantResized = activeVariantResized;
+            } else {
+                activeVariantResized = GraphicUtils.resizeImage(imageMap.get(identifier),
+                    newBtnDim.getWidth(), newBtnDim.getHeight());
+                inactiveVariantResized = GraphicUtils.resizeImage(grayImageMap.get(identifier),
+                    newBtnDim.getWidth(), newBtnDim.getHeight());
+            }
+            tiles.stream().filter(tile -> tile.getActionCommand()
+                .equals(identifier.getActionCommand()))
                 .forEach(tile -> {
-                    tile.setIcon(temporaryIcon);
-                    if (tile.getActionCommand()
-                        .equals(ButtonIdentification.TILE.getActionCommand())
-                        || tile.getActionCommand()
-                            .equals(ButtonIdentification.DEATH.getActionCommand())) {
-
-                        tile.setDisabledIcon(temporaryIcon);
-                    }
+                    tile.setIcon(new ImageIcon(activeVariantResized));
+                    tile.setDisabledIcon(new ImageIcon(inactiveVariantResized));
                 });
         });
     }
@@ -217,7 +224,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     private void loadAssets() {
         Arrays.stream(ButtonIdentification.values()).forEach(identification -> {
             try {
-                imageMap.put(identification, ImageIO.read(
+                rawImageMap.put(identification, ImageIO.read(
                     this.getClass()
                     .getResource(mapConfiguration.getImageMap().get(identification))));
                 bakeTiles();
@@ -228,10 +235,16 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     }
 
     private void bakeTiles() {
-        imageMap.keySet().stream().skip(1).forEach(elementTile ->
+        rawImageMap.keySet().stream().skip(1).forEach(elementTile -> {
             imageMap.put(elementTile,
                 GraphicUtils.overlayImages(
-                    imageMap.get(ButtonIdentification.TILE), imageMap.get(elementTile))));
+                    rawImageMap.get(ButtonIdentification.TILE), rawImageMap.get(elementTile)));
+            grayImageMap.put(elementTile,
+                    GraphicUtils.overlayImages(rawImageMap.get(ButtonIdentification.TILE) ,
+                        GraphicUtils
+                            .applyColorFilterToImage(
+                                rawImageMap.get(elementTile), Color.gray)));
+        });
     }
 
     /**
@@ -247,8 +260,8 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
                 button.setBorderPainted(false);
                 button.setPreferredSize(cellSize);
                 button.setActionCommand(ButtonIdentification.TILE.getActionCommand());
-                button.setIcon(new ImageIcon(imageMap.get(ButtonIdentification.TILE)));
-                button.setDisabledIcon(new ImageIcon(imageMap.get(ButtonIdentification.TILE)));
+                button.setIcon(new ImageIcon(rawImageMap.get(ButtonIdentification.TILE)));
+                button.setDisabledIcon(new ImageIcon(rawImageMap.get(ButtonIdentification.TILE)));
                 button.setBorderPainted(false);
                 button.setContentAreaFilled(false);
                 button.setEnabled(false);
