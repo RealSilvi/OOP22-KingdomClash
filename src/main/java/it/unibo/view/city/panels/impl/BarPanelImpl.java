@@ -9,7 +9,8 @@ import javax.swing.*;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.panels.api.BarPanel;
-import it.unibo.view.city.utilities.NewWindow;
+import it.unibo.view.city.utilities.ResourcePopupPanel;
+import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
 import it.unibo.controller.base.BaseControllerImpl;
 public class BarPanelImpl extends JLabel implements BarPanel {
@@ -18,13 +19,16 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         (int)(GameGui.getAllPanel().getHeight()*0.1));
     private final JPanel mainpanel;
     private BaseController basedata;
-    private NewWindow window;
+    private ResourcePopupPanel resourcepopup;
+    private TroopPopupPanel trooppopup;
     
     
 
     public BarPanelImpl(BaseController controller){
         this.mainpanel=new DrawPanel(Color.BLACK, size);
         this.basedata=controller;
+        this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0);
+        this.trooppopup = new TroopPopupPanel(mainpanel, 500, 0);
         
         //this.isclicked= false;
         
@@ -49,10 +53,9 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         
         troop.addActionListener(new ActionListener() {
             
-            NewWindow window= new NewWindow(getInfo(size));
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                window.changeVisibility();
+                trooppopup.changeVisibility();
                 
             }
         });
