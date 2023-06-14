@@ -56,15 +56,15 @@ public class ImageTextArea extends JTextArea {
                 "You can find more information about the battle, inside of the battle clicking on the 'info' button.\n" +
                 "In the game there are " + lenght + " different troops, and each troop can have only one correspondence.\n" +
                 "There are " + lenght / 2 + " attack troops, which their correspondence:\n     \n");
-                int incrementHeight = height;
+                double incrementHeight = 1.5;
                 for(i=0; i < lenght / 2; i++){
                     int finalI = i;
                     JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values()).
                             filter(x -> x.ordinal() == finalI).toList().get(0)),
                             new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) GameGui.DIMENSION_SCREEN.getHeight() / 20))));
-                    label.setSize(new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth()-width), ((int) GameGui.DIMENSION_SCREEN.getHeight() + incrementHeight)));
+                    label.setSize(new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) (GameGui.DIMENSION_SCREEN.getHeight() * incrementHeight))));
                     add(label);
-                    incrementHeight += height / 4.5;
+                    incrementHeight += 0.12;
                     append("                    --> ");
                     append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == (lenght / 2) + finalI).toList() + "\n      \n");
                 }
