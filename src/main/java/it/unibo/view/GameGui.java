@@ -30,6 +30,7 @@ public final class GameGui implements GameGuiInt {
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
     /** Height of the buttons.*/
     public static final int HEIGHT_BUTTON = (int) DIMENSION_SCREEN.getHeight() / 20;
+    private final JFrame frame;
     private final CardLayout switchLayout;
     private final CardLayout switchLayout2;
     private final JPanel allPanel;
@@ -48,11 +49,11 @@ public final class GameGui implements GameGuiInt {
      * @param gameConfiguration Configuration of the game.
      */
     public GameGui(final JPanel battlePanel, final JPanel cityPanel, final GameConfiguration gameConfiguration) {
-        JFrame frame = new JFrame();
-        frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame = new JFrame();
+        this.frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
+        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.frame.setResizable(false);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.soundManager = new SoundManager();
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
@@ -152,6 +153,8 @@ public final class GameGui implements GameGuiInt {
     private void setActionListenerExit() {
         ActionListener actionListener = e -> showMenuPanel();
         this.infoPanel.setActionListenerExit(actionListener);
+        actionListener = e -> this.frame.dispose();
+        this.southPanel.setActionListenerExit(actionListener);;
     }
 
     private void setActionListenerBattle() {

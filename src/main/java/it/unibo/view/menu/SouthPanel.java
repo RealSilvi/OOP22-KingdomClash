@@ -19,6 +19,7 @@ public class SouthPanel {
     private final JButton mapButton;
     private final JButton menuButton;
     private final JButton musicButton;
+    private final JButton exitButton;
 
     public SouthPanel(){
         this.battleButton = new JButton("BATTLE");
@@ -27,6 +28,7 @@ public class SouthPanel {
         this.battleButton.setVisible(true);
         this.cityButton = new JButton("CITY");
         this.mapButton = new JButton("MAP");
+        this.exitButton = new JButton("EXIT");
 
         this.southPanel = new JPanel();
         this.southPanel.setBackground(Color.blue);
@@ -36,6 +38,7 @@ public class SouthPanel {
         this.southPanel.add(this.menuButton);
         this.southPanel.add(this.cityButton);
         this.southPanel.add(this.mapButton);
+        this.southPanel.add(this.exitButton);
     }
 
     @SuppressFBWarnings(value = "EI",
@@ -64,6 +67,9 @@ public class SouthPanel {
     }
     public void setActionListenerMap(ActionListener actionListener){
         this.mapButton.addActionListener(actionListener);
+    }
+    public void setActionListenerExit(ActionListener actionListener){
+        this.exitButton.addActionListener(actionListener);
     }
 
     public void showButtonsMap(){

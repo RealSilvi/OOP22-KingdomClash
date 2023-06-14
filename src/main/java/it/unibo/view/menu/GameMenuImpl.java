@@ -15,8 +15,8 @@ public class GameMenuImpl implements GameMenu {
 
     private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
-    public static final ImageIcon BACKGROUND_BUTTON = new ImageIcon(ImageIconsSupplier.loadImage("/it/unibo/game.menu/wood.jpg"));
-    public static final ImageIcon BACKGROUND_PANEL = new ImageIcon(ImageIconsSupplier.loadImage("/it/unibo/game.menu/RvsH.jpg"));
+    public static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.loadImageIcon("/it/unibo/game.menu/wood.jpg");
+    public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.loadImageIcon("/it/unibo/game.menu/RvsH.jpg");
     private final JPanel menuPanel;
     private final ImageButton info;
     private final ImageButton new_game;
