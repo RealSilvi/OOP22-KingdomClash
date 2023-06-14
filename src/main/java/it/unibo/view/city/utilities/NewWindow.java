@@ -7,24 +7,24 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class NewWindow implements ActionListener{
+public class NewWindow {
 
         final JFrame frame= new JFrame();
+        boolean visibility;
 
-        public NewWindow(Component content, boolean visibility){
+        public NewWindow(Component content){
             
-             frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-             frame.setSize(100, 100);
+            this.visibility = false;
+            frame.setSize(500, 500);
             frame.setVisible(visibility);
             frame.add(content);
 
             
         }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            frame.dispose();
-        }
+       public void changeVisibility() {
+        this.visibility = !this.visibility;
+       }
 
     
     }
