@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.basedata.Building;
+import org.jetbrains.annotations.TestOnly;
 
 /**
  * A simple data class to store all the game's information.
