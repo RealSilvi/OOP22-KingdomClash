@@ -13,10 +13,18 @@ import it.unibo.controller.base.BaseController;
 import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.data.Resource.ResourceType;
 
-public class ResourcePanelImpl extends JPanel {
+/**
+ * A simple panel class to show available resources to the player.
+ */
+public final class ResourcePanelImpl extends JPanel {
     private Map<ResourceType, JLabel> labelToResource = new EnumMap<>(ResourceType.class);
-    
-    public ResourcePanelImpl(BaseController controller) {
+    private BaseController baseControllerRef;
+    /**
+     * Constructs a panel that has the purpose of showing the player's resources.
+     * @param baseControllerRef the reference for the baseController
+     */
+    public ResourcePanelImpl(BaseController baseControllerRef) {
+        this.baseControllerRef = baseControllerRef;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         Arrays.stream(ResourceType.values())
             .forEach(resourceType -> {
@@ -24,19 +32,26 @@ public class ResourcePanelImpl extends JPanel {
                 labelToResource.put(resourceType, resourceLabel);
                 this.add(resourceLabel);
             });
-        controller.addBuildingProductionObserver(new BuildingObserver() {
+        baseControllerRef.addBuildingProductionObserver(new BuildingObserver() {
             @Override
             public void update(UUID buildingId) {
-                if (controller.requestBuildingMap()
+                if (baseControllerRef.requestBuildingMap()
                     .get(buildingId).getProductionProgress() == 100) {
-                    controller.requestResourceCount().stream()
-                        .forEach(resource -> {
-                            labelToResource.get(resource.getResource())
-                                .setText(resource.getResource().name().toUpperCase()
-                                    +": "+resource.getAmount());
-                        });
+                    updateResourceDisplay();
                 }
             }
         });
+        updateResourceDisplay();
+    }
+    /**
+     * Updates the displayed Resources.
+     */
+    private void updateResourceDisplay() {
+        baseControllerRef.requestResourceCount().stream()
+            .forEach(resource -> 
+                labelToResource.get(resource.getResource())
+                    .setText(resource.getResource().name().toUpperCase()
+                        +": "+resource.getAmount())
+            );
     }
 }
