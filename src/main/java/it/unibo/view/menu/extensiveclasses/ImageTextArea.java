@@ -55,8 +55,8 @@ public class ImageTextArea extends JTextArea {
                 "the bot lose all its life, otherwise you lose, and you have to repeat the level (you don't lose your upgrades).\n" +
                 "You can find more information about the battle, inside of the battle clicking on the 'info' button.\n" +
                 "In the game there are " + lenght + " different troops, and each troop can have only one correspondence.\n" +
-                "There are " + lenght / 2 + " attack troops, which their correspondence:\n     \n");
-                double incrementHeight = 1.5;
+                "There are " + lenght / 2 + " correspondences:\n     \n");
+                double incrementHeight = 1.55;
                 for(i=0; i < lenght / 2; i++){
                     int finalI = i;
                     JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values()).
@@ -64,15 +64,15 @@ public class ImageTextArea extends JTextArea {
                             new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) GameGui.DIMENSION_SCREEN.getHeight() / 20))));
                     label.setSize(new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) (GameGui.DIMENSION_SCREEN.getHeight() * incrementHeight))));
                     add(label);
-                    incrementHeight += 0.12;
-                    append("                    --> ");
-                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == (lenght / 2) + finalI).toList() + "\n      \n");
-                }
-        append("There are " + lenght / 2 + " defense troops, which their correspondence:\n");
-                for(i = lenght-1; i >= lenght / 2; i--){
-                    int finalI1 = i;
-                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI1).toList() + " --> ");
-                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI1 - (lenght / 2)).toList() + "\n");
+                    append("                    ---->              \n");
+                    append("                    <----                ");
+                    JLabel label1 = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values())
+                                    .filter(x -> x.ordinal() == (lenght / 2) + finalI).toList().get(0)),
+                            new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) GameGui.DIMENSION_SCREEN.getHeight() / 20))));
+                    label1.setSize(new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 4), ((int) (GameGui.DIMENSION_SCREEN.getHeight() * incrementHeight))));
+                    add(label1);
+                    incrementHeight += 0.16;
+                    append("\n       \n");
                 }
         append("If an attack troop doesn't find any troop of the enemy in front of it, then the enemy lose 1 life.\n" +
                 "If an attack troop finds a defense troop against it, and they have the same level, then none take damage.\n" +
