@@ -19,6 +19,7 @@ public class GameMenuImpl implements GameMenu {
     public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.loadImageIcon("/it/unibo/game.menu/RvsH.jpg");
     private final JPanel menuPanel;
     private final ImageButton info;
+    private final ImageButton exit;
     private final ImageButton new_game;
     private final ImageButton music;
 
@@ -27,9 +28,9 @@ public class GameMenuImpl implements GameMenu {
         ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
         this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
         this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
+        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
 
         Font font = BattlePanelStyle.getPrimaryFont();
-        //Font font = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON)));
         GridBagConstraints grid = new GridBagConstraints();
 
         this.menuPanel = new ImagePanel(BACKGROUND_PANEL.getImage());
@@ -60,6 +61,11 @@ public class GameMenuImpl implements GameMenu {
         info.setForeground(Color.BLACK);
         menuPanel.add(info, grid);
 
+        grid.gridy = 5;
+        exit.setFont(font);
+        exit.setForeground(Color.BLACK);
+        menuPanel.add(exit, grid);
+
     }
 
     @SuppressFBWarnings(value = "EI",
@@ -79,6 +85,10 @@ public class GameMenuImpl implements GameMenu {
 
     public void setActionListenerMusic(ActionListener actionListener){
         this.music.addActionListener(actionListener);
+    }
+
+    public void setActionListenerExit(ActionListener actionListener){
+        this.exit.addActionListener(actionListener);
     }
 
 }

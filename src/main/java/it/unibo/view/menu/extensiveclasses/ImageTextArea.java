@@ -13,7 +13,7 @@ public class ImageTextArea extends JTextArea {
     public ImageTextArea() {
         super();
         int lenght = TroopType.values().length;
-        int i = 0;
+        int i;
         setForeground(Color.WHITE);
         setText("Welcome in the tutorial of Kingdom Clash:\n" +
                 "In the game are present 3 principal panels which you can switch:\n" +
@@ -48,14 +48,14 @@ public class ImageTextArea extends JTextArea {
                 "There are " + lenght / 2 + " attack troops, which their correspondence:\n");
                 for(i=0; i < lenght / 2; i++){
                     int finalI = i;
-                    append("" + Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI).toList() + " --> ");
-                    append("" + Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == (lenght / 2) + finalI).toList() + "\n");
+                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI).toList() + " --> ");
+                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == (lenght / 2) + finalI).toList() + "\n");
                 }
         append("There are " + lenght / 2 + " defense troops, which their correspondence:\n");
                 for(i = lenght-1; i >= lenght / 2; i--){
                     int finalI1 = i;
-                    append("" + Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI1).toList() + " --> ");
-                    append("" + Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI1 - (lenght / 2)).toList() + "\n");
+                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI1).toList() + " --> ");
+                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI1 - (lenght / 2)).toList() + "\n");
                 }
         append("If an attack troop doesn't find any troop of the enemy in front of it, then the enemy lose 1 life.\n" +
                 "If an attack troop finds a defense troop against it, and they have the same level, then none take damage.\n" +

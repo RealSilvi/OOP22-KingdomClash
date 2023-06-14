@@ -13,4 +13,6 @@ public interface GameMenu {
 
     void setActionListenerMusic(ActionListener actionListener);
 
+    void setActionListenerExit(ActionListener actionListener);
+
 }

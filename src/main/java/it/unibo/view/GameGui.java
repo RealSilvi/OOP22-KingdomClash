@@ -154,7 +154,8 @@ public final class GameGui implements GameGuiInt {
         ActionListener actionListener = e -> showMenuPanel();
         this.infoPanel.setActionListenerExit(actionListener);
         actionListener = e -> this.frame.dispose();
-        this.southPanel.setActionListenerExit(actionListener);;
+        this.southPanel.setActionListenerExit(actionListener);
+        this.menuPanel.setActionListenerExit(actionListener);
     }
 
     private void setActionListenerBattle() {
