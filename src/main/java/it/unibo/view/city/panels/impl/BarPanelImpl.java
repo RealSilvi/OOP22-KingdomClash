@@ -9,22 +9,25 @@ import javax.swing.*;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.panels.api.BarPanel;
-import it.unibo.view.city.utilities.NewWindow;
+import it.unibo.view.city.utilities.ResourcePopupPanel;
+import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
 import it.unibo.controller.base.BaseControllerImpl;
 public class BarPanelImpl extends JLabel implements BarPanel {
 
-    private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),
-        (int)(GameGui.getAllPanel().getHeight()*0.1));
+    
     private final JPanel mainpanel;
     private BaseController basedata;
-    private NewWindow window;
+    private ResourcePopupPanel resourcepopup;
+    private TroopPopupPanel trooppopup;
     
     
 
-    public BarPanelImpl(BaseController controller){
+    public BarPanelImpl(BaseController controller, Dimension size){
         this.mainpanel=new DrawPanel(Color.BLACK, size);
         this.basedata=controller;
+        this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0, new ResourcePanelImpl(controller));
+        this.trooppopup = new TroopPopupPanel(mainpanel, 500, 0);
         
         //this.isclicked= false;
         
@@ -33,28 +36,33 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         
         JButton troop= new JButton("troops button");
         JButton playerinfo= new JButton("player info");
-        JButton button = new JButton("Show Popup");
-
-        button.addActionListener(e -> {
-            JOptionPane.showMessageDialog(mainpanel, "You can't do this", "ERROR", JOptionPane.ERROR_MESSAGE);
-        });
+        JButton resourcebutton = new JButton("resources");
+        
         
        
 
         
         this.mainpanel.add(troop);
         this.mainpanel.add(playerinfo);
-        this.mainpanel.add(button);
+        this.mainpanel.add(resourcebutton);
         
         
         troop.addActionListener(new ActionListener() {
             
-            NewWindow window= new NewWindow(getInfo(size));
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                window.changeVisibility();
+                trooppopup.changeVisibility();
                 
             }
+        });
+
+        resourcebutton.addActionListener( new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+               resourcepopup.changeVisibility();
+            }
+            
         });
         
         //playerinfo
