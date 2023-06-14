@@ -17,11 +17,11 @@ public class CityPanelImpl implements CityPanel {
 
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
-    private final JFrame mainframe;
+    
 
     public CityPanelImpl(BaseControllerImpl controller, GameConfiguration configuration) {
 
-        this.mainframe = new JFrame();
+        
         this.mainPanel = new DrawPanel(Color.BLACK,
                 new Dimension(configuration.getCityConfiguration().getWidth(),
                         configuration.getCityConfiguration().getHeight()));
@@ -33,9 +33,7 @@ public class CityPanelImpl implements CityPanel {
 
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
-        this.mainframe.getContentPane().add(mainPanel);
-        this.mainframe.setDefaultCloseOperation(mainframe.EXIT_ON_CLOSE);
-        this.mainframe.setVisible(true);
+        
 
     }
 
@@ -58,9 +56,6 @@ public class CityPanelImpl implements CityPanel {
         return this.mainPanel;
     }
 
-    public JFrame getFrame(){
-        return this.mainframe;
-    }
 
     @Override
     public void setBuildings() {

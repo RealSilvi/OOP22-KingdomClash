@@ -48,12 +48,12 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         
         
         troop.addActionListener(new ActionListener() {
-            private boolean isOpen = false;
+            
+            NewWindow window= new NewWindow(getInfo(size));
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                window= new NewWindow(getInfo(size),isOpen);
-                troop.addActionListener(window);
-                isOpen= !isOpen;
+                window.changeVisibility();
+                
             }
         });
         
@@ -104,22 +104,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         return this.mainpanel;
     }
 
-    /*public JFrame windFrame(){
-        final JFrame frame= new JFrame();
-        popup = popupFactory.getPopup(secondaryPanel, getInfo(size), 10, 10);
-        popup.show();
-        JButton close = new JButton("close");
-        secondaryPanel.add(close, BorderLayout.PAGE_END);
-        close.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent a){
-                System.exit(0);
-            }
-        });
-        frame.getContentPane().add(secondaryPanel);
-        frame.setVisible(true);
-        return frame;
-
-    }*/
 }
 
     
