@@ -15,8 +15,13 @@ public class GameMenuImpl implements GameMenu {
 
     private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
-    public static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.loadImageIcon("/it/unibo/game.menu/wood.jpg");
-    public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.loadImageIcon("/it/unibo/game.menu/RvsH.jpg");
+    private static final int WIDTH_INCREMENT = 2;
+    private static final double HEIGHT_INCREMENT = 1.5;
+    public static final String PATH_BUTTON = "/it/unibo/game.menu/wood.jpg";
+    public static final String PATH_PANEL = "/it/unibo/game.menu/RvsH.jpg";
+    public static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(PATH_BUTTON,
+            new Dimension(WIDTH_BUTTON * (WIDTH_INCREMENT * 2), (int) (HEIGHT_BUTTON * (HEIGHT_INCREMENT * 2))));
+    public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.loadImageIcon(PATH_PANEL);
     private final JPanel menuPanel;
     private final ImageButton info;
     private final ImageButton exit;
@@ -24,11 +29,11 @@ public class GameMenuImpl implements GameMenu {
     private final ImageButton music;
 
     public GameMenuImpl() {
-        this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
-        ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
-        this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
-        this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
-        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
+        this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
+        ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
+        this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
+        this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
+        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
 
         Font font = BattlePanelStyle.getPrimaryFont();
         GridBagConstraints grid = new GridBagConstraints();
