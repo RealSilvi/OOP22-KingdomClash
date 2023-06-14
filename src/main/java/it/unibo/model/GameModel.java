@@ -19,13 +19,13 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public final class GameModel {
-    private Logger logger = Logger.getLogger(this.getClass().getName());
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
-    private File saveDataLocation;
+    private final File saveDataLocation;
 
     private GameData gameData;
 
-    private GameConfiguration configuration;
+    transient private GameConfiguration configuration;
 
     /**Intended behaviour of File.mkdirs();*/
     @SuppressWarnings("ResultOfMethodCallIgnored")
