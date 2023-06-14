@@ -1,5 +1,7 @@
 package it.unibo.controller;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 /**
@@ -9,6 +11,6 @@ import javax.swing.*;
 
     JPanel getGuiPanel();
 
-    void setReturnActionListener();
-    void removeReturnActionListener();
+    void setReturnActionListener(ActionListener returnActionToAdd);
+    void removeReturnActionListener(ActionListener returnActionToRemove);
 }
