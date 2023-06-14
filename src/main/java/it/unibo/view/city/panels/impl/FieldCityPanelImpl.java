@@ -4,33 +4,31 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-
-import it.unibo.controller.base.BaseControllerImpl;
-import it.unibo.model.base.BaseModelImpl;
-import it.unibo.model.base.internal.BuildingBuilder;
-import it.unibo.model.data.GameData;
+import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
+import it.unibo.view.utilities.ImageIconsSupplier;
 
 public class FieldCityPanelImpl implements FieldCityPanel {
 
     private final JPanel mainpanel;
-    private BaseModelImpl function;
-    private Map<BuildingBuilder.BuildingTypes,Image> buildingmap;
-    private Set<Set<Integer>> coordinate;
     private List<List<JButton>> buttonmap;
-    private CityConfiguration cityConfiguration;
-    private BaseControllerImpl basedata;
+    private CityConfiguration gameConfiguration;
+    private PathIconsConfiguration pathIconsConfiguration;
+    
 
    
 
-    public FieldCityPanelImpl(CityConfiguration cityConfiguration){
+    public FieldCityPanelImpl(CityConfiguration gameConfiguration, PathIconsConfiguration pathIconsConfiguration){
 
-        this.mainpanel= new DrawPanel(new ImageIcon("C:\\Users\\abdou\\OneDrive\\Immagini\\tiles\\grass.png"), new Dimension(cityConfiguration.getWidth(), cityConfiguration.getHeight()));
-        this.mainpanel.setLayout(new GridLayout(cityConfiguration.getWidth(),cityConfiguration.getHeight()));
-        buttonmap= new ArrayList<>(cityConfiguration.getWidth()* cityConfiguration.getHeight());
-        this.setfield(cityConfiguration.getWidth(), cityConfiguration.getHeight());
-        buildingmap=new EnumMap<>(BuildingBuilder.BuildingTypes.class);
+        //GraphicUtils.resizeImage(new ImageIcon(),JButton.WIDTH,JButton.HEIGHT);
+        this.gameConfiguration=gameConfiguration;
+        this.pathIconsConfiguration=pathIconsConfiguration;
+        this.mainpanel= new DrawPanel(ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundCity()),
+            new Dimension(gameConfiguration.getWidth(), gameConfiguration.getHeight()));
+        this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(),gameConfiguration.getHeight()));
+        buttonmap= new ArrayList<>(gameConfiguration.getWidth()* gameConfiguration.getHeight());
+        this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());
         
        
 
