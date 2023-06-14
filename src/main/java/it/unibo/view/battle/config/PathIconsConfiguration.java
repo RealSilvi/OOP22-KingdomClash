@@ -8,11 +8,12 @@ import java.util.Map;
 public class PathIconsConfiguration {
 
     private final String texturesDirectory;
-    private final String troopsDirectory;
-    private final String labelDirectory;
-    private final String buttonsDirectory;
     private final String cityDirectory;
     private final String buildingDirectory;
+    private final String battleDirectory;
+    private final String battleTroopsDirectory;
+    private final String battleLabelDirectory;
+    private final String battleButtonsDirectory;
 
     private final Map<TroopType, String> troops;
     private final Map<BuildingBuilder.BuildingTypes, Map<Integer, String>> buildings;
@@ -29,66 +30,81 @@ public class PathIconsConfiguration {
     private final String death;
 
     public PathIconsConfiguration() {
-        this.texturesDirectory = "/it/unibo/textures/battle/";
-        this.troopsDirectory = texturesDirectory + "troops/";
-        this.labelDirectory = texturesDirectory + "labels/";
-        this.buttonsDirectory = texturesDirectory + "buttons/";
-        this.cityDirectory = texturesDirectory + "city/"; 
+        this.texturesDirectory = "/it/unibo/textures/";
+        this.battleDirectory = texturesDirectory + "battle/";
+        this.cityDirectory = texturesDirectory + "city/";
+        this.battleTroopsDirectory = battleDirectory + "troops/";
+        this.battleLabelDirectory = battleDirectory + "labels/";
+        this.battleButtonsDirectory = battleDirectory + "buttons/";
         this.buildingDirectory = cityDirectory + "buildings/";
-        this.backgroundFillPattern = texturesDirectory + "Background.png";
+
+        this.backgroundFillPattern = battleDirectory + "Background.png";
         this.backgroundCity = cityDirectory + "grass.png";
-        this.pass = buttonsDirectory + "Pass.png";
-        this.spin = buttonsDirectory + "Spin.png";
-        this.info = buttonsDirectory + "Info.png";
-        this.exit = buttonsDirectory + "Exit.png";
-        this.check = labelDirectory + "Check.png";
-        this.x = labelDirectory + "X.png";
-        this.indicator = labelDirectory + "Indicator.png";
-        this.life = labelDirectory + "Life.png";
-        this.death = labelDirectory + "Death.png";
+        this.pass = battleButtonsDirectory + "Pass.png";
+        this.spin = battleButtonsDirectory + "Spin.png";
+        this.info = battleButtonsDirectory + "Info.png";
+        this.exit = battleButtonsDirectory + "Exit.png";
+        this.check = battleLabelDirectory + "Check.png";
+        this.x = battleLabelDirectory + "X.png";
+        this.indicator = battleLabelDirectory + "Indicator.png";
+        this.life = battleLabelDirectory + "Life.png";
+        this.death = battleLabelDirectory + "Death.png";
         this.troops = Map.of(
-                TroopType.AXE, troopsDirectory + "Axe.png",
-                TroopType.SWORD, troopsDirectory + "Sword.png",
-                TroopType.HAMMER, troopsDirectory + "Hammer.png",
-                TroopType.MACE, troopsDirectory + "Mace.png",
-                TroopType.AXE_DEFENCE, troopsDirectory + "Shield01.png",
-                TroopType.SWORD_DEFENCE, troopsDirectory + "Shield02.png",
-                TroopType.HAMMER_DEFENCE, troopsDirectory + "Shield03.png",
-                TroopType.MACE_DEFENCE, troopsDirectory + "Helmet.png");
+                TroopType.AXE, battleTroopsDirectory + "Axe.png",
+                TroopType.SWORD, battleTroopsDirectory + "Sword.png",
+                TroopType.HAMMER, battleTroopsDirectory + "Hammer.png",
+                TroopType.MACE, battleTroopsDirectory + "Mace.png",
+                TroopType.AXE_DEFENCE, battleTroopsDirectory + "Shield01.png",
+                TroopType.SWORD_DEFENCE, battleTroopsDirectory + "Shield02.png",
+                TroopType.HAMMER_DEFENCE, battleTroopsDirectory + "Shield03.png",
+                TroopType.MACE_DEFENCE, battleTroopsDirectory + "Helmet.png");
         this.buildings = Map.of(
-            BuildingBuilder.BuildingTypes.FARM, Map.of(
-            1, buildingDirectory+ "farm1.png",
-            2, buildingDirectory+ "farm2.png",
-            3, buildingDirectory+ "farm3.png"),
-            BuildingBuilder.BuildingTypes.HALL, Map.of(
-            1, buildingDirectory+ "hall_1.png",
-            2, buildingDirectory+ "hall_2.png",
-            3, buildingDirectory+ "hall_3.png"
-            ),
-            BuildingBuilder.BuildingTypes.LUMBERJACK, Map.of(
-            1, buildingDirectory+ "lumberjack1.png",
-            2, buildingDirectory+ "lumberjack2.png",
-            3, buildingDirectory+ "lumberjack3.png"
-            )
+                BuildingBuilder.BuildingTypes.FARM, Map.of(
+                        1, buildingDirectory + "farm1.png",
+                        2, buildingDirectory + "farm2.png",
+                        3, buildingDirectory + "farm3.png"),
+                BuildingBuilder.BuildingTypes.HALL, Map.of(
+                        1, buildingDirectory + "hall_1.png",
+                        2, buildingDirectory + "hall_2.png",
+                        3, buildingDirectory + "hall_3.png"
+                ),
+                BuildingBuilder.BuildingTypes.LUMBERJACK, Map.of(
+                        1, buildingDirectory + "lumberjack1.png",
+                        2, buildingDirectory + "lumberjack2.png",
+                        3, buildingDirectory + "lumberjack3.png"
+                )
         );
-                
+
     }
 
     public String getTexturesDirectory() {
         return this.texturesDirectory;
     }
 
-    public String getTroopsDirectory() {
-        return this.troopsDirectory;
+    public String getBuildingDirectory() {
+        return this.buildingDirectory;
     }
 
-    public String getLabelDirectory() {
-        return this.labelDirectory;
+    public String getBattleDirectory() {
+        return this.battleDirectory;
     }
 
-    public String getButtonsDirectory() {
-        return this.buttonsDirectory;
+    public String getBattleTroopsDirectory() {
+        return this.battleTroopsDirectory;
     }
+
+    public String getBattleLabelDirectory() {
+        return this.battleLabelDirectory;
+    }
+
+    public String getBattleButtonsDirectory() {
+        return this.battleButtonsDirectory;
+    }
+
+    public String getCityDirectory() {
+        return this.cityDirectory;
+    }
+
 
     public String getBackgroundFillPattern() {
         return this.backgroundFillPattern;
@@ -135,8 +151,8 @@ public class PathIconsConfiguration {
     }
 
     public String getBuilding(BuildingBuilder.BuildingTypes type, Integer level) {
-        return (level>3 || level<1)? 
-        this.buildings.get(type).get(1) :
-        this.buildings.get(type).get(level) ;
+        return (level > 3 || level < 1) ?
+                this.buildings.get(type).get(1) :
+                this.buildings.get(type).get(level);
     }
 }
