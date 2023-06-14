@@ -1,5 +1,6 @@
 package it.unibo.view.battle.config;
 
+import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.data.TroopType;
 
 import java.util.Map;
@@ -10,10 +11,13 @@ public class PathIconsConfiguration {
     private final String troopsDirectory;
     private final String labelDirectory;
     private final String buttonsDirectory;
+    private final String cityDirectory;
+    private final String buildingDirectory;
 
     private final Map<TroopType, String> troops;
-
+    private final Map<BuildingBuilder.BuildingTypes, Map<Integer, String>> buildings;
     private final String backgroundFillPattern;
+    private final String backgroundCity;
     private final String pass;
     private final String spin;
     private final String info;
@@ -29,7 +33,10 @@ public class PathIconsConfiguration {
         this.troopsDirectory = texturesDirectory + "troops/";
         this.labelDirectory = texturesDirectory + "labels/";
         this.buttonsDirectory = texturesDirectory + "buttons/";
+        this.cityDirectory = texturesDirectory + "city/"; 
+        this.buildingDirectory = cityDirectory + "buildings/";
         this.backgroundFillPattern = texturesDirectory + "Background.png";
+        this.backgroundCity = cityDirectory + "grass.png";
         this.pass = buttonsDirectory + "Pass.png";
         this.spin = buttonsDirectory + "Spin.png";
         this.info = buttonsDirectory + "Info.png";
@@ -48,6 +55,23 @@ public class PathIconsConfiguration {
                 TroopType.SWORD_DEFENCE, troopsDirectory + "Shield02.png",
                 TroopType.HAMMER_DEFENCE, troopsDirectory + "Shield03.png",
                 TroopType.MACE_DEFENCE, troopsDirectory + "Helmet.png");
+        this.buildings = Map.of(
+            BuildingBuilder.BuildingTypes.FARM, Map.of(
+            1, buildingDirectory+ "farm1.png",
+            2, buildingDirectory+ "farm2.png",
+            3, buildingDirectory+ "farm3.png"),
+            BuildingBuilder.BuildingTypes.HALL, Map.of(
+            1, buildingDirectory+ "hall_1.png",
+            2, buildingDirectory+ "hall_2.png",
+            3, buildingDirectory+ "hall_3.png"
+            ),
+            BuildingBuilder.BuildingTypes.LUMBERJACK, Map.of(
+            1, buildingDirectory+ "lumberjack1.png",
+            2, buildingDirectory+ "lumberjack2.png",
+            3, buildingDirectory+ "lumberjack3.png"
+            )
+        );
+                
     }
 
     public String getTexturesDirectory() {
@@ -68,6 +92,10 @@ public class PathIconsConfiguration {
 
     public String getBackgroundFillPattern() {
         return this.backgroundFillPattern;
+    }
+
+    public String getBackgroundCity() {
+        return this.backgroundCity;
     }
 
     public String getPass() {
@@ -104,5 +132,11 @@ public class PathIconsConfiguration {
 
     public String getTroop(TroopType troop) {
         return this.troops.get(troop);
+    }
+
+    public String getBuilding(BuildingBuilder.BuildingTypes type, Integer level) {
+        return (level>3 || level<1)? 
+        this.buildings.get(type).get(1) :
+        this.buildings.get(type).get(level) ;
     }
 }

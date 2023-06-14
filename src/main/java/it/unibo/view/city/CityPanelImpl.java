@@ -17,25 +17,29 @@ public class CityPanelImpl implements CityPanel {
 
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
+    private final JFrame mainframe;
 
     public CityPanelImpl(BaseControllerImpl controller, GameConfiguration configuration) {
 
+        this.mainframe = new JFrame();
         this.mainPanel = new DrawPanel(Color.BLACK,
                 new Dimension(configuration.getCityConfiguration().getWidth(),
                         configuration.getCityConfiguration().getHeight()));
         this.mainPanel.setLayout(new BorderLayout());
 
         this.barPanel = new BarPanelImpl(controller);
-        this.fieldPanel = new FieldCityPanelImpl(configuration.getCityConfiguration());
+        this.fieldPanel = new FieldCityPanelImpl(configuration.getCityConfiguration(), configuration.getPathIconsConfiguration());
 
 
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
-
+        this.mainframe.getContentPane().add(mainPanel);
+        this.mainframe.setDefaultCloseOperation(mainframe.EXIT_ON_CLOSE);
+        this.mainframe.setVisible(true);
 
     }
 
-    public CityPanelImpl(BaseController controller) {
+    /*public CityPanelImpl(BaseController controller) {
 
         this.mainPanel = new DrawPanel(Color.BLACK, new Dimension(10, 10));
         this.mainPanel.setLayout(new BorderLayout());
@@ -47,10 +51,15 @@ public class CityPanelImpl implements CityPanel {
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
     }
+    */
 
 
     public JPanel getPanel() {
         return this.mainPanel;
+    }
+
+    public JFrame getFrame(){
+        return this.mainframe;
     }
 
     @Override
