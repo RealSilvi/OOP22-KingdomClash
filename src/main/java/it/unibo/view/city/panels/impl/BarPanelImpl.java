@@ -1,6 +1,4 @@
 package it.unibo.view.city.panels.impl;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -11,54 +9,55 @@ import javax.swing.*;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.panels.api.BarPanel;
+import it.unibo.view.city.utilities.NewWindow;
 import it.unibo.controller.base.BaseController;
 import it.unibo.controller.base.BaseControllerImpl;
-import it.unibo.view.city.NewWindow;
 public class BarPanelImpl extends JLabel implements BarPanel {
 
-    private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),(int)(GameGui.getAllPanel().getHeight()*0.1));
+    private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),
+        (int)(GameGui.getAllPanel().getHeight()*0.1));
     private final JPanel mainpanel;
     private BaseController basedata;
-    private JPanel secondaryPanel;
-    private PopupFactory popupFactory;
-    private Popup popup;
     private NewWindow window;
+    
     
 
     public BarPanelImpl(BaseController controller){
         this.mainpanel=new DrawPanel(Color.BLACK, size);
         this.basedata=controller;
-        this.secondaryPanel= new JPanel();
-        this.popupFactory=new PopupFactory();
-        this.secondaryPanel=new JPanel(new BorderLayout());
+        
+        //this.isclicked= false;
         
         
         
         
         JButton troop= new JButton("troops button");
         JButton playerinfo= new JButton("player info");
+        JButton button = new JButton("Show Popup");
+
+        button.addActionListener(e -> {
+            JOptionPane.showMessageDialog(mainpanel, "You can't do this", "ERROR", JOptionPane.ERROR_MESSAGE);
+        });
         
        
 
         
         this.mainpanel.add(troop);
         this.mainpanel.add(playerinfo);
+        this.mainpanel.add(button);
         
-         
-
-        /*troop.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                
-                secondaryPanel.add(getInfo(size));
-                *a way to close the panel on a second click 
-                secondaryPanel.setVisible(false);
-                popup= popupFactory.getPopup(troop, playerinfo, 10, 10);
+        
+        troop.addActionListener(new ActionListener() {
+            private boolean isOpen = false;
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                window= new NewWindow(getInfo(size),isOpen);
+                troop.addActionListener(window);
+                isOpen= !isOpen;
             }
         });
-        */
-        window= new NewWindow(getInfo(size));
-        troop.addActionListener(window);
         
+        //playerinfo
 
 
 
@@ -84,6 +83,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         
        
         info.setEditable(false);
+        
 
 
         
@@ -104,7 +104,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         return this.mainpanel;
     }
 
-    public JFrame windFrame(){
+    /*public JFrame windFrame(){
         final JFrame frame= new JFrame();
         popup = popupFactory.getPopup(secondaryPanel, getInfo(size), 10, 10);
         popup.show();
@@ -119,7 +119,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         frame.setVisible(true);
         return frame;
 
-    }
+    }*/
 }
 
     
