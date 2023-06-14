@@ -15,8 +15,8 @@ public class GameMenuImpl implements GameMenu {
 
     private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
-    private static final int WIDTH_INCREMENT = 2;
-    private static final double HEIGHT_INCREMENT = 1.5;
+    public static final int WIDTH_INCREMENT = 2;
+    public static final double HEIGHT_INCREMENT = 1.5;
     public static final String PATH_BUTTON = "/it/unibo/game.menu/wood.jpg";
     public static final String PATH_PANEL = "/it/unibo/game.menu/RvsH.jpg";
     public static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(PATH_BUTTON,
@@ -29,11 +29,11 @@ public class GameMenuImpl implements GameMenu {
     private final ImageButton music;
 
     public GameMenuImpl() {
-        this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
-        ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
-        this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
-        this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
-        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * WIDTH_INCREMENT, (int) (HEIGHT_BUTTON * HEIGHT_INCREMENT)));
+        this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
 
         Font font = BattlePanelStyle.getPrimaryFont();
         GridBagConstraints grid = new GridBagConstraints();
@@ -43,8 +43,6 @@ public class GameMenuImpl implements GameMenu {
 
         grid.gridx = 1;
         grid.gridy = 1;
-        grid.ipadx = (WIDTH_BUTTON);
-        grid.ipady = (HEIGHT_BUTTON);
         grid.insets = new Insets(30, 0, 0, 0);
 
         new_game.setFont(font);

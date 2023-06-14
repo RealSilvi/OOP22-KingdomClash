@@ -28,8 +28,6 @@ public class InfoMenuPanel {
         GridBagConstraints grid1 = new GridBagConstraints();
         grid1.gridx = 1;
         grid1.gridy = 1;
-        grid1.ipadx = ((int) GameGui.DIMENSION_SCREEN.getWidth() / 4);
-        grid1.ipady = ((int) GameGui.DIMENSION_SCREEN.getHeight() / 4);
         grid1.insets = new Insets(30, 0, 0, 0);
 
         Font font2 = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON))/2);
@@ -38,8 +36,7 @@ public class InfoMenuPanel {
         ImageTextArea textArea = new ImageTextArea(gameConfiguration);
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setWheelScrollingEnabled(true);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension((int) GameGui.DIMENSION_SCREEN.getWidth() / 2, (int) GameGui.DIMENSION_SCREEN.getHeight() / 2));
+        scrollPane.setPreferredSize(new Dimension((int) (GameGui.DIMENSION_SCREEN.width / 1.5), (int) (GameGui.DIMENSION_SCREEN.height / 1.5)));
 
         textArea.setImage(ImageIconsSupplier.loadImageIcon(GameMenuImpl.PATH_BUTTON).getImage());
         textArea.setFont(font2);
@@ -49,15 +46,12 @@ public class InfoMenuPanel {
         textArea.setFocusable(false);
         infoPanel.add(scrollPane, grid1);
 
-        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * 2, (int) (HEIGHT_BUTTON * 1.5)));
+        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
         exit.setHorizontalTextPosition(SwingConstants.CENTER);
         exit.setFocusable(false);
         grid1.gridy = 2;
-        grid1.ipadx = (WIDTH_BUTTON);
-        grid1.ipady = (HEIGHT_BUTTON);
         exit.setFont(font);
         exit.setForeground(Color.BLACK);
-        //exit.setPreferredSize(new Dimension((int) GameGui.DIMENSION_SCREEN.getWidth() / 10, (int) GameGui.DIMENSION_SCREEN.getHeight() / 10));
         infoPanel.add(exit, grid1);
 
     }
