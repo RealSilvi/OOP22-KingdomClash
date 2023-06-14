@@ -41,4 +41,8 @@ public class TroopPopupPanel {
             this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
         }
     }
+
+    public void dispose() {
+        popup.hide();
+    }
 }

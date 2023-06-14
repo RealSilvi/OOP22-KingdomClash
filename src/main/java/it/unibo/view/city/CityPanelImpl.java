@@ -1,12 +1,10 @@
 package it.unibo.view.city;
 
-import it.unibo.controller.base.BaseController;
 import it.unibo.controller.base.BaseControllerImpl;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.panels.impl.BarPanelImpl;
-import it.unibo.view.city.panels.impl.CityConfiguration;
 import it.unibo.view.city.panels.impl.FieldCityPanelImpl;
 
 import javax.swing.*;
@@ -77,5 +75,7 @@ public class CityPanelImpl implements CityPanel {
         throw new UnsupportedOperationException("Unimplemented method 'resources'");
     }
 
-
+    public void disposeAll() {
+        barPanel.disposeAllPopups();
+    }
 }

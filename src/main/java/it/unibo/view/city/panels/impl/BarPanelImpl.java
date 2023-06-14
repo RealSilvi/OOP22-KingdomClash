@@ -112,6 +112,12 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         return this.mainpanel;
     }
 
+    public void disposeAllPopups() {
+        resourcepopup.dispose();
+        trooppopup.dispose();
+    }
+
 }
+
 
     
