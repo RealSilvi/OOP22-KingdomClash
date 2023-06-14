@@ -8,6 +8,7 @@ import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;
 import it.unibo.view.menu.extensiveclasses.ImageTextArea;
+import it.unibo.view.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,17 +39,17 @@ public class InfoMenuPanel {
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setPreferredSize(new Dimension((int) GameGui.DIMENSION_SCREEN.getWidth() / 2, (int) GameGui.DIMENSION_SCREEN.getHeight() / 2));
 
-        textArea.setImage(BACKGROUND_BUTTON.getImage());
+        textArea.setImage(ImageIconsSupplier.loadImageIcon(GameMenuImpl.PATH_BUTTON).getImage());
         textArea.setFont(font2);
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
-        scrollPane.setPreferredSize(new Dimension((int) GameGui.DIMENSION_SCREEN.getWidth() / 2, (int) GameGui.DIMENSION_SCREEN.getHeight() / 2));
         textArea.setFocusable(false);
         infoPanel.add(scrollPane, grid1);
 
-        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON*2,(int)(HEIGHT_BUTTON*1.5)));
+        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(WIDTH_BUTTON * 2, (int) (HEIGHT_BUTTON * 1.5)));
         exit.setHorizontalTextPosition(SwingConstants.CENTER);
         exit.setFocusable(false);
         grid1.gridy = 2;
