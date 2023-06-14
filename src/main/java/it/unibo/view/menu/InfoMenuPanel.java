@@ -1,6 +1,8 @@
 package it.unibo.view.menu;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.model.data.GameConfiguration;
+import it.unibo.model.data.GameData;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
@@ -19,7 +21,7 @@ public class InfoMenuPanel {
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
     private final JPanel infoPanel;
     private final JButton exit;
-    public InfoMenuPanel() {
+    public InfoMenuPanel(GameConfiguration gameConfiguration) {
         this.infoPanel = new ImagePanel(BACKGROUND_PANEL.getImage());
         infoPanel.setLayout(new GridBagLayout());
         GridBagConstraints grid1 = new GridBagConstraints();
@@ -32,7 +34,7 @@ public class InfoMenuPanel {
         Font font2 = new Font("font", Font.ITALIC, ((WIDTH_BUTTON) - (HEIGHT_BUTTON))/2);
         Font font = BattlePanelStyle.getPrimaryFont();
 
-        ImageTextArea textArea = new ImageTextArea();
+        ImageTextArea textArea = new ImageTextArea(gameConfiguration);
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

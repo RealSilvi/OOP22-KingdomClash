@@ -55,6 +55,7 @@ public final class GameGui implements GameGuiInt {
         this.frame.setResizable(false);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.soundManager = new SoundManager();
+        this.soundManager.changeMute();
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
 
@@ -67,7 +68,7 @@ public final class GameGui implements GameGuiInt {
         JPanel borderPanel = new JPanel(new BorderLayout());
 
         this.menuPanel = new GameMenuImpl();
-        this.infoPanel = new InfoMenuPanel();
+        this.infoPanel = new InfoMenuPanel(gameConfiguration);
         this.southPanel = new SouthPanel();
 
         this.allPanel.add(battlePanel, "1");

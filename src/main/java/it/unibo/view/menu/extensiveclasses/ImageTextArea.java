@@ -1,18 +1,28 @@
 package it.unibo.view.menu.extensiveclasses;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.model.data.GameConfiguration;
+import it.unibo.model.data.GameData;
 import it.unibo.model.data.TroopType;
+import it.unibo.view.GameGui;
+import it.unibo.view.battle.config.PathIconsConfiguration;
+import it.unibo.view.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
+import static it.unibo.view.GameGui.DIMENSION_SCREEN;
+
 public class ImageTextArea extends JTextArea {
     private Image backgroundImage;
 
-    public ImageTextArea() {
+    public ImageTextArea(GameConfiguration gameConfiguration) {
         super();
         int lenght = TroopType.values().length;
+        int width = 1800;
+        int height = 550;
+        PathIconsConfiguration pathIconsConfiguration = gameConfiguration.getPathIconsConfiguration();
         int i;
         setForeground(Color.WHITE);
         setText("Welcome in the tutorial of Kingdom Clash:\n" +
@@ -45,11 +55,18 @@ public class ImageTextArea extends JTextArea {
                 "the bot lose all its life, otherwise you lose, and you have to repeat the level (you don't lose your upgrades).\n" +
                 "You can find more information about the battle, inside of the battle clicking on the 'info' button.\n" +
                 "In the game there are " + lenght + " different troops, and each troop can have only one correspondence.\n" +
-                "There are " + lenght / 2 + " attack troops, which their correspondence:\n");
+                "There are " + lenght / 2 + " attack troops, which their correspondence:\n     \n");
+                int incrementHeight = height;
                 for(i=0; i < lenght / 2; i++){
                     int finalI = i;
-                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == finalI).toList() + " --> ");
-                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == (lenght / 2) + finalI).toList() + "\n");
+                    JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values()).
+                            filter(x -> x.ordinal() == finalI).toList().get(0)),
+                            new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) GameGui.DIMENSION_SCREEN.getHeight() / 20))));
+                    label.setSize(new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth()-width), ((int) GameGui.DIMENSION_SCREEN.getHeight() + incrementHeight)));
+                    add(label);
+                    incrementHeight += height / 4.5;
+                    append("                    --> ");
+                    append(Arrays.stream(TroopType.values()).filter(x -> x.ordinal() == (lenght / 2) + finalI).toList() + "\n      \n");
                 }
         append("There are " + lenght / 2 + " defense troops, which their correspondence:\n");
                 for(i = lenght-1; i >= lenght / 2; i--){
