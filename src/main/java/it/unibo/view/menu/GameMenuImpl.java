@@ -21,7 +21,7 @@ public class GameMenuImpl implements GameMenu {
     public static final String PATH_PANEL = "/it/unibo/game.menu/RvsH.jpg";
     public static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(PATH_BUTTON,
             new Dimension((int) (WIDTH_BUTTON * (WIDTH_INCREMENT * 2)), (int) (HEIGHT_BUTTON * (HEIGHT_INCREMENT * 2))));
-    public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.loadImageIcon(PATH_PANEL);
+    public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.getScaledImageIcon(PATH_PANEL, GameGui.DIMENSION_SCREEN);
     private final JPanel menuPanel;
     private final ImageButton info;
     private final ImageButton exit;
@@ -43,7 +43,7 @@ public class GameMenuImpl implements GameMenu {
 
         grid.gridx = 1;
         grid.gridy = 1;
-        grid.insets = new Insets(30, 0, 0, 0);
+        grid.insets = new Insets(GameGui.DIMENSION_SCREEN.height/50, 0, 0, 0);
 
         new_game.setFont(font);
         new_game.setForeground(Color.BLACK);

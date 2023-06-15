@@ -1,5 +1,6 @@
 package it.unibo.controller.base;
 
+import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.Map;
 import java.util.Optional;
@@ -200,5 +201,10 @@ public final class BaseControllerImpl implements Controller, BaseController {
     @Override
     public void removeBuildingProductionObserver(BuildingObserver productionObserver) {
         baseModel.removeBuildingProductionObserver(productionObserver);
+    }
+
+    @Override
+    public void setReturnActionListener(ActionListener returnActionToAdd) {
+        this.baseView.setReturnActionListener(returnActionToAdd);
     }
 }
