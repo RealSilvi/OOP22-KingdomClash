@@ -2,9 +2,7 @@ package it.unibo.view.menu.extensiveclasses;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.GameConfiguration;
-import it.unibo.model.data.GameData;
 import it.unibo.model.data.TroopType;
-import it.unibo.view.GameGui;
 import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
@@ -12,12 +10,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 
-import static it.unibo.view.GameGui.DIMENSION_SCREEN;
-
 public class ImageTextArea extends JTextArea {
     private Image backgroundImage;
+    private static final double INCREMENT_HEIGHT = 2.25;
+    private static final int IMAGE_DIMENSION = 14;
 
-    public ImageTextArea(GameConfiguration gameConfiguration) {
+    public ImageTextArea(GameConfiguration gameConfiguration, Dimension dimension) {
         super();
         int lenght = TroopType.values().length;
         PathIconsConfiguration pathIconsConfiguration = gameConfiguration.getPathIconsConfiguration();
@@ -54,22 +52,26 @@ public class ImageTextArea extends JTextArea {
                 "You can find more information about the battle, inside of the battle clicking on the 'info' button.\n" +
                 "In the game there are " + lenght + " different troops, and each troop can have only one correspondence.\n" +
                 "There are " + lenght / 2 + " correspondences:\n     \n");
-                double incrementHeight = 1.52;
+                double incrementHeight = INCREMENT_HEIGHT;
                 for(i=0; i < lenght / 2; i++){
                     int finalI = i;
                     JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values()).
                             filter(x -> x.ordinal() == finalI).toList().get(0)),
-                            new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) GameGui.DIMENSION_SCREEN.getHeight() / 20))));
-                    label.setSize(new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) (GameGui.DIMENSION_SCREEN.getHeight() * incrementHeight))));
+                            new Dimension(((int) dimension.getWidth() / IMAGE_DIMENSION), ((int) dimension.getHeight() / IMAGE_DIMENSION))));
+
+                    label.setSize(new Dimension(((int) dimension.getWidth() / 12), ((int) (dimension.getHeight() * incrementHeight))));
+
                     add(label);
                     append("                    <---->               ");
-                    //append("                    <----                ");
+
                     JLabel label1 = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values())
                                     .filter(x -> x.ordinal() == (lenght / 2) + finalI).toList().get(0)),
-                            new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 20), ((int) GameGui.DIMENSION_SCREEN.getHeight() / 20))));
-                    label1.setSize(new Dimension(((int) GameGui.DIMENSION_SCREEN.getWidth() / 4), ((int) (GameGui.DIMENSION_SCREEN.getHeight() * incrementHeight))));
+                            new Dimension(((int) dimension.getWidth() / IMAGE_DIMENSION), ((int) dimension.getHeight() / IMAGE_DIMENSION))));
+
+                    label1.setSize(new Dimension((int) (dimension.getWidth() / 2.5), ((int) (dimension.getHeight() * incrementHeight))));
+
                     add(label1);
-                    incrementHeight += 0.11;
+                    incrementHeight += 0.17;
                     append("\n       \n");
                 }
         append("If an attack troop doesn't find any troop of the enemy in front of it, then the enemy lose 1 life.\n" +
