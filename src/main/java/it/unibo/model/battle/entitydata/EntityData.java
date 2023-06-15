@@ -13,6 +13,12 @@ import java.util.Map;
 public interface EntityData {
 
     /**
+     * Used to set the troops in the hand.
+     * @param entityTroop new entity's troops.
+     */
+    void setEntityTroop(Map<Integer, CellsImpl> entityTroop);
+
+    /**
      * Used to ask the troops in the hand.
      * @return entity's troops
      */
