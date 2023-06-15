@@ -14,9 +14,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class InfoMenuPanel {
-    private static final Dimension TEXTAREA_SCROLLPANE_DIMENSION = new Dimension((int) (GameGui.DIMENSION_SCREEN.getWidth() / 1.5),
+    private static final Dimension SCROLLPANE_DIMENSION = new Dimension((int) (GameGui.DIMENSION_SCREEN.getWidth() / 1.5),
             (int) (GameGui.DIMENSION_SCREEN.getHeight() / 1.5));
-    private static  final Dimension TEXTAREA = new Dimension(TEXTAREA_SCROLLPANE_DIMENSION.width * 2, TEXTAREA_SCROLLPANE_DIMENSION.height * 2);
+    private static  final Dimension TEXTAREA = new Dimension(SCROLLPANE_DIMENSION.width * 2, SCROLLPANE_DIMENSION.height * 2);
     private final JPanel infoPanel;
     private final JButton exit;
     public InfoMenuPanel(GameConfiguration gameConfiguration) {
@@ -33,7 +33,7 @@ public class InfoMenuPanel {
         ImageTextArea textArea = new ImageTextArea(gameConfiguration);
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setWheelScrollingEnabled(true);
-        scrollPane.setPreferredSize(TEXTAREA_SCROLLPANE_DIMENSION);
+        scrollPane.setPreferredSize(SCROLLPANE_DIMENSION);
 
         textArea.setImage(ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON, TEXTAREA).getImage());
         textArea.setFont(font2);
