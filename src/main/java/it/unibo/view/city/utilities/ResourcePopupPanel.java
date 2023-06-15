@@ -1,10 +1,7 @@
 package it.unibo.view.city.utilities;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
@@ -39,5 +36,9 @@ public class ResourcePopupPanel {
             popup.hide();
             this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
         }
+    }
+
+    public void dispose(){
+        popup.hide();
     }
 }

@@ -16,6 +16,7 @@ public class GameController {
         Controller baseController = new BaseControllerImpl(gameModel.getGameData());
 
         GameGui gameGui = new GameGui(battleController.getGuiPanel(), baseController.getGuiPanel(), gameModel.getGameData().getGameConfiguration());
+        baseController.setReturnActionListener(gameGui.getActionListenerMap());
         gameGui.setBeatenLevels(0);
         gameGui.setActivateBattle(1);
     }
