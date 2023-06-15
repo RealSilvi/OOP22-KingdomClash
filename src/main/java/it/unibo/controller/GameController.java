@@ -30,7 +30,7 @@ public class GameController {
 
         this.gameGui = new GameGui(battleController.getGuiPanel(), baseController.getGuiPanel(), gameModel.getGameData().getGameConfiguration());
 
-        this.toMainPanel = gameGui.getActionListenerMap();
+        this.toMainPanel=this.backActionListener();
         battleController.setReturnActionListener(toMainPanel);
         baseController.setReturnActionListener(toMainPanel);
 
@@ -44,7 +44,10 @@ public class GameController {
     }
 
     private void setActionListenerNewGame() {
-        ActionListener actionListener = e -> this.gameGui.showCity();
+        ActionListener actionListener = e -> {
+            this.gameModel.newGame();
+            this.gameGui.showCity();
+        };
         this.gameGui.setActionListenerNewGame(actionListener);
     }
 
@@ -58,6 +61,14 @@ public class GameController {
 
     private void setActionListenerBattle() {
         this.gameGui.setActionListenerBattle(e -> this.gameGui.showBattle());
+    }
+
+    private ActionListener backActionListener(){
+        return e -> {
+            this.gameGui.showMap();
+            this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
+            this.gameGui.setBeatenLevels(gameModel.getCurrentLevel()-1);
+        };
     }
 
 }
