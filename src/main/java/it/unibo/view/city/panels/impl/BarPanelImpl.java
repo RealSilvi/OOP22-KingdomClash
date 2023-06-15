@@ -27,7 +27,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.mainpanel=new DrawPanel(Color.BLACK, size);
         this.basedata=controller;
         this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0, new ResourcePanelImpl(controller));
-        this.trooppopup = new TroopPopupPanel(mainpanel, 500, 0);
+        this.trooppopup = new TroopPopupPanel(mainpanel, 200, 0, controller);
         
         //this.isclicked= false;
         
