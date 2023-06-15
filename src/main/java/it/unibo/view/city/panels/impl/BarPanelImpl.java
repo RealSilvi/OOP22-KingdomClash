@@ -38,11 +38,8 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.mainpanel=new DrawPanel(Color.BLACK, size);
         this.basedata=controller;
         this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0, new ResourcePanelImpl(controller));
-<<<<<<< HEAD
-        this.interactionComponents = new ArrayList<>();
-=======
         this.trooppopup = new TroopPopupPanel(mainpanel, 200, 0, controller);
->>>>>>> fad889be5fbed39e9ad5d12a66239af45c096010
+        this.interactionComponents = new ArrayList<>();
         
         ActionListener genericBtnAction = new ActionListener() {
             @Override
