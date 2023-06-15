@@ -134,7 +134,9 @@ public final class BattleControllerImpl implements BattleController, Controller 
                 end(WIN_PLAYER);
                 i = total;
             }
-            update(i + 1);
+            if(i != total){
+                update(i + 1);
+            }
         }
         this.battleModel.reset();
         this.battlePanel.enableSpinButton();
@@ -196,6 +198,16 @@ public final class BattleControllerImpl implements BattleController, Controller 
     @Override
     public JPanel getGuiPanel() {
         return this.battlePanel.getPanel();
+    }
+
+    @Override
+    public void setReturnActionListener(ActionListener returnActionToAdd) {
+        this.battlePanel.setBackActionListener(returnActionToAdd);
+    }
+
+    @Override
+    public void removeReturnActionListener(ActionListener returnActionToRemove) {
+
     }
 
 

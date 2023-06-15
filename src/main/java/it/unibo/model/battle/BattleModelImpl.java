@@ -187,7 +187,14 @@ public final class BattleModelImpl implements BattleModel {
         botLife = this.gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
         playerLife = this.gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
         if (increment) {
-            this.troopBotLevel.values().forEach(x -> ++x);
+            int level = 0;
+            if (this.gameData.getPlayerArmyLevel().values().stream().findFirst().isPresent()) {
+                level = this.gameData.getPlayerArmyLevel().values().stream().findFirst().get();
+            }
+            for (TroopType troopType : TroopType.values()) {
+                this.troopBotLevel.put(troopType, level + 1);
+            }
+            this.gameData.setPlayerArmyLevel(this.troopBotLevel);
         }
     }
 

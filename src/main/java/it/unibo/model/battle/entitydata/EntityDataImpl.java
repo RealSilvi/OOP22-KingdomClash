@@ -26,7 +26,7 @@ public final class EntityDataImpl implements EntityData {
     /** Indicates all the different troops present in the game.*/
     public static final int TOTAL_DIFFERENT_TROOP = TroopType.values().length;
 
-    private final Map<Integer, CellsImpl> entityTroop;
+    private Map<Integer, CellsImpl> entityTroop;
     private final Random random = new Random();
 
     /**
@@ -41,6 +41,11 @@ public final class EntityDataImpl implements EntityData {
         }
     }
 
+    @Override
+    public void setEntityTroop(Map<Integer, CellsImpl> entityTroop) {
+        this.entityTroop = entityTroop;
+    }
+    
     @SuppressFBWarnings(value = "EI",
             justification = "I want to get the object to modify it and all the references")
     @Override

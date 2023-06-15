@@ -50,7 +50,7 @@ public final class GameGui implements GameGuiInt {
      */
     public GameGui(final JPanel battlePanel, final JPanel cityPanel, final GameConfiguration gameConfiguration) {
         this.frame = new JFrame();
-        this.frame.setSize((int) DIMENSION_SCREEN.getWidth(), (int) DIMENSION_SCREEN.getHeight());
+        this.frame.setSize((int) (DIMENSION_SCREEN.getWidth()), (int) (DIMENSION_SCREEN.getHeight()));
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setResizable(false);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,12 +88,8 @@ public final class GameGui implements GameGuiInt {
 
         setActionListenerInfo();
         setActionListenerExit();
-        setActionListenerNewGame();
         setActionListenerMusic();
-        setActionListenerBattle();
         setActionListenerMenu();
-        setActionListenerCity();
-        setActionListenerMap();
         setMapBaseActionListener();
         setMapBattleActionListener();
         showMenuPanel();
@@ -135,8 +131,8 @@ public final class GameGui implements GameGuiInt {
         switchLayout2.show(this.allPanel, "3");
     }
 
-    private void setActionListenerNewGame() {
-        ActionListener actionListener = e -> showCity();
+    @Override
+    public void setActionListenerNewGame(ActionListener actionListener) {
         this.menuPanel.setActionListenerNewGame(actionListener);
     }
 
@@ -154,13 +150,13 @@ public final class GameGui implements GameGuiInt {
     private void setActionListenerExit() {
         ActionListener actionListener = e -> showMenuPanel();
         this.infoPanel.setActionListenerExit(actionListener);
-        actionListener = e -> this.frame.dispose();
+        actionListener = e ->  System.exit(0);
         this.southPanel.setActionListenerExit(actionListener);
         this.menuPanel.setActionListenerExit(actionListener);
     }
 
-    private void setActionListenerBattle() {
-        ActionListener actionListener = e -> showBattle();
+    @Override
+    public void setActionListenerBattle(ActionListener actionListener) {
         this.southPanel.setActionListenerBattle(actionListener);
     }
 
@@ -169,13 +165,13 @@ public final class GameGui implements GameGuiInt {
         this.southPanel.setActionListenerMenu(actionListener);
     }
 
-    private void setActionListenerCity() {
-        ActionListener actionListener = e -> showCity();
+    @Override
+    public void setActionListenerCity(ActionListener actionListener) {
         this.southPanel.setActionListenerCity(actionListener);
     }
 
-    private void setActionListenerMap() {
-        ActionListener actionListener = e -> showMap();
+    @Override
+    public void setActionListenerMap(ActionListener actionListener) {
         this.southPanel.setActionListenerMap(actionListener);
     }
 

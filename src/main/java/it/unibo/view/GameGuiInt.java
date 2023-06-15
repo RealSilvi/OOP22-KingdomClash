@@ -34,6 +34,14 @@ public interface GameGuiInt {
      */
     void showMap();
 
+    void setActionListenerNewGame(ActionListener actionListener);
+
+    void setActionListenerBattle(ActionListener actionListener);
+
+    void setActionListenerCity(ActionListener actionListener);
+
+    void setActionListenerMap(ActionListener actionListener);
+
     /**
      * Takes the action listener to show the map.
      * @return The action listener which shows the map.
