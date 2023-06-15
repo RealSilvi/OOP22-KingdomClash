@@ -3,6 +3,7 @@ package it.unibo.view.menu.extensiveclasses;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.model.data.TroopType;
+import it.unibo.view.GameGui;
 import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
@@ -12,13 +13,27 @@ import java.util.Arrays;
 
 public class ImageTextArea extends JTextArea {
     private Image backgroundImage;
-    private static final double INCREMENT_HEIGHT = 2.25;
-    private static final int IMAGE_DIMENSION = 14;
+    private static final double INCREMENT_HEIGHT = 1.13;
+    private static final double IMAGE_WIDTH_DIMENSION =  0.7;
+    private static final double IMAGE_HEIGHT_DIMENSION =  1.2;
+    private PathIconsConfiguration pathIconsConfiguration;
 
-    public ImageTextArea(GameConfiguration gameConfiguration, Dimension dimension) {
+    public ImageTextArea(GameConfiguration gameConfiguration) {
         super();
+        this.pathIconsConfiguration = gameConfiguration.getPathIconsConfiguration();
+    }
+
+    @SuppressFBWarnings(value = "EI2",
+            justification = "I want to use the background in input to represent the image in the textArea")
+    public void setImage(final Image backgroundImage){
+        this.backgroundImage = backgroundImage;
+        setOpaque(false);
+        repaint();
+    }
+
+    public void setTextImage(final Dimension dimension){
+        System.out.println(dimension.width + "   2   " + dimension.height);
         int lenght = TroopType.values().length;
-        PathIconsConfiguration pathIconsConfiguration = gameConfiguration.getPathIconsConfiguration();
         int i;
         setForeground(Color.WHITE);
         setText("Welcome in the tutorial of Kingdom Clash:\n" +
@@ -52,28 +67,28 @@ public class ImageTextArea extends JTextArea {
                 "You can find more information about the battle, inside of the battle clicking on the 'info' button.\n" +
                 "In the game there are " + lenght + " different troops, and each troop can have only one correspondence.\n" +
                 "There are " + lenght / 2 + " correspondences:\n     \n");
-                double incrementHeight = INCREMENT_HEIGHT;
-                for(i=0; i < lenght / 2; i++){
-                    int finalI = i;
-                    JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values()).
+        double incrementHeight = INCREMENT_HEIGHT;
+        for(i=0; i < lenght / 2; i++){
+            int finalI = i;
+            JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values()).
                             filter(x -> x.ordinal() == finalI).toList().get(0)),
-                            new Dimension(((int) dimension.getWidth() / IMAGE_DIMENSION), ((int) dimension.getHeight() / IMAGE_DIMENSION))));
+                    new Dimension(((int) (dimension.getWidth() / 30)), ((int) (dimension.getHeight() / 30)))));
 
-                    label.setSize(new Dimension(((int) dimension.getWidth() / 12), ((int) (dimension.getHeight() * incrementHeight))));
+            label.setSize(new Dimension((int) (dimension.getWidth() / 20), ((int) (dimension.getHeight() * (incrementHeight)))));
+            System.out.println(label.getSize().width + "   LABEL   " + label.getSize().height);
+            add(label);
+            append("                    <---->               ");
 
-                    add(label);
-                    append("                    <---->               ");
+            JLabel label1 = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values())
+                            .filter(x -> x.ordinal() == (lenght / 2) + finalI).toList().get(0)),
+                    new Dimension(((int) (dimension.getWidth() / 30)), ((int) (dimension.getHeight() / 30)))));
 
-                    JLabel label1 = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values())
-                                    .filter(x -> x.ordinal() == (lenght / 2) + finalI).toList().get(0)),
-                            new Dimension(((int) dimension.getWidth() / IMAGE_DIMENSION), ((int) dimension.getHeight() / IMAGE_DIMENSION))));
+            label1.setSize(new Dimension((int) (dimension.getWidth() / 5), ((int) (dimension.getHeight() * incrementHeight))));
 
-                    label1.setSize(new Dimension((int) (dimension.getWidth() / 2.5), ((int) (dimension.getHeight() * incrementHeight))));
-
-                    add(label1);
-                    incrementHeight += 0.17;
-                    append("\n       \n");
-                }
+            add(label1);
+            incrementHeight += 0.08;
+            append("\n       \n");
+        }
         append("If an attack troop doesn't find any troop of the enemy in front of it, then the enemy lose 1 life.\n" +
                 "If an attack troop finds a defense troop against it, and they have the same level, then none take damage.\n" +
                 "If an attack troop finds a defense troop against it, and the level of the attack troop is higher, then the " +
@@ -83,14 +98,6 @@ public class ImageTextArea extends JTextArea {
                 "All this rules are the same for both teams.\n" +
                 "At the finish of a battle, if you win, at the next battle the enemy's troops levels will increase by one.\n" +
                 "Now you are ready to play and complete the game. GOOD LUCK AND ENJOY THE GAME!!!");
-    }
-
-    @SuppressFBWarnings(value = "EI2",
-            justification = "I want to use the background in input to represent the image in the textArea")
-    public void setImage(final Image backgroundImage){
-        this.backgroundImage = backgroundImage;
-        setOpaque(false);
-        repaint();
     }
 
     @Override

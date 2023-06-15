@@ -14,8 +14,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class InfoMenuPanel {
-    private static final Dimension TEXTAREA_SCROLLPANE_DIMENSION = new Dimension((int) (GameGui.DIMENSION_SCREEN.width / 1.5),
-            (int) (GameGui.DIMENSION_SCREEN.height / 1.5));
+    private static final Dimension TEXTAREA_SCROLLPANE_DIMENSION = new Dimension((int) (GameGui.DIMENSION_SCREEN.getWidth() / 1.5),
+            (int) (GameGui.DIMENSION_SCREEN.getHeight() / 1.5));
+    private static  final Dimension TEXTAREA = new Dimension(TEXTAREA_SCROLLPANE_DIMENSION.width * 2, TEXTAREA_SCROLLPANE_DIMENSION.height * 2);
     private final JPanel infoPanel;
     private final JButton exit;
     public InfoMenuPanel(GameConfiguration gameConfiguration) {
@@ -24,28 +25,27 @@ public class InfoMenuPanel {
         GridBagConstraints grid1 = new GridBagConstraints();
         grid1.gridx = 1;
         grid1.gridy = 1;
-        grid1.insets = new Insets(30, 0, 0, 0);
+        grid1.insets = new Insets(GameGui.DIMENSION_SCREEN.height/50, 0, 0, 0);
 
         Font font2 = new Font("font", Font.ITALIC, ((GameGui.WIDTH_BUTTON) - (GameGui.HEIGHT_BUTTON))/2);
         Font font = BattlePanelStyle.getPrimaryFont();
 
-        ImageTextArea textArea = new ImageTextArea(gameConfiguration, TEXTAREA_SCROLLPANE_DIMENSION);
+        ImageTextArea textArea = new ImageTextArea(gameConfiguration);
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setPreferredSize(TEXTAREA_SCROLLPANE_DIMENSION);
 
-        textArea.setImage(ImageIconsSupplier.loadImageIcon(GameMenuImpl.PATH_BUTTON).getImage());
+        textArea.setImage(ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON, TEXTAREA).getImage());
         textArea.setFont(font2);
         textArea.setWrapStyleWord(true);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
         textArea.setFocusable(false);
+        textArea.setTextImage(TEXTAREA);
         infoPanel.add(scrollPane, grid1);
 
         this.exit = new ImageButton("EXIT", GameMenuImpl.BACKGROUND_BUTTON,
                 new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
-        exit.setHorizontalTextPosition(SwingConstants.CENTER);
-        exit.setFocusable(false);
         grid1.gridy = 2;
         exit.setFont(font);
         exit.setForeground(Color.BLACK);
