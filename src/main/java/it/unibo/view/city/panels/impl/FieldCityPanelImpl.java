@@ -2,6 +2,9 @@ package it.unibo.view.city.panels.impl;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.List;
 
@@ -42,6 +45,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         
         for (int i = 0; i < width; i++) {
             List<JButton> cols= new ArrayList<>();
+            final int coordX = i;
             for (int j = 0; j < height; j++) {
                 /*ognuna di esse ha una determinata posizione -aggiungere un listener per ciascun bottone con la quale possa piazzare la struttura 
                 */
@@ -53,6 +57,18 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 structure.setContentAreaFilled(false);
                 this.mainpanel.add(structure);
                 structure.setBorder(null);
+                
+                final int coordY = j;
+                structure.addActionListener(new ActionListener() {
+                    
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        
+                        new Point2D.Float(coordX, coordY);
+                        System.out.println(new Point2D.Float(coordX, coordY));
+                    }
+                    
+                });
             }
             buttonmap.add(i, cols);
     }
@@ -61,6 +77,10 @@ public class FieldCityPanelImpl implements FieldCityPanel {
 
     public JPanel getPanel(){
         return this.mainpanel;
+    }
+
+    public void getButtonPos(int x, int y){
+        this.buttonmap.get(x).get(y);
     }
 
 
