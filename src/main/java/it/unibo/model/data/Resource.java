@@ -110,4 +110,22 @@ public final class Resource implements Serializable, Cloneable {
                 .map(Resource::clone)
                 .collect(Collectors.toSet());
     }
+    /**
+     * Returns a formatted resource set as string.
+     * @param resourceSet the set to format
+     * @return          a formatted resource set string
+     */
+    public static String beautifyToString(final Set<Resource> resourceSet) {
+        StringBuilder stringBuilder = new StringBuilder();
+        resourceSet.stream().forEach(resource ->
+            stringBuilder.append(resource.getResource()
+                .name().substring(0, 1).toUpperCase())
+            .append(resource.getResource().name().substring(1).toLowerCase())
+            .append(": ")
+            .append(resource.getAmount())
+            .append("\n")
+        );
+        String beautifiedOutput = stringBuilder.toString();
+        return beautifiedOutput.trim();
+    }
 }

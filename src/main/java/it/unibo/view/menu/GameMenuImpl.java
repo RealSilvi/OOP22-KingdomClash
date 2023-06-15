@@ -15,12 +15,12 @@ public class GameMenuImpl implements GameMenu {
 
     private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
-    public static final int WIDTH_INCREMENT = 2;
-    public static final double HEIGHT_INCREMENT = 1.5;
+    public static final double WIDTH_INCREMENT = 1.5;
+    public static final double HEIGHT_INCREMENT = 1.2;
     public static final String PATH_BUTTON = "/it/unibo/game.menu/wood.jpg";
     public static final String PATH_PANEL = "/it/unibo/game.menu/RvsH.jpg";
     public static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(PATH_BUTTON,
-            new Dimension(WIDTH_BUTTON * (WIDTH_INCREMENT * 2), (int) (HEIGHT_BUTTON * (HEIGHT_INCREMENT * 2))));
+            new Dimension((int) (WIDTH_BUTTON * (WIDTH_INCREMENT * 2)), (int) (HEIGHT_BUTTON * (HEIGHT_INCREMENT * 2))));
     public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.loadImageIcon(PATH_PANEL);
     private final JPanel menuPanel;
     private final ImageButton info;
