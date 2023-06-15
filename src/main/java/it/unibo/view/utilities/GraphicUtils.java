@@ -33,8 +33,8 @@ public interface GraphicUtils {
      */
     public static Image resizeImageWithProportion(final Image image,
         final int width, final int height) {
-        int checkedWidth = width >= height ? width : -1; 
-        int checkedHeight = height >= width ? height : -1;
+        int checkedWidth = width <= height ? width : -1; 
+        int checkedHeight = height <= width ? height : -1;
         return image.getScaledInstance(checkedWidth, checkedHeight, Image.SCALE_SMOOTH);
     }
 
