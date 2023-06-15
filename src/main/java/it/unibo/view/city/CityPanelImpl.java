@@ -12,6 +12,7 @@ import it.unibo.view.utilities.ImageIconsSupplier;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +24,9 @@ public class CityPanelImpl implements CityPanel {
     private final JPanel mainPanel;
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
-
     private final Map<BuildingTypes, Map<Integer, Image>> readImages = new EnumMap<>(BuildingTypes.class);
+
+    private ActionListener returnActionListener;
 
     public CityPanelImpl(BaseControllerImpl controller, GameConfiguration configuration) {
         PathIconsConfiguration config = configuration.getPathIconsConfiguration();
@@ -50,11 +52,6 @@ public class CityPanelImpl implements CityPanel {
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
     }
 
-    public JPanel getPanel() {
-        return this.mainPanel;
-    }
-
-
     @Override
     public void setBuildings() {
         // TODO Auto-generated method stub
@@ -75,5 +72,14 @@ public class CityPanelImpl implements CityPanel {
 
     public void disposeAll() {
         barPanel.disposeAllPopups();
+    }
+
+    @Override
+    public void setReturnActionListener(ActionListener returnActionListener) {
+        this.returnActionListener = returnActionListener;
+    }
+
+    public JPanel getPanel() {
+        return this.mainPanel;
     }
 }
