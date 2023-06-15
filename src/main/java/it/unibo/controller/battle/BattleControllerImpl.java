@@ -202,7 +202,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     @Override
     public void setReturnActionListener(ActionListener returnActionToAdd) {
-
+        this.battlePanel.setBackActionListener(returnActionToAdd);
     }
 
     @Override
