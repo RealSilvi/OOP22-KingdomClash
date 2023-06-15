@@ -1,5 +1,6 @@
 package it.unibo.view.city.utilities;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -48,17 +49,14 @@ public class TroopPopupPanel {
             singletroop -> {
                /*JPanel containpanel = new JPanel(new BoxLayout(contentpanel, BoxLayout.PAGE_AXIS)); */ 
                 JPanel containpanel = new JPanel();
-                containpanel.setLayout(new GridBagLayout());
+                containpanel.setLayout(new BorderLayout());
 
-                GridBagConstraints left = new GridBagConstraints();
-                left.anchor = GridBagConstraints.LINE_START;
-                GridBagConstraints right = new GridBagConstraints();
-                right.fill = GridBagConstraints.LINE_END;
                 JLabel label= new JLabel(
                 ""+singletroop.name()+""+data.requestTroopLevels().get(singletroop));
-                containpanel.add(label,left);
+                containpanel.add(label,BorderLayout.LINE_START);
                 var buttonOK = new JButton("upgrade");
-                containpanel.add(buttonOK, right);
+                containpanel.add(buttonOK, BorderLayout.LINE_END);
+                
                 buttonOK.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
