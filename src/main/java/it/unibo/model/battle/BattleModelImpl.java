@@ -194,7 +194,7 @@ public final class BattleModelImpl implements BattleModel {
             for (TroopType troopType : TroopType.values()) {
                 this.troopBotLevel.put(troopType, level + 1);
             }
-            this.gameData.setPlayerArmyLevel(this.troopBotLevel);
+            this.gameData.incrementLevel();
         }
     }
 
