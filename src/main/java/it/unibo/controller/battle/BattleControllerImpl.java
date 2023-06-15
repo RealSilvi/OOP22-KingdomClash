@@ -205,12 +205,6 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.setBackActionListener(returnActionToAdd);
     }
 
-    @Override
-    public void removeReturnActionListener(ActionListener returnActionToRemove) {
-
-    }
-
-
     private void setActionListenerPass() {
         ActionListener actionListenerInfo = e -> pass();
         this.battlePanel.setActionListenerPass(actionListenerInfo);

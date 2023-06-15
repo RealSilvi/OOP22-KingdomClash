@@ -10,7 +10,9 @@ import javax.swing.*;
  public interface Controller {
 
     JPanel getGuiPanel();
-
+    /**
+     * Sets an action listener that tells the view to return to the main menu.
+     * @param returnActionToAdd the ActionListener to add.
+     */
     void setReturnActionListener(ActionListener returnActionToAdd);
-    void removeReturnActionListener(ActionListener returnActionToRemove);
 }
