@@ -11,21 +11,20 @@ import java.util.List;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
 public class FieldCityPanelImpl implements FieldCityPanel {
 
     private final JPanel mainpanel;
+    private final CityPanel cityView;
     private List<List<JButton>> buttonmap;
     private CityConfiguration gameConfiguration;
     private PathIconsConfiguration pathIconsConfiguration;
-    
 
-   
-
-    public FieldCityPanelImpl(CityConfiguration gameConfiguration, PathIconsConfiguration pathIconsConfiguration){
-
+    public FieldCityPanelImpl(CityPanel cityView, CityConfiguration gameConfiguration, PathIconsConfiguration pathIconsConfiguration) {
+        this.cityView = cityView;
         //GraphicUtils.resizeImage(new ImageIcon(),JButton.WIDTH,JButton.HEIGHT);
         this.gameConfiguration=gameConfiguration;
         this.pathIconsConfiguration=pathIconsConfiguration;
@@ -57,17 +56,17 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 structure.setContentAreaFilled(false);
                 this.mainpanel.add(structure);
                 structure.setBorder(null);
-                
+                                
                 final int coordY = j;
                 structure.addActionListener(new ActionListener() {
                     
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        
-                        new Point2D.Float(coordX, coordY);
-                        System.out.println(new Point2D.Float(coordX, coordY));
+                        if (e.getSource() instanceof JComponent) {
+                            cityView.notifyTileClick((JComponent) e.getSource(),
+                                new Point2D.Float(coordX, coordY));
+                        }
                     }
-                    
                 });
             }
             buttonmap.add(i, cols);
