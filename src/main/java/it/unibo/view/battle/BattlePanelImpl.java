@@ -189,6 +189,7 @@ public final class BattlePanelImpl implements BattlePanel {
 
     public void reset() {
         this.buttonsPanel.reset();
+        this.fieldPanel.restart();
     }
 
     public void setBackActionListener(final ActionListener actionListener) {
