@@ -97,6 +97,7 @@ public final class BaseModelImpl implements BaseModel {
         Building newStructure = buildingBuilder
         .makeStandardBuilding(type, position, startingLevel);
             if (!cheatMode) {
+                newStructure.setBeingBuilt(true);
                 gameData.setResources(subtractResources(gameData.getResources(),
                     BuildingBuilder
                         .applyIncrementToResourceSet(newStructure
@@ -105,6 +106,7 @@ public final class BaseModelImpl implements BaseModel {
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
         threadManager.addBuilding(newStructureId);
+        notifyBuildingStateChangedObservers(newStructureId);
         return newStructureId;
     }
 
@@ -357,10 +359,10 @@ public final class BaseModelImpl implements BaseModel {
     private Set<Resource> unsafeOperation(final Set<Resource> resourceStorage,
         final Set<Resource> resourceCost) {
         Set<Resource> storageResult = new HashSet<>();
-        Iterator<Resource> storageIterator = resourceStorage.iterator();
+        Iterator<Resource> storageIterator = Resource.checkAndAddMissingResources(Resource.deepCopySet(resourceStorage)).iterator();
         while (storageIterator.hasNext()) {
             Resource currentStorageResource = storageIterator.next();
-            Iterator<Resource> costIterator = resourceCost.iterator();
+            Iterator<Resource> costIterator = Resource.checkAndAddMissingResources(Resource.deepCopySet(resourceCost)).iterator();
             while (costIterator.hasNext()) {
                 Resource currentCostResource = costIterator.next();
                 if (currentStorageResource.equals(currentCostResource)) {

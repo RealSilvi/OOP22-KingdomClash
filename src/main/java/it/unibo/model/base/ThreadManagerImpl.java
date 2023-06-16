@@ -195,23 +195,24 @@ public final class ThreadManagerImpl implements ThreadManager {
                             .getProductionProgress();
                     productionPercentage++;
                     buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(productionPercentage);
-                    logger.log(Level.INFO, "productionPercentage {0}", productionPercentage);
+                    logger.log(Level.FINEST, "productionPercentage {0}", productionPercentage);
                     if (productionPercentage == 100) {
-                        baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
-                        buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(0);
                         try {
                             baseModel.applyResources(
-                                    buildingMapRef.get(buildingForProductionIdentifier).getProductionAmount());
+                                buildingMapRef.get(buildingForProductionIdentifier)
+                                .getProductionAmount());
                         } catch (NotEnoughResourceException e) {
                             logger.severe("Error adding resources!");
                         }
+                        baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);
+                        buildingMapRef.get(buildingForProductionIdentifier).setProductionProgress(0);
                         buildingMapRef.get(buildingForProductionIdentifier)
-                                .setProductionTime(buildingBuilder.makeStandardBuilding(
-                                        buildingMapRef
-                                                .get(buildingForProductionIdentifier).getType(),
-                                        buildingMapRef
-                                                .get(buildingForProductionIdentifier).getLevel())
-                                        .getProductionTime());
+                            .setProductionTime(buildingBuilder.makeStandardBuilding(
+                                buildingMapRef
+                                    .get(buildingForProductionIdentifier).getType(),
+                                buildingMapRef
+                                    .get(buildingForProductionIdentifier).getLevel())
+                            .getProductionTime());
                         return 0;
                     }
                     baseModel.notifyBuildingProductionObservers(buildingForProductionIdentifier);

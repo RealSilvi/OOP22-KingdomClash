@@ -1,5 +1,6 @@
 package it.unibo.view;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.SoundManager;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.MapPanel;
@@ -195,7 +196,11 @@ public final class GameGui implements GameGuiInt {
         this.mapPanel.setActiveBattle(level);
     }
 
+
     @Override
+    @SuppressFBWarnings(value = "EI",
+            justification = "I want to return the object to let other classes" +
+                    "getting the reference")
     public SoundManager getSoundManager() {
         return this.soundManager;
     }

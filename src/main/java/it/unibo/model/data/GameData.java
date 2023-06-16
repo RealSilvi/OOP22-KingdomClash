@@ -117,7 +117,7 @@ public final class GameData implements Serializable {
      */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
-    public Set<Resource> getResources() {
+    public synchronized Set<Resource> getResources() {
         return resources;
     }
 
@@ -131,7 +131,7 @@ public final class GameData implements Serializable {
      */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
-    public void setResources(final Set<Resource> resources) {
+    public synchronized void setResources(final Set<Resource> resources) {
         this.resources = resources;
     }
 

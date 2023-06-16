@@ -1,6 +1,7 @@
 package it.unibo.model.data;
 
 import java.io.Serializable;
+import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -127,5 +128,22 @@ public final class Resource implements Serializable, Cloneable {
         );
         String beautifiedOutput = stringBuilder.toString();
         return beautifiedOutput.trim();
+    }
+    /**
+     * Checks if all resources listed in the ResourceTypes enum are present in the given set.
+     * If any resource is missing, it adds it to the set with a quantity of 0.
+     *
+     * @param resourceSet the set of resources to be checked and modified
+     * @return the modified set of resources with all resource types included
+     */
+    public static Set<Resource> checkAndAddMissingResources(Set<Resource> resourceSet) {
+        EnumSet.allOf(ResourceType.class)
+                .stream()
+                .filter(resourceType -> resourceSet.stream()
+                        .noneMatch(resource -> resource.getResource() == resourceType))
+                .map(Resource::new)
+                .forEach(resourceSet::add);
+
+        return resourceSet;
     }
 }
