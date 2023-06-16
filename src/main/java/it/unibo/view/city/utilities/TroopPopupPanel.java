@@ -4,6 +4,7 @@ package it.unibo.view.city.utilities;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -19,15 +20,18 @@ import it.unibo.controller.base.BaseController;
  * 
  */
 public class TroopPopupPanel {
+
+    static private final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()* 0.5);
+    static private final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()* 0.3);
+
     private Popup popup;
-    private final int width;
-    private final int height;
     private JPanel contentpanel;
     private boolean visibility;
     private Component container;
     private int xposition;
     private int yposition;
-    private int DIMENSION = 500;
+    
+    
     /**
      * 
      * @param container
@@ -36,8 +40,6 @@ public class TroopPopupPanel {
      * @param data
      */
     public TroopPopupPanel(final Component container, final int xposition, final int yposition, final BaseController data) {
-        this.width = DIMENSION;
-        this.height = DIMENSION;
         this.visibility = false;
         this.container = container;
         this.xposition = xposition;
@@ -45,7 +47,7 @@ public class TroopPopupPanel {
         this.contentpanel = new JPanel();
         this.contentpanel.add(new JLabel("ResourcePopupPanel"));
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
-        this.contentpanel.setPreferredSize(new Dimension(this.width, this.height));
+        this.contentpanel.setPreferredSize(new Dimension(HEIGHT, WIDTH));
         this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
 
        data.requestTroopLevels().keySet().stream().forEach(

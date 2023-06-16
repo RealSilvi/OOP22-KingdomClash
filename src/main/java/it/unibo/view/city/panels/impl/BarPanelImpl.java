@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -32,6 +33,8 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
  */
 public class BarPanelImpl extends JLabel implements BarPanel {
 
+    private static final int X_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()* 0.35);
+    private static final int Y_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()* 0.25);
     private final CityPanel cityView;
     private final JPanel mainpanel;
     private final BaseController basedata;
@@ -58,8 +61,8 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.cityView = cityView;
         this.mainpanel = new DrawPanel(Color.BLACK, size);
         this.basedata = controller;
-        this.resourcepopup = new ResourcePopupPanel(mainpanel, resourcePos, 0, new ResourcePanelImpl(controller));
-        this.trooppopup = new TroopPopupPanel(mainpanel, troopPos, 0, controller);
+        this.resourcepopup = new ResourcePopupPanel(mainpanel,X_POPUP_POSITION, Y_POPUP_POSITION, new ResourcePanelImpl(controller));
+        this.trooppopup = new TroopPopupPanel(mainpanel, X_POPUP_POSITION, Y_POPUP_POSITION, controller);
         this.interactionComponents = new ArrayList<>();
         final ActionListener genericBtnAction = new ActionListener() {
             @Override
