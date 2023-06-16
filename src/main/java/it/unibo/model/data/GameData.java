@@ -40,7 +40,7 @@ public final class GameData implements Serializable {
     }
 
     public GameData(GameConfiguration gameConfiguration) {
-        this.currentLevel=1;
+        this.currentLevel = 1;
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
@@ -57,7 +57,7 @@ public final class GameData implements Serializable {
      * @param configuration the configuration for the game
      */
     public GameData(@NonNull GameData gameData, @NonNull GameConfiguration configuration) {
-        this.currentLevel= gameData.currentLevel;
+        this.currentLevel = gameData.currentLevel;
         this.playerName = gameData.getPlayerName();
         this.resources = gameData.getResources();
         this.buildings = gameData.getBuildings();
@@ -72,8 +72,8 @@ public final class GameData implements Serializable {
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
     public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings,
-                    FightData fightData, GameConfiguration configuration,Integer level) {
-        this.currentLevel=level;
+                    FightData fightData, GameConfiguration configuration, Integer level) {
+        this.currentLevel = level;
         this.resources = resources;
         this.buildings = buildings;
         this.fightData = fightData;
@@ -81,10 +81,13 @@ public final class GameData implements Serializable {
     }
 
 
-    public int getCurrentLevel(){return this.currentLevel;}
+    public void incrementLevel() {
+        this.currentLevel = this.currentLevel + 1;
+    }
 
-    public void incrementLevel(){this.currentLevel++;}
-
+    public int getCurrentLevel() {
+        return this.currentLevel;
+    }
 
     /**
      * Gets the player's name
