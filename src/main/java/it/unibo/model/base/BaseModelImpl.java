@@ -97,6 +97,7 @@ public final class BaseModelImpl implements BaseModel {
         Building newStructure = buildingBuilder
         .makeStandardBuilding(type, position, startingLevel);
             if (!cheatMode) {
+                newStructure.setBeingBuilt(true);
                 gameData.setResources(subtractResources(gameData.getResources(),
                     BuildingBuilder
                         .applyIncrementToResourceSet(newStructure
@@ -105,6 +106,7 @@ public final class BaseModelImpl implements BaseModel {
         UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
         threadManager.addBuilding(newStructureId);
+        notifyBuildingStateChangedObservers(newStructureId);
         return newStructureId;
     }
 
