@@ -120,6 +120,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
     @Override
     public void battle() {
         int total = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData()).size() / 2;
+        int cont = 0;
         update(NO_SKIP);
         for (int i = 0; i < total; i++) {
             int value = this.battleModel.battleCombat(i);
@@ -130,25 +131,38 @@ public final class BattleControllerImpl implements BattleController, Controller 
             } else if (value == WIN_BOT) {
                 end(WIN_BOT);
                 i = total;
+                cont = 1;
+                update(NO_SKIP-1);
             } else if (value == WIN_PLAYER) {
                 end(WIN_PLAYER);
                 i = total;
+                cont = 1;
+                update(NO_SKIP-1);
             }
             if(i != total){
                 update(i + 1);
             }
         }
-        this.battleModel.reset();
-        this.battlePanel.enableSpinButton();
-        update(NO_SKIP);
+        if(cont == 0){
+            this.battleModel.reset();
+            this.battlePanel.enableSpinButton();
+            update(NO_SKIP);
+        }
     }
 
     @Override
     public void end(final Integer entity) {
         this.battleModel.endFight(entity == WIN_PLAYER);
+        spin();
+        this.battleModel.battleSpin(BOT);
+        this.battlePanel.disableSpinButton();
+        this.battlePanel.disableBotSlots();
+        this.battlePanel.enablePassButton();
+        this.battlePanel.enablePlayerSlots();
         this.battlePanel.showEndPanel();
         this.battlePanel.reset();
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
+        update(NO_SKIP-1);
     }
 
     @Override
@@ -176,13 +190,16 @@ public final class BattleControllerImpl implements BattleController, Controller 
         }
         bList.addAll(pList);
 
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                battlePanel.updateField(bList);
-            }
-        }, delay);
-
+        if(skip < 0){
+            this.battlePanel.updateField(bList);
+        }else {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    battlePanel.updateField(bList);
+                }
+            }, delay);
+        }
     }
 
     @Override

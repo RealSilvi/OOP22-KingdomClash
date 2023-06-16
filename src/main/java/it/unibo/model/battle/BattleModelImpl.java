@@ -30,13 +30,13 @@ public final class BattleModelImpl implements BattleModel {
 
     private final FightData fightData;
     private final GameData gameData;
-    private final Map<TroopType, Integer> troopLevel;
+    private final Map<TroopType, Integer> troopPlayerLevel;
     private final Map<TroopType, Integer> troopBotLevel;
 
     /**MAX_ROUND represents the max rounds available during one match of the battle.*/
     private final int maxRound;
-    private final int botTroops;
-    private final int playerTroops;
+    private final int botTroopsN;
+    private final int playerTroopsN;
     private int countedRound = 0;
     private int botLife;
     private int playerLife;
@@ -57,10 +57,10 @@ public final class BattleModelImpl implements BattleModel {
         }
         this.botLife = gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
         this.playerLife = gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
-        this.botTroops = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
-        this.playerTroops = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
+        this.botTroopsN = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
+        this.playerTroopsN = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
         this.maxRound = gameData.getGameConfiguration().getBattleConfiguration().getMaxRound();
-        this.troopLevel = gameData.getPlayerArmyLevel();
+        this.troopPlayerLevel = gameData.getPlayerArmyLevel();
         this.troopBotLevel = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
         this.gameData = gameData;
@@ -86,7 +86,7 @@ public final class BattleModelImpl implements BattleModel {
                             fightData.getBotData().addEntityTroop(key);
                         } else {
                             if (finished == CONTINUE) {
-                                if (fightData.getBotData().getSelected().size() < this.botTroops) {
+                                if (fightData.getBotData().getSelected().size() < this.botTroopsN) {
                                     fightData.getBotData().addEntityTroop(fightData.getBotData().selectRandomTroop());
                                 }
                             }
@@ -95,7 +95,7 @@ public final class BattleModelImpl implements BattleModel {
                 }
             });
         } else {
-            if (fightData.getBotData().getSelected().size() < this.botTroops) {
+            if (fightData.getBotData().getSelected().size() < this.botTroopsN) {
                 int key = fightData.getBotData().selectRandomTroop();
                 fightData.getBotData().addEntityTroop(key);
             }
@@ -130,7 +130,7 @@ public final class BattleModelImpl implements BattleModel {
         Optional<TroopType> botField = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size()).get(position);
 
         if (botField.isPresent() && playerField.isPresent()) {
-            if (troopLevel.get(playerField.get()) > troopBotLevel.get(botField.get())) {
+            if (troopPlayerLevel.get(playerField.get()) > troopBotLevel.get(botField.get())) {
                 if (!TroopType.isDefense(playerField.get())) {
                     if (botLife == 1) {
                         botLife--;
@@ -140,7 +140,7 @@ public final class BattleModelImpl implements BattleModel {
                         return BOT;
                     }
                 }
-            } else if (troopLevel.get(playerField.get()) < troopBotLevel.get(botField.get())) {
+            } else if (troopPlayerLevel.get(playerField.get()) < troopBotLevel.get(botField.get())) {
                 if (TroopType.isDefense(playerField.get())) {
                     if (playerLife == 1) {
                         playerLife--;
@@ -174,18 +174,19 @@ public final class BattleModelImpl implements BattleModel {
     @Override
     public void reset() {
         countedRound = 0;
-
-        for (int i = 0; i < this.playerTroops; i++) {
+        for (int i = 0; i < this.playerTroopsN; i++) {
             fightData.getPlayerData().removeEntityTroop(i);
             fightData.getBotData().removeEntityTroop(i);
         }
-
     }
 
     @Override
     public void endFight(final Boolean increment) {
+        countedRound = 0;
         botLife = this.gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
         playerLife = this.gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
+        fightData.setBotData(new EntityDataImpl(this.gameData.getGameConfiguration().getBattleConfiguration()));
+        fightData.setPlayerData(new EntityDataImpl(this.gameData.getGameConfiguration().getBattleConfiguration()));
         if (increment) {
             int level = 0;
             if (this.gameData.getPlayerArmyLevel().values().stream().findFirst().isPresent()) {
@@ -196,15 +197,16 @@ public final class BattleModelImpl implements BattleModel {
             }
             this.gameData.incrementLevel();
         }
+        this.gameData.setFightData(this.fightData);
     }
 
     @Override
     public Map<TroopType, Boolean> getInfoTable() {
         Map<TroopType, Boolean> infoTable = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType ->
-                infoTable.put(troopType, (this.troopLevel.get(troopType) > this.troopBotLevel.get(troopType)
+                infoTable.put(troopType, (this.troopPlayerLevel.get(troopType) > this.troopBotLevel.get(troopType)
                         && !TroopType.isDefense(troopType))
-                || (this.troopLevel.get(troopType) >= this.troopBotLevel.get(troopType)
+                || (this.troopPlayerLevel.get(troopType) >= this.troopBotLevel.get(troopType)
                         && TroopType.isDefense(troopType))));
         return infoTable;
     }

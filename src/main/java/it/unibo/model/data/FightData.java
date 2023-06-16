@@ -11,12 +11,20 @@ import it.unibo.view.battle.config.BattleConfiguration;
  */
 public class FightData {
 
-    private final EntityData botData;
-    private final EntityData playerData;
+    private EntityData botData;
+    private EntityData playerData;
 
     public FightData(final BattleConfiguration battlePanelConfiguration) {
         this.botData = new EntityDataImpl(battlePanelConfiguration);
         this.playerData = new EntityDataImpl(battlePanelConfiguration);
+    }
+
+    public void setPlayerData(EntityDataImpl entityData){
+        this.playerData = entityData;
+    }
+
+    public void setBotData(EntityDataImpl entityData){
+        this.botData = entityData;
     }
 
     @SuppressFBWarnings(value = "EI", justification = "I need changes to playerData to be reflected on all references")
