@@ -32,7 +32,8 @@ public class GameController {
         baseController.setReturnActionListener(toMainPanel);
 
         this.setActionListenerNewGame();
-        this.setActionListenerBattle();
+        this.setActionListenerName();
+        this.setActionListenerSave();
         this.setActionListenerMap();
         this.setActionListenerCity();
 
@@ -41,6 +42,29 @@ public class GameController {
     }
 
     private void setActionListenerNewGame() {
+        final ActionListener actionListener = e -> {
+            if (this.gameModel.isSaved()) {
+                if (this.gameGui.showNewGameOptions()) {
+                    this.gameModel.newGame();
+                    this.gameGui.showNamePanel();
+                }
+            } else {
+                this.gameGui.showNamePanel();
+            }
+
+        };
+        this.gameGui.setActionListenerNewGame(actionListener);
+    }
+
+    private void setActionListenerLoad(){
+        this.gameGui.setActionListenerLoad(e-> {
+            if(this.gameModel.isSaved()){
+                this.gameGui.showCity();
+            }
+        });
+    }
+
+    private void setActionListenerName() {
         final ActionListener actionListener = e -> this.gameGui.showCity();
         this.gameGui.setActionListenerStart(actionListener);
     }
@@ -53,8 +77,10 @@ public class GameController {
         this.gameGui.setActionListenerMap(e -> this.gameGui.showMap());
     }
 
-    private void setActionListenerBattle() {
-        this.gameGui.setActionListenerBattle(e -> this.gameGui.showBattle());
+    private void setActionListenerSave() {
+        this.gameGui.setActionListenerSave(e -> {
+            this.gameModel.serializeGameData();
+        });
     }
 
     private ActionListener backActionListener() {

@@ -26,7 +26,9 @@ public final class GameModel {
     private final File saveDataLocation;
 
 
-    private transient GameConfiguration configuration;
+    private GameConfiguration configuration;
+
+    private boolean saved;
 
     /**
      * Intended behaviour of File.mkdirs();
@@ -59,11 +61,12 @@ public final class GameModel {
             logger.severe(e.getMessage());
         }
 
-        this.newGame();
+        this.saved=this.load();
     }
 
-    public void newGame() {
-        this.gameData = new GameData(this.configuration);
+    public void newGame(){
+        this.gameData=new GameData();
+        this.saved=false;
     }
 
     public boolean load() {
@@ -144,15 +147,15 @@ public final class GameModel {
     }
 
     public GameData getGameData() {
-        return gameData;
+        return this.gameData;
     }
 
     public int getCurrentLevel() {
         return this.gameData.getCurrentLevel();
     }
 
-    public void incrementCurrenetLevel() {
-        this.gameData.incrementLevel();
+    public boolean isSaved(){
+        return this.saved;
     }
 
     public String getPlayerName() {
