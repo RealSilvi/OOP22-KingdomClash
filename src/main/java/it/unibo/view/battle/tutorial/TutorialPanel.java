@@ -21,11 +21,6 @@ public final class TutorialPanel {
     private final JButton turnBack;
 
 
-    //TODO interfacce e commenti
-    //TODO tutti i final dei parametri
-    //TODO tutti i punti alla fine dei comenti
-    //TODO tutti i commenti dei costruttori
-    //TODO tutti i commenti delle interfacce da rivedere
     public TutorialPanel(final TextConfiguration configuration, final PathIconsConfiguration pathIconsConfiguration) {
         this.turnBack = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), EXIT_DIMENSION));
         final JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel(), pathIconsConfiguration);

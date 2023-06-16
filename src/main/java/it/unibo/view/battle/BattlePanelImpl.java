@@ -23,6 +23,9 @@ import javax.swing.*;
 public final class BattlePanelImpl implements BattlePanel {
 
     private static final int BORDER_LAYOUT_GAP = 3;
+    private static final Dimension EXIT_DIMENSION=new Dimension(80,50);
+
+    private final BattleConfiguration battleConfiguration;
 
     private final CardLayout layoutManager;
 
@@ -44,11 +47,15 @@ public final class BattlePanelImpl implements BattlePanel {
      * param nrOfLives  How many lives has each player
      */
     public BattlePanelImpl(final BattleConfiguration battleConfiguration, final PathIconsConfiguration pathIconsConfiguration) {
+        this.battleConfiguration=battleConfiguration;
         this.layoutManager = new CardLayout();
-        this.closeButton = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), new Dimension(100, 50)));
+        this.closeButton = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), EXIT_DIMENSION));
         this.mainPanel = new JPanel(this.layoutManager);
         this.tutorialPanel = new TutorialPanel(battleConfiguration.getTextConfiguration(), pathIconsConfiguration);
         this.endPanel = new TextPanel(PanelDimensions.MAIN_PANEL_SIZE, pathIconsConfiguration);
+
+        this.closeButton.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, 2, true));
+        this.closeButton.setOpaque(false);
         this.endPanel.add(closeButton);
 
         final JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
@@ -76,9 +83,11 @@ public final class BattlePanelImpl implements BattlePanel {
 
     public void showEndPanel(@Nonnull final Boolean winner) {
         if(Boolean.TRUE.equals(winner)){
-            this.endPanel.setTitle("Winner");
+            this.endPanel.setTitle(this.battleConfiguration.getTextConfiguration().getEndWinPanelTitle());
+            this.endPanel.setContent(this.battleConfiguration.getTextConfiguration().getEndWinPanelText());
         }else{
-            this.endPanel.setTitle("Looser");
+            this.endPanel.setTitle(this.battleConfiguration.getTextConfiguration().getEndLosePanelTitle());
+            this.endPanel.setContent(this.battleConfiguration.getTextConfiguration().getEndLosePanelText());
         }
         layoutManager.show(mainPanel, "3");
     }

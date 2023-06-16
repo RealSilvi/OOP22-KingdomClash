@@ -61,6 +61,8 @@ public class GameController {
         this.gameGui.setActionListenerLoad(e-> {
             if(this.gameModel.isSaved()){
                 this.gameGui.showCity();
+            }else{
+                this.gameGui.showLoadOptions();
             }
         });
     }

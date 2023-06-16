@@ -1,6 +1,7 @@
 package it.unibo.view.battle.config;
 
 public  class TextConfiguration{
+
     private final String tutorialNorthTitle;
     private final String tutorialNorthText;
     private final String tutorialSouthTitle;
@@ -12,8 +13,9 @@ public  class TextConfiguration{
     private final String tutorialCenterTitle;
     private final String tutorialCenterText;
     private final String endWinPanelTitle;
+    private final String endWinPanelText;
     private final String endLosePanelTitle;
-    private final String endPanelText;
+    private final String endLosePanelText;
 
 
     public TextConfiguration() {
@@ -28,8 +30,9 @@ public  class TextConfiguration{
         this.tutorialCenterTitle = " ";
         this.tutorialCenterText = "Within this panel, you'll find the battlefield,where deployed troops are automatically arranged. The outcome of the combat between one troop and another is displayed in the information panel. ";
         this.endWinPanelTitle = "YOU WIN";
+        this.endWinPanelText=" ";
         this.endLosePanelTitle = "YOU LOSE ";
-        this.endPanelText = " ";
+        this.endLosePanelText = "";
     }
 
     public String getTutorialNorthTitle() {
@@ -80,7 +83,11 @@ public  class TextConfiguration{
         return endLosePanelTitle;
     }
 
-    public String getEndPanelText() {
-        return endPanelText;
+    public String getEndWinPanelText() {
+        return endWinPanelText;
+    }
+
+    public String getEndLosePanelText() {
+        return endLosePanelText;
     }
 }
