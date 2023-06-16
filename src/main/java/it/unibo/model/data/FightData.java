@@ -19,10 +19,14 @@ public class FightData {
         this.playerData = new EntityDataImpl(battlePanelConfiguration);
     }
 
+    @SuppressFBWarnings(value = "EI2",
+            justification = "I want to store the input, to get its reference and use it")
     public void setPlayerData(EntityDataImpl entityData){
         this.playerData = entityData;
     }
 
+    @SuppressFBWarnings(value = "EI2",
+            justification = "I want to store the input, to get its reference and use it")
     public void setBotData(EntityDataImpl entityData){
         this.botData = entityData;
     }

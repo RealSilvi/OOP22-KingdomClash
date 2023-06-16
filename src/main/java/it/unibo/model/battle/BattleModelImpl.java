@@ -1,5 +1,6 @@
 package it.unibo.model.battle;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.battle.BattleControllerImpl;
 import it.unibo.model.battle.entitydata.EntityDataImpl;
 import it.unibo.model.data.FightData;
@@ -48,6 +49,8 @@ public final class BattleModelImpl implements BattleModel {
      * data of the fight.
      * @param gameData Contains data of the game.
      */
+    @SuppressFBWarnings(value = "EI2",
+            justification = "I need to store the reference to game data getting it from the input")
     public BattleModelImpl(final GameData gameData) {
         if (gameData.getFightData() != null) {
             this.fightData = gameData.getFightData();
