@@ -11,6 +11,9 @@ import java.awt.*;
  */
 public class DrawPanel extends JPanel {
 
+    //TODO think which serial to set
+    static final long serialVersionUID = 42L;
+
     private static final int WIDTH_IMAGE_FILL_PATTERN = 200;
     private static final int HEIGHT_IMAGE_FILL_PATTERN = 200;
     private static final int H_GAP = 20;
@@ -38,6 +41,7 @@ public class DrawPanel extends JPanel {
     public DrawPanel(final ImageIcon backgroundImageIcon, final Dimension size) {
         this(backgroundImageIcon.getImage(), size);
     }
+
     /**
      * @param color The color to set as background.
      * @param size  The dimension of the Panel.
@@ -61,7 +65,7 @@ public class DrawPanel extends JPanel {
     @Override
     public void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g.create();
+        final Graphics2D g2d = (Graphics2D) g.create();
         for (int y = 0; y < this.size.height; y += HEIGHT_IMAGE_FILL_PATTERN) {
             for (int x = 0; x < this.size.width; x += WIDTH_IMAGE_FILL_PATTERN) {
                 g2d.drawImage(backgroundImage, x, y, this);

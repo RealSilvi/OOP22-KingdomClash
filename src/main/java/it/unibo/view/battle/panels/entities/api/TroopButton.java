@@ -17,7 +17,7 @@ public interface TroopButton {
      *
      * @param troop the troop to set on this button
      */
-    void setTroop(final TroopType troop,final int delay);
+    void setTroop(TroopType troop, int delay);
 
 
     void setEnabled(boolean b);

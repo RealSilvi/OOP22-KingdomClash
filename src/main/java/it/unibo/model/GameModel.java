@@ -26,46 +26,48 @@ public final class GameModel {
     private final File saveDataLocation;
 
 
-    transient private GameConfiguration configuration;
+    private transient GameConfiguration configuration;
 
-    /**Intended behaviour of File.mkdirs();*/
+    /**
+     * Intended behaviour of File.mkdirs();
+     */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public GameModel() {
-        this.saveDataLocation = new File(getAppData()+File.separator+"game.dat");
+        this.saveDataLocation = new File(getAppData() + File.separator + "game.dat");
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        String configDir = getAppData() + File.separator + "configuration.json";
+        final String configDir = getAppData() + File.separator + "configuration.json";
 
 
         try (FileReader content = new FileReader(configDir)) {
-            this.configuration=gson.fromJson(content, GameConfiguration.class);
+            this.configuration = gson.fromJson(content, GameConfiguration.class);
         } catch (FileNotFoundException e) {
-            this.configuration=new GameConfiguration();
-            File file = new File(configDir);
+            this.configuration = new GameConfiguration();
+            final File file = new File(configDir);
             file.getParentFile().mkdirs();
 
             try (FileWriter fileWriter = new FileWriter(file)) {
                 fileWriter.write(gson.toJson(this.configuration));
             } catch (IOException ex) {
                 logger.severe("Configuration saving FAILURE");
-                ex.printStackTrace();
+                logger.severe(ex.getMessage());
             }
         } catch (IOException e) {
-            this.configuration=new GameConfiguration();
+            this.configuration = new GameConfiguration();
             logger.severe("Configuration loading FAILURE");
-            e.printStackTrace();
+            logger.severe(e.getMessage());
         }
 
         this.newGame();
     }
 
-    public void newGame(){
-        this.gameData=new GameData(this.configuration);
+    public void newGame() {
+        this.gameData = new GameData(this.configuration);
     }
 
     public boolean load() {
-        Optional<GameData> gameDataOptional = deserializeGameData(this.configuration);
+        final Optional<GameData> gameDataOptional = deserializeGameData(this.configuration);
         if (gameDataOptional.isPresent()) {
             this.gameData = new GameData(gameDataOptional.get(), this.configuration);
             return true;
@@ -88,10 +90,11 @@ public final class GameModel {
 
     /**
      * Detects the host's OS and returns a path to appdata folder.
+     *
      * @return a path to the appdata folder
      */
     private String getAppData() {
-        String osHome = System.getProperty("os.name").toLowerCase();
+        final String osHome = System.getProperty("os.name").toLowerCase();
         String appData;
 
         if (osHome.contains("win")) {
@@ -108,34 +111,33 @@ public final class GameModel {
 
         return appData + File.separator + "KingdomClash";
     }
+
     /**
      * Creates a GameData object by reading a compatible
      * serialized object on disk.
+     *
      * @param configuration the configuration to apply to gameData
-     * @return              if readable, a GameData object
+     * @return if readable, a GameData object
      */
-    private Optional<GameData> deserializeGameData(GameConfiguration configuration) {
+    private Optional<GameData> deserializeGameData(final GameConfiguration configuration) {
         if (this.saveDataLocation.exists()) {
             try (ObjectInputStream gameDataInputStream =
                          new ObjectInputStream(
                                  new FileInputStream(this.saveDataLocation))) {
 
-                Object data = gameDataInputStream.readObject();
+                final Object data = gameDataInputStream.readObject();
                 if (data instanceof GameData retrievedGameData) {
                     return Optional.of(new GameData(retrievedGameData, configuration));
                 } else {
                     throw new IllegalClassFormatException();
                 }
             } catch (FileNotFoundException | ClassNotFoundException exc) {
-                logger.warning("Cannot read game data!");
-                exc.printStackTrace();
+                logger.warning("Cannot read game data!" + exc);
             } catch (IOException exc) {
-                logger.severe("IOException occourred while loading GameData!");
-                exc.printStackTrace();
+                logger.severe("IOException occourred while loading GameData!" + exc);
             } catch (IllegalArgumentException | SecurityException
                      | IllegalClassFormatException exc) {
-                logger.severe("Data class is incompatible or a different version!");
-                exc.printStackTrace();
+                logger.severe("Data class is incompatible or a different version!" + exc);
             }
         }
         return Optional.empty();
@@ -145,19 +147,19 @@ public final class GameModel {
         return gameData;
     }
 
-    public int getCurrentLevel(){
+    public int getCurrentLevel() {
         return this.gameData.getCurrentLevel();
     }
 
-    public void incrementCurrenetLevel(){
+    public void incrementCurrenetLevel() {
         this.gameData.incrementLevel();
     }
 
-    public String getPlayerName(){
+    public String getPlayerName() {
         return this.gameData.getPlayerName();
     }
 
-    public void setPlayerName(String name){
+    public void setPlayerName(final String name) {
         this.gameData.setPlayerName(name);
     }
 }

@@ -29,12 +29,12 @@ public class FieldPanelImpl implements FieldPanel {
     /**
      * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
      */
-    public FieldPanelImpl(final int nrOfFieldSpot, PathIconsConfiguration pathIconsConfiguration) {
+    public FieldPanelImpl(final int nrOfFieldSpot, final PathIconsConfiguration pathIconsConfiguration) {
         this.field = new ArrayList<>();
         this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getFieldPanel());
 
         this.mainPanel.setLayout(new GridLayout(ROWS, nrOfFieldSpot / ROWS));
-        IntStream.range(0, nrOfFieldSpot * 2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION,pathIconsConfiguration)));
+        IntStream.range(0, nrOfFieldSpot * 2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION, pathIconsConfiguration)));
 
 
         this.restart();

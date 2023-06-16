@@ -44,20 +44,20 @@ public final class BattlePanelImpl implements BattlePanel {
      */
     public BattlePanelImpl(final BattleConfiguration battleConfiguration, final PathIconsConfiguration pathIconsConfiguration) {
         this.layoutManager = new CardLayout();
-        this.closeButton=new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(),new Dimension(200,50)));
+        this.closeButton = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), new Dimension(200, 50)));
         this.mainPanel = new JPanel(this.layoutManager);
-        this.tutorialPanel = new TutorialPanel(battleConfiguration.getTextConfiguration(),pathIconsConfiguration);
+        this.tutorialPanel = new TutorialPanel(battleConfiguration.getTextConfiguration(), pathIconsConfiguration);
         this.endPanel = new TextPanel(battleConfiguration.getTextConfiguration().getEndWinPanelTitle(), battleConfiguration.getTextConfiguration().getEndPanelText(), PanelDimensions.MAIN_PANEL_SIZE, pathIconsConfiguration);
         this.endPanel.add(closeButton);
 
-        JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
+        final JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
         gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
-        this.botPanel = new PlayerPanelImpl(battleConfiguration.getNrOfSlots(),pathIconsConfiguration);
-        this.playerPanel = new PlayerPanelImpl(battleConfiguration.getNrOfSlots(),pathIconsConfiguration);
-        this.infoPanel = new InfoPanelImpl(TroopType.values().length,pathIconsConfiguration);
-        this.buttonsPanel = new CommandPanelImpl(battleConfiguration.getNrOfLives(),pathIconsConfiguration);
-        this.fieldPanel = new FieldPanelImpl(battleConfiguration.getNrOfFieldSpots(),pathIconsConfiguration);
+        this.botPanel = new PlayerPanelImpl(battleConfiguration.getNrOfSlots(), pathIconsConfiguration);
+        this.playerPanel = new PlayerPanelImpl(battleConfiguration.getNrOfSlots(), pathIconsConfiguration);
+        this.infoPanel = new InfoPanelImpl(TroopType.values().length, pathIconsConfiguration);
+        this.buttonsPanel = new CommandPanelImpl(battleConfiguration.getNrOfLives(), pathIconsConfiguration);
+        this.fieldPanel = new FieldPanelImpl(battleConfiguration.getNrOfFieldSpots(), pathIconsConfiguration);
 
         gamePanel.add(botPanel.getPanel(), BorderLayout.NORTH);
         gamePanel.add(playerPanel.getPanel(), BorderLayout.SOUTH);
@@ -67,13 +67,15 @@ public final class BattlePanelImpl implements BattlePanel {
 
         this.mainPanel.add(gamePanel, "1");
         this.mainPanel.add(tutorialPanel.getPanel(), "2");
-        this.mainPanel.add(endPanel,"3");
+        this.mainPanel.add(endPanel, "3");
 
         this.setActionListenerExitButton();
         this.setActionListenerInfoButton();
     }
 
-    public void showEndPanel(){layoutManager.show(mainPanel,"3");}
+    public void showEndPanel() {
+        layoutManager.show(mainPanel, "3");
+    }
 
     public void showTutorialPanel() {
         layoutManager.show(mainPanel, "2");
@@ -172,19 +174,18 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     private void setActionListenerExitButton() {
-        ActionListener actionListenerInfo = e -> this.showGamePanel();
-        this.tutorialPanel.addActionListenerExit(actionListenerInfo);
-    }
-    private void setActionListenerInfoButton() {
-        ActionListener actionListenerInfo = e -> this.showTutorialPanel();
-        this.buttonsPanel.setActionListenerInfo(actionListenerInfo);
+        this.tutorialPanel.addActionListenerExit(e -> this.showGamePanel());
     }
 
-    public void reset(){
+    private void setActionListenerInfoButton() {
+        this.buttonsPanel.setActionListenerInfo(e -> this.showTutorialPanel());
+    }
+
+    public void reset() {
         this.buttonsPanel.reset();
     }
 
-    public void setBackActionListener(ActionListener actionListener){
+    public void setBackActionListener(final ActionListener actionListener) {
         this.closeButton.addActionListener(e -> showGamePanel());
         this.closeButton.addActionListener(actionListener);
     }

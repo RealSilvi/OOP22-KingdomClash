@@ -11,6 +11,9 @@ import java.awt.*;
 
 public class TroopButtonImpl implements TroopButton {
 
+    //    TODO set a serial uid
+    static final long serialVersionUID = 42L;
+
     private TroopType troop;
     private final Dimension size;
     private final PositionJbutton button;
@@ -39,9 +42,10 @@ public class TroopButtonImpl implements TroopButton {
         return this.troop;
     }
 
+    @Override
     public void setTroop(final TroopType troop, final int delay) {
         this.troop = troop;
-        Timer timer = new Timer(delay, e -> button.setIcon(
+        final Timer timer = new Timer(delay, e -> button.setIcon(
                 ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop), size)));
         timer.setRepeats(false);
         timer.start();
@@ -64,11 +68,13 @@ public class TroopButtonImpl implements TroopButton {
     }
 
     public static class PositionJbutton extends JButton {
+        //        TODO set a version UID
+        static final long serialVersionUID = 42L;
 
         private final int position;
         private boolean selectedBorder;
 
-        public PositionJbutton(int position) {
+        public PositionJbutton(final int position) {
             this.position = position;
             this.selectedBorder = false;
             this.setEnabled(true);
@@ -88,13 +94,13 @@ public class TroopButtonImpl implements TroopButton {
         }
 
         @Override
-        public void setIcon(Icon defaultIcon) {
+        public void setIcon(final Icon defaultIcon) {
             super.setIcon(defaultIcon);
             this.setDisabledIcon(defaultIcon);
         }
 
         @Override
-        public void setEnabled(boolean b) {
+        public void setEnabled(final boolean b) {
             super.setEnabled(b);
             this.selectedBorder = false;
             if (b) {

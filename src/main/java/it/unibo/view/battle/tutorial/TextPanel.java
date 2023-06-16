@@ -11,18 +11,22 @@ import java.awt.*;
 
 public class TextPanel extends DrawPanel {
 
-    private final static int VERTICAL_PADDING = 10;
-    private final static int HORIZONTAL_PADDING = 30;
-    private final static float TITLE_FONT_SIZE = 30f;
-    private final static float CONTENT_FONT_SIZE = 20f;
+    //TODo set iud version
 
-    public TextPanel(final String title, final String content, final Dimension size, PathIconsConfiguration pathIconsConfiguration) {
+    static final long serialVersionUID = 42L;
+
+    private static final int VERTICAL_PADDING = 10;
+    private static final int HORIZONTAL_PADDING = 30;
+    private static final float TITLE_FONT_SIZE = 30f;
+    private static final float CONTENT_FONT_SIZE = 20f;
+
+    public TextPanel(final String title, final String content, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
         super(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), size);
 
-        JLabel title1 = new JLabel(title);
-        JTextArea content1 = new JTextArea(content);
+        final JLabel title1 = new JLabel(title);
+        final JTextArea content1 = new JTextArea(content);
 
-        Border padding = BorderFactory.createEmptyBorder(
+        final Border padding = BorderFactory.createEmptyBorder(
                 VERTICAL_PADDING,
                 HORIZONTAL_PADDING,
                 VERTICAL_PADDING,
@@ -34,7 +38,7 @@ public class TextPanel extends DrawPanel {
         content1.setWrapStyleWord(true);
         content1.setEditable(false);
 
-        title1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        title1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         title1.setFont(BattlePanelStyle.getPrimaryFont().deriveFont(TITLE_FONT_SIZE));
         content1.setFont(content1.getFont().deriveFont(CONTENT_FONT_SIZE));

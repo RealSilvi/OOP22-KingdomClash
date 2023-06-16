@@ -13,13 +13,13 @@ import java.awt.event.ActionListener;
 
 public class ButtonsPanelImpl implements ButtonsPanel {
 
-    private final static double GAME_BUTTON_SCALE = 0.5;
-    private final static Dimension GAME_BUTTON_DIMENSION = new Dimension(
+    private static final double GAME_BUTTON_SCALE = 0.5;
+    private static final Dimension GAME_BUTTON_DIMENSION = new Dimension(
             (int) (PanelDimensions.getSideButtonsPanel().getHeight() * GAME_BUTTON_SCALE),
             (int) (PanelDimensions.getSideButtonsPanel().getHeight() * GAME_BUTTON_SCALE));
 
-    private final static double INFO_BUTTON_SCALE = 0.3;
-    private final static Dimension INFO_BUTTON_DIMENSION = new Dimension(
+    private static final double INFO_BUTTON_SCALE = 0.3;
+    private static final Dimension INFO_BUTTON_DIMENSION = new Dimension(
             (int) (PanelDimensions.getSideButtonsPanel().getWidth() * INFO_BUTTON_SCALE),
             (int) (PanelDimensions.getSideButtonsPanel().getHeight() * INFO_BUTTON_SCALE));
 
@@ -28,12 +28,12 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     private final JButton info;
     private final JPanel mainPanel;
 
-    public ButtonsPanelImpl(PathIconsConfiguration pathIconsConfiguration) {
+    public ButtonsPanelImpl(final PathIconsConfiguration pathIconsConfiguration) {
         this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSideButtonsPanel());
-        this.spin = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getSpin(),GAME_BUTTON_DIMENSION)
+        this.spin = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getSpin(), GAME_BUTTON_DIMENSION)
                 , GAME_BUTTON_DIMENSION);
-        this.pass = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getPass(),GAME_BUTTON_DIMENSION), GAME_BUTTON_DIMENSION);
-        this.info = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getInfo(),INFO_BUTTON_DIMENSION), INFO_BUTTON_DIMENSION);
+        this.pass = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getPass(), GAME_BUTTON_DIMENSION), GAME_BUTTON_DIMENSION);
+        this.info = this.getCostumeButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getInfo(), INFO_BUTTON_DIMENSION), INFO_BUTTON_DIMENSION);
 
         this.mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         this.mainPanel.add(spin);
@@ -43,9 +43,9 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     }
 
     private JButton getCostumeButton(final ImageIcon icon, final Dimension size) {
-        JButton button = new JButton() {
+        final JButton button = new JButton() {
             @Override
-            public void setEnabled(boolean b) {
+            public void setEnabled(final boolean b) {
                 super.setEnabled(b);
                 if (b) {
                     this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.SECONDARY_COLOR, 4, true));

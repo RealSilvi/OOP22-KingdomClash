@@ -142,16 +142,16 @@ public class PathIconsConfiguration {
         return this.indicator;
     }
 
-    public String getLife(boolean alive) {
-        return (alive) ? this.life : this.death;
+    public String getLife(final boolean alive) {
+        return alive ? this.life : this.death;
     }
 
-    public String getTroop(TroopType troop) {
+    public String getTroop(final TroopType troop) {
         return this.troops.get(troop);
     }
 
-    public String getBuilding(BuildingBuilder.BuildingTypes type, Integer level) {
-        return (level > 3 || level < 1) ?
+    public String getBuilding(final BuildingBuilder.BuildingTypes type, final Integer level) {
+        return level > 3 || level < 1 ?
                 this.buildings.get(type).get(1) :
                 this.buildings.get(type).get(level);
     }
