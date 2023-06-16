@@ -56,8 +56,8 @@ public class CityPanelImpl implements CityPanel {
         this.mainPanel.setLayout(new BorderLayout());
 
         this.barPanel = new BarPanelImpl(this, controller, size, readImages);
-        this.fieldPanel = new FieldCityPanelImpl(this,
-            configuration.getCityConfiguration(), configuration.getPathIconsConfiguration());
+        this.fieldPanel = new FieldCityPanelImpl(this, controller,
+            configuration, configuration.getCityConfiguration(), configuration.getPathIconsConfiguration(), this.readImages);
 
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
