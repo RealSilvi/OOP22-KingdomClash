@@ -7,13 +7,13 @@ import it.unibo.view.map.MapPanel;
 import it.unibo.view.map.MapPanelImpl;
 import it.unibo.view.menu.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.CardLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 /**
  * This class is the principal GUI, which takes
@@ -39,6 +39,7 @@ public final class GameGui implements GameGuiInt {
     private final NamePlayerImpl namePlayer;
     private final MapPanel mapPanel;
     private final SoundManager soundManager;
+    private Boolean saved;
 
     /**
      * The constructor initialize all the panels,
@@ -55,6 +56,7 @@ public final class GameGui implements GameGuiInt {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.soundManager = new SoundManager();
         this.soundManager.changeMute();
+        this.saved = false;
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
 
@@ -94,7 +96,6 @@ public final class GameGui implements GameGuiInt {
         setMapBaseActionListener();
         setMapBattleActionListener();
         setActionListenerBack();
-        setActionListenerNewGame();
         showMenuPanel();
 
     }
@@ -140,9 +141,16 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setActionListenerNewGame() {
-        ActionListener actionListener = e -> showNamePanel();
+    public Boolean showNewGameOptions(){
+        return JOptionPane.showConfirmDialog(null, "Exist a previous save, if you click" +
+                        "new game, you will delete it and start a new save, are you sure?",
+                "Empty Name", JOptionPane.YES_NO_OPTION) == 0;
+    }
+
+    @Override
+    public void setActionListenerNewGame(ActionListener actionListener) {
         this.menuPanel.setActionListenerNewGame(actionListener);
+
     }
 
     private void setActionListenerBack(){
@@ -236,6 +244,10 @@ public final class GameGui implements GameGuiInt {
         double width = SouthPanel.getMenuPanel().getWidth();
         double height = DIMENSION_SCREEN.getHeight() - SouthPanel.getMenuPanel().getHeight();
         return new Dimension((int) width, (int) height);
+    }
+
+    public void setSaves(Boolean saved){
+        this.saved = saved;
     }
 
 }

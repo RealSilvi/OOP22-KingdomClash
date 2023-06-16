@@ -160,10 +160,6 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
     }
 
-    public void clearField(){
-        this.battlePanel.reset();
-    }
-
     @Override
     public void clickedButtonPlayer(final Integer key) {
         if (fightData.getPlayerData().getCells(key).getClicked()) {
