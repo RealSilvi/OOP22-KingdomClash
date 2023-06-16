@@ -152,9 +152,9 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         interactionComponents.add(buildingPanel);
         this.mainpanel.add(buildingPanel);
         this.mainpanel.add(troop);
-        this.mainpanel.add(playerinfo);
         this.mainpanel.add(upgradeBtn);
         this.mainpanel.add(demolishBtn);
+        this.mainpanel.add(playerinfo);
         this.mainpanel.add(resourcePanel);
         troop.addActionListener(new ActionListener() {
             @Override
