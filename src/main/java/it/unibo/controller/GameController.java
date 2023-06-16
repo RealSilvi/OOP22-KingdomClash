@@ -10,11 +10,11 @@ import java.awt.event.ActionListener;
 
 public class GameController {
 
-    GameModel gameModel;
-    GameGui gameGui;
+    final GameModel gameModel;
+    final GameGui gameGui;
 
-    Controller battleController;
-    Controller baseController;
+    final Controller battleController;
+    final Controller baseController;
 
     ActionListener toMainPanel;
 
@@ -37,11 +37,11 @@ public class GameController {
         this.setActionListenerCity();
 
         gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
-        gameGui.setActivateBattle((gameModel.getCurrentLevel()));
+        gameGui.setActivateBattle(gameModel.getCurrentLevel());
     }
 
     private void setActionListenerNewGame() {
-        ActionListener actionListener = e -> this.gameGui.showCity();
+        final ActionListener actionListener = e -> this.gameGui.showCity();
         this.gameGui.setActionListenerNewGame(actionListener);
     }
 
@@ -61,7 +61,7 @@ public class GameController {
         return e -> {
             this.gameGui.showMap();
             this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
-            this.gameGui.setBeatenLevels((gameModel.getCurrentLevel() - 1));
+            this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         };
     }
 

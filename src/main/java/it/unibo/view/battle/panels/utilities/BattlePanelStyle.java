@@ -16,12 +16,12 @@ public interface BattlePanelStyle {
     Color SECONDARY_COLOR = new Color(250, 160, 21);
     Color DEFAULT_COLOR = Color.darkGray;
 
-    static Font loadTtfFont(final String pathToDirectory,final String fontName){
+    static Font loadTtfFont(final String pathToDirectory, final String fontName) {
         final float fontSize = 40f;
         Font font;
         try {
             font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(BattlePanelStyle.class.getResourceAsStream(pathToDirectory + fontName + FONT_EXTENSION)));
-            GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            final GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
             g.registerFont(font);
             return font.deriveFont(fontSize);
         } catch (IOException | FontFormatException e) {
@@ -31,6 +31,6 @@ public interface BattlePanelStyle {
     }
 
     static Font getPrimaryFont() {
-        return loadTtfFont(FONTS_DIRECTORY , PRIMARY_FONT_NAME);
+        return loadTtfFont(FONTS_DIRECTORY, PRIMARY_FONT_NAME);
     }
 }

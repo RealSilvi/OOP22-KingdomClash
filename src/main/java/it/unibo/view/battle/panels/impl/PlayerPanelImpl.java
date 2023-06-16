@@ -17,8 +17,8 @@ import java.util.stream.IntStream;
 
 public class PlayerPanelImpl implements PlayerPanel {
 
-    private final static double BUTTON_SCALE = 0.90;
-    private final static Dimension BUTTON_DIMENSION = new Dimension(
+    private static final double BUTTON_SCALE = 0.90;
+    private static final Dimension BUTTON_DIMENSION = new Dimension(
             (int) (PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE),
             (int) (PanelDimensions.getPlayersPanel().getHeight() * BUTTON_SCALE));
 
@@ -29,8 +29,8 @@ public class PlayerPanelImpl implements PlayerPanel {
     /**
      * @param nrOfSlots how many buttons to display
      */
-    public PlayerPanelImpl(final Integer nrOfSlots , PathIconsConfiguration pathIconsConfiguration) {
-        this.pathIconsConfiguration=pathIconsConfiguration;
+    public PlayerPanelImpl(final Integer nrOfSlots, final PathIconsConfiguration pathIconsConfiguration) {
+        this.pathIconsConfiguration = pathIconsConfiguration;
         this.mainPanel = new DrawPanel(
                 ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundFillPattern())
                 , PanelDimensions.getPlayersPanel());
@@ -44,13 +44,13 @@ public class PlayerPanelImpl implements PlayerPanel {
 
     @Override
     public void update(final Map<Integer, TroopType> troops) {
-        int delay=600;
+        int delay = 600;
 
         for (int x = 0; x < this.slots.size(); x++) {
             if (troops.containsKey(x)) {
                 this.slots.get(x).setEnabled(true);
-                this.slots.get(x).setTroop(troops.get(x),delay);
-                delay+=200;
+                this.slots.get(x).setTroop(troops.get(x), delay);
+                delay += 200;
             } else {
                 this.slots.get(x).setEnabled(false);
             }

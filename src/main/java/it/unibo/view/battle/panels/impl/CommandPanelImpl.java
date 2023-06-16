@@ -22,10 +22,10 @@ public class CommandPanelImpl implements CommandPanel {
     /**
      * @param numberOfLives how many health points has the players
      */
-    public CommandPanelImpl(final int numberOfLives, PathIconsConfiguration pathIconsConfiguration) {
+    public CommandPanelImpl(final int numberOfLives, final PathIconsConfiguration pathIconsConfiguration) {
         this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSidePanel());
-        this.botLivesPanel = new LifePanelImpl(numberOfLives,pathIconsConfiguration);
-        this.playerLivesPanel = new LifePanelImpl(numberOfLives,pathIconsConfiguration);
+        this.botLivesPanel = new LifePanelImpl(numberOfLives, pathIconsConfiguration);
+        this.playerLivesPanel = new LifePanelImpl(numberOfLives, pathIconsConfiguration);
         this.buttonsPanel = new ButtonsPanelImpl(pathIconsConfiguration);
 
 
@@ -80,7 +80,7 @@ public class CommandPanelImpl implements CommandPanel {
         this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 
-    public void reset(){
+    public void reset() {
         this.botLivesPanel.reset();
         this.playerLivesPanel.reset();
     }

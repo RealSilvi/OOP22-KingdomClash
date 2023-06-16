@@ -43,13 +43,13 @@ public enum TroopType {
      */
     MACE_DEFENCE;
 
-    private static final Map<TroopType, TroopType> counterList =
-        Map.of(TroopType.AXE, TroopType.AXE_DEFENCE,
-            TroopType.SWORD, TroopType.SWORD_DEFENCE,
-            TroopType.HAMMER, TroopType.HAMMER_DEFENCE,
-            TroopType.MACE, TroopType.MACE_DEFENCE);
+    private static final Map<TroopType, TroopType> COUNTER_LIST =
+            Map.of(TroopType.AXE, TroopType.AXE_DEFENCE,
+                    TroopType.SWORD, TroopType.SWORD_DEFENCE,
+                    TroopType.HAMMER, TroopType.HAMMER_DEFENCE,
+                    TroopType.MACE, TroopType.MACE_DEFENCE);
 
-    private static final Random rnGenerator = new Random();
+    private static final Random RN_GENERATOR = new Random();
 
     /**
      * @return Returns a random troop type everytime this method is called
@@ -57,7 +57,7 @@ public enum TroopType {
     public static TroopType getRandomTroop() {
 
         return Arrays.stream(values())
-                .skip(rnGenerator.nextInt(values().length))
+                .skip(RN_GENERATOR.nextInt(values().length))
                 .iterator()
                 .next();
     }
@@ -67,20 +67,22 @@ public enum TroopType {
      * @return the other troop that counters the given troop
      */
     public static Optional<TroopType> getNullable(final TroopType troopToCheck) {
-        if (counterList.containsKey(troopToCheck)) {
-            return Optional.of(counterList.get(troopToCheck));
+        if (COUNTER_LIST.containsKey(troopToCheck)) {
+            return Optional.of(COUNTER_LIST.get(troopToCheck));
         }
-        return counterList.entrySet().stream()
-        .filter(troopEntry -> troopEntry.getValue() == troopToCheck)
-        .map(Map.Entry::getKey)
-        .findFirst();
+        return COUNTER_LIST.entrySet().stream()
+                .filter(troopEntry -> troopEntry.getValue() == troopToCheck)
+                .map(Map.Entry::getKey)
+                .findFirst();
     }
+
     /**
      * Checks if the given troop is a defence.
+     *
      * @param troopType troop to check
-     * @return          true if is a defence
+     * @return true if is a defence
      */
     public static boolean isDefense(final TroopType troopType) {
-        return !counterList.containsKey(troopType);
+        return !COUNTER_LIST.containsKey(troopType);
     }
 }

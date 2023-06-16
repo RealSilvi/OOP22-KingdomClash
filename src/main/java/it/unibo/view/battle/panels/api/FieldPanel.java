@@ -20,9 +20,8 @@ public interface FieldPanel {
     /**
      * Update the panel setting the troops on it.<br>
      * Note: there's could be empties slots.
-     *
      */
-    void redraw(final List<Optional<TroopType>> field);
+    void redraw(List<Optional<TroopType>> field);
 
     JPanel getPanel();
 }

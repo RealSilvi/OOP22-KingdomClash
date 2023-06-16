@@ -13,8 +13,8 @@ import javax.swing.*;
 
 public final class TutorialPanel {
 
-    private final static int BORDER_LAYOUT_GAP = 3;
-    private final static Dimension EXIT_DIMENSION = new Dimension(60, 30);
+    private static final int BORDER_LAYOUT_GAP = 3;
+    private static final Dimension EXIT_DIMENSION = new Dimension(60, 30);
 
     private final JPanel mainPanel;
 
@@ -26,9 +26,9 @@ public final class TutorialPanel {
     //TODO tutti i punti alla fine dei comenti
     //TODO tutti i commenti dei costruttori
     //TODO tutti i commenti delle interfacce da rivedere
-    public TutorialPanel(TextConfiguration configuration, PathIconsConfiguration pathIconsConfiguration) {
-        this.turnBack = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(),EXIT_DIMENSION));
-        JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel(),pathIconsConfiguration);
+    public TutorialPanel(final TextConfiguration configuration, final PathIconsConfiguration pathIconsConfiguration) {
+        this.turnBack = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), EXIT_DIMENSION));
+        final JPanel backPanel = new TextPanel(configuration.getTutorialSouthTitle(), configuration.getTutorialSouthText(), PanelDimensions.getPlayersPanel(), pathIconsConfiguration);
 
         this.turnBack.setPreferredSize(EXIT_DIMENSION);
         this.turnBack.setOpaque(false);
@@ -40,20 +40,19 @@ public final class TutorialPanel {
         this.mainPanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
         this.mainPanel.add(backPanel, BorderLayout.SOUTH);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialNorthTitle(),configuration.getTutorialNorthText(),PanelDimensions.getPlayersPanel(),pathIconsConfiguration), BorderLayout.NORTH);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialWestTitle(),configuration.getTutorialWestText(),PanelDimensions.getSidePanel(),pathIconsConfiguration), BorderLayout.WEST);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialEastTitle(),configuration.getTutorialEastText(),PanelDimensions.getSidePanel(),pathIconsConfiguration), BorderLayout.EAST);
-        this.mainPanel.add(new TextPanel(configuration.getTutorialCenterTitle(),configuration.getTutorialCenterText(),PanelDimensions.getFieldPanel(),pathIconsConfiguration), BorderLayout.CENTER);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialNorthTitle(), configuration.getTutorialNorthText(), PanelDimensions.getPlayersPanel(), pathIconsConfiguration), BorderLayout.NORTH);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialWestTitle(), configuration.getTutorialWestText(), PanelDimensions.getSidePanel(), pathIconsConfiguration), BorderLayout.WEST);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialEastTitle(), configuration.getTutorialEastText(), PanelDimensions.getSidePanel(), pathIconsConfiguration), BorderLayout.EAST);
+        this.mainPanel.add(new TextPanel(configuration.getTutorialCenterTitle(), configuration.getTutorialCenterText(), PanelDimensions.getFieldPanel(), pathIconsConfiguration), BorderLayout.CENTER);
     }
 
-    public void addActionListenerExit(ActionListener actionListener) {
+    public void addActionListenerExit(final ActionListener actionListener) {
         this.turnBack.addActionListener(actionListener);
     }
 
     public JPanel getPanel() {
         return this.mainPanel;
     }
-
 
 
 }

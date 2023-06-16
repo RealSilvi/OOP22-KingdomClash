@@ -32,21 +32,21 @@ public interface ButtonsPanel {
      *
      * @param actionListener
      */
-    void setActionListenerPass(final ActionListener actionListener);
+    void setActionListenerPass(ActionListener actionListener);
 
     /**
      * Sets the action listener at the spin button
      *
      * @param actionListener
      */
-    void setActionListenerSpin(final ActionListener actionListener);
+    void setActionListenerSpin(ActionListener actionListener);
 
     /**
      * Sets the action listener at the info button
      *
      * @param actionListener
      */
-    void setActionListenerInfo(final ActionListener actionListener);
+    void setActionListenerInfo(ActionListener actionListener);
 
 
     JPanel getPanel();

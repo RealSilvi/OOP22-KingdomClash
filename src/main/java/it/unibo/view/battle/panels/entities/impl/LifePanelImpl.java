@@ -10,27 +10,28 @@ import it.unibo.view.battle.panels.utilities.PanelDimensions;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class LifePanelImpl implements LifePanel {
 
-    private final static double LABEL_SCALE = 0.2;
-    private final static Dimension LABEL_DIMENSION = new Dimension(
+    private static final double LABEL_SCALE = 0.2;
+    private static final Dimension LABEL_DIMENSION = new Dimension(
             (int) (PanelDimensions.getSideLifePanel().getHeight() * LABEL_SCALE),
             (int) (PanelDimensions.getSideLifePanel().getHeight() * LABEL_SCALE));
 
     private final JPanel mainPanel;
-    private final ArrayList<LivesLabelImpl> lives;
+    private final List<LivesLabelImpl> lives;
 
     /**
      * @param nrOfLives how many health points has the player.
      */
-    public LifePanelImpl(final int nrOfLives, PathIconsConfiguration pathIconsConfiguration) {
+    public LifePanelImpl(final int nrOfLives, final PathIconsConfiguration pathIconsConfiguration) {
         this.lives = new ArrayList<>();
         this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSideLifePanel());
 
 
-        IntStream.range(0, nrOfLives).forEach(i -> lives.add(new LivesLabelImpl(LABEL_DIMENSION,pathIconsConfiguration)));
+        IntStream.range(0, nrOfLives).forEach(i -> lives.add(new LivesLabelImpl(LABEL_DIMENSION, pathIconsConfiguration)));
         this.lives.forEach(this.mainPanel::add);
     }
 
@@ -42,7 +43,7 @@ public class LifePanelImpl implements LifePanel {
                 .ifPresent(LivesLabel::changeStatus);
     }
 
-    public void reset(){
+    public void reset() {
         this.lives.forEach(LivesLabelImpl::reset);
     }
 
@@ -53,6 +54,9 @@ public class LifePanelImpl implements LifePanel {
 
     private static class LivesLabelImpl extends JLabel implements LivesLabel {
 
+        //        TODO set the serial UID
+        static final long serialVersionUID = 42L;
+
         private final Dimension size;
         private boolean alive;
         private final PathIconsConfiguration pathIconsConfiguration;
@@ -60,12 +64,12 @@ public class LifePanelImpl implements LifePanel {
         /**
          * @param size the size of the label
          */
-        public LivesLabelImpl(final Dimension size,PathIconsConfiguration pathIconsConfiguration) {
-            super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true),size));
+        public LivesLabelImpl(final Dimension size, PathIconsConfiguration pathIconsConfiguration) {
+            super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true), size));
 
             this.size = size;
             this.alive = true;
-            this.pathIconsConfiguration=pathIconsConfiguration;
+            this.pathIconsConfiguration = pathIconsConfiguration;
 
             this.setPreferredSize(size);
         }
@@ -74,7 +78,7 @@ public class LifePanelImpl implements LifePanel {
         @Override
         public void changeStatus() {
             this.alive = !this.alive;
-            this.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(this.alive),size));
+            this.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(this.alive), size));
         }
 
         @Override
@@ -82,9 +86,9 @@ public class LifePanelImpl implements LifePanel {
             return this.alive;
         }
 
-        public void reset(){
-            this.alive=true;
-            this.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true),size));
+        public void reset() {
+            this.alive = true;
+            this.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true), size));
         }
     }
 }
