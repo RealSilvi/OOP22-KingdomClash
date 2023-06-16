@@ -39,7 +39,6 @@ public final class GameGui implements GameGuiInt {
     private final NamePlayerImpl namePlayer;
     private final MapPanel mapPanel;
     private final SoundManager soundManager;
-    private Boolean saved;
 
     /**
      * The constructor initialize all the panels,
@@ -56,7 +55,6 @@ public final class GameGui implements GameGuiInt {
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.soundManager = new SoundManager();
         this.soundManager.changeMute();
-        this.saved = false;
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
 
@@ -244,10 +242,6 @@ public final class GameGui implements GameGuiInt {
         double width = SouthPanel.getMenuPanel().getWidth();
         double height = DIMENSION_SCREEN.getHeight() - SouthPanel.getMenuPanel().getHeight();
         return new Dimension((int) width, (int) height);
-    }
-
-    public void setSaves(Boolean saved){
-        this.saved = saved;
     }
 
 }
