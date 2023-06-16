@@ -44,6 +44,8 @@ public interface GameGuiInt {
 
     void setActionListenerSave(ActionListener actionListener);
 
+    void setActionListenerLoad(ActionListener actionListener);
+
     void setActionListenerCity(ActionListener actionListener);
 
     void setActionListenerMap(ActionListener actionListener);

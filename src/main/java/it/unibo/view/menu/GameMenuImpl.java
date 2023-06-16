@@ -27,10 +27,11 @@ public class GameMenuImpl implements GameMenu {
     private final ImageButton exit;
     private final ImageButton new_game;
     private final ImageButton music;
+    private final ImageButton load;
 
     public GameMenuImpl() {
         this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
-        ImageButton load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        this.load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
         this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
         this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
         this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
@@ -78,18 +79,27 @@ public class GameMenuImpl implements GameMenu {
         return this.menuPanel;
     }
 
+    @Override
     public void setActionListenerInfo(ActionListener actionListener){
         this.info.addActionListener(actionListener);
     }
 
+    @Override
     public void setActionListenerNewGame(ActionListener actionListener){
         this.new_game.addActionListener(actionListener);
     }
 
+    @Override
+    public void setActionListenerLoad(ActionListener actionListener){
+        this.load.addActionListener(actionListener);
+    }
+
+    @Override
     public void setActionListenerMusic(ActionListener actionListener){
         this.music.addActionListener(actionListener);
     }
 
+    @Override
     public void setActionListenerExit(ActionListener actionListener){
         this.exit.addActionListener(actionListener);
     }
