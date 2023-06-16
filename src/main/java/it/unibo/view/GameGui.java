@@ -5,10 +5,7 @@ import it.unibo.controller.SoundManager;
 import it.unibo.model.data.GameConfiguration;
 import it.unibo.view.map.MapPanel;
 import it.unibo.view.map.MapPanelImpl;
-import it.unibo.view.menu.GameMenu;
-import it.unibo.view.menu.GameMenuImpl;
-import it.unibo.view.menu.InfoMenuPanel;
-import it.unibo.view.menu.SouthPanel;
+import it.unibo.view.menu.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,6 +36,7 @@ public final class GameGui implements GameGuiInt {
     private final SouthPanel southPanel;
     private final GameMenu menuPanel;
     private final InfoMenuPanel infoPanel;
+    private final NamePlayerImpl namePlayer;
     private final MapPanel mapPanel;
     private final SoundManager soundManager;
 
@@ -70,6 +68,7 @@ public final class GameGui implements GameGuiInt {
 
         this.menuPanel = new GameMenuImpl();
         this.infoPanel = new InfoMenuPanel(gameConfiguration);
+        this.namePlayer = new NamePlayerImpl();
         this.southPanel = new SouthPanel();
 
         this.allPanel.add(battlePanel, "1");
@@ -81,6 +80,7 @@ public final class GameGui implements GameGuiInt {
 
         this.mainPanel.add(this.menuPanel.getPanel(), "1");
         this.mainPanel.add(this.infoPanel.getPanel(), "2");
+        this.mainPanel.add(this.namePlayer.getPanel(), "4");
         this.mainPanel.add(borderPanel, "3");
 
         frame.setContentPane(this.mainPanel);
@@ -93,6 +93,8 @@ public final class GameGui implements GameGuiInt {
         setActionListenerMenu();
         setMapBaseActionListener();
         setMapBattleActionListener();
+        setActionListenerBack();
+        setActionListenerStart();
         showMenuPanel();
 
     }
@@ -133,8 +135,23 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
+    public void showNamePanel(){
+        switchLayout.show(this.mainPanel, "4");
+    }
+
+    @Override
     public void setActionListenerNewGame(ActionListener actionListener) {
         this.menuPanel.setActionListenerNewGame(actionListener);
+    }
+
+    private void setActionListenerBack(){
+        ActionListener actionListener = e -> showMenuPanel();
+        this.namePlayer.setActionListenerBack(actionListener);
+    }
+
+    private void setActionListenerStart(){
+        ActionListener actionListener = e -> showCity();
+        this.namePlayer.setActionListenerStart(actionListener);
     }
 
     private void setActionListenerMusic() {

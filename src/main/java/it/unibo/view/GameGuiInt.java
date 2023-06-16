@@ -34,6 +34,8 @@ public interface GameGuiInt {
      */
     void showMap();
 
+    void showNamePanel();
+
     void setActionListenerNewGame(ActionListener actionListener);
 
     void setActionListenerBattle(ActionListener actionListener);

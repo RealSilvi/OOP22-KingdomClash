@@ -41,7 +41,7 @@ public class GameController {
     }
 
     private void setActionListenerNewGame() {
-        final ActionListener actionListener = e -> this.gameGui.showCity();
+        final ActionListener actionListener = e -> this.gameGui.showNamePanel();
         this.gameGui.setActionListenerNewGame(actionListener);
     }
 
