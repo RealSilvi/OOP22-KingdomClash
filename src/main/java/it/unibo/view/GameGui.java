@@ -181,8 +181,8 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setActionListenerBattle(ActionListener actionListener) {
-        this.southPanel.setActionListenerBattle(actionListener);
+    public void setActionListenerSave(ActionListener actionListener) {
+        this.southPanel.setActionListenerSave(actionListener);
     }
 
     private void setActionListenerMenu() {

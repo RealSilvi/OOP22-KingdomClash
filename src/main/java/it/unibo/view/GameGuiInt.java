@@ -42,7 +42,7 @@ public interface GameGuiInt {
 
     void setActionListenerStart(ActionListener actionListener);
 
-    void setActionListenerBattle(ActionListener actionListener);
+    void setActionListenerSave(ActionListener actionListener);
 
     void setActionListenerCity(ActionListener actionListener);
 

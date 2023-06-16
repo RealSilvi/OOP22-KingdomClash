@@ -14,18 +14,17 @@ public class SouthPanel {
     private static final double MENU_WIDTH_SCALE = 1;
     private static final double MENU_HEIGHT_SCALE = 0.05;
     private final JPanel southPanel;
-    private final JButton battleButton;
     private final JButton cityButton;
     private final JButton mapButton;
     private final JButton menuButton;
     private final JButton musicButton;
     private final JButton exitButton;
+    private final JButton saveButton;
 
     public SouthPanel(){
-        this.battleButton = new JButton("BATTLE");
+        this.saveButton = new JButton("SAVE");
         this.menuButton = new JButton("MENU");
         this.musicButton = new JButton("MUSIC");
-        this.battleButton.setVisible(true);
         this.cityButton = new JButton("CITY");
         this.mapButton = new JButton("MAP");
         this.exitButton = new JButton("EXIT");
@@ -33,11 +32,11 @@ public class SouthPanel {
         this.southPanel = new JPanel();
         this.southPanel.setBackground(Color.blue);
         this.southPanel.setPreferredSize(getMenuPanel());
-        this.southPanel.add(this.battleButton);
         this.southPanel.add(this.musicButton);
         this.southPanel.add(this.menuButton);
         this.southPanel.add(this.cityButton);
         this.southPanel.add(this.mapButton);
+        this.southPanel.add(this.saveButton);
         this.southPanel.add(this.exitButton);
     }
 
@@ -53,9 +52,6 @@ public class SouthPanel {
                 (int) (DIMENSION_SCREEN.getHeight() * MENU_HEIGHT_SCALE));
     }
 
-    public void setActionListenerBattle(ActionListener actionListener){
-        this.battleButton.addActionListener(actionListener);
-    }
     public void setActionListenerMusic(ActionListener actionListener){
         this.musicButton.addActionListener(actionListener);
     }
@@ -71,12 +67,16 @@ public class SouthPanel {
     public void setActionListenerExit(ActionListener actionListener){
         this.exitButton.addActionListener(actionListener);
     }
+    public void setActionListenerSave(ActionListener actionListener){
+        this.saveButton.addActionListener(actionListener);
+    }
 
     public void showButtonsMap(){
         this.menuButton.setVisible(true);
         this.cityButton.setVisible(true);
         this.mapButton.setVisible(false);
         this.musicButton.setVisible(true);
+        this.saveButton.setVisible(true);
     }
 
     public void showButtonsCity(){
@@ -84,6 +84,7 @@ public class SouthPanel {
         this.cityButton.setVisible(false);
         this.mapButton.setVisible(true);
         this.musicButton.setVisible(true);
+        this.saveButton.setVisible(true);
     }
 
     public void showButtonsBattle(){
@@ -91,6 +92,7 @@ public class SouthPanel {
         this.cityButton.setVisible(false);
         this.mapButton.setVisible(false);
         this.musicButton.setVisible(true);
+        this.saveButton.setVisible(false);
     }
 
 }
