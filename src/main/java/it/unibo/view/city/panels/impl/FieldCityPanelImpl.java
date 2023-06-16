@@ -7,8 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import it.unibo.controller.base.BaseController;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
@@ -37,6 +39,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     private List<List<JButton>> buttonmap;
     private CityConfiguration gameConfiguration;
     private PathIconsConfiguration pathIconsConfiguration;
+    private Map<UUID, Point2D> buildingTilePositions;
 
     /**
      * The costructor create the panel and set the background of the field.
@@ -47,6 +50,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     public FieldCityPanelImpl(CityPanel cityView, BaseController baseController,
         GameConfiguration gameConfig, CityConfiguration gameConfiguration, PathIconsConfiguration pathIconsConfiguration,
         final Map<BuildingTypes, Map<Integer, Image>> readImages) {
+        this.buildingTilePositions = new HashMap<>();
         this.cityView = cityView;
         //GraphicUtils.resizeImage(new ImageIcon(),JButton.WIDTH,JButton.HEIGHT);
         this.gameConfiguration=gameConfiguration;
@@ -59,13 +63,30 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         buttonmap = new ArrayList<>(gameConfiguration.getWidth()* gameConfiguration.getHeight());
         this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());
         baseController.addBuildingStateChangedObserver(responsibleUUID -> {
-            if (!baseController.requestBuildingMap().get(responsibleUUID).isBeingBuilt()) {
-                BuildingTypes type = baseController.requestBuildingMap().get(responsibleUUID).getType();
-                int level = baseController.requestBuildingMap().get(responsibleUUID).getLevel();
-                Double xPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getX();
-                Double yPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getY();
-                JButton tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
-                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(readImages.get(type).get(level), tile.getWidth(), tile.getHeight())));
+            BuildingTypes type;
+            int level;
+            Double xPos;
+            Double yPos;
+            JButton tile;
+            if (!baseController.requestBuildingMap()
+                .containsKey(responsibleUUID)) {
+                xPos = this.buildingTilePositions.get(responsibleUUID).getX();
+                yPos = this.buildingTilePositions.get(responsibleUUID).getY();
+                tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
+                tile.setIcon(null);
+            } else {
+                if (!baseController.requestBuildingMap().get(responsibleUUID).isBeingBuilt()) {
+                    type = baseController.requestBuildingMap().get(responsibleUUID).getType();
+                    level = baseController.requestBuildingMap().get(responsibleUUID).getLevel();
+                    xPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getX();
+                    yPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getY();
+                    this.buildingTilePositions.put(responsibleUUID,
+                        baseController
+                        .requestBuildingMap()
+                        .get(responsibleUUID).getStructurePos());
+                    tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
+                    tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(readImages.get(type).get(level), tile.getWidth(), tile.getHeight())));
+                }
             }
         });
     }

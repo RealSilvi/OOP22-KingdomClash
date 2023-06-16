@@ -175,6 +175,9 @@ public final class BaseModelImpl implements BaseModel {
                     + " this implies a broken state of the player resource set and should be fixed!"
                     + " dumping stacktrace:\n" + e.getStackTrace());
         }
+        this.threadManager.removeBuilding(structureId);
+        this.gameData.getBuildings().remove(structureId);
+        this.notifyBuildingStateChangedObservers(structureId);
         return refund;
     }
 

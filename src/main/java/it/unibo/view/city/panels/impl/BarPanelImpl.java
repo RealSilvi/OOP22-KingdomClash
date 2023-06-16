@@ -25,7 +25,6 @@ import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.utilities.ResourcePopupPanel;
 import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
-import it.unibo.controller.base.BaseControllerImpl;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 /**
@@ -42,7 +41,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
     private Optional<String> actionCommand = Optional.empty();
 
-    private int faus = 9;
     private boolean selectionActive = false;
     private boolean constructionAction = false;
     private boolean upgradeAction = false;
@@ -77,45 +75,18 @@ public class BarPanelImpl extends JLabel implements BarPanel {
                 selectionActive = !selectionActive;
             }
         };
+
         final BuildingPanel buildingPanel = new BuildingPanel(readImages);
         buildingPanel.addBuildingSelectActionListener(genericBtnAction);
         buildingPanel.addBuildingSelectActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (actionCommand.isPresent()) {
-                    System.out.println("Setting false ");
                     actionCommand = Optional.empty();
                     return;
                 }
                 constructionAction = true;
                 actionCommand = Optional.of(e.getActionCommand());
-                System.out.println("Pressed "+e.getActionCommand());
-                faus = 0;
-            }
-        });
-
-        this.cityView.registerTileClickObserver(new TileClickObserver() {
-            @Override
-            public void tileClicked(JComponent tile, Float position) {
-                if (selectionActive && actionCommand.isPresent()) {
-                    Optional<UUID> building = findBuildingbyPosition(position);
-                    if (building.isEmpty()) {
-                        if (constructionAction) {
-                        controller.handleBuildingPlaced(position,
-                            BuildingTypes.valueOf(actionCommand.get()), 0,true);
-                        }
-                    } else {
-                        if (upgradeAction) {
-                            controller.handleStructureUpgrade(building.get());
-                        } else if (demolishAction) {
-                            controller.handleStructureDestruction(building.get());
-                        }
-                    }
-                    setOptionsLocked();
-                    resetConditions();
-                    selectionActive = false;
-                    actionCommand = Optional.empty();
-                }
             }
         });
 
@@ -146,6 +117,36 @@ public class BarPanelImpl extends JLabel implements BarPanel {
                 demolishAction = true;
             }
         });
+
+        this.cityView.registerTileClickObserver(new TileClickObserver() {
+            @Override
+            public void tileClicked(JComponent tile, Float position) {
+                if (selectionActive) {
+                    Optional<UUID> building = findBuildingbyPosition(position);
+                    if (building.isEmpty() && actionCommand.isPresent()) {
+                        if (constructionAction) {
+                            controller.handleBuildingPlaced(position,
+                                BuildingTypes.valueOf(actionCommand.get()), 0,true);
+                        }
+                    } else {
+                        if (upgradeAction) {
+                            controller.handleStructureUpgrade(building.get());
+                            upgradeBtn.setEnabled(false);
+                            
+                        } else if (demolishAction) {
+                            controller.handleStructureDestruction(building.get());
+                            demolishBtn.setEnabled(false);
+                        }
+                    }
+                    setOptionsLocked();
+                    resetConditions();
+                    selectionActive = false;
+                    tile.setEnabled(true);
+                    actionCommand = Optional.empty();
+                }
+            }
+        });
+
         interactionComponents.add(upgradeBtn);
         interactionComponents.add(demolishBtn);
         interactionComponents.add(buildingPanel);
