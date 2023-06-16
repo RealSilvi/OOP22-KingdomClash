@@ -142,7 +142,13 @@ public final class GameGui implements GameGuiInt {
     public Boolean showNewGameOptions(){
         return JOptionPane.showConfirmDialog(null, "Exist a previous save, if you click" +
                         "new game, you will delete it and start a new save, are you sure?",
-                "Empty Name", JOptionPane.YES_NO_OPTION) == 0;
+                "New Game", JOptionPane.YES_NO_OPTION) == 0;
+    }
+
+    @Override
+    public void showLoadOptions(){
+        JOptionPane.showConfirmDialog(null, "There is no past save",
+                "Load Game", JOptionPane.DEFAULT_OPTION);
     }
 
     @Override

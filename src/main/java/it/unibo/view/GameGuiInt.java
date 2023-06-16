@@ -38,6 +38,8 @@ public interface GameGuiInt {
 
     Boolean showNewGameOptions();
 
+    void showLoadOptions();
+
     void setActionListenerNewGame(ActionListener actionListener);
 
     void setActionListenerStart(ActionListener actionListener);
