@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
-import javax.swing.JComponent;import java.util.Optional;
+import javax.swing.JComponent;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.Map.Entry;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
@@ -25,7 +25,6 @@ import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.utilities.ResourcePopupPanel;
 import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
-import it.unibo.controller.base.BaseControllerImpl;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 /**
@@ -43,28 +42,28 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     private Optional<String> actionCommand = Optional.empty();
 
     private int faus = 9;
+    private int troopPos = 200;
+    private int resourcePos = 100;
     private boolean selectionActive = false;
     private boolean constructionAction = false;
     private boolean upgradeAction = false;
     private boolean demolishAction = false;
-        //sopprimere il basecontroller
         /**
          * The costructor create the panel and add the buttons on the panel that show the troops,
          *  which building you can place and applicate an actionlistener on each other.
          * @param controller give all the function the class need 
          * @param size gave the size of the panel
-         * @param readImages chiedere a marco
+         * @param readImages a for each building level gave his texture
          */
-        public BarPanelImpl(CityPanel cityView, BaseController controller, final
+        public BarPanelImpl(final CityPanel cityView, final BaseController controller, final
         Dimension size,
         final Map<BuildingTypes, Map<Integer, Image>> readImages) {
         this.cityView = cityView;
         this.mainpanel = new DrawPanel(Color.BLACK, size);
         this.basedata = controller;
-        this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0, new ResourcePanelImpl(controller));
-        this.trooppopup = new TroopPopupPanel(mainpanel, 200, 0, controller);
+        this.resourcepopup = new ResourcePopupPanel(mainpanel, resourcePos, 0, new ResourcePanelImpl(controller));
+        this.trooppopup = new TroopPopupPanel(mainpanel, troopPos, 0, controller);
         this.interactionComponents = new ArrayList<>();
-        
         final ActionListener genericBtnAction = new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -96,13 +95,13 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
         this.cityView.registerTileClickObserver(new TileClickObserver() {
             @Override
-            public void tileClicked(JComponent tile, Float position) {
+            public void tileClicked(final JComponent tile, final Float position) {
                 if (selectionActive && actionCommand.isPresent()) {
                     Optional<UUID> building = findBuildingbyPosition(position);
                     if (building.isEmpty()) {
                         if (constructionAction) {
                         controller.handleBuildingPlaced(position,
-                            BuildingTypes.valueOf(actionCommand.get()), 0,true);
+                            BuildingTypes.valueOf(actionCommand.get()), 0, true);
                         }
                     } else {
                         if (upgradeAction) {
@@ -124,14 +123,13 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         GridLayout barGridLayout = new GridLayout();
         barGridLayout.setHgap(5);
         this.mainpanel.setLayout(barGridLayout);
-        
         final JButton troop = new JButton("Upgrade Troops");
         final JButton playerinfo = new JButton("player info");
         final JButton upgradeBtn = new JButton("Upgrade Building");
         upgradeBtn.addActionListener(genericBtnAction);
         upgradeBtn.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 resetConditions();
                 upgradeAction = true;
             }
@@ -170,9 +168,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
             component.setEnabled(!component.isEnabled())
         );
     }
-    /**
-     * 
-     */
     private void resetConditions() {
         this.constructionAction = false;
         this.upgradeAction = false;
@@ -192,7 +187,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         trooppopup.dispose();
     }
 
-    private Optional<UUID> findBuildingbyPosition(Point2D.Float position) {
+    private Optional<UUID> findBuildingbyPosition(final Point2D.Float position) {
         Optional<UUID> resultIdentifier = Optional.empty();
         List<Entry<UUID, Building>> idlist = this.basedata.requestBuildingMap()
             .entrySet().stream().filter(buildingEntry -> buildingEntry.getValue().getStructurePos().equals(position))

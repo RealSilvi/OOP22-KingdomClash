@@ -27,9 +27,7 @@ public class TroopPopupPanel {
     private Component container;
     private int xposition;
     private int yposition;
-
-    
-
+    private int DIMENSION = 500;
     /**
      * 
      * @param container
@@ -37,9 +35,9 @@ public class TroopPopupPanel {
      * @param yposition
      * @param data
      */
-    public TroopPopupPanel(final Component container, final int xposition, final int yposition, BaseController data) {
-        this.width = 500;
-        this.height = 500;
+    public TroopPopupPanel(final Component container, final int xposition, final int yposition, final BaseController data) {
+        this.width = DIMENSION;
+        this.height = DIMENSION;
         this.visibility = false;
         this.container = container;
         this.xposition = xposition;
@@ -49,9 +47,7 @@ public class TroopPopupPanel {
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
         this.contentpanel.setPreferredSize(new Dimension(this.width, this.height));
         this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
-       
-       
-        
+
        data.requestTroopLevels().keySet().stream().forEach(
             singletroop -> {
                 JPanel containpanel = new JPanel();
@@ -67,7 +63,7 @@ public class TroopPopupPanel {
                     @Override
                     public void actionPerformed(final ActionEvent arg0) {
                        data.upgradeTroop(singletroop,
-                        data.requestTroopLevels().get(singletroop)+1);
+                        data.requestTroopLevels().get(singletroop) + 1);
 
                        System.out.println("ciao");
                     }

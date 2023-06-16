@@ -90,17 +90,23 @@ public class CityPanelImpl implements CityPanel {
     public JPanel getPanel() {
         return this.mainPanel;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void registerTileClickObserver(TileClickObserver tileClickObservertoRegister) {
         this.tileClickObservers.add(tileClickObservertoRegister);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void unregisterTileClickObserver(TileClickObserver tileClickObservertoUnregister) {
         this.tileClickObservers.remove(tileClickObservertoUnregister);
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyTileClick(JComponent tile, Point2D.Float position) {
         this.tileClickObservers.stream().forEach(tileObserver -> 

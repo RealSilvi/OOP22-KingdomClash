@@ -40,22 +40,27 @@ public class FieldCityPanelImpl implements FieldCityPanel {
 
     /**
      * The costructor create the panel and set the background of the field.
+     *
+     * @param cityView
+     * @param baseController
+     * @param gameConfig
      * @param gameConfiguration gave the width and height for the field
      * @param pathIconsConfiguration gave the textures of the building and of the background for the field
+     * @param readImages a for each building level gave his texture
      */
     //TODO: Require only 1 configuration and fix names
-    public FieldCityPanelImpl(CityPanel cityView, BaseController baseController,
-        GameConfiguration gameConfig, CityConfiguration gameConfiguration, PathIconsConfiguration pathIconsConfiguration,
+    public FieldCityPanelImpl(final CityPanel cityView, final BaseController baseController,
+        GameConfiguration gameConfig, final CityConfiguration gameConfiguration, final PathIconsConfiguration pathIconsConfiguration,
         final Map<BuildingTypes, Map<Integer, Image>> readImages) {
         this.cityView = cityView;
         //GraphicUtils.resizeImage(new ImageIcon(),JButton.WIDTH,JButton.HEIGHT);
-        this.gameConfiguration=gameConfiguration;
-        this.pathIconsConfiguration=pathIconsConfiguration;
-        this.mainpanel= new DrawPanel(ImageIconsSupplier.loadImage(gameConfig
+        this.gameConfiguration = gameConfiguration;
+        this.pathIconsConfiguration = pathIconsConfiguration;
+        this.mainpanel = new DrawPanel(ImageIconsSupplier.loadImage(gameConfig
             .getMapConfiguration()
             .getImageMap().get(ButtonIdentification.TILE)),
             GameGui.getAllPanel());
-        this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(),gameConfiguration.getHeight()));
+        this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(), gameConfiguration.getHeight()));
         buttonmap = new ArrayList<>(gameConfiguration.getWidth()* gameConfiguration.getHeight());
         this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());
         baseController.addBuildingStateChangedObserver(responsibleUUID -> {
@@ -65,7 +70,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 Double xPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getX();
                 Double yPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getY();
                 JButton tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
-                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(readImages.get(type).get(level), tile.getWidth(), tile.getHeight())));
+                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(readImages.get(type).get(level),
+                    tile.getWidth(), tile.getHeight())));
             }
         });
     }
@@ -80,13 +86,11 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 structure.setOpaque(false);
                 structure.setContentAreaFilled(false);
                 this.mainpanel.add(structure);
-                structure.setBorder(null);
-                                
+                structure.setBorder(null);               
                 final int coordY = j;
                 structure.addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        
+                    public void actionPerformed(final ActionEvent e) {
                          if (e.getSource() instanceof JComponent) {
                             cityView.notifyTileClick((JComponent) e.getSource(),
                                 new Point2D.Float(coordX, coordY));
@@ -100,7 +104,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     /**
      * {@inheritDoc}
      */
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         return this.mainpanel;
     }
 
