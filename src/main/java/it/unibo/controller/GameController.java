@@ -10,9 +10,6 @@ import java.awt.event.ActionListener;
 
 public class GameController {
 
-    private static final int START_ACTIVE_LEVEL = 1;
-    private static final int START_BEATEN_LEVEL = 0;
-
     GameModel gameModel;
     GameGui gameGui;
 
@@ -30,7 +27,7 @@ public class GameController {
 
         this.gameGui = new GameGui(battleController.getGuiPanel(), baseController.getGuiPanel(), gameModel.getGameData().getGameConfiguration());
 
-        this.toMainPanel = gameGui.getActionListenerMap();
+        this.toMainPanel = this.backActionListener();
         battleController.setReturnActionListener(toMainPanel);
         baseController.setReturnActionListener(toMainPanel);
 
@@ -39,8 +36,8 @@ public class GameController {
         this.setActionListenerMap();
         this.setActionListenerCity();
 
-        gameGui.setBeatenLevels(START_BEATEN_LEVEL);
-        gameGui.setActivateBattle(START_ACTIVE_LEVEL);
+        gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
+        gameGui.setActivateBattle((gameModel.getCurrentLevel()));
     }
 
     private void setActionListenerNewGame() {
@@ -58,6 +55,14 @@ public class GameController {
 
     private void setActionListenerBattle() {
         this.gameGui.setActionListenerBattle(e -> this.gameGui.showBattle());
+    }
+
+    private ActionListener backActionListener() {
+        return e -> {
+            this.gameGui.showMap();
+            this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
+            this.gameGui.setBeatenLevels((gameModel.getCurrentLevel() - 1));
+        };
     }
 
 }

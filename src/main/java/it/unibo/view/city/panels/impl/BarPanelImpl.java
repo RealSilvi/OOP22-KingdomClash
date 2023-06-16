@@ -6,29 +6,43 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+import javax.swing.JComponent;import java.util.Optional;
+import java.util.UUID;
+import java.util.Map.Entry;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.BarPanel;
+import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.utilities.ResourcePopupPanel;
 import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
+import it.unibo.controller.base.BaseControllerImpl;
+import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 /**
  * This class implement the panel on the top of the city panel.
  */
 public class BarPanelImpl extends JLabel implements BarPanel {
 
+    private final CityPanel cityView;
     private final JPanel mainpanel;
     private final BaseController basedata;
     private final ResourcePopupPanel resourcepopup;
     private final TroopPopupPanel trooppopup;
     private final List<JComponent> interactionComponents;
+
+    private Optional<String> actionCommand = Optional.empty();
+
+    private int faus = 9;
     private boolean selectionActive = false;
     private boolean constructionAction = false;
     private boolean upgradeAction = false;
@@ -41,8 +55,10 @@ public class BarPanelImpl extends JLabel implements BarPanel {
          * @param size gave the size of the panel
          * @param readImages chiedere a marco
          */
-        public BarPanelImpl(BaseController controller, final Dimension size,
+        public BarPanelImpl(CityPanel cityView, BaseController controller, final
+        Dimension size,
         final Map<BuildingTypes, Map<Integer, Image>> readImages) {
+        this.cityView = cityView;
         this.mainpanel = new DrawPanel(Color.BLACK, size);
         this.basedata = controller;
         this.resourcepopup = new ResourcePopupPanel(mainpanel, 100, 0, new ResourcePanelImpl(controller));
@@ -65,9 +81,41 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         buildingPanel.addBuildingSelectActionListener(genericBtnAction);
         buildingPanel.addBuildingSelectActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(final ActionEvent e) {
-                resetConditions();
+            public void actionPerformed(ActionEvent e) {
+                if (actionCommand.isPresent()) {
+                    System.out.println("Setting false ");
+                    actionCommand = Optional.empty();
+                    return;
+                }
                 constructionAction = true;
+                actionCommand = Optional.of(e.getActionCommand());
+                System.out.println("Pressed "+e.getActionCommand());
+                faus = 0;
+            }
+        });
+
+        this.cityView.registerTileClickObserver(new TileClickObserver() {
+            @Override
+            public void tileClicked(JComponent tile, Float position) {
+                if (selectionActive && actionCommand.isPresent()) {
+                    Optional<UUID> building = findBuildingbyPosition(position);
+                    if (building.isEmpty()) {
+                        if (constructionAction) {
+                        controller.handleBuildingPlaced(position,
+                            BuildingTypes.valueOf(actionCommand.get()), 0,true);
+                        }
+                    } else {
+                        if (upgradeAction) {
+                            controller.handleStructureUpgrade(building.get());
+                        } else if (demolishAction) {
+                            controller.handleStructureDestruction(building.get());
+                        }
+                    }
+                    setOptionsLocked();
+                    resetConditions();
+                    selectionActive = false;
+                    actionCommand = Optional.empty();
+                }
             }
         });
 
@@ -144,4 +192,14 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         trooppopup.dispose();
     }
 
+    private Optional<UUID> findBuildingbyPosition(Point2D.Float position) {
+        Optional<UUID> resultIdentifier = Optional.empty();
+        List<Entry<UUID, Building>> idlist = this.basedata.requestBuildingMap()
+            .entrySet().stream().filter(buildingEntry -> buildingEntry.getValue().getStructurePos().equals(position))
+            .toList();
+        if (idlist.size() == 1) {
+            resultIdentifier = Optional.of(idlist.get(0).getKey());
+        }
+        return resultIdentifier;
+    }
 }

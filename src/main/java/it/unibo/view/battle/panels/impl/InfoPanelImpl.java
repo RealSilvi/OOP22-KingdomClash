@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class InfoPanelImpl implements InfoPanel {
 
-    private final static double LABEL_SCALE = 0.3;
-    private final static Dimension LABEL_DIMENSION = new Dimension(
+    private static final double LABEL_SCALE = 0.3;
+    private static final Dimension LABEL_DIMENSION = new Dimension(
             (int) (PanelDimensions.getSideLifePanel().getHeight() * LABEL_SCALE),
             (int) (PanelDimensions.getSideLifePanel().getHeight() * LABEL_SCALE));
 
@@ -36,6 +36,7 @@ public class InfoPanelImpl implements InfoPanel {
 
     @Override
     public void drawTable(final Map<TroopType, Boolean> powerTable) {
+        this.mainPanel.removeAll();
         powerTable.forEach((troop, lv) -> {
             this.mainPanel.add(new TroopLabelImpl(troop, LABEL_DIMENSION,this.pathIconsConfiguration));
             this.mainPanel.add(new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getIndicator(),LABEL_DIMENSION)));

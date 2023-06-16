@@ -16,7 +16,7 @@ public class ResourcePopupPanel {
     private int xposition;
     private int yposition;
 
-    public ResourcePopupPanel(Component container, int xposition,int yposition, JPanel panel) {
+    public ResourcePopupPanel(final Component container, final int xposition, final int yposition, final JPanel panel) {
         this.width = 200;
         this.height = 200;
         this.visibility = false;
@@ -27,7 +27,10 @@ public class ResourcePopupPanel {
         this.contentpanel.setPreferredSize(new Dimension(this.width, this.height));
         this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
     }
-
+    /**
+     * This method allows to make the popup visible on each click
+     * with a boolean parameter.
+     */
     public void changeVisibility(){
         this.visibility = !this.visibility;
         if(visibility) {
@@ -37,7 +40,9 @@ public class ResourcePopupPanel {
             this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
         }
     }
-
+     /**
+     * This method close the popus when is unused or when the game is close.
+     */
     public void dispose(){
         popup.hide();
     }

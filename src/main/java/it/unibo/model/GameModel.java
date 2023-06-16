@@ -19,11 +19,12 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 public final class GameModel {
-    private final Logger logger = Logger.getLogger(this.getClass().getName());
-
-    private final File saveDataLocation;
 
     private GameData gameData;
+
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
+    private final File saveDataLocation;
+
 
     transient private GameConfiguration configuration;
 
@@ -40,7 +41,6 @@ public final class GameModel {
         try (FileReader content = new FileReader(configDir)) {
             this.configuration=gson.fromJson(content, GameConfiguration.class);
         } catch (FileNotFoundException e) {
-            //gameData = new GameData();
             this.configuration=new GameConfiguration();
             File file = new File(configDir);
             file.getParentFile().mkdirs();
@@ -56,7 +56,7 @@ public final class GameModel {
             logger.severe("Configuration loading FAILURE");
             e.printStackTrace();
         }
-            //TODO chiama da controller
+
         this.newGame();
     }
 
@@ -85,6 +85,7 @@ public final class GameModel {
         }
         return true;
     }
+
     /**
      * Detects the host's OS and returns a path to appdata folder.
      * @return a path to the appdata folder
@@ -142,5 +143,21 @@ public final class GameModel {
 
     public GameData getGameData() {
         return gameData;
+    }
+
+    public int getCurrentLevel(){
+        return this.gameData.getCurrentLevel();
+    }
+
+    public void incrementCurrenetLevel(){
+        this.gameData.incrementLevel();
+    }
+
+    public String getPlayerName(){
+        return this.gameData.getPlayerName();
+    }
+
+    public void setPlayerName(String name){
+        this.gameData.setPlayerName(name);
     }
 }

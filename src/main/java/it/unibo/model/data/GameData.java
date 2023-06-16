@@ -26,6 +26,7 @@ public final class GameData implements Serializable {
     private static final long serialVersionUID = 164372586L;
 
     private String playerName;
+    private int currentLevel;
     private Set<Resource> resources;
     private ConcurrentMap<UUID, Building> buildings;
     private Map<TroopType, Integer> playerArmyLevel;
@@ -39,6 +40,7 @@ public final class GameData implements Serializable {
     }
 
     public GameData(GameConfiguration gameConfiguration) {
+        this.currentLevel = 1;
         this.resources = new HashSet<>();
         this.buildings = new ConcurrentHashMap<>();
         this.playerArmyLevel = new EnumMap<>(TroopType.class);
@@ -55,6 +57,7 @@ public final class GameData implements Serializable {
      * @param configuration the configuration for the game
      */
     public GameData(@NonNull GameData gameData, @NonNull GameConfiguration configuration) {
+        this.currentLevel = gameData.currentLevel;
         this.playerName = gameData.getPlayerName();
         this.resources = gameData.getResources();
         this.buildings = gameData.getBuildings();
@@ -69,11 +72,21 @@ public final class GameData implements Serializable {
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
     public GameData(Set<Resource> resources, ConcurrentMap<UUID, Building> buildings,
-                    FightData fightData, GameConfiguration configuration) {
+                    FightData fightData, GameConfiguration configuration, Integer level) {
+        this.currentLevel = level;
         this.resources = resources;
         this.buildings = buildings;
         this.fightData = fightData;
         this.configuration = configuration;
+    }
+
+
+    public void incrementLevel() {
+        this.currentLevel = this.currentLevel + 1;
+    }
+
+    public int getCurrentLevel() {
+        return this.currentLevel;
     }
 
     /**
@@ -104,7 +117,7 @@ public final class GameData implements Serializable {
      */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
-    public Set<Resource> getResources() {
+    public synchronized Set<Resource> getResources() {
         return resources;
     }
 
@@ -118,7 +131,7 @@ public final class GameData implements Serializable {
      */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
-    public void setResources(Set<Resource> resources) {
+    public synchronized void setResources(Set<Resource> resources) {
         this.resources = resources;
     }
 

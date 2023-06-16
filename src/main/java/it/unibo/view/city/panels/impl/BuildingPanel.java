@@ -21,10 +21,10 @@ import it.unibo.view.utilities.GraphicUtils;
 
 public class BuildingPanel extends JPanel {
     private Map<BuildingTypes, JButton> buildingButtonType;
-    private Optional<String> actionCommand;
 
     public BuildingPanel(Map<BuildingTypes, Map<Integer, Image>> buildingImages) {
         this.buildingButtonType = new EnumMap<>(BuildingTypes.class);
+        this.setOpaque(false);
         GridLayout gridLayout = new GridLayout();
         gridLayout.setHgap(10);
         this.setLayout(gridLayout);

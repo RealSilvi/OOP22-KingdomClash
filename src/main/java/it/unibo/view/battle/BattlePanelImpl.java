@@ -185,6 +185,7 @@ public final class BattlePanelImpl implements BattlePanel {
     }
 
     public void setBackActionListener(ActionListener actionListener){
+        this.closeButton.addActionListener(e -> showGamePanel());
         this.closeButton.addActionListener(actionListener);
     }
 

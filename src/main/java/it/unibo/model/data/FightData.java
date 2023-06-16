@@ -11,12 +11,24 @@ import it.unibo.view.battle.config.BattleConfiguration;
  */
 public class FightData {
 
-    private final EntityData botData;
-    private final EntityData playerData;
+    private EntityData botData;
+    private EntityData playerData;
 
     public FightData(final BattleConfiguration battlePanelConfiguration) {
         this.botData = new EntityDataImpl(battlePanelConfiguration);
         this.playerData = new EntityDataImpl(battlePanelConfiguration);
+    }
+
+    @SuppressFBWarnings(value = "EI2",
+            justification = "I want to store the input, to get its reference and use it")
+    public void setPlayerData(EntityDataImpl entityData){
+        this.playerData = entityData;
+    }
+
+    @SuppressFBWarnings(value = "EI2",
+            justification = "I want to store the input, to get its reference and use it")
+    public void setBotData(EntityDataImpl entityData){
+        this.botData = entityData;
     }
 
     @SuppressFBWarnings(value = "EI", justification = "I need changes to playerData to be reflected on all references")
