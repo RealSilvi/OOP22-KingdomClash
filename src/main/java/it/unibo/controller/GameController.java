@@ -36,6 +36,7 @@ public class GameController {
         this.setActionListenerSave();
         this.setActionListenerMap();
         this.setActionListenerCity();
+        this.setActionListenerLoad();
 
         gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         gameGui.setActivateBattle(gameModel.getCurrentLevel());
