@@ -187,13 +187,16 @@ public final class BattlePanelImpl implements BattlePanel {
         this.buttonsPanel.setActionListenerInfo(e -> this.showTutorialPanel());
     }
 
-    public void reset() {
+    private void reset() {
         this.buttonsPanel.reset();
         this.fieldPanel.restart();
     }
 
     public void setBackActionListener(final ActionListener actionListener) {
-        this.closeButton.addActionListener(e -> showGamePanel());
+        this.closeButton.addActionListener(e -> {
+            reset();
+            showGamePanel();
+        });
         this.closeButton.addActionListener(actionListener);
     }
 
