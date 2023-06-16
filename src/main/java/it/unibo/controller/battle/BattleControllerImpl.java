@@ -120,8 +120,8 @@ public final class BattleControllerImpl implements BattleController, Controller 
     @Override
     public void battle() {
         int total = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData()).size() / 2;
-        int cont = 0;
         update(NO_SKIP);
+        int cont = 0;
         for (int i = 0; i < total; i++) {
             int value = this.battleModel.battleCombat(i);
             if (value == BOT) {
@@ -132,12 +132,10 @@ public final class BattleControllerImpl implements BattleController, Controller 
                 end(WIN_BOT);
                 i = total;
                 cont = 1;
-                update(NO_SKIP-1);
             } else if (value == WIN_PLAYER) {
                 end(WIN_PLAYER);
                 i = total;
                 cont = 1;
-                update(NO_SKIP-1);
             }
             if(i != total){
                 update(i + 1);
@@ -145,7 +143,6 @@ public final class BattleControllerImpl implements BattleController, Controller 
         }
         if(cont == 0){
             this.battleModel.reset();
-            this.battlePanel.enableSpinButton();
             update(NO_SKIP);
         }
     }
@@ -160,9 +157,11 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.enablePassButton();
         this.battlePanel.enablePlayerSlots();
         this.battlePanel.showEndPanel(entity == WIN_PLAYER);
-        this.battlePanel.reset();
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
-        update(NO_SKIP-1);
+    }
+
+    public void clearField(){
+        this.battlePanel.reset();
     }
 
     @Override
@@ -177,7 +176,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     @Override
     public void update(final Integer skip) {
-        long delay = 500L * skip;
+        long delay = 100L * skip;
         Timer timer = new Timer();
         List<Optional<TroopType>> orderedList = EntityDataImpl.exOrdered(fightData.getBotData(), fightData.getPlayerData());
         List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2));
@@ -190,16 +189,16 @@ public final class BattleControllerImpl implements BattleController, Controller 
         }
         bList.addAll(pList);
 
-        if(skip < 0){
-            this.battlePanel.updateField(bList);
-        }else {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    if(skip == (pList.size())){
+                        battlePanel.enableSpinButton();
+                    }
                     battlePanel.updateField(bList);
                 }
             }, delay);
-        }
+
     }
 
     @Override
