@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.controller.Controller;
@@ -57,7 +58,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
         try {
             providedUUID = Optional.of(baseModel.buildStructure(position, type, startingLevel, cheatMode));
         } catch (BuildingException | ResourceException e) {
-            // TODO: Warn the user that he can't do that and why!
+            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
             providedUUID = Optional.empty();
         }
         return providedUUID;
@@ -83,7 +84,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.upgradeStructure(structureId, cheatMode);
             upgradeSucceded = true;
         } catch (ResourceException | BuildingMaxedOutException | InvalidStructureReferenceException e) {
-            // TODO: Warn the user that he can't do that and why!
+            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
             upgradeSucceded = false;
         }
         return upgradeSucceded;
@@ -101,7 +102,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.demolishStructure(structureId);
             demolitionSucceded = true;
         } catch (InvalidStructureReferenceException e) {
-            // TODO: Warn the user that he can't do that and why!
+            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
             demolitionSucceded = false;
         }
         return demolitionSucceded;
@@ -115,7 +116,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.relocateStructure(position, structureId);
             relocationSucceded = true;
         } catch (InvalidBuildingPlacementException | InvalidStructureReferenceException e) {
-            // TODO: Warn the user that he can't do that and why!
+            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
             relocationSucceded = false;
         }
         return relocationSucceded;
@@ -158,7 +159,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.upgradeTroop(troopToUpgrade, levelToUpgradeTo);
             operationSuccessful = true;
         } catch (InvalidTroopLevelException e) {
-            // TODO: Warn the user that he can't do that and why!
+            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
         }
         return operationSuccessful;
     }
