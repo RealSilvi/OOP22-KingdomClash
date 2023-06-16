@@ -20,37 +20,55 @@ public class TextPanel extends DrawPanel {
     private static final float TITLE_FONT_SIZE = 30f;
     private static final float CONTENT_FONT_SIZE = 20f;
 
-    public TextPanel(final String title, final String content, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
-        super(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), size);
+    private final JLabel titleLabel;
+    private final JTextArea contentText;
 
-        final JLabel title1 = new JLabel(title);
-        final JTextArea content1 = new JTextArea(content);
+    public TextPanel(final String title, final String content, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
+        this(size,pathIconsConfiguration);
+        this.setTitle(title);
+        this.setContent(content);
+    }
+
+    public TextPanel(Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
+        super(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), size);
+        this.titleLabel = new JLabel();
+        this.contentText = new JTextArea();
 
         final Border padding = BorderFactory.createEmptyBorder(
                 VERTICAL_PADDING,
                 HORIZONTAL_PADDING,
                 VERTICAL_PADDING,
                 HORIZONTAL_PADDING);
-        title1.setBorder(padding);
-        content1.setBorder(padding);
+        titleLabel.setBorder(padding);
+        contentText.setBorder(padding);
 
-        content1.setLineWrap(true);
-        content1.setWrapStyleWord(true);
-        content1.setEditable(false);
+        contentText.setLineWrap(true);
+        contentText.setWrapStyleWord(true);
+        contentText.setEditable(false);
 
-        title1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        title1.setFont(BattlePanelStyle.getPrimaryFont().deriveFont(TITLE_FONT_SIZE));
-        content1.setFont(content1.getFont().deriveFont(CONTENT_FONT_SIZE));
+        titleLabel.setFont(BattlePanelStyle.getPrimaryFont().deriveFont(TITLE_FONT_SIZE));
+        contentText.setFont(contentText.getFont().deriveFont(CONTENT_FONT_SIZE));
 
-        title1.setOpaque(false);
-        content1.setOpaque(false);
+        titleLabel.setOpaque(false);
+        contentText.setOpaque(false);
 
-        title1.setForeground(BattlePanelStyle.PRIMARY_COLOR);
-        content1.setForeground(BattlePanelStyle.PRIMARY_COLOR);
+        titleLabel.setForeground(BattlePanelStyle.PRIMARY_COLOR);
+        contentText.setForeground(BattlePanelStyle.PRIMARY_COLOR);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title1);
-        this.add(content1);
+        this.add(titleLabel);
+        this.add(contentText);
+    }
+
+    public void setTitle(final String title) {
+        this.titleLabel.removeAll();
+        this.titleLabel.setText(title);
+    }
+
+    public void setContent(final String content) {
+        this.contentText.removeAll();
+        this.contentText.setText(content);
     }
 }

@@ -159,7 +159,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.disableBotSlots();
         this.battlePanel.enablePassButton();
         this.battlePanel.enablePlayerSlots();
-        this.battlePanel.showEndPanel();
+        this.battlePanel.showEndPanel(entity == WIN_PLAYER);
         this.battlePanel.reset();
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
         update(NO_SKIP-1);

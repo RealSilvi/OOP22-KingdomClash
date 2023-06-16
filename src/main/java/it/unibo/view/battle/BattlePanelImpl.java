@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 public final class BattlePanelImpl implements BattlePanel {
@@ -44,10 +45,10 @@ public final class BattlePanelImpl implements BattlePanel {
      */
     public BattlePanelImpl(final BattleConfiguration battleConfiguration, final PathIconsConfiguration pathIconsConfiguration) {
         this.layoutManager = new CardLayout();
-        this.closeButton = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), new Dimension(200, 50)));
+        this.closeButton = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), new Dimension(100, 50)));
         this.mainPanel = new JPanel(this.layoutManager);
         this.tutorialPanel = new TutorialPanel(battleConfiguration.getTextConfiguration(), pathIconsConfiguration);
-        this.endPanel = new TextPanel(battleConfiguration.getTextConfiguration().getEndWinPanelTitle(), battleConfiguration.getTextConfiguration().getEndPanelText(), PanelDimensions.MAIN_PANEL_SIZE, pathIconsConfiguration);
+        this.endPanel = new TextPanel(PanelDimensions.MAIN_PANEL_SIZE, pathIconsConfiguration);
         this.endPanel.add(closeButton);
 
         final JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
@@ -73,7 +74,12 @@ public final class BattlePanelImpl implements BattlePanel {
         this.setActionListenerInfoButton();
     }
 
-    public void showEndPanel() {
+    public void showEndPanel(@Nonnull final Boolean winner) {
+        if(Boolean.TRUE.equals(winner)){
+            this.endPanel.setTitle("Winner");
+        }else{
+            this.endPanel.setTitle("Looser");
+        }
         layoutManager.show(mainPanel, "3");
     }
 
