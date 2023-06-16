@@ -1,3 +1,4 @@
+
 package it.unibo.view.city;
 
 import it.unibo.controller.base.BaseControllerImpl;
@@ -22,24 +23,30 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JComponent;
 
+
+/**
+ * * This class show the main city panel.
+ */
 public class CityPanelImpl implements CityPanel {
 
-    private static final Dimension size=new Dimension((int)(GameGui.getAllPanel().getWidth()),
-        (int)(GameGui.getAllPanel().getHeight()*0.05));
+    private static final Dimension SIZE = new Dimension((int) (GameGui.getAllPanel().getWidth()),
+        (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
     private final Map<BuildingTypes, Map<Integer, Image>> readImages = new EnumMap<>(BuildingTypes.class);
 
     private List<TileClickObserver> tileClickObservers;
-
     private ActionListener returnActionListener;
-
-    public CityPanelImpl(BaseControllerImpl controller, GameConfiguration configuration) {
+    /**
+    *
+     * @param controller give the configuration and the parameter for each function
+     * @param configuration set the configuration for displaying the panel
+     */
+    public CityPanelImpl(final BaseControllerImpl controller,  final GameConfiguration configuration) {
         this.tileClickObservers = new ArrayList<>();
         PathIconsConfiguration config = configuration.getPathIconsConfiguration();
         for (BuildingTypes buildingType : BuildingTypes.values()) {
@@ -49,6 +56,8 @@ public class CityPanelImpl implements CityPanel {
             }
             readImages.put(buildingType, imageLevel);
         }
+
+
 
         this.mainPanel = new DrawPanel(Color.BLACK,
                 new Dimension(configuration.getCityConfiguration().getWidth(),
@@ -62,34 +71,22 @@ public class CityPanelImpl implements CityPanel {
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
     }
-
-    @Override
-    public void setBuildings() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setBuildings'");
-    }
-
-    @Override
-    public void setfield() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setfield'");
-    }
-
-    @Override
-    public void resources() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'resources'");
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public void disposeAll() {
         barPanel.disposeAllPopups();
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setReturnActionListener(ActionListener returnActionListener) {
+    public void setReturnActionListener(final ActionListener returnActionListener) {
         this.returnActionListener = returnActionListener;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     public JPanel getPanel() {
         return this.mainPanel;
     }
