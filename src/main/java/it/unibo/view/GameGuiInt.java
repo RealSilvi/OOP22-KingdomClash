@@ -36,7 +36,9 @@ public interface GameGuiInt {
 
     void showNamePanel();
 
-    void setActionListenerNewGame(ActionListener actionListener);
+    void setActionListenerNewGame();
+
+    void setActionListenerStart(ActionListener actionListener);
 
     void setActionListenerBattle(ActionListener actionListener);
 

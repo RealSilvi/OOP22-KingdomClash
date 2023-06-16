@@ -94,7 +94,7 @@ public final class GameGui implements GameGuiInt {
         setMapBaseActionListener();
         setMapBattleActionListener();
         setActionListenerBack();
-        setActionListenerStart();
+        setActionListenerNewGame();
         showMenuPanel();
 
     }
@@ -140,7 +140,8 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setActionListenerNewGame(ActionListener actionListener) {
+    public void setActionListenerNewGame() {
+        ActionListener actionListener = e -> showNamePanel();
         this.menuPanel.setActionListenerNewGame(actionListener);
     }
 
@@ -149,8 +150,8 @@ public final class GameGui implements GameGuiInt {
         this.namePlayer.setActionListenerBack(actionListener);
     }
 
-    private void setActionListenerStart(){
-        ActionListener actionListener = e -> showCity();
+    @Override
+    public void setActionListenerStart(ActionListener actionListener){
         this.namePlayer.setActionListenerStart(actionListener);
     }
 
