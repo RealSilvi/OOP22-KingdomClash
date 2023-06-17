@@ -94,7 +94,6 @@ public final class GameGui implements GameGuiInt {
         setActionListenerInfo();
         setActionListenerExit();
         setActionListenerMusic();
-        setActionListenerBack();
         showMenuPanel();
 
     }
@@ -223,11 +222,6 @@ public final class GameGui implements GameGuiInt {
                     "getting the reference")
     public SoundManager getSoundManager() {
         return this.soundManager;
-    }
-
-    private void setActionListenerBack(){
-        ActionListener actionListener = e -> showMenuPanel();
-        this.namePlayer.setActionListenerBack(actionListener);
     }
 
     private void setActionListenerMusic() {
