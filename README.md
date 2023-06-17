@@ -11,7 +11,9 @@ Embark yourself in a challenge where you must conquer and dominate the enemy!
 - Possibility to upgrade troops
 
 ## Images
-
+![MapView](https://i.imgur.com/uwHbb8q.png)
+![BaseView](https://i.imgur.com/t6UDHSk.png)
+![BattleView](https://i.imgur.com/ANFKh1w.png)
 ## Authors
 - [RealSilvi](https://github.com/RealSilvi)
 - [MarcoFrn](https://github.com/MarcoFrn)
