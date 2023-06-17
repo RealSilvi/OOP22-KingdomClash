@@ -18,7 +18,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.Map.Entry;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.BarPanel;
@@ -41,8 +43,8 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     private final ResourcePopupPanel resourcepopup;
     private final TroopPopupPanel trooppopup;
     private final List<JComponent> interactionComponents;
-
     private Optional<String> actionCommand = Optional.empty();
+    
 
     private boolean selectionActive = false;
     private boolean constructionAction = false;
@@ -64,6 +66,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.resourcepopup = new ResourcePopupPanel(mainpanel,X_POPUP_POSITION, Y_POPUP_POSITION, new ResourcePanelImpl(controller));
         this.trooppopup = new TroopPopupPanel(mainpanel, X_POPUP_POSITION, Y_POPUP_POSITION, controller);
         this.interactionComponents = new ArrayList<>();
+
         final ActionListener genericBtnAction = new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -99,6 +102,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         final JButton troop = new JButton("Upgrade Troops");
         final JButton playerinfo = new JButton("player info");
         final JButton upgradeBtn = new JButton("Upgrade Building");
+        final JButton changeButton = new JButton("map");
         upgradeBtn.addActionListener(genericBtnAction);
         upgradeBtn.addActionListener(new ActionListener() {
             @Override
@@ -156,12 +160,30 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.mainpanel.add(upgradeBtn);
         this.mainpanel.add(demolishBtn);
         this.mainpanel.add(playerinfo);
+        this.mainpanel.add(changeButton);
         this.mainpanel.add(resourcePanel);
         troop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
                 trooppopup.changeVisibility();
             }
+        });
+        playerinfo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+              JOptionPane.showMessageDialog(mainpanel, "" + basedata.requestPlayerName(),
+               "Player Name", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+        });
+        changeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+              /*JOptionPane.showMessageDialog(mainpanel, "" + basedata.requestPlayerName(),
+               "Player Name", JOptionPane.INFORMATION_MESSAGE);
+               */
+            }
+            
         });
     }
     /**
@@ -201,4 +223,5 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         }
         return resultIdentifier;
     }
+   
 }
