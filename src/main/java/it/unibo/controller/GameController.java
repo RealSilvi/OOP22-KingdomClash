@@ -10,11 +10,26 @@ import java.awt.event.ActionListener;
 
 public class GameController {
 
+    private enum PANELS_NAME {
+        BATTLE("BATTLE"),
+        CITY("CITY");
+
+        private String name;
+
+        PANELS_NAME(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+    }
+
     final GameModel gameModel;
     final GameGui gameGui;
 
-    final Controller battleController;
-    final Controller baseController;
+    Controller battleController;
+    Controller baseController;
 
     ActionListener toMainPanel;
 
@@ -22,34 +37,38 @@ public class GameController {
 
         this.gameModel = new GameModel();
 
-        this.battleController = new BattleControllerImpl(gameModel.getGameData());
-        this.baseController = new BaseControllerImpl(gameModel.getGameData());
+//        this.battleController = new BattleControllerImpl(gameModel.getGameData());
+//        this.baseController = new BaseControllerImpl(gameModel.getGameData());
 
-        this.gameGui = new GameGui(battleController.getGuiPanel(), baseController.getGuiPanel(), gameModel.getGameData().getGameConfiguration());
+        this.gameGui = new GameGui(new LoadConfiguration().getConfiguration());
 
         this.toMainPanel = this.backActionListener();
-        battleController.setReturnActionListener(toMainPanel);
-        baseController.setReturnActionListener(toMainPanel);
+//        battleController.setReturnActionListener(toMainPanel);
+//        baseController.setReturnActionListener(toMainPanel);
 
-        this.setActionListenerNewGame();
+        this.init();
         this.setActionListenerName();
         this.setActionListenerSave();
-        this.setActionListenerMap();
-        this.setActionListenerCity();
         this.setActionListenerLoad();
 
-        gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
-        gameGui.setActivateBattle(gameModel.getCurrentLevel());
+
     }
 
-    private void setActionListenerNewGame() {
+    private void init() {
         final ActionListener actionListener = e -> {
             if (this.gameModel.isSaved()) {
-                if (this.gameGui.showNewGameOptions()) {
-                    this.gameModel.newGame();
+                if (Boolean.TRUE.equals(this.gameGui.showNewGameOptions())) {
+                    this.gameModel.resetSaved();
+                    this.battleController = new BattleControllerImpl(gameModel.getGameData());
+                    this.baseController = new BaseControllerImpl(gameModel.getGameData());
+                    this.loadGui();
                     this.gameGui.showNamePanel();
                 }
             } else {
+                this.gameModel.resetSaved();
+                this.battleController = new BattleControllerImpl(gameModel.getGameData());
+                this.baseController = new BaseControllerImpl(gameModel.getGameData());
+                this.loadGui();
                 this.gameGui.showNamePanel();
             }
 
@@ -57,27 +76,32 @@ public class GameController {
         this.gameGui.setActionListenerNewGame(actionListener);
     }
 
-    private void setActionListenerLoad(){
-        this.gameGui.setActionListenerLoad(e-> {
-            if(this.gameModel.isSaved()){
-                this.gameGui.showCity();
-            }else{
+    private void loadGui() {
+        this.gameGui.addPanels(this.baseController.getGuiPanel(), PANELS_NAME.CITY.getName());
+        this.gameGui.addPanels(this.battleController.getGuiPanel(), PANELS_NAME.BATTLE.getName());
+
+        gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
+        gameGui.setActivateBattle(gameModel.getCurrentLevel());
+
+    }
+
+    private void setActionListenerLoad() {
+        this.gameGui.setActionListenerLoad(e -> {
+            if (this.gameModel.isSaved()) {
+                this.gameModel.load();
+                this.battleController = new BattleControllerImpl(gameModel.getGameData());
+                this.baseController = new BaseControllerImpl(gameModel.getGameData());
+                this.loadGui();
+                this.gameGui.showPanels(GameGui.MAP_NAME);
+            } else {
                 this.gameGui.showLoadOptions();
             }
         });
     }
 
     private void setActionListenerName() {
-        final ActionListener actionListener = e -> this.gameGui.showCity();
+        final ActionListener actionListener = e -> this.gameGui.showPanels(GameGui.MAP_NAME);
         this.gameGui.setActionListenerStart(actionListener);
-    }
-
-    private void setActionListenerCity() {
-        this.gameGui.setActionListenerCity(e -> this.gameGui.showCity());
-    }
-
-    private void setActionListenerMap() {
-        this.gameGui.setActionListenerMap(e -> this.gameGui.showMap());
     }
 
     private void setActionListenerSave() {
@@ -88,7 +112,7 @@ public class GameController {
 
     private ActionListener backActionListener() {
         return e -> {
-            this.gameGui.showMap();
+            this.gameGui.showPanels(GameGui.MAP_NAME);
             this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
             this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         };
