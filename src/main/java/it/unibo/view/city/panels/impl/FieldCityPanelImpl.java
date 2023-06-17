@@ -1,4 +1,3 @@
-
 package it.unibo.view.city.panels.impl;
 
 import java.awt.GridLayout;
@@ -21,7 +20,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import it.unibo.view.GameGui;
-import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
@@ -38,7 +36,6 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     private final CityPanel cityView;
     private List<List<JButton>> buttonmap;
     private CityConfiguration gameConfiguration;
-    private PathIconsConfiguration pathIconsConfiguration;
     private Map<UUID, Point2D> buildingTilePositions;
 
     /**
@@ -51,15 +48,13 @@ public class FieldCityPanelImpl implements FieldCityPanel {
      * @param pathIconsConfiguration gave the textures of the building and of the background for the field
      * @param readImages a for each building level gave his texture
      */
-    //TODO: Require only 1 configuration and fix names
-    public FieldCityPanelImpl(final CityPanel cityView, final BaseController baseController,
-        GameConfiguration gameConfig, final CityConfiguration gameConfiguration, final PathIconsConfiguration pathIconsConfiguration,
+    public FieldCityPanelImpl(final CityPanel cityView,
+        final BaseController baseController,
+        GameConfiguration gameConfig, 
         final Map<BuildingTypes, Map<Integer, Image>> readImages) {
         this.buildingTilePositions = new HashMap<>();
         this.cityView = cityView;
-        //GraphicUtils.resizeImage(new ImageIcon(),JButton.WIDTH,JButton.HEIGHT);
-        this.gameConfiguration = gameConfiguration;
-        this.pathIconsConfiguration = pathIconsConfiguration;
+        this.gameConfiguration = gameConfig.getCityConfiguration();
         this.mainpanel = new DrawPanel(ImageIconsSupplier.loadImage(gameConfig
             .getMapConfiguration()
             .getImageMap().get(ButtonIdentification.TILE)),

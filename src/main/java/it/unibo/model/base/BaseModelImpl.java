@@ -134,17 +134,18 @@ public final class BaseModelImpl implements BaseModel {
         if (this.gameData.getBuildings().get(structureId).getLevel() >= buildingConfiguration.getMaxLevel()) {
             throw new BuildingMaxedOutException();
         }
-        threadManager.removeBuilding(structureId);
         gameData.setResources(subtractResources(gameData.getResources(),
                 this.gameData.getBuildings().get(structureId).getType().getCost(
                         this.gameData.getBuildings().get(structureId).getLevel() + 1)));
+        threadManager.removeBuilding(structureId);
         this.gameData.getBuildings().get(structureId).setBeingBuilt(true);
         addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
             public void update(final UUID buildingId) {
-                if (structureId.equals(buildingId)
-                        && (gameData.getBuildings().get(structureId).getBuildingProgress() == 0
-                        && !gameData.getBuildings().get(structureId).isBeingBuilt())) {
+                if (gameData.getBuildings().containsKey(structureId)
+                    && structureId.equals(buildingId)
+                    && (gameData.getBuildings().get(structureId).getBuildingProgress() == 0
+                    && !gameData.getBuildings().get(structureId).isBeingBuilt())) {
                     threadManager.addBuilding(buildingId);
                 }
             }

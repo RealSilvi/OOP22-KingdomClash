@@ -32,7 +32,7 @@ public final class BattleModelImpl implements BattleModel {
     private final FightData fightData;
     private final GameData gameData;
     private final Map<TroopType, Integer> troopPlayerLevel;
-    private final Map<TroopType, Integer> troopBotLevel;
+    private Map<TroopType, Integer> troopBotLevel;
 
     /**MAX_ROUND represents the max rounds available during one match of the battle.*/
     private final int maxRound;
@@ -65,7 +65,7 @@ public final class BattleModelImpl implements BattleModel {
         this.maxRound = gameData.getGameConfiguration().getBattleConfiguration().getMaxRound();
         this.troopPlayerLevel = gameData.getPlayerArmyLevel();
         this.troopBotLevel = new EnumMap<>(TroopType.class);
-        Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, 1));
+        Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, gameData.getCurrentLevel()));
         this.gameData = gameData;
     }
 
@@ -191,14 +191,10 @@ public final class BattleModelImpl implements BattleModel {
         fightData.setBotData(new EntityDataImpl(this.gameData.getGameConfiguration().getBattleConfiguration()));
         fightData.setPlayerData(new EntityDataImpl(this.gameData.getGameConfiguration().getBattleConfiguration()));
         if (increment) {
-            int level = 0;
-            if (this.gameData.getPlayerArmyLevel().values().stream().findFirst().isPresent()) {
-                level = this.gameData.getPlayerArmyLevel().values().stream().findFirst().get();
-            }
-            for (TroopType troopType : TroopType.values()) {
-                this.troopBotLevel.put(troopType, level + 1);
-            }
             this.gameData.incrementLevel();
+            for(TroopType troopType : TroopType.values()){
+                this.troopBotLevel.put(troopType, this.gameData.getCurrentLevel());
+            }
         }
         this.gameData.setFightData(this.fightData);
     }

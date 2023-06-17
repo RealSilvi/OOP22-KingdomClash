@@ -1,5 +1,6 @@
 package it.unibo.model.base;
 
+import java.awt.geom.Point2D;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -169,12 +170,16 @@ public final class ThreadManagerImpl implements ThreadManager {
                     constructionPercentage++;
                     buildingMapRef.get(buildingToBuildIdentifier).setBuildingProgress(constructionPercentage);
                     if (constructionPercentage == 100) {
+                        Point2D buildingPosition = 
+                            buildingMapRef.get(buildingToBuildIdentifier).getStructurePos();
                         buildingMapRef.put(buildingToBuildIdentifier,
-                                buildingBuilder.makeStandardBuilding(
-                                        buildingMapRef.get(
-                                                buildingToBuildIdentifier).getType(),
-                                        buildingMapRef.get(
-                                                buildingToBuildIdentifier).getLevel() + 1));
+                            buildingBuilder.makeStandardBuilding(
+                                buildingMapRef.get(
+                                    buildingToBuildIdentifier).getType(),
+                                    buildingMapRef.get(
+                                        buildingToBuildIdentifier).getLevel() + 1));
+                        buildingMapRef.get(buildingToBuildIdentifier)
+                            .setStructurePos(buildingPosition);
                     }
                     baseModel.notifyBuildingStateChangedObservers(buildingToBuildIdentifier);
                     return constructionPercentage;
