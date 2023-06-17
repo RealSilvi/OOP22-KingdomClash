@@ -13,8 +13,6 @@ import it.unibo.model.data.Resource;
 import it.unibo.model.data.TroopType;
 
 import java.awt.geom.Point2D;
-import java.nio.file.Path;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -131,19 +129,6 @@ public interface BaseModel {
         throws InvalidBuildingPlacementException, InvalidStructureReferenceException;
 
     /**
-     * Gets the path of the texture that represents the current structure's status.
-     *
-     * @param structureId an existing structure's identifier
-     * @return the texture's path
-     * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
-     * @deprecated This method will be removed in the future because texture handling is not a
-     * responsability for the model anymore
-     */
-    @Deprecated
-    Path getStructureTexture(UUID structureId)
-        throws InvalidStructureReferenceException;
-
-    /**
      * Given a structure's identifier, returns the progress in percentage of the current operation.
      *
      * @param structureId an existing structure's identifier
@@ -156,7 +141,7 @@ public interface BaseModel {
     /**
      * Produces a set of materials that the structures produces.
      *
-     * @param structureId an existing structure's identifier
+     * @param structureId an existing structure's identifierde
      * @return a set of materials that the structures produces
      * @throws InvalidStructureReferenceException thrown when the provided identifier does not represent a building
      */
@@ -311,21 +296,4 @@ public interface BaseModel {
      * Refreshes threadmanager's building list.
      */
     void refreshBuildings();
-
-    /**
-     * Applies the level multiplier given a set of resources and a level, returning a set with updated resources.
-     *
-     * @param resource the set of resources that need to be worked on
-     * @param level    an integer representing the level
-     * @return a set with updated resources given a level multiplier
-     * @deprecated This metod is deprecated and will not be used anymore
-     * because it has been implemented internally in {@link it.unibo.model.base.internal.BuildingBuilderImpl}
-     */
-    @Deprecated
-    static Set<Resource> applyMultiplierToResources(Set<Resource> resource, int level) {
-        Set<Resource> alteredResource = new HashSet<>();
-        resource.forEach(singleCost -> alteredResource.add(
-            new Resource(singleCost.getResource(), singleCost.getAmount() * (level == 0 ? 1 : level))));
-        return alteredResource;
-    }
 }

@@ -1,7 +1,6 @@
 package it.unibo.model.base;
 
 import java.awt.geom.Point2D;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -194,12 +193,6 @@ public final class BaseModelImpl implements BaseModel {
             }
         }
         this.gameData.getBuildings().get(structureId).setStructurePos(position);
-    }
-
-    @Override
-    public Path getStructureTexture(final UUID structureId)
-        throws InvalidStructureReferenceException {
-        throw new UnsupportedOperationException("Unimplemented method 'getStructureTexture'");
     }
 
     @Override
