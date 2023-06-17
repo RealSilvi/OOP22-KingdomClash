@@ -39,8 +39,6 @@ public interface GameGuiInt {
 
     void setActionListenerStart(ActionListener actionListener);
 
-    void setActionListenerSave(ActionListener actionListener);
-
     void setActionListenerLoad(ActionListener actionListener);
 
     void setMapBaseActionListener(ActionListener actionListener);

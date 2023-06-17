@@ -91,7 +91,6 @@ public final class GameGui implements GameGuiInt {
         setActionListenerInfo();
         setActionListenerExit();
         setActionListenerMusic();
-        setActionListenerMenu();
         setActionListenerBack();
         showMenuPanel();
 
@@ -164,11 +163,6 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setActionListenerSave(ActionListener actionListener) {
-        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.SAVE);
-    }
-
-    @Override
     public void setActionListenerLoad(ActionListener actionListener){
         this.menuPanel.setActionListenerLoad(actionListener);
     }
@@ -185,7 +179,6 @@ public final class GameGui implements GameGuiInt {
 
     @Override
     public void setActionListenerQuit(ActionListener actionListener) {
-        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.QUIT);
         this.menuPanel.setActionListenerExit(actionListener);
     }
 
@@ -215,7 +208,6 @@ public final class GameGui implements GameGuiInt {
     private void setActionListenerMusic() {
         ActionListener actionListener = e -> this.soundManager.changeMute();
         this.menuPanel.setActionListenerMusic(actionListener);
-        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.MUSIC);
     }
 
     private void setActionListenerInfo() {
@@ -226,11 +218,6 @@ public final class GameGui implements GameGuiInt {
     private void setActionListenerExit(){
         ActionListener actionListener = e -> showMenuPanel();
         this.infoPanel.setActionListenerExit(actionListener);
-    }
-
-    private void setActionListenerMenu() {
-        ActionListener actionListener = e -> showMenuPanel();
-        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.MENU);
     }
 
     /**

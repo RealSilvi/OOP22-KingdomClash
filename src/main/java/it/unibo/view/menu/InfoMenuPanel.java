@@ -65,7 +65,7 @@ public class InfoMenuPanel {
         this.exit = new ImageButton("EXIT", GameMenuImpl.BACKGROUND_BUTTON,
                 new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
 
-        JTextField textField = new JTextField("CORRESPONDENCES");
+        JTextField textField = new JTextField("COUNTERS");
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(font3);
         textField.setFocusable(false);
@@ -106,8 +106,8 @@ public class InfoMenuPanel {
             int finalI = i;
             JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values()).
                             filter(x -> x.ordinal() == finalI).toList().get(0)),
-                    new Dimension(((int) (dimension.getWidth() / (imageDimension-2))), ((int) (dimension.getHeight() / imageDimension)))));
-            label.setText("  <-----");
+                    new Dimension(((int) (dimension.getWidth() / (imageDimension-2.5))), ((int) (dimension.getHeight() / imageDimension)))));
+            label.setText("  <---");
             label.setFont(font2);
             label.setForeground(Color.WHITE);
             label.setHorizontalTextPosition(JLabel.RIGHT);
@@ -116,8 +116,8 @@ public class InfoMenuPanel {
             grid.gridx = 1;
             JLabel label1 = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(Arrays.stream(TroopType.values())
                             .filter(x -> x.ordinal() == (lenght / 2) + finalI).toList().get(0)),
-                    new Dimension(((int) (dimension.getWidth() / (imageDimension-2))), ((int) (dimension.getHeight() / imageDimension)))));
-            label1.setText("----->  ");
+                    new Dimension(((int) (dimension.getWidth() / (imageDimension-2.5))), ((int) (dimension.getHeight() / imageDimension)))));
+            label1.setText("--->  ");
             label1.setFont(font2);
             label1.setForeground(Color.WHITE);
             label1.setHorizontalTextPosition(JLabel.LEFT);
