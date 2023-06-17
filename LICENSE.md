@@ -1,14 +1,14 @@
-# Licenza GPL (General Public License)
+# GPL (General Public License)
 
-Il progetto "KingdomClash" è distribuito con la seguente licenza:
+The "KingdomClash" project is distributed under the following license:
 
 ## KingdomClash
 
 © Silvi Sinani, Marco Francolini, Lorenzo La Farciola, Abdoulaye Kane
 
-Il presente progetto è un software libero: puoi ridistribuirlo e/o modificarlo secondo i termini della Licenza Pubblica Generale GNU come pubblicata dalla Free Software Foundation, sia nella versione 3 della Licenza, o (a tua scelta) in qualsiasi versione successiva.
+This project is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-Questo programma è distribuito con la speranza che sia utile, ma SENZA ALCUNA GARANZIA; senza neppure la garanzia implicita di COMMERCIABILITÀ o IDONEITÀ PER UN PARTICOLARE SCOPO. Per ulteriori dettagli, consulta la Licenza Pubblica Generale GNU.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-È possibile trovare una copia della Licenza Pubblica Generale GNU visitando il seguente collegamento:
+You can find a copy of the GNU General Public License at the following link:
 [GNU General Public License](https://www.gnu.org/licenses/gpl.html)
