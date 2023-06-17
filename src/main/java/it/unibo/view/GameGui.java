@@ -13,6 +13,8 @@ import java.awt.Toolkit;
 import java.awt.CardLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is the principal GUI, which takes
@@ -27,6 +29,7 @@ public final class GameGui implements GameGuiInt {
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
     /** Height of the buttons.*/
     public static final int HEIGHT_BUTTON = (int) DIMENSION_SCREEN.getHeight() / 20;
+    public static final String MAP_NAME = "MAP" ;
     private final JFrame frame;
     private final CardLayout switchLayout;
     private final CardLayout switchLayout2;
@@ -38,15 +41,15 @@ public final class GameGui implements GameGuiInt {
     private final NamePlayerImpl namePlayer;
     private final MapPanel mapPanel;
     private final SoundManager soundManager;
+    private final Map<String, JPanel> panel;
 
     /**
      * The constructor initialize all the panels,
      * and creates a system to switch panels.
-     * @param battlePanel Panel of the battle.
-     * @param cityPanel Panel of the city.
      * @param gameConfiguration Configuration of the game.
      */
-    public GameGui(final JPanel battlePanel, final JPanel cityPanel, final GameConfiguration gameConfiguration) {
+    public GameGui(final GameConfiguration gameConfiguration) {
+        this.panel = new HashMap<>();
         this.frame = new JFrame();
         this.frame.setSize((int) (DIMENSION_SCREEN.getWidth()), (int) (DIMENSION_SCREEN.getHeight()));
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -70,9 +73,7 @@ public final class GameGui implements GameGuiInt {
         this.namePlayer = new NamePlayerImpl();
         this.southPanel = new SouthPanel();
 
-        this.allPanel.add(battlePanel, "1");
-        this.allPanel.add(cityPanel, "2");
-        this.allPanel.add(this.mapPanel.getAsJPanel(), "3");
+        this.panel.put(MAP_NAME,this.mapPanel.getAsJPanel());
 
         borderPanel.add(this.allPanel, BorderLayout.CENTER);
         borderPanel.add(this.southPanel.getPanel(), BorderLayout.SOUTH);
@@ -90,11 +91,25 @@ public final class GameGui implements GameGuiInt {
         setActionListenerExit();
         setActionListenerMusic();
         setActionListenerMenu();
-        setMapBaseActionListener();
-        setMapBattleActionListener();
         setActionListenerBack();
         showMenuPanel();
 
+    }
+
+    @Override
+    public void addPanels(JPanel panel, String name) {
+        if(!this.panel.containsKey(name)){
+            this.panel.put(name, panel);
+            this.allPanel.add(panel, name);
+        }
+    }
+
+    @Override
+    public void showPanels(String name) {
+        if(this.panel.containsKey(name)){
+            switchLayout.show(this.mainPanel, "3");
+            switchLayout2.show(this.allPanel, name);
+        }
     }
 
     @Override
@@ -106,30 +121,6 @@ public final class GameGui implements GameGuiInt {
     @Override
     public void showInfoPanel() {
         switchLayout.show(this.mainPanel, "2");
-    }
-
-    @Override
-    public void showBattle() {
-        this.soundManager.startBattleTheme();
-        this.southPanel.showButtonsBattle();
-        switchLayout.show(this.mainPanel, "3");
-        switchLayout2.show(this.allPanel, "1");
-    }
-
-    @Override
-    public void showCity() {
-        this.soundManager.startCityTheme();
-        this.southPanel.showButtonsCity();
-        switchLayout.show(this.mainPanel, "3");
-        switchLayout2.show(this.allPanel, "2");
-    }
-
-    @Override
-    public void showMap() {
-        this.soundManager.startMapTheme();
-        this.southPanel.showButtonsMap();
-        switchLayout.show(this.mainPanel, "3");
-        switchLayout2.show(this.allPanel, "3");
     }
 
     @Override
@@ -151,14 +142,19 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
+    public void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_NAME name){
+        this.southPanel.setActionListenerButtons(actionListener, name);
+    }
+
+    @Override
+    public void setButtonsVisibility(SouthPanel.BUTTONS_NAME name, Boolean visibility){
+        this.southPanel.setButtonsVisibility(name, visibility);
+    }
+
+    @Override
     public void setActionListenerNewGame(ActionListener actionListener) {
         this.menuPanel.setActionListenerNewGame(actionListener);
 
-    }
-
-    private void setActionListenerBack(){
-        ActionListener actionListener = e -> showMenuPanel();
-        this.namePlayer.setActionListenerBack(actionListener);
     }
 
     @Override
@@ -166,28 +162,9 @@ public final class GameGui implements GameGuiInt {
         this.namePlayer.setActionListenerStart(actionListener);
     }
 
-    private void setActionListenerMusic() {
-        ActionListener actionListener = e -> this.soundManager.changeMute();
-        this.menuPanel.setActionListenerMusic(actionListener);
-        this.southPanel.setActionListenerMusic(actionListener);
-    }
-
-    private void setActionListenerInfo() {
-        ActionListener actionListener = e -> showInfoPanel();
-        this.menuPanel.setActionListenerInfo(actionListener);
-    }
-
-    private void setActionListenerExit() {
-        ActionListener actionListener = e -> showMenuPanel();
-        this.infoPanel.setActionListenerExit(actionListener);
-        actionListener = e ->  System.exit(0);
-        this.southPanel.setActionListenerExit(actionListener);
-        this.menuPanel.setActionListenerExit(actionListener);
-    }
-
     @Override
     public void setActionListenerSave(ActionListener actionListener) {
-        this.southPanel.setActionListenerSave(actionListener);
+        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.SAVE);
     }
 
     @Override
@@ -195,33 +172,13 @@ public final class GameGui implements GameGuiInt {
         this.menuPanel.setActionListenerLoad(actionListener);
     }
 
-    private void setActionListenerMenu() {
-        ActionListener actionListener = e -> showMenuPanel();
-        this.southPanel.setActionListenerMenu(actionListener);
-    }
-
     @Override
-    public void setActionListenerCity(ActionListener actionListener) {
-        this.southPanel.setActionListenerCity(actionListener);
-    }
-
-    @Override
-    public void setActionListenerMap(ActionListener actionListener) {
-        this.southPanel.setActionListenerMap(actionListener);
-    }
-
-    @Override
-    public ActionListener getActionListenerMap() {
-        return e -> showMap();
-    }
-
-    private void setMapBaseActionListener() {
-        ActionListener actionListener = e -> showCity();
+    public void setMapBaseActionListener(ActionListener actionListener) {
         this.mapPanel.setBaseActionListener(actionListener);
     }
 
-    private void setMapBattleActionListener() {
-        ActionListener actionListener = e -> showBattle();
+    @Override
+    public void setMapBattleActionListener(ActionListener actionListener) {
         this.mapPanel.setBattleActionListener(actionListener);
     }
 
@@ -242,6 +199,38 @@ public final class GameGui implements GameGuiInt {
     @Override
     public void setBeatenLevels(final Integer levels) {
         this.mapPanel.setBeatenLevels(levels);
+    }
+
+    @Override
+    public void setActionListenerQuit(ActionListener actionListener) {
+        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.QUIT);
+        this.menuPanel.setActionListenerExit(actionListener);
+    }
+
+    private void setActionListenerBack(){
+        ActionListener actionListener = e -> showMenuPanel();
+        this.namePlayer.setActionListenerBack(actionListener);
+    }
+
+    private void setActionListenerMusic() {
+        ActionListener actionListener = e -> this.soundManager.changeMute();
+        this.menuPanel.setActionListenerMusic(actionListener);
+        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.MUSIC);
+    }
+
+    private void setActionListenerInfo() {
+        ActionListener actionListener = e -> showInfoPanel();
+        this.menuPanel.setActionListenerInfo(actionListener);
+    }
+
+    private void setActionListenerExit(){
+        ActionListener actionListener = e -> showMenuPanel();
+        this.infoPanel.setActionListenerExit(actionListener);
+    }
+
+    private void setActionListenerMenu() {
+        ActionListener actionListener = e -> showMenuPanel();
+        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.MENU);
     }
 
     /**

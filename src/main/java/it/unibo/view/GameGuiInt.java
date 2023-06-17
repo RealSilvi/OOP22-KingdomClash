@@ -1,13 +1,19 @@
 package it.unibo.view;
 
 import it.unibo.controller.SoundManager;
+import it.unibo.view.menu.SouthPanel;
 
+import javax.swing.*;
 import java.awt.event.ActionListener;
 
 /**
  * This class shows public methods of the GameGui.
  */
 public interface GameGuiInt {
+
+    void addPanels(JPanel panel, String name);
+
+    void showPanels(String name);
 
     /**
      * Shows the menu Panel.
@@ -39,6 +45,16 @@ public interface GameGuiInt {
     Boolean showNewGameOptions();
 
     void showLoadOptions();
+
+    void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_NAME name);
+
+    void setButtonsVisibility(SouthPanel.BUTTONS_NAME name, Boolean visibility);
+
+    void setMapBaseActionListener(ActionListener actionListener);
+
+    void setMapBattleActionListener(ActionListener actionListener);
+
+    public void setActionListenerQuit(ActionListener actionListener);
 
     void setActionListenerNewGame(ActionListener actionListener);
 

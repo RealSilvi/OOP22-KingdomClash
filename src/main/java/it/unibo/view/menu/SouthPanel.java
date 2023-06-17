@@ -7,37 +7,49 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SouthPanel {
+
+    public enum BUTTONS_NAME {
+        QUIT("QUIT"),
+        MUSIC("MUSIC"),
+        MENU("MENU"),
+        SAVE("SAVE");
+
+        private String name;
+
+        BUTTONS_NAME(final String name) {
+            this.name = name;
+        }
+
+        public String getName(){
+            return this.name;
+        }
+
+    }
 
     public static final Dimension DIMENSION_SCREEN = GameGui.DIMENSION_SCREEN;
     private static final double MENU_WIDTH_SCALE = 1;
     private static final double MENU_HEIGHT_SCALE = 0.05;
     private final JPanel southPanel;
-    private final JButton cityButton;
-    private final JButton mapButton;
-    private final JButton menuButton;
-    private final JButton musicButton;
-    private final JButton exitButton;
-    private final JButton saveButton;
+    private final Map<BUTTONS_NAME, JButton> buttons;
 
     public SouthPanel(){
-        this.saveButton = new JButton("SAVE");
-        this.menuButton = new JButton("MENU");
-        this.musicButton = new JButton("MUSIC");
-        this.cityButton = new JButton("CITY");
-        this.mapButton = new JButton("MAP");
-        this.exitButton = new JButton("EXIT");
+        buttons = new HashMap<>();
+        this.buttons.put(BUTTONS_NAME.MUSIC, new JButton(BUTTONS_NAME.MUSIC.getName()));
+        this.buttons.put(BUTTONS_NAME.MENU, new JButton(BUTTONS_NAME.MENU.getName()));
+        this.buttons.put(BUTTONS_NAME.SAVE, new JButton(BUTTONS_NAME.SAVE.getName()));
+        this.buttons.put(BUTTONS_NAME.QUIT, new JButton(BUTTONS_NAME.QUIT.getName()));
 
         this.southPanel = new JPanel();
         this.southPanel.setBackground(Color.blue);
         this.southPanel.setPreferredSize(getMenuPanel());
-        this.southPanel.add(this.musicButton);
-        this.southPanel.add(this.menuButton);
-        this.southPanel.add(this.cityButton);
-        this.southPanel.add(this.mapButton);
-        this.southPanel.add(this.saveButton);
-        this.southPanel.add(this.exitButton);
+
+        this.buttons.forEach((x,y) -> {
+            southPanel.add(y);
+        });
     }
 
     @SuppressFBWarnings(value = "EI",
@@ -52,47 +64,12 @@ public class SouthPanel {
                 (int) (DIMENSION_SCREEN.getHeight() * MENU_HEIGHT_SCALE));
     }
 
-    public void setActionListenerMusic(ActionListener actionListener){
-        this.musicButton.addActionListener(actionListener);
-    }
-    public void setActionListenerMenu(ActionListener actionListener){
-        this.menuButton.addActionListener(actionListener);
-    }
-    public void setActionListenerCity(ActionListener actionListener){
-        this.cityButton.addActionListener(actionListener);
-    }
-    public void setActionListenerMap(ActionListener actionListener){
-        this.mapButton.addActionListener(actionListener);
-    }
-    public void setActionListenerExit(ActionListener actionListener){
-        this.exitButton.addActionListener(actionListener);
-    }
-    public void setActionListenerSave(ActionListener actionListener){
-        this.saveButton.addActionListener(actionListener);
+    public void setActionListenerButtons(ActionListener actionListener, BUTTONS_NAME name){
+        this.buttons.get(name).addActionListener(actionListener);
     }
 
-    public void showButtonsMap(){
-        this.menuButton.setVisible(true);
-        this.cityButton.setVisible(true);
-        this.mapButton.setVisible(false);
-        this.musicButton.setVisible(true);
-        this.saveButton.setVisible(true);
-    }
-
-    public void showButtonsCity(){
-        this.menuButton.setVisible(true);
-        this.cityButton.setVisible(false);
-        this.mapButton.setVisible(true);
-        this.musicButton.setVisible(true);
-        this.saveButton.setVisible(true);
-    }
-
-    public void showButtonsBattle(){
-        this.menuButton.setVisible(false);
-        this.cityButton.setVisible(false);
-        this.mapButton.setVisible(false);
-        this.musicButton.setVisible(true);
-        this.saveButton.setVisible(false);
+    public void setButtonsVisibility(BUTTONS_NAME name, Boolean visibility){
+        this.buttons.get(name).setVisible(visibility);
     }
 
 }
