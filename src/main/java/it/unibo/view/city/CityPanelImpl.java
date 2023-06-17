@@ -40,7 +40,6 @@ public class CityPanelImpl implements CityPanel {
     private final Map<BuildingTypes, Map<Integer, Image>> readImages = new EnumMap<>(BuildingTypes.class);
 
     private List<TileClickObserver> tileClickObservers;
-    private ActionListener returnActionListener;
     /**
     *
      * @param controller give the configuration and the parameter for each function
@@ -81,7 +80,7 @@ public class CityPanelImpl implements CityPanel {
      */
     @Override
     public void setReturnActionListener(final ActionListener returnActionListener) {
-        this.returnActionListener = returnActionListener;
+        this.barPanel.setReturnActionListener(returnActionListener);
     }
     /**
      * {@inheritDoc}
