@@ -224,6 +224,11 @@ public final class GameGui implements GameGuiInt {
         return this.soundManager;
     }
 
+    @Override
+    public String getPlayerName(){
+        return this.namePlayer.getPlayerName();
+    }
+
     private void setActionListenerMusic() {
         ActionListener actionListener = e -> this.soundManager.changeMute();
         this.menuPanel.setActionListenerMusic(actionListener);

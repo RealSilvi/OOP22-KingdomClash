@@ -23,7 +23,8 @@ public class NamePlayerImpl {
         textField = new JTextField();
         textField.setPreferredSize(new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
         textField.setFont(font);
-        textField.setForeground(Color.BLACK);
+        textField.setForeground(Color.WHITE);
+        textField.setBackground(Color.BLACK);
 
         GridBagConstraints grid = new GridBagConstraints();
 
@@ -45,6 +46,10 @@ public class NamePlayerImpl {
 
     public JPanel getPanel(){
         return this.namePanel;
+    }
+
+    public String getPlayerName(){
+        return this.textField.getText();
     }
 
     public void setActionListenerStart(ActionListener actionListener) {

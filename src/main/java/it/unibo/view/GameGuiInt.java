@@ -76,4 +76,6 @@ public interface GameGuiInt {
      */
     SoundManager getSoundManager();
 
+    String getPlayerName();
+
 }
