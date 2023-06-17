@@ -138,6 +138,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
                             demolishBtn.setEnabled(false);
                         }
                     }
+                    resourcePanel.updateResourceDisplay();
                     setOptionsLocked();
                     resetConditions();
                     selectionActive = false;
