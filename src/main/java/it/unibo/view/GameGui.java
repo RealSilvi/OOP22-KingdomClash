@@ -183,17 +183,14 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setActivateBattle(final Integer level) {
-        this.mapPanel.setActiveBattle(level);
+    public void setActionListenerQuit(ActionListener actionListener) {
+        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.QUIT);
+        this.menuPanel.setActionListenerExit(actionListener);
     }
 
-
     @Override
-    @SuppressFBWarnings(value = "EI",
-            justification = "I want to return the object to let other classes" +
-                    "getting the reference")
-    public SoundManager getSoundManager() {
-        return this.soundManager;
+    public void setActivateBattle(final Integer level) {
+        this.mapPanel.setActiveBattle(level);
     }
 
     @Override
@@ -202,9 +199,11 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setActionListenerQuit(ActionListener actionListener) {
-        this.southPanel.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_NAME.QUIT);
-        this.menuPanel.setActionListenerExit(actionListener);
+    @SuppressFBWarnings(value = "EI",
+            justification = "I want to return the object to let other classes" +
+                    "getting the reference")
+    public SoundManager getSoundManager() {
+        return this.soundManager;
     }
 
     private void setActionListenerBack(){

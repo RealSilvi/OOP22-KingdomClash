@@ -25,21 +25,6 @@ public interface GameGuiInt {
      */
     void showInfoPanel();
 
-    /**
-     * Shows the battle Panel.
-     */
-    void showBattle();
-
-    /**
-     * Shows the city Panel.
-     */
-    void showCity();
-
-    /**
-     * Shows the map Panel.
-     */
-    void showMap();
-
     void showNamePanel();
 
     Boolean showNewGameOptions();
@@ -50,12 +35,6 @@ public interface GameGuiInt {
 
     void setButtonsVisibility(SouthPanel.BUTTONS_NAME name, Boolean visibility);
 
-    void setMapBaseActionListener(ActionListener actionListener);
-
-    void setMapBattleActionListener(ActionListener actionListener);
-
-    public void setActionListenerQuit(ActionListener actionListener);
-
     void setActionListenerNewGame(ActionListener actionListener);
 
     void setActionListenerStart(ActionListener actionListener);
@@ -64,15 +43,11 @@ public interface GameGuiInt {
 
     void setActionListenerLoad(ActionListener actionListener);
 
-    void setActionListenerCity(ActionListener actionListener);
+    void setMapBaseActionListener(ActionListener actionListener);
 
-    void setActionListenerMap(ActionListener actionListener);
+    void setMapBattleActionListener(ActionListener actionListener);
 
-    /**
-     * Takes the action listener to show the map.
-     * @return The action listener which shows the map.
-     */
-    ActionListener getActionListenerMap();
+    void setActionListenerQuit(ActionListener actionListener);
 
     /**
      * Used to activate the next battle
@@ -82,17 +57,18 @@ public interface GameGuiInt {
      */
     void setActivateBattle(Integer level);
 
-    /**
-     * Used to get the music of the game.
-     * @return the class which manage the music
-     * of the game.
-     */
-    SoundManager getSoundManager();
 
     /**
      * Set the level beaten.
      * @param levels represents the level beaten.
      */
     void setBeatenLevels(Integer levels);
+
+    /**
+     * Used to get the music of the game.
+     * @return the class which manage the music
+     * of the game.
+     */
+    SoundManager getSoundManager();
 
 }
