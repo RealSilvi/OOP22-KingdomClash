@@ -31,6 +31,8 @@ public interface GameGuiInt {
 
     void showLoadOptions();
 
+    Integer showMenuSouthOptions();
+
     void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_NAME name);
 
     void setButtonsVisibility(SouthPanel.BUTTONS_NAME name, Boolean visibility);

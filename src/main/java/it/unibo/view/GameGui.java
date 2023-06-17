@@ -29,6 +29,9 @@ public final class GameGui implements GameGuiInt {
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
     /** Height of the buttons.*/
     public static final int HEIGHT_BUTTON = (int) DIMENSION_SCREEN.getHeight() / 20;
+    public static final int YES = 0;
+    public static final int NO = 1;
+
     public static final String MAP_NAME = "MAP" ;
     private final JFrame frame;
     private final CardLayout switchLayout;
@@ -139,6 +142,19 @@ public final class GameGui implements GameGuiInt {
     public void showLoadOptions(){
         JOptionPane.showConfirmDialog(null, "There is no past save",
                 "Load Game", JOptionPane.DEFAULT_OPTION);
+    }
+
+    @Override
+    public Integer showMenuSouthOptions() {
+        if(JOptionPane.showConfirmDialog(null, "Do you want to save",
+                "Come Back To Menu", JOptionPane.YES_NO_CANCEL_OPTION) == YES){
+            return 0;
+        }else if(JOptionPane.showConfirmDialog(null, "Do you want to save",
+                "Come Back To Menu", JOptionPane.YES_NO_CANCEL_OPTION) == NO){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 
     @Override
