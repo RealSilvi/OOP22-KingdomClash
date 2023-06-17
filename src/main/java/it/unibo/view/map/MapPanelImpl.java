@@ -21,7 +21,6 @@ import java.util.function.IntPredicate;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -40,7 +39,6 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
 
     private transient Logger logger = Logger.getLogger(this.getClass().getName());
 
-    public static final int BATTLE_LEVELS = 3;
     private static final int RANDOM_SEED = 65455;
 
     private transient Map<ButtonIdentification, Image> rawImageMap = 
@@ -52,8 +50,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
 
     private transient List<JButton> tiles = new ArrayList<>();
     private Random randomGen = new Random(RANDOM_SEED);
-    @SuppressWarnings("unused")
-    //Used to get global configuration
+
     private transient GameConfiguration configuration;
     private transient MapConfiguration mapConfiguration;
 
@@ -62,9 +59,9 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     /**
      * Constructs a MapPanel, a GUI composed of different types of tiles
      * and assigns a controller to fire events to.
-     * @param controller the controller that will be assigned to this GUI
+     * @param configuration the game configuration
      */
-    public MapPanelImpl(GameConfiguration configuration) {
+    public MapPanelImpl(final GameConfiguration configuration) {
         this.configuration = configuration;
         this.mapConfiguration = configuration.getMapConfiguration();
         initialize();
@@ -81,17 +78,6 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
         });
         generateTileGrid();
         populateMap();
-    }
-
-    /**
-     * Opens the panel inside a JFrame, for manual testing purposes only.
-     */
-    public void showInJFrame() {
-        JFrame frame = new JFrame("MapPanelTestGUI");
-        frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
-        frame.add(this);
-        frame.setVisible(true);
     }
 
     @Override
@@ -193,11 +179,14 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
      * Populates the map with the player's base and the enemies.
      */
     private void populateMap() {
-        for (int index = 0; index <= BATTLE_LEVELS; index++) {
+        for (int index = 0; index <= configuration
+            .getMapConfiguration()
+            .getLevels(); index++) {
             ImageIcon imageReference;
             ButtonIdentification command;
             Cursor tempCursor = new Cursor(Cursor.HAND_CURSOR);
-            int temporaryIndex = 11;
+            int temporaryIndex = configuration
+                .getMapConfiguration().getInitialPlayerTile();
             if (index == 0) {
                 imageReference = new ImageIcon(imageMap.get(ButtonIdentification.PLAYER));
                 command = ButtonIdentification.PLAYER;
@@ -240,9 +229,8 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
                 GraphicUtils.overlayImages(
                     rawImageMap.get(ButtonIdentification.TILE), rawImageMap.get(elementTile)));
             grayImageMap.put(elementTile,
-                    GraphicUtils.overlayImages(rawImageMap.get(ButtonIdentification.TILE) ,
-                        GraphicUtils
-                            .applyColorFilterToImage(
+                    GraphicUtils.overlayImages(rawImageMap.get(ButtonIdentification.TILE),
+                        GraphicUtils.applyColorFilterToImage(
                                 rawImageMap.get(elementTile), Color.BLACK)));
         });
     }

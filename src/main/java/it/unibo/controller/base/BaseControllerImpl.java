@@ -58,7 +58,9 @@ public final class BaseControllerImpl implements Controller, BaseController {
         try {
             providedUUID = Optional.of(baseModel.buildStructure(position, type, startingLevel, cheatMode));
         } catch (BuildingException | ResourceException e) {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                e.getMessage(), "HEY",
+                JOptionPane.ERROR_MESSAGE);
             providedUUID = Optional.empty();
         }
         return providedUUID;
@@ -84,7 +86,9 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.upgradeStructure(structureId, cheatMode);
             upgradeSucceded = true;
         } catch (ResourceException | BuildingMaxedOutException | InvalidStructureReferenceException e) {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                e.getMessage(), "HEY",
+                JOptionPane.ERROR_MESSAGE);
             upgradeSucceded = false;
         }
         return upgradeSucceded;
@@ -102,7 +106,9 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.demolishStructure(structureId);
             demolitionSucceded = true;
         } catch (InvalidStructureReferenceException e) {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                e.getMessage(), "HEY",
+                JOptionPane.ERROR_MESSAGE);
             demolitionSucceded = false;
         }
         return demolitionSucceded;
@@ -116,7 +122,9 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.relocateStructure(position, structureId);
             relocationSucceded = true;
         } catch (InvalidBuildingPlacementException | InvalidStructureReferenceException e) {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                e.getMessage(), "HEY",
+                JOptionPane.ERROR_MESSAGE);
             relocationSucceded = false;
         }
         return relocationSucceded;
@@ -159,14 +167,17 @@ public final class BaseControllerImpl implements Controller, BaseController {
             baseModel.upgradeTroop(troopToUpgrade, levelToUpgradeTo);
             operationSuccessful = true;
         } catch (InvalidTroopLevelException e) {
-            JOptionPane.showMessageDialog(null,e.getMessage(),"HEY", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                e.getMessage(), "HEY",
+                JOptionPane.ERROR_MESSAGE);
         }
         return operationSuccessful;
     }
 
     @Override
     public boolean upgradeTroop(final TroopType troopToUpgrade) {
-        return upgradeTroop(troopToUpgrade, baseModel.getTroopMap().get(troopToUpgrade));
+        return upgradeTroop(troopToUpgrade,
+            baseModel.getTroopMap().get(troopToUpgrade));
     }
 
     @Override
@@ -185,27 +196,27 @@ public final class BaseControllerImpl implements Controller, BaseController {
     }
 
     @Override
-    public void addBuildingStateChangedObserver(BuildingObserver stateChangedObserver) {
+    public void addBuildingStateChangedObserver(final BuildingObserver stateChangedObserver) {
         baseModel.addBuildingStateChangedObserver(stateChangedObserver);
     }
 
     @Override
-    public void removeBuildingStateChangedObserver(BuildingObserver stateChangedObserver) {
+    public void removeBuildingStateChangedObserver(final BuildingObserver stateChangedObserver) {
         baseModel.removeBuildingStateChangedObserver(stateChangedObserver);
     }
 
     @Override
-    public void addBuildingProductionObserver(BuildingObserver productionObserver) {
+    public void addBuildingProductionObserver(final BuildingObserver productionObserver) {
         baseModel.addBuildingProductionObserver(productionObserver);
     }
 
     @Override
-    public void removeBuildingProductionObserver(BuildingObserver productionObserver) {
+    public void removeBuildingProductionObserver(final BuildingObserver productionObserver) {
         baseModel.removeBuildingProductionObserver(productionObserver);
     }
 
     @Override
-    public void setReturnActionListener(ActionListener returnActionToAdd) {
+    public void setReturnActionListener(final ActionListener returnActionToAdd) {
         this.baseView.setReturnActionListener(returnActionToAdd);
     }
 }

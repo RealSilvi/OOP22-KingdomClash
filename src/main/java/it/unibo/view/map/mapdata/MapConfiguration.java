@@ -10,12 +10,15 @@ import it.unibo.view.map.MapPanel.ButtonIdentification;
  */
 public final class MapConfiguration {
 
+    private int initialPlayerTile;
+    private int levels;
     private int rows;
     private int columns;
     private Map<ButtonIdentification, String> imagePathMap;
 
-    @SuppressWarnings("java:S1075")
-    //This is a default configuration file constructor
+    /**
+     * Constructs a MapConfiguration object with default parameters.
+     */
     public MapConfiguration() {
         this.imagePathMap = new EnumMap<>(ButtonIdentification.class);
         this.imagePathMap.put(ButtonIdentification.TILE,
@@ -26,6 +29,8 @@ public final class MapConfiguration {
             "/it/unibo/textures/map/enemy.png");
         this.imagePathMap.put(ButtonIdentification.DEATH,
             "/it/unibo/textures/map/ruins.png");
+        this.initialPlayerTile = 11;
+        this.levels = 3;
         this.rows = 10;
         this.columns = 10;
     }
@@ -46,5 +51,17 @@ public final class MapConfiguration {
      */
     public int getColumns() {
         return columns;
+    }
+    /**
+     * @return maximum number of levels
+     */
+    public int getLevels() {
+        return levels;
+    }
+    /**
+     * @return initial position of the player
+     */
+    public int getInitialPlayerTile() {
+        return initialPlayerTile;
     }
 }
