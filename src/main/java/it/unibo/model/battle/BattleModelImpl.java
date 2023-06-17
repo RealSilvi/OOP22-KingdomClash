@@ -64,6 +64,7 @@ public final class BattleModelImpl implements BattleModel {
         this.playerTroopsN = gameData.getGameConfiguration().getBattleConfiguration().getNrOfSlots();
         this.maxRound = gameData.getGameConfiguration().getBattleConfiguration().getMaxRound();
         this.troopPlayerLevel = gameData.getPlayerArmyLevel();
+        this.troopBotLevel = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(troopType -> this.troopBotLevel.put(troopType, gameData.getCurrentLevel()));
         this.gameData = gameData;
     }
