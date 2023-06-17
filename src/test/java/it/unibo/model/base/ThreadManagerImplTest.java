@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.model.base.api.BuildingObserver;
@@ -25,7 +26,7 @@ public class ThreadManagerImplTest {
     private GameData gameData;
     private BaseModel baseModel;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     public void initModel() {
         this.gameData = new GameData();
         this.baseModel = new BaseModelImpl(this.gameData);
@@ -42,7 +43,7 @@ public class ThreadManagerImplTest {
             gameData.getResources().remove(new Resource(ResourceType.WOOD, 50));
             gameData.getResources().add(new Resource(ResourceType.WOOD, 50));
         }
-        UUID builtStructureId = baseModel.buildStructure(new Point2D.Float(0.0f, 0.0f), BuildingTypes.FARM);
+        UUID builtStructureId = baseModel.buildStructure(new Point2D.Float(0.0f, 0.0f), BuildingTypes.FARM, 0, true);
         long buildingTime = baseModel.getBuildingMap().get(builtStructureId).getBuildingTime();
         baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
@@ -93,8 +94,9 @@ public class ThreadManagerImplTest {
             try {
                 lock.wait();
                 Thread.sleep(1000L);
-                Assertions.assertEquals(gameData.getBuildings().get(builtStructureId)
-                            .getProductionAmount(), gameData.getResources());
+                Assertions.assertEquals(Resource.checkAndAddMissingResources(
+                    Resource.deepCopySet(gameData.getBuildings().get(builtStructureId)
+                            .getProductionAmount())), gameData.getResources());
                 Assertions.assertEquals(1, baseModel.getBuildingMap().get(builtStructureId).getLevel());
             } catch (InterruptedException e) {
             }

@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.model.base.api.BuildingObserver;
@@ -22,7 +22,7 @@ public class BaseModelImplTest {
     private BaseModel baseModel;
     private int counter;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     public void buildAllStructures() {
         initModel();
         float xvariation = 0.0f;
@@ -40,7 +40,6 @@ public class BaseModelImplTest {
 
     @Test
     public void testStructureUpgrade() {
-        testBuildMultipleStructures();
         Object synchronizationObject = new Object();
         Set<UUID> buildingKeys = baseModel.getBuildingIds();
         buildingKeys.forEach((buildingIdentifier) -> {
@@ -93,7 +92,6 @@ public class BaseModelImplTest {
 
     @Test
     public void testStructureDemolition() {
-        testBuildMultipleStructures();
         Set<UUID> buildingKeys = baseModel.getBuildingIds();
         buildingKeys.forEach((buildingIdentifier) -> Assertions.assertDoesNotThrow(() -> baseModel.demolishStructure(buildingIdentifier)));
     }
