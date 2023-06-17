@@ -4,6 +4,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +36,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
 
     private final JPanel mainpanel;
     private final CityPanel cityView;
+    private final BaseController baseController;
+    private final Map<BuildingTypes, Map<Integer, Image>> readImages;
     private List<List<JButton>> buttonmap;
     private CityConfiguration gameConfiguration;
     private Map<UUID, Point2D> buildingTilePositions;
@@ -54,6 +58,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         final Map<BuildingTypes, Map<Integer, Image>> readImages) {
         this.buildingTilePositions = new HashMap<>();
         this.cityView = cityView;
+        this.baseController = baseController;
+        this.readImages = readImages;
         this.gameConfiguration = gameConfig.getCityConfiguration();
         this.mainpanel = new DrawPanel(ImageIconsSupplier.loadImage(gameConfig
             .getMapConfiguration()
@@ -62,31 +68,14 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(), gameConfiguration.getHeight()));
         buttonmap = new ArrayList<>(gameConfiguration.getWidth()* gameConfiguration.getHeight());
         this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());
-        baseController.addBuildingStateChangedObserver(responsibleUUID -> {
-            BuildingTypes type;
-            int level;
-            Double xPos;
-            Double yPos;
-            JButton tile;
-            if (!baseController.requestBuildingMap()
-                .containsKey(responsibleUUID)) {
-                xPos = this.buildingTilePositions.get(responsibleUUID).getX();
-                yPos = this.buildingTilePositions.get(responsibleUUID).getY();
-                tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
-                tile.setIcon(null);
-            } else {
-                if (!baseController.requestBuildingMap().get(responsibleUUID).isBeingBuilt()) {
-                    type = baseController.requestBuildingMap().get(responsibleUUID).getType();
-                    level = baseController.requestBuildingMap().get(responsibleUUID).getLevel();
-                    xPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getX();
-                    yPos = baseController.requestBuildingMap().get(responsibleUUID).getStructurePos().getY();
-                    this.buildingTilePositions.put(responsibleUUID,
-                        baseController
-                        .requestBuildingMap()
-                        .get(responsibleUUID).getStructurePos());
-                    tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
-                    tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(readImages.get(type).get(level), tile.getWidth(), tile.getHeight())));
-                }
+        this.baseController.addBuildingStateChangedObserver(this::updateBuildingOnField);
+        this.baseController.requestBuildingMap()
+            .keySet().stream().forEach(this::updateBuildingOnField);
+        this.mainpanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(final ComponentEvent e) {
+                baseController.requestBuildingMap()
+                    .keySet().stream().forEach(FieldCityPanelImpl.this::updateBuildingOnField);
             }
         });
     }
@@ -123,4 +112,31 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         return this.mainpanel;
     }
 
+    private void updateBuildingOnField(UUID buildingToUpdate) {
+        BuildingTypes type;
+        int level;
+        Double xPos;
+        Double yPos;
+            JButton tile;
+        if (!this.baseController.requestBuildingMap()
+            .containsKey(buildingToUpdate)) {
+            xPos = this.buildingTilePositions.get(buildingToUpdate).getX();
+            yPos = this.buildingTilePositions.get(buildingToUpdate).getY();
+            tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
+            tile.setIcon(null);
+        } else {
+            if (!this.baseController.requestBuildingMap().get(buildingToUpdate).isBeingBuilt()) {
+                type = this.baseController.requestBuildingMap().get(buildingToUpdate).getType();
+                level = this.baseController.requestBuildingMap().get(buildingToUpdate).getLevel();
+                xPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getX();
+                 yPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getY();
+                 this.buildingTilePositions.put(buildingToUpdate,
+                    this.baseController
+                    .requestBuildingMap()
+                    .get(buildingToUpdate).getStructurePos());
+                tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
+                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level), tile.getWidth(), tile.getHeight())));
+            }
+        }
+    }
 }
