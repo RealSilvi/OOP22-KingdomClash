@@ -1,8 +1,8 @@
 package it.unibo.kingdomclash;
 
-import it.unibo.controller.*;
+import it.unibo.controller.GameController;
 
-public class KingdomClash {
+public final class KingdomClash {
     public static void main(String[] args) {
         new GameController();
     }
