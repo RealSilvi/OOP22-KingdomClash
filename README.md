@@ -40,6 +40,5 @@ gradlew.bat shadowJar
 ```
 ./gradlew shadowJar
 ```
+## Run
 The compiled jar can be found in `/build/libs/KingdomClash-all.jar`
-
-(% include license.md %)
