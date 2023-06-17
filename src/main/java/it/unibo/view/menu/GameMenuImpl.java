@@ -19,6 +19,7 @@ public class GameMenuImpl implements GameMenu {
     public enum BUTTONS_MENU {
         NEW_GAME("NEW GAME"),
         LOAD("LOAD"),
+        CONTINUE("CONTINUE"),
         MUSIC("MUSIC"),
         INFO("INFO"),
         EXIT("EXIT");
@@ -53,6 +54,10 @@ public class GameMenuImpl implements GameMenu {
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
         this.buttons.put(BUTTONS_MENU.LOAD, new ImageButton("LOAD", BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
+        ImageButton continues = new ImageButton("MENU", BACKGROUND_BUTTON,
+                new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        continues.setVisible(false);
+        this.buttons.put(BUTTONS_MENU.CONTINUE, continues);
         this.buttons.put(BUTTONS_MENU.MUSIC, new ImageButton("MUSIC", BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
         this.buttons.put(BUTTONS_MENU.INFO, new ImageButton("INFO", BACKGROUND_BUTTON,
@@ -84,6 +89,11 @@ public class GameMenuImpl implements GameMenu {
                     "so I want to get the reference of the Object")
     public JPanel getPanel(){
         return this.menuPanel;
+    }
+
+    @Override
+    public void setActionListenerContinue(ActionListener actionListener) {
+        this.buttons.get(BUTTONS_MENU.CONTINUE).addActionListener(actionListener);
     }
 
     @Override

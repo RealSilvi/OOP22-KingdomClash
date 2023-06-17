@@ -42,6 +42,8 @@ public interface GameGuiInt {
 
     void setActionListenerNewGame(ActionListener actionListener);
 
+    void setActionListenerContinue(ActionListener actionListener);
+
     void setActionListenerStart(ActionListener actionListener);
 
     void setActionListenerLoad(ActionListener actionListener);
