@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**
- * This interface show how to use southPanel and northPanel of the BattlePanel.
+ * Describe the behaviour of southPanel and northPanel in the BattlePanel.
  * <br>
  * Show how to use the TroopButtons which the user can choose before passing the round.
  */
@@ -31,9 +31,16 @@ public interface PlayerPanel {
     void enableAllSlots();
 
     /**
+     * Adds the action listener to all the TroopButtons
+     *
      * @param actionListener gives instruction at all the TroopButtons.
      */
     void setActionListenersSlot(ActionListener actionListener);
 
+    /**
+     * Returns itself in a JPanel.
+     *
+     * @return this instance like a JPanel.
+     */
     JPanel getPanel();
 }

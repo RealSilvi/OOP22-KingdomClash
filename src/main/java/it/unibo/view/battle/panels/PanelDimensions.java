@@ -2,12 +2,10 @@ package it.unibo.view.battle.panels;
 
 import it.unibo.view.GameGui;
 
-import java.awt.*;
+import java.awt.Dimension;
 
 /**
- * An interface that show how to get the preferred size of all the BorderLayout's JPanels.
- * <br>
- * Note: The NorthPanel has a BorderLayout also.
+ * Utility interface that calculate all the dimensions of the panels in the BattlePanel.
  */
 public interface PanelDimensions {
 

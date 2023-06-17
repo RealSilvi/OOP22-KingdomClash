@@ -1,18 +1,24 @@
 package it.unibo.view.battle.panels.entities;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * Extends a JPanel defining the size and a background.<br>
  * The background could be a color or an image.
  * The background's image is created replicating the input
- * image for all over the size of the Panel.
+ * image for all over the size of the Panel.<br>
+ * ps. This class is not designed to handle serialization.
  */
-public class DrawPanel extends JPanel {
 
-    //TODO think which serial to set
-    static final long serialVersionUID = 42L;
+@SuppressWarnings(value = "serial")
+public class DrawPanelImpl extends JPanel {
 
     private static final int WIDTH_IMAGE_FILL_PATTERN = 200;
     private static final int HEIGHT_IMAGE_FILL_PATTERN = 200;
@@ -26,7 +32,7 @@ public class DrawPanel extends JPanel {
      * @param backgroundImage The image to replicate as background.
      * @param size            The dimension of the Panel.
      */
-    public DrawPanel(final Image backgroundImage, final Dimension size) {
+    public DrawPanelImpl(final Image backgroundImage, final Dimension size) {
         this.backgroundImage = backgroundImage.getScaledInstance(WIDTH_IMAGE_FILL_PATTERN, HEIGHT_IMAGE_FILL_PATTERN, Image.SCALE_DEFAULT);
         this.size = size;
 
@@ -38,7 +44,7 @@ public class DrawPanel extends JPanel {
      * @param backgroundImageIcon The ImageIcon to replicate as background.
      * @param size                The dimension of the Panel.
      */
-    public DrawPanel(final ImageIcon backgroundImageIcon, final Dimension size) {
+    public DrawPanelImpl(final ImageIcon backgroundImageIcon, final Dimension size) {
         this(backgroundImageIcon.getImage(), size);
     }
 
@@ -46,14 +52,13 @@ public class DrawPanel extends JPanel {
      * @param color The color to set as background.
      * @param size  The dimension of the Panel.
      */
-    public DrawPanel(final Color color, final Dimension size) {
+    public DrawPanelImpl(final Color color, final Dimension size) {
         this.backgroundImage = null;
         this.size = size;
 
         this.setPreferredSize(size);
         this.setBackground(color);
     }
-
 
     /**
      * Overwritten the paintComponent method to display a background

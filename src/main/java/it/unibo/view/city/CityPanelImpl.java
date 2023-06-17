@@ -6,7 +6,7 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.view.GameGui;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
-import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.panels.impl.BarPanelImpl;
 import it.unibo.view.city.panels.impl.FieldCityPanelImpl;
@@ -33,19 +33,19 @@ import javax.swing.JComponent;
 public class CityPanelImpl implements CityPanel {
 
     private static final Dimension SIZE = new Dimension((int) (GameGui.getAllPanel().getWidth()),
-        (int) (GameGui.getAllPanel().getHeight() * 0.05));
+            (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
     private final Map<BuildingTypes, Map<Integer, Image>> readImages = new EnumMap<>(BuildingTypes.class);
 
     private List<TileClickObserver> tileClickObservers;
+
     /**
-    *
-     * @param controller give the configuration and the parameter for each function
+     * @param controller    give the configuration and the parameter for each function
      * @param configuration set the configuration for displaying the panel
      */
-    public CityPanelImpl(final BaseControllerImpl controller,  final GameConfiguration configuration) {
+    public CityPanelImpl(final BaseControllerImpl controller, final GameConfiguration configuration) {
         this.tileClickObservers = new ArrayList<>();
         PathIconsConfiguration config = configuration.getPathIconsConfiguration();
         for (BuildingTypes buildingType : BuildingTypes.values()) {
@@ -57,8 +57,7 @@ public class CityPanelImpl implements CityPanel {
         }
 
 
-
-        this.mainPanel = new DrawPanel(Color.BLACK,
+        this.mainPanel = new DrawPanelImpl(Color.BLACK,
                 new Dimension(configuration.getCityConfiguration().getWidth(),
                         configuration.getCityConfiguration().getHeight()));
         this.mainPanel.setLayout(new BorderLayout());
@@ -69,12 +68,14 @@ public class CityPanelImpl implements CityPanel {
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
     }
+
     /**
      * {@inheritDoc}
      */
     public void disposeAll() {
         barPanel.disposeAllPopups();
     }
+
     /**
      * {@inheritDoc}
      */
@@ -82,12 +83,14 @@ public class CityPanelImpl implements CityPanel {
     public void setReturnActionListener(final ActionListener returnActionListener) {
         this.barPanel.setReturnActionListener(returnActionListener);
     }
+
     /**
      * {@inheritDoc}
      */
     public JPanel getPanel() {
         return this.mainPanel;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -95,6 +98,7 @@ public class CityPanelImpl implements CityPanel {
     public void registerTileClickObserver(TileClickObserver tileClickObservertoRegister) {
         this.tileClickObservers.add(tileClickObservertoRegister);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -102,12 +106,13 @@ public class CityPanelImpl implements CityPanel {
     public void unregisterTileClickObserver(TileClickObserver tileClickObservertoUnregister) {
         this.tileClickObservers.remove(tileClickObservertoUnregister);
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void notifyTileClick(JComponent tile, Point2D.Float position) {
-        this.tileClickObservers.stream().forEach(tileObserver -> 
-            tileObserver.tileClicked(tile, position));
+        this.tileClickObservers.stream().forEach(tileObserver ->
+                tileObserver.tileClicked(tile, position));
     }
 }

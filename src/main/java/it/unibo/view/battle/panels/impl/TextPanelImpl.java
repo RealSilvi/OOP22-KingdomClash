@@ -1,19 +1,23 @@
 package it.unibo.view.battle.panels.impl;
 
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
-import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.border.Border;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Component;
 
-public class TextPanel extends DrawPanel {
-
-    //TODo set iud version
-
-    static final long serialVersionUID = 42L;
+/**
+ * This class is not designed to handle serialization.
+ */
+@SuppressWarnings(value = "serial")
+public class TextPanelImpl extends DrawPanelImpl {
 
     private static final int VERTICAL_PADDING = 10;
     private static final int HORIZONTAL_PADDING = 30;
@@ -23,13 +27,27 @@ public class TextPanel extends DrawPanel {
     private final JLabel titleLabel;
     private final JTextArea contentText;
 
-    public TextPanel(final String title, final String content, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
-        this(size,pathIconsConfiguration);
+    /**
+     * Construct a DrawPanelImpl with a title section and a text section.
+     *
+     * @param title                  the title to set in the panel.
+     * @param content                the content to set in the panel.
+     * @param size                   the size of the panel.
+     * @param pathIconsConfiguration where are defined the paths of the textures.
+     */
+    public TextPanelImpl(final String title, final String content, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
+        this(size, pathIconsConfiguration);
         this.setTitle(title);
         this.setContent(content);
     }
 
-    public TextPanel(Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
+    /**
+     * Constructs a DrawPanelImpl with an empty title section and an empty text section.
+     *
+     * @param size the size of the panel.
+     * @param pathIconsConfiguration where are defined the paths of the textures..
+     */
+    public TextPanelImpl(Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
         super(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), size);
         this.titleLabel = new JLabel();
         this.contentText = new JTextArea();
@@ -62,11 +80,21 @@ public class TextPanel extends DrawPanel {
         this.add(contentText);
     }
 
+    /**
+     * Set the title on the panel.
+     *
+     * @param title the title to set in the panel.
+     */
     public void setTitle(final String title) {
         this.titleLabel.removeAll();
         this.titleLabel.setText(title);
     }
 
+    /**
+     * Set thr content on the panel.
+     *
+     * @param content the content to set in the panel.
+     */
     public void setContent(final String content) {
         this.contentText.removeAll();
         this.contentText.setText(content);

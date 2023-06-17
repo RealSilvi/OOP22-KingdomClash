@@ -5,44 +5,55 @@ import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.api.TroopLabel;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JLabel;
+import java.awt.Dimension;
 
+/**
+ * This class is not designed to handle serialization.
+ */
+
+@SuppressWarnings(value = "serial")
 public class TroopLabelImpl extends JLabel implements TroopLabel {
 
     private final Dimension size;
     private final PathIconsConfiguration pathIconsConfiguration;
 
     /**
-     * @param troop The troop to display.
-     * @param size  The size of the JLabel.
+     * Constructs an instance of a TroopLabel defining the troop.
+     *
+     * @param troop                  the troop to set.
+     * @param size                   the size of the label.
+     * @param pathIconsConfiguration where are defined the paths of the textures.
      */
-    public TroopLabelImpl(final TroopType troop, final Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
-        super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(troop),size));
-        this.pathIconsConfiguration=pathIconsConfiguration;
+    public TroopLabelImpl(final TroopType troop, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
+        super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(troop), size));
+        this.pathIconsConfiguration = pathIconsConfiguration;
         this.size = size;
         this.setPreferredSize(this.size);
 
     }
 
     /**
-     * Create an empty label.
+     * Constructs an instance of an empty TroopLabel.
      *
-     * @param size The dimension of the JLabel.
+     * @param size                   the size of the label.
+     * @param pathIconsConfiguration where are defined the paths of the textures.
      */
-    public TroopLabelImpl(final Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
+    public TroopLabelImpl(final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
         super();
         this.size = size;
-        this.pathIconsConfiguration=pathIconsConfiguration;
+        this.pathIconsConfiguration = pathIconsConfiguration;
     }
 
+
     @Override
-    //passed null according to the javadoc inherit
+    /* Passed null according to inherit javadoc */
     public void setEmpty() {
         this.setIcon(null);
     }
 
+    @Override
     public void setTroop(final TroopType troop) {
-        this.setIcon(ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop),size));
+        this.setIcon(ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop), size));
     }
 }

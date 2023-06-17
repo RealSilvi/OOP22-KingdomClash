@@ -3,62 +3,68 @@ package it.unibo.view.battle;
 import it.unibo.model.data.TroopType;
 import it.unibo.kingdomclash.config.BattleConfiguration;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
-import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.api.CommandPanel;
+import it.unibo.view.battle.panels.api.FieldPanel;
+import it.unibo.view.battle.panels.api.InfoPanel;
+import it.unibo.view.battle.panels.api.PlayerPanel;
+import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.battle.panels.impl.*;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.PanelDimensions;
-import it.unibo.view.battle.panels.impl.TextPanel;
+import it.unibo.view.battle.panels.impl.TextPanelImpl;
 import it.unibo.view.battle.panels.impl.TutorialPanel;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.CardLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.annotation.Nonnull;
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
 
 public final class BattlePanelImpl implements BattlePanel {
 
     private static final int BORDER_LAYOUT_GAP = 3;
-    private static final Dimension EXIT_DIMENSION=new Dimension(80,50);
+    private static final int BORDER_THICKNESS = 2;
+    private static final Dimension EXIT_DIMENSION = new Dimension(80, 50);
 
     private final BattleConfiguration battleConfiguration;
-
     private final CardLayout layoutManager;
 
     private final JPanel mainPanel;
     private final TutorialPanel tutorialPanel;
-    private final TextPanel endPanel;
+    private final TextPanelImpl endPanel;
 
-    private final FieldPanelImpl fieldPanel;
-    private final PlayerPanelImpl botPanel;
-    private final PlayerPanelImpl playerPanel;
-    private final InfoPanelImpl infoPanel;
-    private final CommandPanelImpl buttonsPanel;
+    private final FieldPanel fieldPanel;
+    private final PlayerPanel botPanel;
+    private final PlayerPanel playerPanel;
+    private final InfoPanel infoPanel;
+    private final CommandPanel buttonsPanel;
 
     private final JButton closeButton;
 
     /**
-     * param nrOfSlots  How many slots has each player.
-     * param nrOfTroops How many troops has the game.
-     * param nrOfLives  How many lives has each player
+     * Construct an instance of the BattlePanel.
+     *
+     * @param battleConfiguration    where are defined the configuration data.
+     * @param pathIconsConfiguration where are defined the paths of the textures.
      */
     public BattlePanelImpl(final BattleConfiguration battleConfiguration, final PathIconsConfiguration pathIconsConfiguration) {
-        this.battleConfiguration=battleConfiguration;
-        this.layoutManager = new CardLayout();
-        this.closeButton = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), EXIT_DIMENSION));
-        this.mainPanel = new JPanel(this.layoutManager);
+        this.battleConfiguration = battleConfiguration;
         this.tutorialPanel = new TutorialPanel(battleConfiguration.getTextConfiguration(), pathIconsConfiguration);
-        this.endPanel = new TextPanel(PanelDimensions.MAIN_PANEL_SIZE, pathIconsConfiguration);
+        this.endPanel = new TextPanelImpl(PanelDimensions.MAIN_PANEL_SIZE, pathIconsConfiguration);
+        this.layoutManager = new CardLayout();
+        this.mainPanel = new JPanel(this.layoutManager);
+        this.closeButton = new JButton(
+                ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(), EXIT_DIMENSION));
 
-        this.closeButton.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, 2, true));
-        this.closeButton.setOpaque(false);
-        this.endPanel.add(closeButton);
-
-        final JPanel gamePanel = new DrawPanel(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
+        final JPanel gamePanel = new DrawPanelImpl(BattlePanelStyle.DEFAULT_COLOR, PanelDimensions.MAIN_PANEL_SIZE);
         gamePanel.setLayout(new BorderLayout(BORDER_LAYOUT_GAP, BORDER_LAYOUT_GAP));
 
         this.botPanel = new PlayerPanelImpl(battleConfiguration.getNrOfSlots(), pathIconsConfiguration);
@@ -73,31 +79,39 @@ public final class BattlePanelImpl implements BattlePanel {
         gamePanel.add(buttonsPanel.getPanel(), BorderLayout.EAST);
         gamePanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
 
-        this.mainPanel.add(gamePanel, "1");
-        this.mainPanel.add(tutorialPanel.getPanel(), "2");
-        this.mainPanel.add(endPanel, "3");
+        this.mainPanel.add(gamePanel, PanelsName.FIGHT.name);
+        this.mainPanel.add(tutorialPanel.getPanel(), PanelsName.TUTORIAL.name);
+        this.mainPanel.add(endPanel, PanelsName.END.name);
+
+        this.closeButton.setBorder(
+                BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, BORDER_THICKNESS, true));
+        this.closeButton.setOpaque(false);
+        this.endPanel.add(closeButton);
 
         this.setActionListenerExitButton();
         this.setActionListenerInfoButton();
     }
 
+    @Override
     public void showEndPanel(@Nonnull final Boolean winner) {
-        if(Boolean.TRUE.equals(winner)){
+        if (Boolean.TRUE.equals(winner)) {
             this.endPanel.setTitle(this.battleConfiguration.getTextConfiguration().getEndWinPanelTitle());
             this.endPanel.setContent(this.battleConfiguration.getTextConfiguration().getEndWinPanelText());
-        }else{
+        } else {
             this.endPanel.setTitle(this.battleConfiguration.getTextConfiguration().getEndLosePanelTitle());
             this.endPanel.setContent(this.battleConfiguration.getTextConfiguration().getEndLosePanelText());
         }
-        layoutManager.show(mainPanel, "3");
+        layoutManager.show(mainPanel, PanelsName.END.name);
     }
 
+    @Override
     public void showTutorialPanel() {
-        layoutManager.show(mainPanel, "2");
+        layoutManager.show(mainPanel, PanelsName.TUTORIAL.name);
     }
 
+    @Override
     public void showGamePanel() {
-        layoutManager.show(mainPanel, "1");
+        layoutManager.show(mainPanel, PanelsName.FIGHT.name);
     }
 
     @Override
@@ -175,17 +189,29 @@ public final class BattlePanelImpl implements BattlePanel {
         return this.mainPanel;
     }
 
+    @Override
     public void setActionListenersPlayerSlot(final ActionListener actionListener) {
         this.playerPanel.setActionListenersSlot(actionListener);
     }
 
+    @Override
     public void setActionListenerSpinButton(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerSpin(actionListener);
     }
 
 
+    @Override
     public void setActionListenerPass(final ActionListener actionListener) {
         this.buttonsPanel.setActionListenerPass(actionListener);
+    }
+
+    @Override
+    public void setBackActionListener(final ActionListener actionListener) {
+        this.closeButton.addActionListener(e -> {
+            reset();
+            showGamePanel();
+        });
+        this.closeButton.addActionListener(actionListener);
     }
 
     private void setActionListenerExitButton() {
@@ -201,12 +227,19 @@ public final class BattlePanelImpl implements BattlePanel {
         this.fieldPanel.restart();
     }
 
-    public void setBackActionListener(final ActionListener actionListener) {
-        this.closeButton.addActionListener(e -> {
-            reset();
-            showGamePanel();
-        });
-        this.closeButton.addActionListener(actionListener);
+    private enum PanelsName {
+
+        FIGHT("FIGHT"),
+
+        TUTORIAL("TUTORIAL"),
+
+        END("END");
+
+        private final String name;
+
+        PanelsName(String name) {
+            this.name = name;
+        }
     }
 
 }

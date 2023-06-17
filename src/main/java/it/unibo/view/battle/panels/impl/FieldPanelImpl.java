@@ -3,15 +3,17 @@ package it.unibo.view.battle.panels.impl;
 import it.unibo.model.data.TroopType;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.FieldPanel;
-import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
 import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.PanelDimensions;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
+import javax.swing.JPanel;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class FieldPanelImpl implements FieldPanel {
@@ -27,14 +29,18 @@ public class FieldPanelImpl implements FieldPanel {
     private final List<TroopLabelImpl> field;
 
     /**
-     * @param nrOfFieldSpot ho many slots the player has in the PlayerPanel
+     * Construct an instance of FieldPanel.
+     *
+     * @param nrOfFieldSpot          sets the number of the spots.
+     * @param pathIconsConfiguration where are defined the paths of the textures.
      */
     public FieldPanelImpl(final int nrOfFieldSpot, final PathIconsConfiguration pathIconsConfiguration) {
         this.field = new ArrayList<>();
-        this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getFieldPanel());
+        this.mainPanel = new DrawPanelImpl(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()),
+                PanelDimensions.getFieldPanel());
 
         this.mainPanel.setLayout(new GridLayout(ROWS, nrOfFieldSpot / ROWS));
-        IntStream.range(0, nrOfFieldSpot * 2).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION, pathIconsConfiguration)));
+        IntStream.range(0, nrOfFieldSpot * ROWS).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION, pathIconsConfiguration)));
 
 
         this.restart();
@@ -48,13 +54,15 @@ public class FieldPanelImpl implements FieldPanel {
 
     @Override
     public void redraw(final List<Optional<TroopType>> fieldTroops) {
-        IntStream.range(0, fieldTroops.size()).forEach(x -> {
-            if (fieldTroops.get(x).isEmpty()) {
-                this.field.get(x).setEmpty();
-            } else {
-                this.field.get(x).setTroop(fieldTroops.get(x).get());
-            }
-        });
+        if (fieldTroops.size() == this.field.size()) {
+            IntStream.range(0, fieldTroops.size()).forEach(x -> {
+                if (fieldTroops.get(x).isEmpty()) {
+                    this.field.get(x).setEmpty();
+                } else {
+                    this.field.get(x).setTroop(fieldTroops.get(x).get());
+                }
+            });
+        }
     }
 
 

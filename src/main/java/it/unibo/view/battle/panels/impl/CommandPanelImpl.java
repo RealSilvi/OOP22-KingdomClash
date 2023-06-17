@@ -2,28 +2,34 @@ package it.unibo.view.battle.panels.impl;
 
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.CommandPanel;
+import it.unibo.view.battle.panels.entities.api.ButtonsPanel;
+import it.unibo.view.battle.panels.entities.api.LifePanel;
 import it.unibo.view.battle.panels.entities.impl.ButtonsPanelImpl;
-import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.battle.panels.entities.impl.LifePanelImpl;
 import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.battle.panels.PanelDimensions;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 
 public class CommandPanelImpl implements CommandPanel {
 
     private final JPanel mainPanel;
 
-    private final LifePanelImpl playerLivesPanel;
-    private final LifePanelImpl botLivesPanel;
-    private final ButtonsPanelImpl buttonsPanel;
+    private final LifePanel playerLivesPanel;
+    private final LifePanel botLivesPanel;
+    private final ButtonsPanel buttonsPanel;
 
     /**
-     * @param numberOfLives how many health points has the players
+     * Constructs an instance of the CommandPanel
+     *
+     * @param numberOfLives          sets the number of lives for each player.
+     * @param pathIconsConfiguration where are defined the paths of the textures.
      */
     public CommandPanelImpl(final int numberOfLives, final PathIconsConfiguration pathIconsConfiguration) {
-        this.mainPanel = new DrawPanel(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSidePanel());
+        this.mainPanel = new DrawPanelImpl(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSidePanel());
         this.botLivesPanel = new LifePanelImpl(numberOfLives, pathIconsConfiguration);
         this.playerLivesPanel = new LifePanelImpl(numberOfLives, pathIconsConfiguration);
         this.buttonsPanel = new ButtonsPanelImpl(pathIconsConfiguration);
@@ -80,6 +86,7 @@ public class CommandPanelImpl implements CommandPanel {
         this.buttonsPanel.setActionListenerInfo(actionListener);
     }
 
+    @Override
     public void reset() {
         this.botLivesPanel.reset();
         this.playerLivesPanel.reset();

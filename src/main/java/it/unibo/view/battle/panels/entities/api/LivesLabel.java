@@ -1,7 +1,7 @@
 package it.unibo.view.battle.panels.entities.api;
 
 /**
- * Represents a JLabel for a single healthPoint displaying an image.
+ * Represents a JLabel for a single healthPoint.
  */
 public interface LivesLabel {
 
@@ -15,4 +15,9 @@ public interface LivesLabel {
      * @return the status of a health point.
      */
     boolean isAlive();
+
+    /**
+     * Reset the health point.
+     */
+    void reset();
 }

@@ -2,7 +2,9 @@ package it.unibo.view.battle;
 
 import it.unibo.model.data.TroopType;
 
-import javax.swing.*;
+import javax.annotation.Nonnull;
+import javax.swing.JPanel;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,6 +13,17 @@ import java.util.Optional;
  * Defines all the methods that the controller can use to control a BattlePanel.
  */
 public interface BattlePanel {
+
+    /**
+     * //TODO finish javadoc
+     *
+     * @param winner
+     */
+    void showEndPanel(@Nonnull Boolean winner);
+
+    void showTutorialPanel();
+
+    void showGamePanel();
 
     /**
      * Display that the player loses a health point.
@@ -94,4 +107,12 @@ public interface BattlePanel {
      * @return The BattlePanel to add at the frame
      */
     JPanel getPanel();
+
+    void setActionListenersPlayerSlot(ActionListener actionListener);
+
+    void setActionListenerSpinButton(ActionListener actionListener);
+
+    void setActionListenerPass(ActionListener actionListener);
+
+    void setBackActionListener(ActionListener actionListener);
 }
