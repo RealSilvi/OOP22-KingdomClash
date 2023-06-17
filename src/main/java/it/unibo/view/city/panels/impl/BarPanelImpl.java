@@ -37,6 +37,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
     private static final int X_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()* 0.35);
     private static final int Y_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()* 0.25);
+    private final JButton mapReturnBtn;
     private final CityPanel cityView;
     private final JPanel mainpanel;
     private final BaseController basedata;
@@ -102,7 +103,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         final JButton troop = new JButton("Upgrade Troops");
         final JButton playerinfo = new JButton("player info");
         final JButton upgradeBtn = new JButton("Upgrade Building");
-        final JButton changeButton = new JButton("map");
+        this.mapReturnBtn = new JButton("Return to Map");
         upgradeBtn.addActionListener(genericBtnAction);
         upgradeBtn.addActionListener(new ActionListener() {
             @Override
@@ -132,7 +133,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
                             controller.handleBuildingPlaced(position,
                                 BuildingTypes.valueOf(actionCommand.get()), 0,true);
                         }
-                    } else {
+                    } else if (building.isPresent()) {
                         if (upgradeAction) {
                             controller.handleStructureUpgrade(building.get());
                             upgradeBtn.setEnabled(false);
@@ -160,7 +161,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.mainpanel.add(upgradeBtn);
         this.mainpanel.add(demolishBtn);
         this.mainpanel.add(playerinfo);
-        this.mainpanel.add(changeButton);
+        this.mainpanel.add(mapReturnBtn);
         this.mainpanel.add(resourcePanel);
         troop.addActionListener(new ActionListener() {
             @Override
@@ -174,16 +175,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
               JOptionPane.showMessageDialog(mainpanel, "" + basedata.requestPlayerName(),
                "Player Name", JOptionPane.INFORMATION_MESSAGE);
             }
-            
-        });
-        changeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-              /*JOptionPane.showMessageDialog(mainpanel, "" + basedata.requestPlayerName(),
-               "Player Name", JOptionPane.INFORMATION_MESSAGE);
-               */
-            }
-            
         });
     }
     /**
@@ -211,6 +202,10 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     public void disposeAllPopups() {
         resourcepopup.dispose();
         trooppopup.dispose();
+    }
+
+    public void setReturnActionListener(ActionListener returnActionListener) {
+        this.mapReturnBtn.addActionListener(returnActionListener);
     }
 
     private Optional<UUID> findBuildingbyPosition(final Point2D.Float position) {
