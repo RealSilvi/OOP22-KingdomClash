@@ -1,16 +1,13 @@
 package it.unibo.view.menu;
 
 import it.unibo.view.GameGui;
-import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
+import it.unibo.view.battle.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class NamePlayerImpl {
 

@@ -2,7 +2,7 @@ package it.unibo.view.menu;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
-import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
+import it.unibo.view.battle.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;

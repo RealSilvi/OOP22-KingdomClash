@@ -1,12 +1,12 @@
 package it.unibo.view.battle.panels.impl;
 
 import it.unibo.model.data.TroopType;
-import it.unibo.view.battle.config.PathIconsConfiguration;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.InfoPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
 import it.unibo.view.utilities.ImageIconsSupplier;
-import it.unibo.view.battle.panels.utilities.PanelDimensions;
+import it.unibo.view.battle.utilities.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;

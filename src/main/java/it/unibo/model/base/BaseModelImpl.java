@@ -31,7 +31,7 @@ import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.base.internal.BuildingBuilderImpl;
-import it.unibo.model.data.GameConfiguration;
+import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.TroopType;

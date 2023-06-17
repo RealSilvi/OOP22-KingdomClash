@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.model.base.basedata.Building;
 
 /**

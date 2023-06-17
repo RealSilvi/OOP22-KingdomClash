@@ -3,7 +3,7 @@ package it.unibo.model.battle.entitydata;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.battle.CellsImpl;
 import it.unibo.model.data.TroopType;
-import it.unibo.view.battle.config.BattleConfiguration;
+import it.unibo.kingdomclash.config.BattleConfiguration;
 
 
 import java.util.HashMap;

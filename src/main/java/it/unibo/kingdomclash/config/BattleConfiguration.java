@@ -1,4 +1,4 @@
-package it.unibo.view.battle.config;
+package it.unibo.kingdomclash.config;
 
 public class BattleConfiguration {
 

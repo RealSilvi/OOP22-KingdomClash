@@ -1,7 +1,7 @@
 package it.unibo.view.battle.panels.entities.impl;
 
 import it.unibo.model.data.TroopType;
-import it.unibo.view.battle.config.PathIconsConfiguration;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.api.TroopLabel;
 import it.unibo.view.utilities.ImageIconsSupplier;
 

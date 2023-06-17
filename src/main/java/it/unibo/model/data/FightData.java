@@ -3,7 +3,7 @@ package it.unibo.model.data;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.battle.entitydata.EntityData;
 import it.unibo.model.battle.entitydata.EntityDataImpl;
-import it.unibo.view.battle.config.BattleConfiguration;
+import it.unibo.kingdomclash.config.BattleConfiguration;
 
 /**
  * This class contains the player data and

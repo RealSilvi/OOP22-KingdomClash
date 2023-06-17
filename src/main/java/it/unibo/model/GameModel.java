@@ -2,7 +2,7 @@ package it.unibo.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.unibo.model.data.GameConfiguration;
+import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.model.data.GameData;
 
 import java.io.File;

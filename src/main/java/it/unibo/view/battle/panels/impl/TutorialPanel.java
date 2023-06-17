@@ -1,11 +1,11 @@
-package it.unibo.view.battle.tutorial;
+package it.unibo.view.battle.panels.impl;
 
-import it.unibo.view.battle.config.PathIconsConfiguration;
-import it.unibo.view.battle.config.TextConfiguration;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
+import it.unibo.kingdomclash.config.TextConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
-import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
+import it.unibo.view.battle.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
-import it.unibo.view.battle.panels.utilities.PanelDimensions;
+import it.unibo.view.battle.utilities.PanelDimensions;
 
 import java.awt.*;
 import java.awt.event.ActionListener;

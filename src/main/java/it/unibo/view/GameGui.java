@@ -2,7 +2,7 @@ package it.unibo.view;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.SoundManager;
-import it.unibo.model.data.GameConfiguration;
+import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.view.map.MapPanel;
 import it.unibo.view.map.MapPanelImpl;
 import it.unibo.view.menu.*;
@@ -13,7 +13,6 @@ import java.awt.Toolkit;
 import java.awt.CardLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.util.Set;
 
 /**
  * This class is the principal GUI, which takes

@@ -14,14 +14,14 @@ import java.util.UUID;
 
 import it.unibo.controller.base.BaseController;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
-import it.unibo.model.data.GameConfiguration;
+import it.unibo.kingdomclash.config.GameConfiguration;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import it.unibo.view.GameGui;
-import it.unibo.view.battle.config.PathIconsConfiguration;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;

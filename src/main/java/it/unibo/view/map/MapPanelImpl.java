@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.model.data.GameConfiguration;
+import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.view.map.mapdata.MapConfiguration;
 import it.unibo.view.utilities.GraphicUtils;
 import it.unibo.view.utilities.ImageIconsSupplier;

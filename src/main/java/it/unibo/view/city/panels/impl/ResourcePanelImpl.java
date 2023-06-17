@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import it.unibo.controller.base.BaseController;
 import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.data.Resource.ResourceType;
-import it.unibo.view.battle.panels.utilities.BattlePanelStyle;
+import it.unibo.view.battle.utilities.BattlePanelStyle;
 
 /**
  * A simple panel class to show available resources to the player.

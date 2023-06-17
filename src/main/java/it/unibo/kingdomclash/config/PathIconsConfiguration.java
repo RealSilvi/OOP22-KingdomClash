@@ -1,4 +1,4 @@
-package it.unibo.view.battle.config;
+package it.unibo.kingdomclash.config;
 
 import it.unibo.model.base.internal.BuildingBuilder;
 import it.unibo.model.data.TroopType;
