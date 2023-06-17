@@ -49,7 +49,11 @@ public class NamePlayerImpl {
     }
 
     public String getPlayerName(){
-        return this.textField.getText();
+        if(this.textField.getText().equals("")){
+            return "Guest";
+        }else {
+            return this.textField.getText();
+        }
     }
 
     public void setActionListenerStart(ActionListener actionListener) {
