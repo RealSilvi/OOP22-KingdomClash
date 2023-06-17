@@ -1,4 +1,45 @@
-# Kingdom Clash
+# KingdomClash
+![Logo](https://i.imgur.com/EzxDex1.png)
 
-This is a repository that can be used as a base to develop an OOP project.
-The tools seen in the lab are pre-integrated in the build file.
+KingdomClash is a strategy game inspired by Assassin's Creed Valhalla's Orlog.
+Embark yourself in a challenge where you must conquer and dominate the enemy!
+
+## Game Features
+- Turn-based battle system
+- Multiple battles with varying difficulties
+- Base with production and upgrade system
+- Possibility to upgrade troops
+
+## Images
+
+## Authors
+- [RealSilvi](https://github.com/RealSilvi)
+- [MarcoFrn](https://github.com/MarcoFrn)
+- [L4fA](https://github.com/L4fA)
+- [Babidi0](https://github.com/Babidi0)
+
+# How to build
+### Requirements
+- [OpenJDK 17](https://jdk.java.net/17/)
+- [Gradle](https://gradle.org/install/)
+
+## Compile and Execute
+### Clone repo
+```shell
+git clone https://github.com/RealSilvi/KingdomClash.git
+```
+### Go to the project's directory
+```shell
+cd KingdomClash
+```
+### Windows 
+```
+gradlew.bat shadowJar
+```
+### Linux
+```
+./gradlew shadowJar
+```
+The compiled jar can be found in `/build/libs/KingdomClash-all.jar`
+
+(% include license.md %)
