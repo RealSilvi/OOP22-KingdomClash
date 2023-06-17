@@ -172,8 +172,8 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         playerinfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-              JOptionPane.showMessageDialog(mainpanel, "" + basedata.requestPlayerName(),
-               "Player Name", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(mainpanel, controller.requestPlayerName(),
+                    "Player Name", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
