@@ -51,9 +51,9 @@ public final class ResourcePanelImpl extends JPanel {
         updateResourceDisplay();
     }
     /**
-     * Updates the displayed Resources.
+     * Updates the resource display of this panel
      */
-    private void updateResourceDisplay() {
+    public void updateResourceDisplay() {
         baseControllerRef.requestResourceCount().stream()
             .forEach(resource -> 
                 labelToResource.get(resource.getResource())
