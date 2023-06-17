@@ -54,7 +54,7 @@ public class GameMenuImpl implements GameMenu {
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
         this.buttons.put(BUTTONS_MENU.LOAD, new ImageButton("LOAD", BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
-        ImageButton continues = new ImageButton("MENU", BACKGROUND_BUTTON,
+        ImageButton continues = new ImageButton("CONTINUE", BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
         continues.setVisible(false);
         this.buttons.put(BUTTONS_MENU.CONTINUE, continues);
