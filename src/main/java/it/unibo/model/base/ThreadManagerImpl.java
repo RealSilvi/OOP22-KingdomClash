@@ -261,6 +261,8 @@ public final class ThreadManagerImpl implements ThreadManager {
         }
 
         @Override
+        //remainingWork is checked
+        @SuppressWarnings("java:S3518")
         @SuppressFBWarnings(value = "UW",
         justification = "Not an unconditional wait as the thread can be woken up using the wait object")
         public void run() {
@@ -276,7 +278,7 @@ public final class ThreadManagerImpl implements ThreadManager {
                 long elapsedTime = System.currentTimeMillis() - operationStartTime;
                 long remainingAvailableTime = remainingTimeGetter.get() - elapsedTime;
                 remainingTimeSetter.accept(remainingAvailableTime > 0 ? remainingAvailableTime : 0);
-                long waitTime = remainingAvailableTime > 0 ? remainingAvailableTime / 100 : 0;
+                long waitTime = remainingAvailableTime > 0 ? remainingAvailableTime / remainingWork : 0;
                 logger.log(Level.FINEST, "Sleeping for: {0}ms", waitTime);
                 try {
                     sleep(waitTime);
@@ -285,6 +287,7 @@ public final class ThreadManagerImpl implements ThreadManager {
                     threadClosureOperation();
                     Thread.currentThread().interrupt();
                 }
+                remainingTimeSetter.accept(remainingTimeGetter.get()-waitTime);
                 if (!threadsRunning.get(threadType)) {
                     synchronized (threadLocks.get(threadType)) {
                         try {
