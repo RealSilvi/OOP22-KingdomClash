@@ -74,6 +74,7 @@ public final class GameGui implements GameGuiInt {
         this.southPanel = new SouthPanel();
 
         this.panel.put(MAP_NAME,this.mapPanel.getAsJPanel());
+        this.allPanel.add(this.mapPanel.getAsJPanel(),MAP_NAME);
 
         borderPanel.add(this.allPanel, BorderLayout.CENTER);
         borderPanel.add(this.southPanel.getPanel(), BorderLayout.SOUTH);
