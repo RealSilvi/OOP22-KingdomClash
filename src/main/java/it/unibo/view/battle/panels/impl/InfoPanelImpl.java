@@ -6,7 +6,7 @@ import it.unibo.view.battle.panels.api.InfoPanel;
 import it.unibo.view.battle.panels.entities.DrawPanel;
 import it.unibo.view.battle.panels.entities.impl.TroopLabelImpl;
 import it.unibo.view.utilities.ImageIconsSupplier;
-import it.unibo.view.battle.utilities.PanelDimensions;
+import it.unibo.view.battle.panels.PanelDimensions;
 
 import javax.swing.*;
 import java.awt.*;

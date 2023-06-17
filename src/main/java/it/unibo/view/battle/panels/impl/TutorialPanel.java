@@ -3,9 +3,9 @@ package it.unibo.view.battle.panels.impl;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.kingdomclash.config.TextConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
-import it.unibo.view.battle.utilities.BattlePanelStyle;
+import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
-import it.unibo.view.battle.utilities.PanelDimensions;
+import it.unibo.view.battle.panels.PanelDimensions;
 
 import java.awt.*;
 import java.awt.event.ActionListener;

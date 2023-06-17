@@ -5,7 +5,7 @@ import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.model.data.TroopType;
 import it.unibo.view.GameGui;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
-import it.unibo.view.battle.utilities.BattlePanelStyle;
+import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;
 import it.unibo.view.menu.extensiveclasses.ImageTextArea;

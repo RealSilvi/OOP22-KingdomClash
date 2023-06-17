@@ -1,4 +1,4 @@
-package it.unibo.view.battle.utilities;
+package it.unibo.view.utilities;
 
 import java.awt.*;
 import java.io.IOException;

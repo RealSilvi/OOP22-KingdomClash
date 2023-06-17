@@ -1,4 +1,4 @@
-package it.unibo.view.battle.utilities;
+package it.unibo.view.battle.panels;
 
 import it.unibo.view.GameGui;
 

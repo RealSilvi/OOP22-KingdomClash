@@ -2,7 +2,7 @@ package it.unibo.view.battle.panels.impl;
 
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanel;
-import it.unibo.view.battle.utilities.BattlePanelStyle;
+import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
 import javax.swing.*;

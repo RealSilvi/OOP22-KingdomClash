@@ -1,7 +1,7 @@
 package it.unibo.view.menu;
 
 import it.unibo.view.GameGui;
-import it.unibo.view.battle.utilities.BattlePanelStyle;
+import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;
 
