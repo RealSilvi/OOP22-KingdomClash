@@ -7,6 +7,10 @@ public interface GameMenu {
 
     JPanel getPanel();
 
+    void setActionListenerContinue(ActionListener actionListener);
+
+    void setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU name, Boolean visibility);
+
     void setActionListenerInfo(ActionListener actionListener);
 
     void setActionListenerNewGame(ActionListener actionListener);

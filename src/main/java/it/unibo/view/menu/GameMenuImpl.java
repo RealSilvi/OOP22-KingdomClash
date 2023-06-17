@@ -10,8 +10,31 @@ import it.unibo.view.menu.extensiveclasses.ImagePanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameMenuImpl implements GameMenu {
+
+    public enum BUTTONS_MENU {
+        NEW_GAME("NEW GAME"),
+        LOAD("LOAD"),
+        CONTINUE("CONTINUE"),
+        MUSIC("MUSIC"),
+        INFO("INFO"),
+        EXIT("EXIT");
+
+        private final String name;
+
+        BUTTONS_MENU(final String name) {
+            this.name = name;
+        }
+
+        public String getName(){
+            return this.name;
+        }
+
+    }
 
     private static final int WIDTH_BUTTON = GameGui.WIDTH_BUTTON;
     private static final int HEIGHT_BUTTON = GameGui.HEIGHT_BUTTON;
@@ -23,18 +46,24 @@ public class GameMenuImpl implements GameMenu {
             new Dimension((int) (WIDTH_BUTTON * (WIDTH_INCREMENT * 2)), (int) (HEIGHT_BUTTON * (HEIGHT_INCREMENT * 2))));
     public static final ImageIcon BACKGROUND_PANEL = ImageIconsSupplier.getScaledImageIcon(PATH_PANEL, GameGui.DIMENSION_SCREEN);
     private final JPanel menuPanel;
-    private final ImageButton info;
-    private final ImageButton exit;
-    private final ImageButton new_game;
-    private final ImageButton music;
-    private final ImageButton load;
+    private final Map<BUTTONS_MENU, JButton> buttons;
 
     public GameMenuImpl() {
-        this.new_game = new ImageButton("NEW GAME", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
-        this.load = new ImageButton("LOAD", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
-        this.music = new ImageButton("MUSIC", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
-        this.info = new ImageButton("INFO", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
-        this.exit = new ImageButton("EXIT", BACKGROUND_BUTTON, new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        this.buttons = new HashMap<>();
+        this.buttons.put(BUTTONS_MENU.NEW_GAME, new ImageButton("NEW GAME", BACKGROUND_BUTTON,
+                new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
+        this.buttons.put(BUTTONS_MENU.LOAD, new ImageButton("LOAD", BACKGROUND_BUTTON,
+                new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
+        ImageButton continues = new ImageButton("CONTINUE", BACKGROUND_BUTTON,
+                new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
+        continues.setVisible(false);
+        this.buttons.put(BUTTONS_MENU.CONTINUE, continues);
+        this.buttons.put(BUTTONS_MENU.MUSIC, new ImageButton("MUSIC", BACKGROUND_BUTTON,
+                new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
+        this.buttons.put(BUTTONS_MENU.INFO, new ImageButton("INFO", BACKGROUND_BUTTON,
+                new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
+        this.buttons.put(BUTTONS_MENU.EXIT, new ImageButton("EXIT", BACKGROUND_BUTTON,
+                new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
 
         Font font = BattlePanelStyle.getPrimaryFont();
         GridBagConstraints grid = new GridBagConstraints();
@@ -46,29 +75,12 @@ public class GameMenuImpl implements GameMenu {
         grid.gridy = 1;
         grid.insets = new Insets(GameGui.DIMENSION_SCREEN.height/50, 0, 0, 0);
 
-        new_game.setFont(font);
-        new_game.setForeground(Color.BLACK);
-        menuPanel.add(new_game, grid);
-
-        grid.gridy = 2;
-        load.setFont(font);
-        load.setForeground(Color.BLACK);
-        menuPanel.add(load, grid);
-
-        grid.gridy = 3;
-        music.setFont(font);
-        music.setForeground(Color.BLACK);
-        menuPanel.add(music, grid);
-
-        grid.gridy = 4;
-        info.setFont(font);
-        info.setForeground(Color.BLACK);
-        menuPanel.add(info, grid);
-
-        grid.gridy = 5;
-        exit.setFont(font);
-        exit.setForeground(Color.BLACK);
-        menuPanel.add(exit, grid);
+        for(int i = 0; i < this.buttons.size(); i++){
+            this.buttons.get(BUTTONS_MENU.values()[i]).setFont(font);
+            this.buttons.get(BUTTONS_MENU.values()[i]).setForeground(Color.BLACK);
+            this.menuPanel.add(this.buttons.get(BUTTONS_MENU.values()[i]), grid);
+            grid.gridy += 1;
+        }
 
     }
 
@@ -80,28 +92,38 @@ public class GameMenuImpl implements GameMenu {
     }
 
     @Override
-    public void setActionListenerInfo(ActionListener actionListener){
-        this.info.addActionListener(actionListener);
+    public void setActionListenerContinue(ActionListener actionListener) {
+        this.buttons.get(BUTTONS_MENU.CONTINUE).addActionListener(actionListener);
     }
 
     @Override
-    public void setActionListenerNewGame(ActionListener actionListener){
-        this.new_game.addActionListener(actionListener);
+    public void setButtonsVisibilityMenu(BUTTONS_MENU name, Boolean visibility) {
+        this.buttons.get(name).setVisible(visibility);
     }
 
     @Override
-    public void setActionListenerLoad(ActionListener actionListener){
-        this.load.addActionListener(actionListener);
+    public void setActionListenerInfo(ActionListener actionListener) {
+        this.buttons.get(BUTTONS_MENU.INFO).addActionListener(actionListener);
     }
 
     @Override
-    public void setActionListenerMusic(ActionListener actionListener){
-        this.music.addActionListener(actionListener);
+    public void setActionListenerNewGame(ActionListener actionListener) {
+        this.buttons.get(BUTTONS_MENU.NEW_GAME).addActionListener(actionListener);
+    }
+
+    @Override
+    public void setActionListenerLoad(ActionListener actionListener) {
+        this.buttons.get(BUTTONS_MENU.LOAD).addActionListener(actionListener);
+    }
+
+    @Override
+    public void setActionListenerMusic(ActionListener actionListener) {
+        this.buttons.get(BUTTONS_MENU.MUSIC).addActionListener(actionListener);
     }
 
     @Override
     public void setActionListenerExit(ActionListener actionListener){
-        this.exit.addActionListener(actionListener);
+        this.buttons.get(BUTTONS_MENU.EXIT).addActionListener(actionListener);
     }
 
 }

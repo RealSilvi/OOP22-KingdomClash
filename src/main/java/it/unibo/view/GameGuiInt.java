@@ -1,6 +1,7 @@
 package it.unibo.view;
 
 import it.unibo.controller.SoundManager;
+import it.unibo.view.menu.GameMenuImpl;
 import it.unibo.view.menu.SouthPanel;
 
 import javax.swing.*;
@@ -33,11 +34,15 @@ public interface GameGuiInt {
 
     Integer showMenuSouthOptions();
 
+    void setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU name, Boolean visibility);
+
     void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_NAME name);
 
     void setButtonsVisibility(SouthPanel.BUTTONS_NAME name, Boolean visibility);
 
     void setActionListenerNewGame(ActionListener actionListener);
+
+    void setActionListenerContinue(ActionListener actionListener);
 
     void setActionListenerStart(ActionListener actionListener);
 
@@ -70,5 +75,7 @@ public interface GameGuiInt {
      * of the game.
      */
     SoundManager getSoundManager();
+
+    String getPlayerName();
 
 }

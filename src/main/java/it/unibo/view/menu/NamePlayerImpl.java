@@ -13,7 +13,6 @@ public class NamePlayerImpl {
 
     private JPanel namePanel;
     private ImageButton start;
-    private ImageButton back;
     private JTextField textField;
 
     public NamePlayerImpl(){
@@ -22,32 +21,25 @@ public class NamePlayerImpl {
         this.namePanel = new ImagePanel(GameMenuImpl.BACKGROUND_PANEL.getImage());
         this.namePanel.setLayout(new GridBagLayout());
         textField = new JTextField();
-        textField.setPreferredSize(new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth() * 2, GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
+        textField.setPreferredSize(new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
         textField.setFont(font);
-        textField.setForeground(Color.BLACK);
+        textField.setForeground(Color.WHITE);
+        textField.setBackground(Color.BLACK);
 
         GridBagConstraints grid = new GridBagConstraints();
 
         this.start = new ImageButton("START", GameMenuImpl.BACKGROUND_BUTTON,
                 new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
-        this.back = new ImageButton("BACK", GameMenuImpl.BACKGROUND_BUTTON,
-                new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
 
-        grid.gridx = 1;
+        grid.gridx = 0;
         grid.gridy = 1;
         grid.insets = new Insets(GameGui.DIMENSION_SCREEN.height/50, 0, 0, 0);
-        back.setFont(font);
-        back.setForeground(Color.BLACK);
-        this.namePanel.add(back, grid);
-
-        grid.gridx = 2;
         start.setFont(font);
         start.setForeground(Color.BLACK);
         this.namePanel.add(start, grid);
 
         grid.gridy = 0;
         grid.gridx = 0;
-        grid.gridwidth = GameGui.DIMENSION_SCREEN.width / 2;
         this.namePanel.add(textField, grid);
 
     }
@@ -56,8 +48,12 @@ public class NamePlayerImpl {
         return this.namePanel;
     }
 
-    public void setActionListenerBack(ActionListener actionListener) {
-        this.back.addActionListener(actionListener);
+    public String getPlayerName(){
+        if(this.textField.getText().equals("")){
+            return "Guest";
+        }else {
+            return this.textField.getText();
+        }
     }
 
     public void setActionListenerStart(ActionListener actionListener) {
