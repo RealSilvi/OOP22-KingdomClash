@@ -47,9 +47,7 @@ public class SouthPanel {
         this.southPanel.setBackground(Color.blue);
         this.southPanel.setPreferredSize(getMenuPanel());
 
-        this.buttons.forEach((x,y) -> {
-            southPanel.add(y);
-        });
+        this.buttons.forEach((x,y) -> southPanel.add(y));
     }
 
     @SuppressFBWarnings(value = "EI",
