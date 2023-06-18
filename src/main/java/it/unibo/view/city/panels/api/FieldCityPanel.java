@@ -1,6 +1,7 @@
 package it.unibo.view.city.panels.api;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+
 /**
  * This interface is used for the implementation of the field for the city panel.
  */

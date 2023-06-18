@@ -60,6 +60,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
      * @param controller give all the function the class need
      * @param size       gave the size of the panel
      * @param readImages a for each building level gave his texture
+     * @param cityView 
      */
     public BarPanelImpl(final CityPanel cityView, final BaseController controller, final
     Dimension size,
@@ -88,7 +89,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         buildingPanel.addBuildingSelectActionListener(genericBtnAction);
         buildingPanel.addBuildingSelectActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 if (actionCommand.isPresent()) {
                     actionCommand = Optional.empty();
                     return;
@@ -128,7 +129,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
 
         this.cityView.registerTileClickObserver(new TileClickObserver() {
             @Override
-            public void tileClicked(JComponent tile, Float position) {
+            public void tileClicked(final JComponent tile, final Float position) {
                 if (selectionActive) {
                     Optional<UUID> building = findBuildingbyPosition(position);
                     if (building.isEmpty() && actionCommand.isPresent()) {
@@ -210,8 +211,11 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         resourcepopup.dispose();
         trooppopup.dispose();
     }
-
-    public void setReturnActionListener(ActionListener returnActionListener) {
+    /**
+     * {@inheritDoc}
+     * @param returnActionListener
+     */
+    public void setReturnActionListener(final ActionListener returnActionListener) {
         this.mapReturnBtn.addActionListener(returnActionListener);
     }
 

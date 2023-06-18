@@ -55,7 +55,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
      */
     public FieldCityPanelImpl(final CityPanel cityView,
                               final BaseController baseController,
-                              GameConfiguration gameConfig,
+                              final GameConfiguration gameConfig,
                               final Map<BuildingTypes, Map<Integer, Image>> readImages) {
         this.buildingTilePositions = new HashMap<>();
         this.cityView = cityView;
@@ -114,7 +114,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         return this.mainpanel;
     }
 
-    private void updateBuildingOnField(UUID buildingToUpdate) {
+    private void updateBuildingOnField(final UUID buildingToUpdate) {
         BuildingTypes type;
         int level;
         Double xPos;
@@ -137,7 +137,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                                 .requestBuildingMap()
                                 .get(buildingToUpdate).getStructurePos());
                 tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
-                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level), tile.getWidth(), tile.getHeight())));
+                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
+                    tile.getWidth(), tile.getHeight())));
             }
         }
     }
