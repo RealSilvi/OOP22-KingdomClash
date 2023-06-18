@@ -1,19 +1,27 @@
 package it.unibo.view.battle.panels.entities.api;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 /**
- * Define the class which manage the player's life.
+ * Describe which actions are allowed in the LifePanel.<br>
+ * Which contains the LivesLabel.
  */
 public interface LifePanel {
 
     /**
-     * Display that the player lose a health point
+     * Display that the player loses a health point.
      */
     void decreaseLife();
 
     /**
-     * @return this panel
+     * Reset all the health points.
+     */
+    void reset();
+
+    /**
+     * Returns itself in a JPanel.
+     *
+     * @return this instance like a JPanel.
      */
     JPanel getPanel();
 }

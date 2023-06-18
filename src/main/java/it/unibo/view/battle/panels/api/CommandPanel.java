@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 /**
- * This interface show how to use the westPanel of the BattlePanel.
- * <br>
- * Show how to use the spinButton, the passButton and the lives of the Players.
+ * Describe the behaviour of the westPanel in the BattlePanel.<br>
+ * Which contains the Spin button, the Pass button and the lives of the Players.
  */
 public interface CommandPanel {
 
@@ -55,5 +54,15 @@ public interface CommandPanel {
      */
     void setActionListenerInfo(ActionListener actionListener);
 
+    /**
+     * Reset the life of each player.
+     */
+    void reset();
+
+    /**
+     * Returns itself in a JPanel.
+     *
+     * @return this instance like a JPanel.
+     */
     JPanel getPanel();
 }

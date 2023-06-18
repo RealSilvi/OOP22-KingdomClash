@@ -21,8 +21,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+
 import it.unibo.view.GameGui;
-import it.unibo.view.battle.panels.entities.DrawPanel;
+import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
 import it.unibo.view.utilities.GraphicUtils;
@@ -48,34 +49,34 @@ public class FieldCityPanelImpl implements FieldCityPanel {
      * @param cityView
      * @param baseController
      * @param gameConfig
-     * @param gameConfiguration gave the width and height for the field
+     * @param gameConfiguration      gave the width and height for the field
      * @param pathIconsConfiguration gave the textures of the building and of the background for the field
-     * @param readImages a for each building level gave his texture
+     * @param readImages             a for each building level gave his texture
      */
     public FieldCityPanelImpl(final CityPanel cityView,
-        final BaseController baseController,
-        GameConfiguration gameConfig, 
-        final Map<BuildingTypes, Map<Integer, Image>> readImages) {
+                              final BaseController baseController,
+                              final GameConfiguration gameConfig,
+                              final Map<BuildingTypes, Map<Integer, Image>> readImages) {
         this.buildingTilePositions = new HashMap<>();
         this.cityView = cityView;
         this.baseController = baseController;
         this.readImages = readImages;
         this.gameConfiguration = gameConfig.getCityConfiguration();
-        this.mainpanel = new DrawPanel(ImageIconsSupplier.loadImage(gameConfig
-            .getMapConfiguration()
-            .getImageMap().get(ButtonIdentification.TILE)),
-            GameGui.getAllPanel());
+        this.mainpanel = new DrawPanelImpl(ImageIconsSupplier.loadImage(gameConfig
+                .getMapConfiguration()
+                .getImageMap().get(ButtonIdentification.TILE)),
+                GameGui.getAllPanel());
         this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(), gameConfiguration.getHeight()));
-        buttonmap = new ArrayList<>(gameConfiguration.getWidth()* gameConfiguration.getHeight());
+        buttonmap = new ArrayList<>(gameConfiguration.getWidth() * gameConfiguration.getHeight());
         this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());
         this.baseController.addBuildingStateChangedObserver(this::updateBuildingOnField);
         this.baseController.requestBuildingMap()
-            .keySet().stream().forEach(this::updateBuildingOnField);
+                .keySet().stream().forEach(this::updateBuildingOnField);
         this.mainpanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
                 baseController.requestBuildingMap()
-                    .keySet().stream().forEach(FieldCityPanelImpl.this::updateBuildingOnField);
+                        .keySet().stream().forEach(FieldCityPanelImpl.this::updateBuildingOnField);
             }
         });
     }
@@ -90,21 +91,22 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 structure.setOpaque(false);
                 structure.setContentAreaFilled(false);
                 this.mainpanel.add(structure);
-                structure.setBorder(null);               
+                structure.setBorder(null);
                 final int coordY = j;
                 structure.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(final ActionEvent e) {
-                         if (e.getSource() instanceof JComponent) {
+                        if (e.getSource() instanceof JComponent) {
                             cityView.notifyTileClick((JComponent) e.getSource(),
-                                new Point2D.Float(coordX, coordY));
+                                    new Point2D.Float(coordX, coordY));
                         }
                     }
                 });
             }
             buttonmap.add(i, cols);
-    }
         }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -112,14 +114,14 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         return this.mainpanel;
     }
 
-    private void updateBuildingOnField(UUID buildingToUpdate) {
+    private void updateBuildingOnField(final UUID buildingToUpdate) {
         BuildingTypes type;
         int level;
         Double xPos;
         Double yPos;
-            JButton tile;
+        JButton tile;
         if (!this.baseController.requestBuildingMap()
-            .containsKey(buildingToUpdate)) {
+                .containsKey(buildingToUpdate)) {
             xPos = this.buildingTilePositions.get(buildingToUpdate).getX();
             yPos = this.buildingTilePositions.get(buildingToUpdate).getY();
             tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
@@ -129,13 +131,14 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 type = this.baseController.requestBuildingMap().get(buildingToUpdate).getType();
                 level = this.baseController.requestBuildingMap().get(buildingToUpdate).getLevel();
                 xPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getX();
-                 yPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getY();
-                 this.buildingTilePositions.put(buildingToUpdate,
-                    this.baseController
-                    .requestBuildingMap()
-                    .get(buildingToUpdate).getStructurePos());
+                yPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getY();
+                this.buildingTilePositions.put(buildingToUpdate,
+                        this.baseController
+                                .requestBuildingMap()
+                                .get(buildingToUpdate).getStructurePos());
                 tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
-                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level), tile.getWidth(), tile.getHeight())));
+                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
+                    tile.getWidth(), tile.getHeight())));
             }
         }
     }

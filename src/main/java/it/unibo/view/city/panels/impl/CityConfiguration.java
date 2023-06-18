@@ -2,10 +2,9 @@
 package it.unibo.view.city.panels.impl;
 
 /**
- * This class give the configuration for the main class of the cityPanel
+ * This class give the configuration for the main class of the cityPanel.
  */
 public class CityConfiguration {
-   
     private final int width;
     private final int height;
     /**
@@ -16,14 +15,14 @@ public class CityConfiguration {
         this.height = 5;
     }
     /**
-     * This method return the widht of the grid for the main field
+     * This method return the widht of the grid for the main field.
      * @return the width of the grid for the main field
      */
     public int getWidth() {
         return width;
     }
     /**
-     * This method return the height of the grid for the main field
+     * This method return the height of the grid for the main field.
      * @return the height of the grid for the main field
      */
     public int getHeight() {

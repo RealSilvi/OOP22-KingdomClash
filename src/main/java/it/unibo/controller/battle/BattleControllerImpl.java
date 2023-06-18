@@ -137,11 +137,11 @@ public final class BattleControllerImpl implements BattleController, Controller 
                 i = total;
                 cont = 1;
             }
-            if(i != total){
+            if (i != total) {
                 update(i + 1);
             }
         }
-        if(cont == 0){
+        if (cont == 0) {
             this.battleModel.reset();
             update(NO_SKIP);
         }
@@ -185,15 +185,15 @@ public final class BattleControllerImpl implements BattleController, Controller 
         }
         bList.addAll(pList);
 
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if(skip == (pList.size())){
-                        battlePanel.enableSpinButton();
-                    }
-                    battlePanel.updateField(bList);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (skip == (pList.size())) {
+                    battlePanel.enableSpinButton();
                 }
-            }, delay);
+                battlePanel.updateField(bList);
+            }
+        }, delay);
 
     }
 
@@ -229,8 +229,9 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     private void setActionListenerSlots() {
         ActionListener actionListenerInfo = e -> {
-            TroopButtonImpl.PositionJbutton button = (TroopButtonImpl.PositionJbutton) e.getSource();
-            clickedButtonPlayer(button.getPosition());
+            TroopButtonImpl.PositionJbutton<Integer> button;
+            button = (TroopButtonImpl.PositionJbutton<Integer>) e.getSource();
+            clickedButtonPlayer(button.getData());
             button.updateBorder();
         };
         this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);

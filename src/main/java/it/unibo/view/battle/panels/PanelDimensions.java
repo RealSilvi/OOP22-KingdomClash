@@ -2,12 +2,10 @@ package it.unibo.view.battle.panels;
 
 import it.unibo.view.GameGui;
 
-import java.awt.*;
+import java.awt.Dimension;
 
 /**
- * An interface that show how to get the preferred size of all the BorderLayout's JPanels.
- * <br>
- * Note: The NorthPanel has a BorderLayout also.
+ * Utility interface that calculate all the dimensions of the panels in the BattlePanel.
  */
 public interface PanelDimensions {
 
@@ -29,7 +27,7 @@ public interface PanelDimensions {
     double SIDE_BUTTONS_HEIGHT_SCALE = 0.4;
 
     /**
-     * @return The preferred dimension of the CenterPanel.
+     * @return the preferred dimension of the CenterPanel.
      */
     static Dimension getFieldPanel() {
         return new Dimension(
@@ -38,7 +36,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the NorthSouthPanel and SouthPanel.
+     * @return the preferred dimension of the NorthSouthPanel and SouthPanel.
      */
     static Dimension getPlayersPanel() {
         return new Dimension(
@@ -47,7 +45,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the EastPanel and WestPanel.
+     * @return the preferred dimension of the EastPanel and WestPanel.
      */
     static Dimension getSidePanel() {
         return new Dimension(
@@ -56,7 +54,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the MiddlePanel of SidePanel.
+     * @return the preferred dimension of the MiddlePanel of SidePanel.
      */
     static Dimension getSideButtonsPanel() {
         return new Dimension(
@@ -65,7 +63,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the TopPanel and BottomPanel of SidePanel.
+     * @return the preferred dimension of the TopPanel and BottomPanel of SidePanel.
      */
     static Dimension getSideLifePanel() {
         return new Dimension(
