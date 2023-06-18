@@ -25,7 +25,9 @@ public class TroopLabelImpl extends JLabel implements TroopLabel {
      * @param size                   the size of the label.
      * @param pathIconsConfiguration where are defined the paths of the textures.
      */
-    public TroopLabelImpl(final TroopType troop, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
+    public TroopLabelImpl(final TroopType troop,
+                          final Dimension size,
+                          final PathIconsConfiguration pathIconsConfiguration) {
         super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(troop), size));
         this.pathIconsConfiguration = pathIconsConfiguration;
         this.size = size;

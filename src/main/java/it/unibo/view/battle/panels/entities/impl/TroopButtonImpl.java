@@ -6,7 +6,6 @@ import it.unibo.view.battle.panels.entities.api.TroopButton;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
-
 import java.awt.Dimension;
 import java.awt.Color;
 import javax.swing.Timer;
@@ -29,7 +28,10 @@ public class TroopButtonImpl implements TroopButton {
      * @param position               the logic position of the button.
      * @param pathIconsConfiguration where are defined the paths of the textures.
      */
-    public TroopButtonImpl(final TroopType troop, final Dimension size, final int position, final PathIconsConfiguration pathIconsConfiguration) {
+    public TroopButtonImpl(final TroopType troop,
+                           final Dimension size,
+                           final int position,
+                           final PathIconsConfiguration pathIconsConfiguration) {
         this.pathIconsConfiguration = pathIconsConfiguration;
         this.button = new PositionJbutton<>(position);
         this.troop = troop;
@@ -37,7 +39,10 @@ public class TroopButtonImpl implements TroopButton {
 
         this.button.setPreferredSize(size);
 
-        this.button.setIcon(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(this.troop), this.size));
+        this.button.setIcon(
+                ImageIconsSupplier.getScaledImageIcon(
+                        pathIconsConfiguration.getTroop(this.troop),
+                        this.size));
         this.button.setBackground(Color.BLACK);
         this.button.setOpaque(true);
     }
@@ -51,14 +56,17 @@ public class TroopButtonImpl implements TroopButton {
     public void setTroop(final TroopType troop, final int delay) {
         this.troop = troop;
         final Timer timer = new Timer(delay, e -> button.setIcon(
-                ImageIconsSupplier.getScaledImageIcon(this.pathIconsConfiguration.getTroop(troop), size)));
+                ImageIconsSupplier.getScaledImageIcon(
+                        this.pathIconsConfiguration.getTroop(troop),
+                        size)));
+
         timer.setRepeats(false);
         timer.start();
     }
 
     @Override
-    public void setEnabled(final boolean b) {
-        this.button.setEnabled(b);
+    public void setEnabled(final boolean enabled) {
+        this.button.setEnabled(enabled);
     }
 
     @Override
@@ -75,7 +83,7 @@ public class TroopButtonImpl implements TroopButton {
     @SuppressWarnings(value = "serial")
     public static class PositionJbutton<X> extends JButton {
 
-        private static final int THICKNESS = 4;
+        private static final int BORDER_THICKNESS = 4;
 
         private final X data;
         private boolean selectedBorder;
@@ -96,9 +104,17 @@ public class TroopButtonImpl implements TroopButton {
         public void updateBorder() {
             this.selectedBorder = !this.selectedBorder;
             if (!selectedBorder) {
-                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, THICKNESS, true));
+                this.setBorder(
+                        BorderFactory.createLineBorder(
+                                BattlePanelStyle.PRIMARY_COLOR,
+                                BORDER_THICKNESS,
+                                true));
             } else {
-                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.SECONDARY_COLOR, THICKNESS, true));
+                this.setBorder(
+                        BorderFactory.createLineBorder(
+                                BattlePanelStyle.SECONDARY_COLOR,
+                                BORDER_THICKNESS,
+                                true));
             }
         }
 
@@ -123,9 +139,17 @@ public class TroopButtonImpl implements TroopButton {
             super.setEnabled(enabled);
             this.selectedBorder = false;
             if (enabled) {
-                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, THICKNESS, true));
+                this.setBorder(
+                        BorderFactory.createLineBorder(
+                                BattlePanelStyle.PRIMARY_COLOR,
+                                BORDER_THICKNESS,
+                                true));
             } else {
-                this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.DEFAULT_COLOR, THICKNESS, true));
+                this.setBorder(
+                        BorderFactory.createLineBorder(
+                                BattlePanelStyle.DEFAULT_COLOR,
+                                BORDER_THICKNESS,
+                                true));
             }
         }
     }

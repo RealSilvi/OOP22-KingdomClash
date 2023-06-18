@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Describe the behaviour of the centerPanel in the BattlePanel.
+ * Describe the behaviour of the centerPanel in the BattlePanel.<br>
+ * Which contains Troop labels to represent the army's.
  */
 public interface FieldPanel {
 
