@@ -46,12 +46,11 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     /**
      * The costructor create the panel and set the background of the field.
      *
-     * @param cityView
-     * @param baseController
-     * @param gameConfig
-     * @param gameConfiguration      gave the width and height for the field
-     * @param pathIconsConfiguration gave the textures of the building and of the background for the field
-     * @param readImages             a for each building level gave his texture
+     * @param cityView          reference of the main city view
+     * @param baseController    reference of the base controller
+     * @param gameConfig        reference of the game configuration
+     * @param readImages        reference of a map composed of loaded images
+     *                          with textures for building types and level
      */
     public FieldCityPanelImpl(final CityPanel cityView,
                               final BaseController baseController,

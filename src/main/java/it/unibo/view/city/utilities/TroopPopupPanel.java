@@ -54,7 +54,7 @@ public class TroopPopupPanel {
                 containpanel.setLayout(new BorderLayout());
 
                 JLabel label = new JLabel(
-                "" + singletroop.name() +" " + data.requestTroopLevels().get(singletroop));
+                "" + singletroop.name() + " " + data.requestTroopLevels().get(singletroop));
                 containpanel.add(label, BorderLayout.LINE_START);
                 var buttonOK = new JButton("upgrade");
                 containpanel.add(buttonOK, BorderLayout.LINE_END);
@@ -63,8 +63,6 @@ public class TroopPopupPanel {
                     public void actionPerformed(final ActionEvent arg0) {
                        data.upgradeTroop(singletroop,
                         data.requestTroopLevels().get(singletroop) + 1);
-
-                       System.out.println("ciao");
                     }
                 });
                 contentpanel.add(containpanel);

@@ -25,7 +25,6 @@ import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.BarPanel;
 import it.unibo.view.city.panels.api.TileClickObserver;
-import it.unibo.view.city.utilities.ResourcePopupPanel;
 import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
 import it.unibo.model.base.basedata.Building;
@@ -36,13 +35,13 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
  */
 public class BarPanelImpl extends JLabel implements BarPanel {
 
+    private static final int DEFAULT_HGAP = 5;
     private static final int X_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.35);
     private static final int Y_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.25);
     private final JButton mapReturnBtn;
     private final CityPanel cityView;
     private final JPanel mainpanel;
     private final BaseController basedata;
-    private final ResourcePopupPanel resourcepopup;
     private final TroopPopupPanel trooppopup;
     private final List<JComponent> interactionComponents;
     private Optional<String> actionCommand = Optional.empty();
@@ -56,7 +55,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
     /**
      * The costructor create the panel and add the buttons on the panel that show the troops,
      * which building you can place and applicate an actionlistener on each other.
-     *
      * @param controller give all the function the class need
      * @param size       gave the size of the panel
      * @param readImages a for each building level gave his texture
@@ -68,7 +66,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         this.cityView = cityView;
         this.mainpanel = new DrawPanelImpl(Color.BLACK, size);
         this.basedata = controller;
-        this.resourcepopup = new ResourcePopupPanel(mainpanel, X_POPUP_POSITION, Y_POPUP_POSITION, new ResourcePanelImpl(controller));
         this.trooppopup = new TroopPopupPanel(mainpanel, X_POPUP_POSITION, Y_POPUP_POSITION, controller);
         this.interactionComponents = new ArrayList<>();
 
@@ -102,7 +99,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         final ResourcePanelImpl resourcePanel = new ResourcePanelImpl(controller);
 
         GridLayout barGridLayout = new GridLayout();
-        barGridLayout.setHgap(5);
+        barGridLayout.setHgap(DEFAULT_HGAP);
         this.mainpanel.setLayout(barGridLayout);
         final JButton troop = new JButton("Upgrade Troops");
         final JButton playerinfo = new JButton("player info");
@@ -208,7 +205,6 @@ public class BarPanelImpl extends JLabel implements BarPanel {
      * {@inheritDoc}
      */
     public void disposeAllPopups() {
-        resourcepopup.dispose();
         trooppopup.dispose();
     }
     /**

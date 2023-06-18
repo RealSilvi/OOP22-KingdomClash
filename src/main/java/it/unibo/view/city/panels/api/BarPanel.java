@@ -4,12 +4,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-
 /*/**
  * This interface is used for the implementation of the top panel the city panel.
  */
 public interface BarPanel {
-
     /**
      * 
      */
@@ -27,8 +25,5 @@ public interface BarPanel {
      * 
      * @param returnActionListener
      */
-    void setReturnActionListener(final ActionListener returnActionListener);
-
-
-
+    void setReturnActionListener(ActionListener returnActionListener);
 }

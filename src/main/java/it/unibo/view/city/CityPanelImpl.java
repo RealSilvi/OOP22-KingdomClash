@@ -95,7 +95,7 @@ public class CityPanelImpl implements CityPanel {
      * {@inheritDoc}
      */
     @Override
-    public void registerTileClickObserver(TileClickObserver tileClickObservertoRegister) {
+    public void registerTileClickObserver(final TileClickObserver tileClickObservertoRegister) {
         this.tileClickObservers.add(tileClickObservertoRegister);
     }
 
@@ -103,7 +103,7 @@ public class CityPanelImpl implements CityPanel {
      * {@inheritDoc}
      */
     @Override
-    public void unregisterTileClickObserver(TileClickObserver tileClickObservertoUnregister) {
+    public void unregisterTileClickObserver(final TileClickObserver tileClickObservertoUnregister) {
         this.tileClickObservers.remove(tileClickObservertoUnregister);
     }
 
@@ -111,7 +111,7 @@ public class CityPanelImpl implements CityPanel {
      * {@inheritDoc}
      */
     @Override
-    public void notifyTileClick(JComponent tile, Point2D.Float position) {
+    public void notifyTileClick(final JComponent tile, final Point2D.Float position) {
         this.tileClickObservers.stream().forEach(tileObserver ->
                 tileObserver.tileClicked(tile, position));
     }
