@@ -1,6 +1,6 @@
 package it.unibo.view.battle.panels.api;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 
 /**

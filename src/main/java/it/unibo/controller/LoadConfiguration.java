@@ -18,6 +18,11 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+/**
+ * This class is responsible for loading correctly the configuration of the game.
+ * In case that the configuration doesn't exists it will return a configuration
+ * with the default values.
+ */
 public final class LoadConfiguration {
 
     private GameConfiguration configuration;

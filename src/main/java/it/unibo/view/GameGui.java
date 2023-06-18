@@ -1,7 +1,7 @@
 package it.unibo.view;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.controller.SoundManager;
+import it.unibo.controller.sound.SoundManagerImpl;
 import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.view.map.MapPanel;
 import it.unibo.view.map.MapPanelImpl;
@@ -43,7 +43,7 @@ public final class GameGui implements GameGuiInt {
     private final InfoMenuPanel infoPanel;
     private final NamePlayerImpl namePlayer;
     private final MapPanel mapPanel;
-    private final SoundManager soundManager;
+    private final SoundManagerImpl soundManagerImpl;
     private final Map<String, JPanel> panel;
 
     /**
@@ -58,8 +58,8 @@ public final class GameGui implements GameGuiInt {
         this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.frame.setResizable(false);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.soundManager = new SoundManager();
-        this.soundManager.changeMute();
+        this.soundManagerImpl = new SoundManagerImpl();
+        this.soundManagerImpl.changeMute();
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
 
@@ -116,7 +116,7 @@ public final class GameGui implements GameGuiInt {
 
     @Override
     public void showMenuPanel() {
-        this.soundManager.startMenuTheme();
+        this.soundManagerImpl.startMenuTheme();
         switchLayout.show(this.mainPanel, "1");
     }
 
@@ -220,8 +220,8 @@ public final class GameGui implements GameGuiInt {
     @SuppressFBWarnings(value = "EI",
             justification = "I want to return the object to let other classes" +
                     "getting the reference")
-    public SoundManager getSoundManager() {
-        return this.soundManager;
+    public SoundManagerImpl getSoundManager() {
+        return this.soundManagerImpl;
     }
 
     @Override
@@ -230,7 +230,7 @@ public final class GameGui implements GameGuiInt {
     }
 
     private void setActionListenerMusic() {
-        ActionListener actionListener = e -> this.soundManager.changeMute();
+        ActionListener actionListener = e -> this.soundManagerImpl.changeMute();
         this.menuPanel.setActionListenerMusic(actionListener);
     }
 

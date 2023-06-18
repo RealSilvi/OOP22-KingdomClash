@@ -1,6 +1,6 @@
 package it.unibo.view;
 
-import it.unibo.controller.SoundManager;
+import it.unibo.controller.sound.SoundManagerImpl;
 import it.unibo.view.menu.GameMenuImpl;
 import it.unibo.view.menu.SouthPanel;
 
@@ -74,7 +74,7 @@ public interface GameGuiInt {
      * @return the class which manage the music
      * of the game.
      */
-    SoundManager getSoundManager();
+    SoundManagerImpl getSoundManager();
 
     String getPlayerName();
 

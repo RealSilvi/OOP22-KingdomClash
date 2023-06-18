@@ -1,7 +1,12 @@
-package it.unibo.controller;
+package it.unibo.controller.sound;
 
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
@@ -10,7 +15,7 @@ import java.util.Optional;
 /**
  * The class that starts and manage sounds effect and main theme.
  */
-public class SoundManager {
+public class SoundManagerImpl implements SoundManager {
 
     private static final String SOUND_FILE_EXTENSION = ".wav";
     private static final String SOUND_THEMES_DIRECTORY = "/it/unibo/soundThemes/";
@@ -21,18 +26,11 @@ public class SoundManager {
     private static final String BATTLE_THEME_PATH = SOUND_THEMES_DIRECTORY + "battleTheme" + SOUND_FILE_EXTENSION;
     private static final String MAP_THEME_PATH = SOUND_THEMES_DIRECTORY + "mapTheme" + SOUND_FILE_EXTENSION;
 
-    private enum Themes {
-        MENU,
-        BATTLE,
-        CITY,
-        MAP
-    }
-
     private final Map<Themes, Optional<Clip>> themesClips;
     private Optional<Clip> currentTheme;
     private boolean enable;
 
-    public SoundManager() {
+    public SoundManagerImpl() {
         this.currentTheme= Optional.empty();
         this.enable=true;
         this.themesClips = Map.of(
@@ -57,23 +55,27 @@ public class SoundManager {
         });
     }
 
-
+    @Override
     public void startCityTheme() {
         this.setTheme(Themes.CITY);
     }
 
+    @Override
     public  void startMapTheme() {
         this.setTheme(Themes.MAP);
     }
 
+    @Override
     public void startBattleTheme() {
         this.setTheme(Themes.BATTLE);
     }
 
+    @Override
     public void startMenuTheme() {
         this.setTheme(Themes.MENU);
     }
 
+    @Override
     public void changeMute() {
         this.enable=!this.enable;
         if(enable){
@@ -89,13 +91,21 @@ public class SoundManager {
 
     private Optional<Clip> createClip(final String themeFile) {
         try {
-            final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(Objects.requireNonNull(SoundManager.class.getResourceAsStream(themeFile)));
+            final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(Objects.requireNonNull(SoundManagerImpl.class.getResourceAsStream(themeFile)));
             final Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             return Optional.of(clip);
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
             return Optional.empty();
         }
+    }
+
+
+    private enum Themes {
+        MENU,
+        BATTLE,
+        CITY,
+        MAP
     }
 
 }
