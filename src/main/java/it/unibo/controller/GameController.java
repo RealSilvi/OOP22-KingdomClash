@@ -12,21 +12,6 @@ import java.awt.event.ActionListener;
 
 public class GameController {
 
-    private enum PanelsName {
-        BATTLE("BATTLE"),
-        CITY("CITY");
-
-        private final String name;
-
-        PanelsName(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-    }
-
     final GameModel gameModel;
     final GameGui gameGui;
 
@@ -114,6 +99,8 @@ public class GameController {
         return e -> {
             this.gameGui.getSoundManager().startMapTheme();
             this.gameGui.showPanels(GameGui.MAP_NAME);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE,true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU,true);
             this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
             this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         };
@@ -142,7 +129,6 @@ public class GameController {
         }, SouthPanel.BUTTONS_NAME.MENU);
     }
 
-
     private void setActionListenerMusic() {
         this.gameGui.setActionListenerButtons(
                 e -> this.gameGui.getSoundManager().changeMute(), SouthPanel.BUTTONS_NAME.MUSIC);
@@ -152,6 +138,8 @@ public class GameController {
         this.gameGui.setMapBattleActionListener(e -> {
             this.gameGui.getSoundManager().startBattleTheme();
             this.gameGui.showPanels(PanelsName.BATTLE.getName());
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE,false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU,false);
         });
     }
 
@@ -166,5 +154,20 @@ public class GameController {
         this.gameGui.setActionListenerButtons(e -> {
             System.exit(0);
         }, SouthPanel.BUTTONS_NAME.QUIT);
+    }
+
+    private enum PanelsName {
+        BATTLE("BATTLE"),
+        CITY("CITY");
+
+        private final String name;
+
+        PanelsName(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
     }
 }
