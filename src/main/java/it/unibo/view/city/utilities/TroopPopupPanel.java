@@ -1,4 +1,3 @@
-
 package it.unibo.view.city.utilities;
 
 import java.awt.BorderLayout;
