@@ -1,4 +1,3 @@
-
 package it.unibo.view.city;
 
 import it.unibo.controller.base.BaseControllerImpl;

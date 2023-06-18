@@ -1,4 +1,3 @@
-
 package it.unibo.view.city;
 
 import java.awt.event.ActionListener;

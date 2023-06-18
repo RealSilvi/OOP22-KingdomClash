@@ -206,6 +206,10 @@ public final class ThreadManagerImpl implements ThreadManager {
                             baseModel.applyResources(
                                 buildingMapRef.get(buildingForProductionIdentifier)
                                 .getProductionAmount());
+                            buildingMapRef.get(identifier)
+                                .setProductionTime(
+                                    buildingMapRef.get(buildingForProductionIdentifier)
+                                    .getType().getProductionTime());
                         } catch (NotEnoughResourceException e) {
                             logger.severe("Error adding resources!");
                         }

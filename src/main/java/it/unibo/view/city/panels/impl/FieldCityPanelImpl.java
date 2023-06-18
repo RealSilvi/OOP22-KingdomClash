@@ -66,17 +66,20 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 .getMapConfiguration()
                 .getImageMap().get(ButtonIdentification.TILE)),
                 GameGui.getAllPanel());
-        this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(), gameConfiguration.getHeight()));
+        this.mainpanel.setLayout(
+            new GridLayout(
+                gameConfiguration.getWidth(), gameConfiguration.getHeight()));
         buttonmap = new ArrayList<>(gameConfiguration.getWidth() * gameConfiguration.getHeight());
         this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());
         this.baseController.addBuildingStateChangedObserver(this::updateBuildingOnField);
         this.baseController.requestBuildingMap()
-                .keySet().stream().forEach(this::updateBuildingOnField);
+            .keySet().stream().forEach(this::updateBuildingOnField);
         this.mainpanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
                 baseController.requestBuildingMap()
-                        .keySet().stream().forEach(FieldCityPanelImpl.this::updateBuildingOnField);
+                    .keySet().stream()
+                    .forEach(FieldCityPanelImpl.this::updateBuildingOnField);
             }
         });
     }
