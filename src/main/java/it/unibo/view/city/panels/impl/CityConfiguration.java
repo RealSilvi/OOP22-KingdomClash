@@ -1,4 +1,3 @@
-
 package it.unibo.view.city.panels.impl;
 
 /**
@@ -31,5 +30,4 @@ public class CityConfiguration {
     public int getHeight() {
         return height;
     }
-
 }
