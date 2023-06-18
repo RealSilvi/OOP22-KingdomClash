@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.kingdomclash.config.GameConfiguration;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.map.mapdata.MapConfiguration;
 import it.unibo.view.utilities.GraphicUtils;
 import it.unibo.view.utilities.ImageIconsSupplier;
@@ -37,24 +38,25 @@ import it.unibo.view.utilities.ImageIconsSupplier;
     justification = "This class will never be serialized")
 public final class MapPanelImpl extends JPanel implements MapPanel {
 
-    private transient Logger logger = Logger.getLogger(this.getClass().getName());
+    private final transient Logger logger = Logger.getLogger(this.getClass().getName());
 
     private static final int RANDOM_SEED = 65455;
 
-    private transient Map<ButtonIdentification, Image> rawImageMap = 
+    private final transient Map<ButtonIdentification, Image> rawImageMap =
         new EnumMap<>(ButtonIdentification.class);
-    private transient Map<ButtonIdentification, Image> imageMap = 
+    private final transient Map<ButtonIdentification, Image> imageMap =
         new EnumMap<>(ButtonIdentification.class);
-    private transient Map<ButtonIdentification, Image> grayImageMap = 
+    private final transient Map<ButtonIdentification, Image> grayImageMap =
         new EnumMap<>(ButtonIdentification.class);
 
-    private transient List<JButton> tiles = new ArrayList<>();
-    private Random randomGen = new Random(RANDOM_SEED);
+    private final transient List<JButton> tiles = new ArrayList<>();
+    private final Random randomGen = new Random(RANDOM_SEED);
 
-    private transient GameConfiguration configuration;
-    private transient MapConfiguration mapConfiguration;
+    private final transient GameConfiguration configuration;
+    private final transient MapConfiguration mapConfiguration;
+    private final transient PathIconsConfiguration pathIconsConfiguration;
 
-    private List<Integer> specialTileIndexes = new ArrayList<>();
+    private final List<Integer> specialTileIndexes = new ArrayList<>();
 
     /**
      * Constructs a MapPanel, a GUI composed of different types of tiles
@@ -64,6 +66,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     public MapPanelImpl(final GameConfiguration configuration) {
         this.configuration = configuration;
         this.mapConfiguration = configuration.getMapConfiguration();
+        this.pathIconsConfiguration = configuration.getPathIconsConfiguration();
         initialize();
     }
 
@@ -214,7 +217,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
             try {
                 rawImageMap.put(identification,
                     ImageIconsSupplier
-                    .loadImage(mapConfiguration
+                    .loadImage(pathIconsConfiguration
                         .getImageMap().get(identification)));
                 bakeTiles();
             } catch (IllegalArgumentException e) {

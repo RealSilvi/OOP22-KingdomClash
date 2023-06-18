@@ -1,8 +1,11 @@
 package it.unibo.kingdomclash.config;
 
+/**
+ * Configuration of the battle.
+ */
 public class BattleConfiguration {
 
-    private final TextConfiguration textConfiguration;
+    private final TextConfigurationBattle textConfigurationBattle;
 
     private final int nrOfSlots;
     private final int nrOfLives;
@@ -14,27 +17,42 @@ public class BattleConfiguration {
         nrOfLives = 8;
         nrOfFieldSpots = nrOfSlots * 2;
         maxRound = 3;
-        this.textConfiguration = new TextConfiguration();
+        this.textConfigurationBattle = new TextConfigurationBattle();
     }
 
+    /**
+     * @return the number of slots for each player.
+     */
     public int getNrOfSlots() {
         return nrOfSlots;
     }
 
+    /**
+     * @return the number of lives for each player.
+     */
     public int getNrOfLives() {
         return nrOfLives;
     }
 
+    /**
+     * @return the number of spots in the field panel.
+     */
     public int getNrOfFieldSpots() {
         return nrOfFieldSpots;
     }
 
+    /**
+     * @return the number of max raund in the battle.
+     */
     public int getMaxRound() {
         return maxRound;
     }
 
-    public TextConfiguration getTextConfiguration() {
-        return textConfiguration;
+    /**
+     * @return the configuration for the text areas.
+     */
+    public TextConfigurationBattle getTextConfiguration() {
+        return textConfigurationBattle;
     }
 }
 
