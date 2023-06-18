@@ -15,11 +15,10 @@ import java.util.Optional;
 /**
  * The class that starts and manage sounds effect and main theme.
  */
-public class SoundManagerImpl implements SoundManager {
+public final class SoundManagerImpl implements SoundManager {
 
     private static final String SOUND_FILE_EXTENSION = ".wav";
     private static final String SOUND_THEMES_DIRECTORY = "/it/unibo/soundThemes/";
-
 
     private static final String MENU_THEME_PATH = SOUND_THEMES_DIRECTORY + "menuTheme" + SOUND_FILE_EXTENSION;
     private static final String CITY_THEME_PATH = SOUND_THEMES_DIRECTORY + "cityTheme" + SOUND_FILE_EXTENSION;
@@ -30,9 +29,12 @@ public class SoundManagerImpl implements SoundManager {
     private Optional<Clip> currentTheme;
     private boolean enable;
 
+    /**
+     * Constructs a Sound manager to manage the themes of the application.
+     */
     public SoundManagerImpl() {
-        this.currentTheme= Optional.empty();
-        this.enable=true;
+        this.currentTheme = Optional.empty();
+        this.enable = true;
         this.themesClips = Map.of(
                 Themes.MENU, this.createClip(MENU_THEME_PATH),
                 Themes.BATTLE, this.createClip(BATTLE_THEME_PATH),
@@ -44,11 +46,11 @@ public class SoundManagerImpl implements SoundManager {
     private void setTheme(final Themes theme) {
 
         this.currentTheme.ifPresent(DataLine::stop);
-        this.currentTheme=Optional.empty();
+        this.currentTheme = Optional.empty();
 
-        this.themesClips.get(theme).ifPresent( t ->{
-            this.currentTheme=Optional.of(t);
-            if(enable){
+        this.themesClips.get(theme).ifPresent(t -> {
+            this.currentTheme = Optional.of(t);
+            if (enable) {
                 this.currentTheme.get().stop();
                 this.currentTheme.get().loop(Clip.LOOP_CONTINUOUSLY);
             }
@@ -61,7 +63,7 @@ public class SoundManagerImpl implements SoundManager {
     }
 
     @Override
-    public  void startMapTheme() {
+    public void startMapTheme() {
         this.setTheme(Themes.MAP);
     }
 
@@ -77,13 +79,13 @@ public class SoundManagerImpl implements SoundManager {
 
     @Override
     public void changeMute() {
-        this.enable=!this.enable;
-        if(enable){
+        this.enable = !this.enable;
+        if (enable) {
             this.currentTheme.ifPresent(theme -> {
                 theme.start();
                 theme.loop(Clip.LOOP_CONTINUOUSLY);
             });
-        }else{
+        } else {
             this.currentTheme.ifPresent(DataLine::stop);
 
         }

@@ -12,13 +12,13 @@ import java.awt.event.ActionListener;
 
 public class GameController {
 
-    final GameModel gameModel;
-    final GameGui gameGui;
+    private final GameModel gameModel;
+    private final GameGui gameGui;
 
-    Controller battleController;
-    Controller baseController;
+    private Controller battleController;
+    private Controller baseController;
 
-    ActionListener toMainPanel;
+    private final ActionListener toMainPanel;
 
     public GameController() {
 
@@ -99,8 +99,8 @@ public class GameController {
         return e -> {
             this.gameGui.getSoundManager().startMapTheme();
             this.gameGui.showPanels(GameGui.MAP_NAME);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE,true);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU,true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE, true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU, true);
             this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
             this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         };
@@ -141,8 +141,8 @@ public class GameController {
         this.gameGui.setMapBattleActionListener(e -> {
             this.gameGui.getSoundManager().startBattleTheme();
             this.gameGui.showPanels(PanelsName.BATTLE.getName());
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE,false);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU,false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE, false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU, false);
         });
     }
 

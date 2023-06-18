@@ -3,24 +3,17 @@ package it.unibo.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.unibo.kingdomclash.config.GameConfiguration;
-import it.unibo.model.data.GameData;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.lang.instrument.IllegalClassFormatException;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
  * This class is responsible for loading correctly the configuration of the game.
- * In case that the configuration doesn't exists it will return a configuration
+ * In case that the configuration doesn't exist, it will return a configuration
  * with the default values.
  */
 public final class LoadConfiguration {
@@ -28,7 +21,7 @@ public final class LoadConfiguration {
     private GameConfiguration configuration;
 
     /**
-     * Intended behaviour of File.mkdirs();
+     * Intended behaviour of File.mkdirs().
      */
     public LoadConfiguration() {
 
@@ -43,13 +36,13 @@ public final class LoadConfiguration {
         } catch (FileNotFoundException e) {
             this.configuration = new GameConfiguration();
             final File file = new File(configDir);
-            file.getParentFile().mkdirs();
-
-            try (FileWriter fileWriter = new FileWriter(file)) {
-                fileWriter.write(gson.toJson(this.configuration));
-            } catch (IOException ex) {
-                logger.severe("Configuration saving FAILURE");
-                logger.severe(ex.getMessage());
+            if (file.getParentFile().mkdirs()) {
+                try (FileWriter fileWriter = new FileWriter(file)) {
+                    fileWriter.write(gson.toJson(this.configuration));
+                } catch (IOException ex) {
+                    logger.severe("Configuration saving FAILURE");
+                    logger.severe(ex.getMessage());
+                }
             }
         } catch (IOException e) {
             this.configuration = new GameConfiguration();

@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 
-public class CommandPanelImpl implements CommandPanel {
+public final class CommandPanelImpl implements CommandPanel {
 
     private final JPanel mainPanel;
 

@@ -17,7 +17,7 @@ import java.awt.Component;
  * This class is not designed to handle serialization.
  */
 @SuppressWarnings(value = "serial")
-public class TextPanelImpl extends DrawPanelImpl {
+public final class TextPanelImpl extends DrawPanelImpl {
 
     private static final int VERTICAL_PADDING = 10;
     private static final int HORIZONTAL_PADDING = 30;

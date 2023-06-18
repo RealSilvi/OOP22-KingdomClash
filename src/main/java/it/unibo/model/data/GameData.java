@@ -36,10 +36,18 @@ public final class GameData implements Serializable {
 
     private transient FightData fightData;
 
+    /**
+     * Constructs an instance of GameData creating a default game configuration.
+     */
     public GameData() {
         this(new GameConfiguration());
     }
 
+    /**
+     * Construct an instance following the game configuration.
+     *
+     * @param gameConfiguration the confiugration of the game.
+     */
     public GameData(final GameConfiguration gameConfiguration) {
         this.currentLevel = 1;
         this.resources = new HashSet<>();
@@ -51,11 +59,11 @@ public final class GameData implements Serializable {
     }
 
     /**
-     * Constructs a GameData instance given an already existing GameData
+     * Constructs a GameData instance given an already existing GameData.
      * and a configuration in order easily restore transient fields.
      *
-     * @param gameData      an already existing GameData object
-     * @param configuration the configuration for the game
+     * @param gameData      an already existing GameData object.
+     * @param configuration the configuration for the game.
      */
     public GameData(@NonNull final GameData gameData, @NonNull final GameConfiguration configuration) {
         this.currentLevel = gameData.currentLevel;
@@ -81,37 +89,42 @@ public final class GameData implements Serializable {
         this.configuration = configuration;
     }
 
-
+    /**
+     * Increment by one the game level.
+     */
     public void incrementLevel() {
         this.currentLevel = this.currentLevel + 1;
     }
 
+    /**
+     * @return the game level.
+     */
     public int getCurrentLevel() {
         return this.currentLevel;
     }
 
     /**
-     * Gets the player's name
+     * Gets the player's name.
      *
-     * @return a string representing the player's name
+     * @return a string representing the player's name.
      */
     public String getPlayerName() {
         return playerName;
     }
 
     /**
-     * Sets the player's name
+     * Sets the player's name.
      *
-     * @param playerName a string representing the player's name
+     * @param playerName a string representing the player's name.
      */
     public void setPlayerName(final String playerName) {
         this.playerName = playerName;
     }
 
     /**
-     * Gets the resources owned by the player
+     * Gets the resources owned by the player.
      *
-     * @return a set of resources owned by the player
+     * @return a set of resources owned by the player.
      */
     /* No defensive copy needed because the base model already
      * handles data integrity
@@ -123,9 +136,9 @@ public final class GameData implements Serializable {
     }
 
     /**
-     * Sets the resources owned by the player
+     * Sets the resources owned by the player.
      *
-     * @param resources A set representing the resources owned
+     * @param resources A set representing the resources owned.
      */
     /* No defensive copy needed because the base model already
      * handles data integrity
@@ -137,9 +150,9 @@ public final class GameData implements Serializable {
     }
 
     /**
-     * Gets the currently built buildings owned by the player
+     * Gets the currently built buildings owned by the player.
      *
-     * @return a map containing all the buildings and their corresponding identifier
+     * @return a map containing all the buildings and their corresponding identifier.
      */
     /* No defensive copy needed because the base model already
      * handles data integrity
@@ -151,10 +164,10 @@ public final class GameData implements Serializable {
     }
 
     /**
-     * Sets a map of buildings currently owned by the player
+     * Sets a map of buildings currently owned by the player.
      *
      * @param buildings a map containing all buildings owned by the player and
-     *                  their corresponding identifier
+     *                  their corresponding identifier.
      */
     /* No defensive copy needed because the base model already
      * handles data integrity
@@ -166,9 +179,9 @@ public final class GameData implements Serializable {
     }
 
     /**
-     * Gets a map with a troop type and it's corresponding level for the player
+     * Gets a map with a troop type and it's corresponding level for the player.
      *
-     * @return a map with the troop and the level of the troop as an integer
+     * @return a map with the troop and the level of the troop as an integer.
      */
     /* No defensive copy needed because the base model already
      * handles data integrity
@@ -180,9 +193,9 @@ public final class GameData implements Serializable {
     }
 
     /**
-     * Sets a map with a troop type and it's corresponding level for the player
+     * Sets a map with a troop type and it's corresponding level for the player.
      *
-     * @param playerArmyLevel a map with the troop and the level of the troop as an integer
+     * @param playerArmyLevel a map with the troop and the level of the troop as an integer.
      */
     /* No defensive copy needed because the base model already
      * handles data integrity
@@ -193,16 +206,22 @@ public final class GameData implements Serializable {
         this.playerArmyLevel = playerArmyLevel;
     }
 
+    /**
+     * @return the fight data.
+     */
     public FightData getFightData() {
         return fightData;
     }
 
+    /**
+     * @param fightData sets a new fight data.
+     */
     public void setFightData(final FightData fightData) {
         this.fightData = fightData;
     }
 
     /**
-     * @return The game's configuration
+     * @return The game's configuration.
      */
     public GameConfiguration getGameConfiguration() {
         return this.configuration;

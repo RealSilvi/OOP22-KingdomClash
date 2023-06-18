@@ -17,7 +17,8 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 
-public class ButtonsPanelImpl implements ButtonsPanel {
+
+public final class ButtonsPanelImpl implements ButtonsPanel {
 
     private static final int BUTTON_BORDER_THICKNESS = 4;
 

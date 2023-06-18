@@ -14,7 +14,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Map;
 
-public class InfoPanelImpl implements InfoPanel {
+public final class InfoPanelImpl implements InfoPanel {
 
     private static final int GRID_LAYOUT_COLS = 3;
     private static final double LABEL_SCALE = 0.3;

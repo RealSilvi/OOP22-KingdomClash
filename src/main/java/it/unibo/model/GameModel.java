@@ -15,6 +15,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+
 public final class GameModel {
 
     private GameData gameData;
@@ -25,17 +26,17 @@ public final class GameModel {
     private final GameConfiguration configuration;
 
     /**
-     * Intended behaviour of File.mkdirs();
+     * Intended behaviour of File.mkdirs().
      */
     public GameModel() {
-        LoadConfiguration loadConfiguration= new LoadConfiguration();
+        LoadConfiguration loadConfiguration = new LoadConfiguration();
         this.saveDataLocation = new File(LoadConfiguration.getAppData() + File.separator + "game.dat");
-        this.configuration=loadConfiguration.getConfiguration();
+        this.configuration = loadConfiguration.getConfiguration();
     }
 
-    public void resetSaved(){
+    public void resetSaved() {
         this.saveDataLocation.delete();
-        this.gameData=new GameData();
+        this.gameData = new GameData();
     }
 
     public boolean load() {
@@ -100,7 +101,7 @@ public final class GameModel {
         return this.gameData.getCurrentLevel();
     }
 
-    public boolean isSaved(){
+    public boolean isSaved() {
         return saveDataLocation.exists();
     }
 
