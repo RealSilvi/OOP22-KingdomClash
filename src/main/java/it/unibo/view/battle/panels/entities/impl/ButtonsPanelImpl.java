@@ -66,31 +66,6 @@ public class ButtonsPanelImpl implements ButtonsPanel {
         this.mainPanel.add(info);
     }
 
-    private JButton getCostumeButton(final ImageIcon icon, final Dimension size) {
-        final JButton button = new JButton() {
-            @Override
-            public void setEnabled(final boolean enabled) {
-                super.setEnabled(enabled);
-                if (enabled) {
-                    this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.SECONDARY_COLOR, BUTTON_BORDER_THICKNESS, true));
-                } else {
-                    this.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.PRIMARY_COLOR, BUTTON_BORDER_THICKNESS, true));
-                }
-            }
-        };
-
-        button.setIcon(icon);
-        button.setDisabledIcon(icon);
-
-        button.setPreferredSize(size);
-
-        button.setBorder(BorderFactory.createLineBorder(BattlePanelStyle.SECONDARY_COLOR, BUTTON_BORDER_THICKNESS, true));
-        button.setBackground(Color.BLACK);
-        button.setOpaque(true);
-
-        return button;
-    }
-
     @Override
     public void disablePassButton() {
         this.pass.setEnabled(false);
@@ -129,6 +104,43 @@ public class ButtonsPanelImpl implements ButtonsPanel {
     @Override
     public JPanel getPanel() {
         return this.mainPanel;
+    }
+
+    private JButton getCostumeButton(final ImageIcon icon, final Dimension size) {
+        final JButton button = new JButton() {
+            @Override
+            public void setEnabled(final boolean enabled) {
+                super.setEnabled(enabled);
+                if (enabled) {
+                    this.setBorder(
+                            BorderFactory.createLineBorder(
+                                    BattlePanelStyle.SECONDARY_COLOR,
+                                    BUTTON_BORDER_THICKNESS,
+                                    true));
+                } else {
+                    this.setBorder(
+                            BorderFactory.createLineBorder(
+                                    BattlePanelStyle.PRIMARY_COLOR,
+                                    BUTTON_BORDER_THICKNESS,
+                                    true));
+                }
+            }
+        };
+
+        button.setIcon(icon);
+        button.setDisabledIcon(icon);
+
+        button.setPreferredSize(size);
+
+        button.setBorder(
+                BorderFactory.createLineBorder(
+                        BattlePanelStyle.SECONDARY_COLOR,
+                        BUTTON_BORDER_THICKNESS,
+                        true));
+        button.setBackground(Color.BLACK);
+        button.setOpaque(true);
+
+        return button;
     }
 
 }

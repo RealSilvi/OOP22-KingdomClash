@@ -15,14 +15,20 @@ import java.util.Optional;
 public interface BattlePanel {
 
     /**
-     * //TODO finish javadoc
+     * Shows the EndPanel.
      *
-     * @param winner
+     * @param winner true if the player win the battle.
      */
     void showEndPanel(@Nonnull Boolean winner);
 
+    /**
+     * Shows the TutorialPanel.
+     */
     void showTutorialPanel();
 
+    /**
+     * Shows the Game Panel.
+     */
     void showGamePanel();
 
     /**
@@ -36,23 +42,23 @@ public interface BattlePanel {
     void hitBot();
 
     /**
-     * Update the player's slot
+     * Update the player's slot.
      *
-     * @param troops Indicate which troop to put in which position.
+     * @param troops indicate which troop to put in which position.
      */
     void spinPlayerFreeSlot(Map<Integer, TroopType> troops);
 
     /**
-     * Update the bots slot
+     * Update the bots slot.
      *
-     * @param troops Indicate which troop to put in which position.
+     * @param troops indicate which troop to put in which position.
      */
     void spinBotFreeSlot(Map<Integer, TroopType> troops);
 
     /**
      * Display a power info of the player's troops.
      *
-     * @param troopLv Foreach troop indicates if it's strong enough to defeat corresponding bots defense.
+     * @param troopLv foreach troop indicates if it's strong enough to defeat corresponding bots troop.
      */
     void drawInfoTable(Map<TroopType, Boolean> troopLv);
 
@@ -63,56 +69,77 @@ public interface BattlePanel {
     void updateField(List<Optional<TroopType>> field);
 
     /**
-     * Disable all the bots slots
+     * Disable all the bots slots.
      */
     void disableBotSlots();
 
     /**
-     * Enable all the bots slots
+     * Enable all the bots slots.
      */
     void enableBotSlots();
 
     /**
-     * Disable all the player's slots
+     * Disable all the player's slots.
      */
     void disablePlayerSlots();
 
     /**
-     * Enable all the player's slots
+     * Enable all the player's slots.
      */
     void enablePlayerSlots();
 
     /**
-     * Disable the spin button
+     * Disable the spin button.
      */
     void disableSpinButton();
 
     /**
-     * Enable the spin button
+     * Enable the spin button.
      */
     void enableSpinButton();
 
     /**
-     * Disable the Pass button
+     * Disable the Pass button.
      */
     void disablePassButton();
 
     /**
-     * Enable the pass button
+     * Enable the pass button.
      */
     void enablePassButton();
 
-
     /**
-     * @return The BattlePanel to add at the frame
+     * Set the action listener in the player's slots and in the bots slots.
+     *
+     * @param actionListener to add in the players slots.
      */
-    JPanel getPanel();
-
     void setActionListenersPlayerSlot(ActionListener actionListener);
 
+    /**
+     * Set the action listener in the spin button.
+     *
+     * @param actionListener to add in the spin button.
+     */
     void setActionListenerSpinButton(ActionListener actionListener);
 
+    /**
+     * Set the action listener in the pass button.
+     *
+     * @param actionListener to add in the pass button.
+     */
     void setActionListenerPass(ActionListener actionListener);
 
+    /**
+     * Set the action listener to the exit button.
+     *
+     * @param actionListener to add in the exit button.
+     */
     void setBackActionListener(ActionListener actionListener);
+
+    /**
+     * Returns itself in a JPanel.
+     *
+     * @return this instance like a JPanel.
+     */
+    JPanel getPanel();
 }

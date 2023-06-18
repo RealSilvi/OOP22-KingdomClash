@@ -33,7 +33,10 @@ public class DrawPanelImpl extends JPanel {
      * @param size            The dimension of the Panel.
      */
     public DrawPanelImpl(final Image backgroundImage, final Dimension size) {
-        this.backgroundImage = backgroundImage.getScaledInstance(WIDTH_IMAGE_FILL_PATTERN, HEIGHT_IMAGE_FILL_PATTERN, Image.SCALE_DEFAULT);
+        this.backgroundImage = backgroundImage.getScaledInstance(
+                WIDTH_IMAGE_FILL_PATTERN,
+                HEIGHT_IMAGE_FILL_PATTERN,
+                Image.SCALE_DEFAULT);
         this.size = size;
 
         this.setLayout(new FlowLayout(FlowLayout.CENTER, H_GAP, V_GAP));

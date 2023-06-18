@@ -27,7 +27,7 @@ public interface PanelDimensions {
     double SIDE_BUTTONS_HEIGHT_SCALE = 0.4;
 
     /**
-     * @return The preferred dimension of the CenterPanel.
+     * @return the preferred dimension of the CenterPanel.
      */
     static Dimension getFieldPanel() {
         return new Dimension(
@@ -36,7 +36,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the NorthSouthPanel and SouthPanel.
+     * @return the preferred dimension of the NorthSouthPanel and SouthPanel.
      */
     static Dimension getPlayersPanel() {
         return new Dimension(
@@ -45,7 +45,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the EastPanel and WestPanel.
+     * @return the preferred dimension of the EastPanel and WestPanel.
      */
     static Dimension getSidePanel() {
         return new Dimension(
@@ -54,7 +54,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the MiddlePanel of SidePanel.
+     * @return the preferred dimension of the MiddlePanel of SidePanel.
      */
     static Dimension getSideButtonsPanel() {
         return new Dimension(
@@ -63,7 +63,7 @@ public interface PanelDimensions {
     }
 
     /**
-     * @return The preferred dimension of the TopPanel and BottomPanel of SidePanel.
+     * @return the preferred dimension of the TopPanel and BottomPanel of SidePanel.
      */
     static Dimension getSideLifePanel() {
         return new Dimension(

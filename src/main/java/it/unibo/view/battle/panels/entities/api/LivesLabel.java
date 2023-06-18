@@ -1,7 +1,7 @@
 package it.unibo.view.battle.panels.entities.api;
 
 /**
- * Represents a JLabel for a single healthPoint.
+ * Define a JLabel for representing a single healthPoint.
  */
 public interface LivesLabel {
 

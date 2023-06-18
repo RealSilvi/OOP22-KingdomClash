@@ -3,7 +3,8 @@ package it.unibo.view.battle.panels.entities.api;
 import javax.swing.JPanel;
 
 /**
- * Describe which actions are allowed in the LifePanel.
+ * Describe which actions are allowed in the LifePanel.<br>
+ * Which contains the LivesLabel.
  */
 public interface LifePanel {
 

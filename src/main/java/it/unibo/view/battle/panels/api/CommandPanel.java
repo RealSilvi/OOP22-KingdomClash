@@ -4,9 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 /**
- * Describe the behaviour of the westPanel in the BattlePanel.
- * <br>
- * Show how to use the spinButton, the passButton and the lives of the Players.
+ * Describe the behaviour of the westPanel in the BattlePanel.<br>
+ * Which contains the Spin button, the Pass button and the lives of the Players.
  */
 public interface CommandPanel {
 
