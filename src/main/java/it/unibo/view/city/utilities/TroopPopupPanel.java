@@ -16,13 +16,13 @@ import javax.swing.PopupFactory;
 import it.unibo.controller.base.BaseController;
 /**
  * This class create the popup that shows the troop and their levels and contains
- *  a button that can improve the level of the troops
+ *  a button that can improve the level of the troops.
  * 
  */
 public class TroopPopupPanel {
 
-    static private final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()* 0.5);
-    static private final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()* 0.3);
+    private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
+    private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
 
     private Popup popup;
     private JPanel contentpanel;
@@ -30,14 +30,12 @@ public class TroopPopupPanel {
     private Component container;
     private int xposition;
     private int yposition;
-    
-    
     /**
-     * 
-     * @param container
-     * @param xposition
-     * @param yposition
-     * @param data
+     * This costructor create the popup and gave him the name and the level of the troops and an upgrade button for each other.
+     * @param container the content of the Popup
+     * @param xposition the coordinate x where the popup is placed
+     * @param yposition the coordinate y where the popup is placed
+     * @param data use for get the information of the troop and the upgrade button
      */
     public TroopPopupPanel(final Component container, final int xposition, final int yposition, final BaseController data) {
         this.visibility = false;
@@ -56,11 +54,10 @@ public class TroopPopupPanel {
                 containpanel.setLayout(new BorderLayout());
 
                 JLabel label = new JLabel(
-                ""+ singletroop.name() +" "+ data.requestTroopLevels().get(singletroop));
-                containpanel.add(label,BorderLayout.LINE_START);
+                "" + singletroop.name() +" " + data.requestTroopLevels().get(singletroop));
+                containpanel.add(label, BorderLayout.LINE_START);
                 var buttonOK = new JButton("upgrade");
                 containpanel.add(buttonOK, BorderLayout.LINE_END);
-                
                 buttonOK.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(final ActionEvent arg0) {
@@ -69,12 +66,10 @@ public class TroopPopupPanel {
 
                        System.out.println("ciao");
                     }
-                    
                 });
                 contentpanel.add(containpanel);
             });
      }
-   
     /**
      * This method allows to make the popup visible on each click
      * with a boolean parameter.

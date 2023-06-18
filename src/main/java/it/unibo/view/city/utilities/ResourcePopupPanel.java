@@ -3,6 +3,8 @@ package it.unibo.view.city.utilities;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JPanel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
@@ -10,6 +12,9 @@ import javax.swing.PopupFactory;
  * This class 
  */
 public class ResourcePopupPanel {
+    private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
+    private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
+
     private Popup popup;
     private final int width;
     private final int height;
@@ -18,7 +23,6 @@ public class ResourcePopupPanel {
     private Component container;
     private int xposition;
     private int yposition;
-    private int DIMENSION = 200;
     /**
      * 
      * @param container in which panel this popup is applicate
@@ -27,8 +31,8 @@ public class ResourcePopupPanel {
      * @param panel the content of the popup
      */
     public ResourcePopupPanel(final Component container, final int xposition, final int yposition, final JPanel panel) {
-        this.width = DIMENSION;
-        this.height = DIMENSION;
+        this.width = WIDTH;
+        this.height = HEIGHT;
         this.visibility = false;
         this.container = container;
         this.xposition = xposition;

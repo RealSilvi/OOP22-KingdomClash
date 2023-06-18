@@ -1,5 +1,7 @@
 package it.unibo.view.city.panels.api;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 
 
@@ -13,14 +15,19 @@ public interface BarPanel {
      */
     void setOptionsLocked();
     /**
-     * This method give the main panel
+     * This method give the main panel.
      * @return the main panel
      */
     JPanel getPanel();
     /**
-     * method that display the popups
+     * method that display the popups.
      */
     void disposeAllPopups();
+    /**
+     * 
+     * @param returnActionListener
+     */
+    void setReturnActionListener(final ActionListener returnActionListener);
 
 
 
