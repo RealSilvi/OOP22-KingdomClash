@@ -93,6 +93,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 cols.add(j, structure);
                 structure.setOpaque(false);
                 structure.setContentAreaFilled(false);
+                structure.setFocusable(false);
+                structure.setBorderPainted(false);
                 this.mainpanel.add(structure);
                 structure.setBorder(null);
                 final int coordY = j;

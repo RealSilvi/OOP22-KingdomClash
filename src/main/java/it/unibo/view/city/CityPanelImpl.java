@@ -36,7 +36,8 @@ public class CityPanelImpl implements CityPanel {
     private final JPanel mainPanel;
     private final BarPanelImpl barPanel;
     private final FieldCityPanelImpl fieldPanel;
-    private final Map<BuildingTypes, Map<Integer, Image>> readImages = new EnumMap<>(BuildingTypes.class);
+    private final Map<BuildingTypes, Map<Integer, Image>> readImages =
+        new EnumMap<>(BuildingTypes.class);
 
     private List<TileClickObserver> tileClickObservers;
 
