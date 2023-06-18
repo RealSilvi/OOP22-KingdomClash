@@ -119,7 +119,10 @@ public class GameController {
     }
 
     private void setActionListenerContinue() {
-        this.gameGui.setActionListenerContinue(e -> this.gameGui.showPanels(GameGui.MAP_NAME));
+        this.gameGui.setActionListenerContinue(e -> {
+            this.gameGui.showPanels(GameGui.MAP_NAME);
+            this.gameGui.getSoundManager().startMapTheme();
+        });
     }
 
     private void setActionListenerMenu() {

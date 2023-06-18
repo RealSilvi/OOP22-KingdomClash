@@ -32,7 +32,7 @@ public final class BattlePanelImpl implements BattlePanel {
 
     private static final int BORDER_LAYOUT_GAP = 3;
     private static final int BORDER_THICKNESS = 2;
-    private static final Dimension EXIT_DIMENSION = new Dimension(80, 50);
+    private static final Dimension EXIT_DIMENSION = new Dimension(50, 25);
 
     private final BattleConfiguration battleConfiguration;
     private final CardLayout layoutManager;
