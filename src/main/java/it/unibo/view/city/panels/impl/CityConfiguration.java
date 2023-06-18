@@ -12,8 +12,8 @@ public class CityConfiguration {
      * This costructor contains the values for build the field where you can place the buildings.
      */
     public CityConfiguration(){
-        this.width = 10;
-        this.height = 10;
+        this.width = 5;
+        this.height = 5;
     }
     /**
      * This method return the widht of the grid for the main field
