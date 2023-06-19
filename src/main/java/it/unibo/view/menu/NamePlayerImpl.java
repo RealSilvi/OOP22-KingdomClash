@@ -5,8 +5,7 @@ import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -42,20 +41,29 @@ public final class NamePlayerImpl {
         textField.setBackground(Color.BLACK);
 
         GridBagConstraints grid = new GridBagConstraints();
+        grid.insets = new Insets(GameMenuImpl.BUTTONS_DISTANCE, 0, 0, 0);
+
+        JLabel textLabel = new JLabel("Insert your nickname: ");
+        textLabel.setFont(font);
+        textLabel.setForeground(Color.BLACK);
 
         this.start = new ImageButton("START", GameMenuImpl.BACKGROUND_BUTTON,
                 new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
 
+        grid.gridy = 0;
+        grid.gridx = 1;
+        this.namePanel.add(textField, grid);
+
+        grid.gridx = 0;
+        grid.gridy = 0;
+        this.namePanel.add(textLabel, grid);
+
         grid.gridx = 0;
         grid.gridy = 1;
-        grid.insets = new Insets(GameMenuImpl.BUTTONS_DISTANCE, 0, 0, 0);
+        grid.gridwidth = (textField.getWidth() + textLabel.getWidth()) / 2;
         start.setFont(font);
         start.setForeground(Color.BLACK);
         this.namePanel.add(start, grid);
-
-        grid.gridy = 0;
-        grid.gridx = 0;
-        this.namePanel.add(textField, grid);
 
     }
 
