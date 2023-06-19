@@ -15,6 +15,7 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+
 public final class GameModel {
 
     private GameData gameData;
@@ -25,17 +26,17 @@ public final class GameModel {
     private final GameConfiguration configuration;
 
     /**
-     * Intended behaviour of File.mkdirs();
+     * Intended behaviour of File.mkdirs().
      */
     public GameModel() {
-        LoadConfiguration loadConfiguration= new LoadConfiguration();
+        LoadConfiguration loadConfiguration = new LoadConfiguration();
         this.saveDataLocation = new File(LoadConfiguration.getAppData() + File.separator + "game.dat");
-        this.configuration=loadConfiguration.getConfiguration();
+        this.configuration = loadConfiguration.getConfiguration();
     }
 
-    public void resetSaved(){
+    public void resetSaved() {
         this.saveDataLocation.delete();
-        this.gameData=new GameData();
+        this.gameData = new GameData();
     }
 
     public boolean load() {
@@ -91,24 +92,40 @@ public final class GameModel {
         return Optional.empty();
     }
 
-
+    /**
+     * @return the game data.
+     */
     public GameData getGameData() {
         return this.gameData;
     }
 
+    /**
+     * @return the current level of the game.
+     */
     public int getCurrentLevel() {
         return this.gameData.getCurrentLevel();
     }
 
-    public boolean isSaved(){
+    /**
+     * @return true if a saved file exists.
+     */
+    public boolean isSaved() {
         return saveDataLocation.exists();
     }
 
-    public String getPlayerName() {
-        return this.gameData.getPlayerName();
-    }
-
+    /**
+     * Sets the name of the player in this game.
+     *
+     * @param name the name to set.
+     */
     public void setPlayerName(final String name) {
         this.gameData.setPlayerName(name);
+    }
+
+    /**
+     * @return the default game configuration.
+     */
+    public GameConfiguration getDefaultConfiguration() {
+        return this.configuration;
     }
 }

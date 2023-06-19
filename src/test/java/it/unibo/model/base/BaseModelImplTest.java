@@ -17,11 +17,20 @@ import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
 
-public class BaseModelImplTest {
+/**
+ * Tests for the model for the base part of the game.
+ */
+public final class BaseModelImplTest {
+    private static final long GAME_PAUSE_MS = 5000L;
+    private static final float POSITION_INCREMENT = 5.5f;
+    private static final int BUILDING_TIME_TOLERANCE = 10000;
     private GameData gameData;
     private BaseModel baseModel;
     private int counter;
 
+    /**
+     * Build all type of buildings.
+     */
     @BeforeEach
     public void buildAllStructures() {
         initModel();
@@ -33,11 +42,16 @@ public class BaseModelImplTest {
         }
     }
 
+    /**
+     * Tests by building all type of structures.
+     */
     @Test
     public void testBuildMultipleStructures() {
         buildAllStructures();
     }
-
+    /**
+     * Tests the upgrade of a structure.
+     */
     @Test
     public void testStructureUpgrade() {
         Object synchronizationObject = new Object();
@@ -45,7 +59,7 @@ public class BaseModelImplTest {
         buildingKeys.forEach((buildingIdentifier) -> {
             baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
                 @Override
-                public void update(UUID buildingId) {
+                public void update(final UUID buildingId) {
                     if (buildingId.equals(buildingIdentifier)
                             && !baseModel.getBuildingMap().get(buildingIdentifier).isBeingBuilt()) {
                         Assertions.assertEquals(1, baseModel.getBuildingMap().get(buildingId).getLevel());
@@ -73,11 +87,18 @@ public class BaseModelImplTest {
             }
         }
     }
-
+    /**
+     * Tests if the relocation of a structure is done correctly and does not
+     * allow ovelapping of buildings.
+     * @throws InvalidBuildingPlacementException    thrown if the building
+     *                                              is being placed in an invalid position
+     * @throws InvalidStructureReferenceException   thrown if a non existing building is
+     *                                              being referenced
+     */
     @Test
     public void testStructureRelocation() throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
         testBuildMultipleStructures();
-        float positionIncrement = 5.5f;
+        float positionIncrement = POSITION_INCREMENT;
         Set<UUID> identifiers = baseModel.getBuildingIds();
         for (UUID identifier : identifiers) {
             positionIncrement++;
@@ -89,17 +110,33 @@ public class BaseModelImplTest {
                     .get(identifier).getStructurePos().getY());
         }
     }
-
+    /**
+     * Tests the demolition of a building.
+     */
     @Test
     public void testStructureDemolition() {
         Set<UUID> buildingKeys = baseModel.getBuildingIds();
-        buildingKeys.forEach((buildingIdentifier) -> Assertions.assertDoesNotThrow(() -> baseModel.demolishStructure(buildingIdentifier)));
+        buildingKeys.forEach((buildingIdentifier) -> 
+            Assertions.assertDoesNotThrow(() -> 
+                baseModel.demolishStructure(buildingIdentifier)));
     }
-
+    /**
+     * Tests if the base model part pauses correctly.
+     * @throws NotEnoughResourceException           thrown when an action that
+     *                                              requires resources is being
+     *                                              done when not present
+     * @throws BuildingMaxedOutException            thrown when the level limit
+     *                                              is exceeded
+     * @throws InvalidStructureReferenceException   thrown if a non existing building is
+     *                                              being referenced
+     * @throws InterruptedException                 thrown when thread is interrupted
+     */
     @Test
-    public void testGamePause() throws NotEnoughResourceException, BuildingMaxedOutException, InvalidStructureReferenceException, InterruptedException {
+    public void testGamePause() throws NotEnoughResourceException,
+        BuildingMaxedOutException, InvalidStructureReferenceException,
+        InterruptedException {
         Object synchronizationObject = new Object();
-        long initialWaitingTime = 5000L;
+        long initialWaitingTime = GAME_PAUSE_MS;
         counter = 0;
         testBuildMultipleStructures();
         Iterator<UUID> buildingIdentifiers = baseModel.getBuildingIds().iterator();
@@ -107,7 +144,7 @@ public class BaseModelImplTest {
         long buildingTime = baseModel.getBuildingMap().get(singleBuildingUUID).getBuildingTime();
         baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
-            public void update(UUID buildingId) {
+            public void update(final UUID buildingId) {
                 Assertions.assertTrue(baseModel.isClockTicking());
                 if (buildingId.equals(singleBuildingUUID)
                         && !baseModel.getBuildingMap().get(singleBuildingUUID).isBeingBuilt()) {
@@ -127,7 +164,7 @@ public class BaseModelImplTest {
         }
         baseModel.setClockTicking(false);
         synchronized (synchronizationObject) {
-            synchronizationObject.wait(buildingTime + 10000);
+            synchronizationObject.wait(buildingTime + BUILDING_TIME_TOLERANCE);
         }
         long startTime = System.currentTimeMillis();
         baseModel.setClockTicking(true);
@@ -142,12 +179,11 @@ public class BaseModelImplTest {
                     BaseTestUtils.STANDARD_TIME_TOLERANCE));
         }
     }
-
-    public synchronized void increaseCounter() {
+    private synchronized void increaseCounter() {
         counter++;
     }
 
-    public int getCounter() {
+    private int getCounter() {
         return this.counter;
     }
 

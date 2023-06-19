@@ -13,7 +13,10 @@ import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
-public class TroopButtonImpl implements TroopButton {
+/**
+ * This class implements a TroopButton.
+ */
+public final class TroopButtonImpl implements TroopButton {
 
     private TroopType troop;
     private final Dimension size;
@@ -79,9 +82,11 @@ public class TroopButtonImpl implements TroopButton {
      * In this way if the action listener of this JButton is implemented
      * outside this class for any reason, it can still access the logic data.<br>
      * ps. This class is not implemented to handle serialization.
+     *
+     * @param <X> the type of data to store.
      */
     @SuppressWarnings(value = "serial")
-    public static class PositionJbutton<X> extends JButton {
+    public final static class PositionJbutton<X> extends JButton {
 
         private static final int BORDER_THICKNESS = 4;
 
@@ -94,6 +99,9 @@ public class TroopButtonImpl implements TroopButton {
             this.setEnabled(true);
         }
 
+        /**
+         * @return the data.
+         */
         public X getData() {
             return data;
         }

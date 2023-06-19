@@ -19,7 +19,7 @@ import java.util.Arrays;
  */
 public final class EntityDataImpl implements EntityData {
 
-    /** The number of total troops (player + bot)*/
+    /** The number of total troops (player + bot).*/
     private static int totalTroops;
     /** Variable used to indicate the number of troops in the hand.*/
     private final int handTroops;
@@ -31,6 +31,8 @@ public final class EntityDataImpl implements EntityData {
 
     /**
      * The constructor initializes the troops in the hand.
+     * @param battlePanelConfiguration The configuration with the necessary information
+     * used in all the battle.
      */
     @SuppressFBWarnings(value = "ST",
             justification = "I need the static variable to use it in the static classes")
@@ -46,10 +48,9 @@ public final class EntityDataImpl implements EntityData {
     @SuppressFBWarnings(value = "EI2",
             justification = "I want to store the input, to get its reference")
     @Override
-    public void setEntityTroop(Map<Integer, CellsImpl> entityTroop) {
+    public void setEntityTroop(final Map<Integer, CellsImpl> entityTroop) {
         this.entityTroop = entityTroop;
     }
-    
     @SuppressFBWarnings(value = "EI",
             justification = "I want to get the object to modify it and all the references")
     @Override

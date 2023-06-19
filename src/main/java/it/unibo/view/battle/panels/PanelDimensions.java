@@ -5,25 +5,63 @@ import it.unibo.view.GameGui;
 import java.awt.Dimension;
 
 /**
- * Utility interface that calculate all the dimensions of the panels in the BattlePanel.
+ * Utility interface that calculates all the dimensions of the panels in the BattlePanel.
  */
 public interface PanelDimensions {
 
+    /**
+     * Indicate the dimension required by the frame.
+     */
     Dimension MAIN_PANEL_SIZE = GameGui.getAllPanel();
 
+    /**
+     * Field panel width scale.
+     */
     double FIELD_WIDTH_SCALE = 0.6;
+
+    /**
+     * Field panel height scale.
+     */
     double FIELD_HEIGHT_SCALE = 0.6;
 
+    /**
+     * Sides panels width scale.
+     */
     double SIDE_WIDTH_SCALE = 0.2;
+
+    /**
+     * Sides panels height scale.
+     */
     double SIDE_HEIGHT_SCALE = 0.6;
 
+    /**
+     * Players panels width scale.
+     */
     double PLAYERS_WIDTH_SCALE = 1;
+
+    /**
+     * Players panel height scale.
+     */
     double PLAYERS_HEIGHT_SCALE = 0.2;
 
+    /**
+     * North and South panel width scale of the buttons panel.
+     */
     double SIDE_LIFE_WIDTH_SCALE = 1;
+
+    /**
+     * North and South panel height scale of the buttons panel.
+     */
     double SIDE_LIFE_HEIGHT_SCALE = 0.3;
 
+    /**
+     * Center panel width scale of the buttons panel.
+     */
     double SIDE_BUTTONS_WIDTH_SCALE = 1;
+
+    /**
+     * Center panel height scale of the buttons panel.
+     */
     double SIDE_BUTTONS_HEIGHT_SCALE = 0.4;
 
     /**

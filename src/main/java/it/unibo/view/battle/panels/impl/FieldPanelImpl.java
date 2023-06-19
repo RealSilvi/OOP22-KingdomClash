@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public class FieldPanelImpl implements FieldPanel {
+public final class FieldPanelImpl implements FieldPanel {
 
     private static final double LABEL_SCALE = 0.1;
     private static final Dimension LABEL_DIMENSION = new Dimension(

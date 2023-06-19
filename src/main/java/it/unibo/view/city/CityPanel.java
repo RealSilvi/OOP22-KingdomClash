@@ -1,4 +1,3 @@
-
 package it.unibo.view.city;
 
 import java.awt.event.ActionListener;
@@ -36,7 +35,7 @@ public interface CityPanel {
      void registerTileClickObserver(TileClickObserver tileClickObservertoRegister);
      /**
       * Unregisters an observers that gets notified whenever a tile gets clicked.
-      * @param tileClickObservertoRegister the observer to unregister
+      * @param tileClickObservertoUnregister the observer to unregister
       */
      void unregisterTileClickObserver(TileClickObserver tileClickObservertoUnregister);
      /**

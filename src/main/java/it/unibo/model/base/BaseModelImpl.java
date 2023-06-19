@@ -356,7 +356,10 @@ public final class BaseModelImpl implements BaseModel {
     private Set<Resource> unsafeOperation(final Set<Resource> resourceStorage,
         final Set<Resource> resourceCost) {
         Set<Resource> storageResult = new HashSet<>();
-        Iterator<Resource> storageIterator = Resource.checkAndAddMissingResources(Resource.deepCopySet(resourceStorage)).iterator();
+        Iterator<Resource> storageIterator = 
+            Resource
+            .checkAndAddMissingResources(
+                Resource.deepCopySet(resourceStorage)).iterator();
         while (storageIterator.hasNext()) {
             Resource currentStorageResource = storageIterator.next();
             Iterator<Resource> costIterator = Resource.checkAndAddMissingResources(Resource.deepCopySet(resourceCost)).iterator();

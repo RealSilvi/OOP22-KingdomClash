@@ -2,8 +2,6 @@ package it.unibo.view.city.panels.impl;
 
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.Point2D;
@@ -39,19 +37,18 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     private final CityPanel cityView;
     private final BaseController baseController;
     private final Map<BuildingTypes, Map<Integer, Image>> readImages;
-    private List<List<JButton>> buttonmap;
-    private CityConfiguration gameConfiguration;
-    private Map<UUID, Point2D> buildingTilePositions;
+    private final List<List<JButton>> buttonmap;
+    private final CityConfiguration gameConfiguration;
+    private final Map<UUID, Point2D> buildingTilePositions;
 
     /**
-     * The costructor create the panel and set the background of the field.
+     * The constructor create the panel and set the background of the field.
      *
-     * @param cityView
-     * @param baseController
-     * @param gameConfig
-     * @param gameConfiguration      gave the width and height for the field
-     * @param pathIconsConfiguration gave the textures of the building and of the background for the field
-     * @param readImages             a for each building level gave his texture
+     * @param cityView          reference of the main city view
+     * @param baseController    reference of the base controller
+     * @param gameConfig        reference of the game configuration
+     * @param readImages        reference of a map composed of loaded images
+     *                          with textures for building types and level
      */
     public FieldCityPanelImpl(final CityPanel cityView,
                               final BaseController baseController,
@@ -63,20 +60,23 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         this.readImages = readImages;
         this.gameConfiguration = gameConfig.getCityConfiguration();
         this.mainpanel = new DrawPanelImpl(ImageIconsSupplier.loadImage(gameConfig
-                .getMapConfiguration()
+                .getPathIconsConfiguration()
                 .getImageMap().get(ButtonIdentification.TILE)),
                 GameGui.getAllPanel());
-        this.mainpanel.setLayout(new GridLayout(gameConfiguration.getWidth(), gameConfiguration.getHeight()));
+        this.mainpanel.setLayout(
+            new GridLayout(
+                gameConfiguration.getWidth(), gameConfiguration.getHeight()));
         buttonmap = new ArrayList<>(gameConfiguration.getWidth() * gameConfiguration.getHeight());
         this.setfield(gameConfiguration.getWidth(), gameConfiguration.getHeight());
         this.baseController.addBuildingStateChangedObserver(this::updateBuildingOnField);
         this.baseController.requestBuildingMap()
-                .keySet().stream().forEach(this::updateBuildingOnField);
+            .keySet().forEach(this::updateBuildingOnField);
         this.mainpanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
                 baseController.requestBuildingMap()
-                        .keySet().stream().forEach(FieldCityPanelImpl.this::updateBuildingOnField);
+                    .keySet()
+                    .forEach(FieldCityPanelImpl.this::updateBuildingOnField);
             }
         });
     }
@@ -90,16 +90,15 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                 cols.add(j, structure);
                 structure.setOpaque(false);
                 structure.setContentAreaFilled(false);
+                structure.setFocusable(false);
+                structure.setBorderPainted(false);
                 this.mainpanel.add(structure);
                 structure.setBorder(null);
                 final int coordY = j;
-                structure.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(final ActionEvent e) {
-                        if (e.getSource() instanceof JComponent) {
-                            cityView.notifyTileClick((JComponent) e.getSource(),
-                                    new Point2D.Float(coordX, coordY));
-                        }
+                structure.addActionListener(e -> {
+                    if (e.getSource() instanceof JComponent) {
+                        cityView.notifyTileClick((JComponent) e.getSource(),
+                                new Point2D.Float(coordX, coordY));
                     }
                 });
             }
@@ -117,14 +116,14 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     private void updateBuildingOnField(final UUID buildingToUpdate) {
         BuildingTypes type;
         int level;
-        Double xPos;
-        Double yPos;
+        double xPos;
+        double yPos;
         JButton tile;
         if (!this.baseController.requestBuildingMap()
                 .containsKey(buildingToUpdate)) {
             xPos = this.buildingTilePositions.get(buildingToUpdate).getX();
             yPos = this.buildingTilePositions.get(buildingToUpdate).getY();
-            tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
+            tile = this.buttonmap.get((int) xPos).get((int) yPos);
             tile.setIcon(null);
         } else {
             if (!this.baseController.requestBuildingMap().get(buildingToUpdate).isBeingBuilt()) {
@@ -136,7 +135,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
                         this.baseController
                                 .requestBuildingMap()
                                 .get(buildingToUpdate).getStructurePos());
-                tile = this.buttonmap.get(xPos.intValue()).get(yPos.intValue());
+                tile = this.buttonmap.get((int) xPos).get((int) yPos);
                 tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
                     tile.getWidth(), tile.getHeight())));
             }

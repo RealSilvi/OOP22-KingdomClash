@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class LifePanelImpl implements LifePanel {
+public final class LifePanelImpl implements LifePanel {
 
     private static final double LABEL_SCALE = 0.2;
 

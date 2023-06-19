@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class PlayerPanelImpl implements PlayerPanel {
+public final class PlayerPanelImpl implements PlayerPanel {
 
     private static final double BUTTON_SCALE = 0.90;
     private static final int UPDATING_DELAY = 200;

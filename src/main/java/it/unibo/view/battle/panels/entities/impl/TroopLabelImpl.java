@@ -13,7 +13,7 @@ import java.awt.Dimension;
  */
 
 @SuppressWarnings(value = "serial")
-public class TroopLabelImpl extends JLabel implements TroopLabel {
+public final class TroopLabelImpl extends JLabel implements TroopLabel {
 
     private final Dimension size;
     private final PathIconsConfiguration pathIconsConfiguration;

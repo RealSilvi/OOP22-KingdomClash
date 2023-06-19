@@ -20,17 +20,20 @@ import it.unibo.view.utilities.BattlePanelStyle;
  * A simple panel class to show available resources to the player.
  */
 public final class ResourcePanelImpl extends JPanel {
+    private static final float DEFAULT_FONT_SIZE = 18.0f;
+
+    private final BaseController baseControllerRef;
     private Map<ResourceType, JLabel> labelToResource = new EnumMap<>(ResourceType.class);
-    private BaseController baseControllerRef;
+
     /**
      * Constructs a panel that has the purpose of showing the player's resources.
      * @param baseControllerRef the reference for the baseController
      */
-    public ResourcePanelImpl(BaseController baseControllerRef) {
+    public ResourcePanelImpl(final BaseController baseControllerRef) {
         this.setOpaque(false);
         this.baseControllerRef = baseControllerRef;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        Font textFont = BattlePanelStyle.getPrimaryFont().deriveFont(20.0f);
+        Font textFont = BattlePanelStyle.getPrimaryFont().deriveFont(DEFAULT_FONT_SIZE);
         Arrays.stream(ResourceType.values())
             .forEach(resourceType -> {
                 JLabel resourceLabel = new JLabel();
@@ -41,7 +44,7 @@ public final class ResourcePanelImpl extends JPanel {
             });
         baseControllerRef.addBuildingProductionObserver(new BuildingObserver() {
             @Override
-            public void update(UUID buildingId) {
+            public void update(final UUID buildingId) {
                 if (baseControllerRef.requestBuildingMap()
                     .get(buildingId).getProductionProgress() == 100) {
                     updateResourceDisplay();
@@ -51,14 +54,14 @@ public final class ResourcePanelImpl extends JPanel {
         updateResourceDisplay();
     }
     /**
-     * Updates the resource display of this panel
+     * Updates the resource display of this panel.
      */
     public void updateResourceDisplay() {
         baseControllerRef.requestResourceCount().stream()
             .forEach(resource -> 
                 labelToResource.get(resource.getResource())
                     .setText(resource.getResource().name().toUpperCase()
-                        +": "+resource.getAmount())
+                        + ": " + resource.getAmount())
             );
     }
 }

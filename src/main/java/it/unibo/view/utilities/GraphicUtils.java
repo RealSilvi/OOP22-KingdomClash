@@ -19,9 +19,9 @@ public interface GraphicUtils {
      */
     //The assignment is necessary to avoid an exception
     @SuppressWarnings("java:S1488")
-    public static Image resizeImage(final Image image, final int width, final int height) {
-        Image changedImage = width == 0 || height == 0 ? image :
-            image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    static Image resizeImage(final Image image, final int width, final int height) {
+        Image changedImage = width == 0 || height == 0 ? image
+        : image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return changedImage;
     }
     /**
@@ -31,9 +31,9 @@ public interface GraphicUtils {
      * @param height    new image height
      * @return          proportionally resized image
      */
-    public static Image resizeImageWithProportion(final Image image,
+    static Image resizeImageWithProportion(final Image image,
         final int width, final int height) {
-        if (width == 0 || height == 9) {
+        if (width == 0 || height == 0) {
             return image;
         }
         int checkedWidth = width <= height ? width : -1; 
@@ -47,7 +47,7 @@ public interface GraphicUtils {
      * @param overlayImage      the image to overlay
      * @return                  the original image with an applied overlay
      */
-    public static Image overlayImages(final Image backgroundImage,
+    static Image overlayImages(final Image backgroundImage,
         final Image overlayImage) {
         Image ovelrayImageTemp = overlayImage;
 
@@ -81,7 +81,7 @@ public interface GraphicUtils {
      * @param colorFilter   the color filter to apply
      * @return              an image with the applied color filter
      */
-    public static Image applyColorFilterToImage(Image img, Color colorFilter) {
+    static Image applyColorFilterToImage(Image img, Color colorFilter) {
         int width = img.getWidth(null);
         int height = img.getHeight(null);
 

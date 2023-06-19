@@ -2,7 +2,12 @@ package it.unibo.kingdomclash.util;
 
 import java.io.Serializable;
 
-public class Pair<X extends Serializable, Y extends Serializable> implements Serializable {
+/**
+ * A pair class to contain data.
+ * @param <X> the first serializable element type
+ * @param <Y> the second serializable element type
+ */
+public final class Pair<X extends Serializable, Y extends Serializable> implements Serializable {
     /**
      * Serial version UID.
      */
@@ -10,28 +15,47 @@ public class Pair<X extends Serializable, Y extends Serializable> implements Ser
 
     private X first;
     private Y second;
-
-    public Pair(X first, Y second) {
+    /**
+     * Constructs a pair composed of 2 elements.
+     * @param first     the first element
+     * @param second    the second element
+     */
+    public Pair(final X first, final Y second) {
         this.first = first;
         this.second = second;
     }
-
-    public void setFirst(X first) {
+    /**
+     * Sets the first element.
+     * @param first the first element to set
+     */
+    public void setFirst(final X first) {
         this.first = first;
     }
-
-    public void setSecond(Y second) {
+    /**
+     * Sets the second element.
+     * @param second the second element to set
+     */
+    public void setSecond(final Y second) {
         this.second = second;
     }
-
+    /**
+     * Gets the first element.
+     * @return the first element
+     */
     public X getFirst() {
         return this.first;
     }
-
+    /**
+     * Gets the second element.
+     * @return the second element
+     */
     public Y getSecond() {
         return this.second;
     }
-
+    /**
+     * Prints in a formatted way the content of the pair.
+     * @return a formatted string with the content of the pair
+     */
     public String toString() {
         return "<" + this.first + "," + this.second + ">";
     }
@@ -48,24 +72,31 @@ public class Pair<X extends Serializable, Y extends Serializable> implements Ser
     /*This behaviour is intended and necessary for the function*/
     @SuppressWarnings("rawtypes")
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Pair other = (Pair) obj;
         if (first == null) {
-            if (other.first != null)
+            if (other.first != null) {
                 return false;
-        } else if (!first.equals(other.first))
+            }
+        } else if (!first.equals(other.first)) {
             return false;
+        }
         if (second == null) {
-            if (other.second != null)
+            if (other.second != null) {
                 return false;
-        } else if (!second.equals(other.second))
+            }
+        } else if (!second.equals(other.second)) {
             return false;
+        }
         return true;
     }
 }

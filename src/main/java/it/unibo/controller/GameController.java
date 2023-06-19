@@ -10,35 +10,26 @@ import it.unibo.view.menu.SouthPanel;
 
 import java.awt.event.ActionListener;
 
+/**
+ * The game controller handles the communication between the controllers, model and the views.
+ */
 public class GameController {
 
-    private enum PanelsName {
-        BATTLE("BATTLE"),
-        CITY("CITY");
+    private final GameModel gameModel;
+    private final GameGui gameGui;
 
-        private final String name;
+    private Controller battleController;
+    private Controller baseController;
 
-        PanelsName(String name) {
-            this.name = name;
-        }
+    private final ActionListener toMainPanel;
 
-        public String getName() {
-            return this.name;
-        }
-    }
-
-    final GameModel gameModel;
-    final GameGui gameGui;
-
-    Controller battleController;
-    Controller baseController;
-
-    ActionListener toMainPanel;
-
+    /**
+     * Initialize the game.
+     */
     public GameController() {
 
         this.gameModel = new GameModel();
-        this.gameGui = new GameGui(new LoadConfiguration().getConfiguration());
+        this.gameGui = new GameGui(gameModel.getDefaultConfiguration());
 
         this.toMainPanel = this.backActionListener();
 
@@ -114,6 +105,8 @@ public class GameController {
         return e -> {
             this.gameGui.getSoundManager().startMapTheme();
             this.gameGui.showPanels(GameGui.MAP_NAME);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.SAVE, true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.MENU, true);
             this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
             this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         };
@@ -122,36 +115,41 @@ public class GameController {
     private void setActionListenerName() {
         final ActionListener actionListener = e -> {
             this.gameGui.getSoundManager().startMapTheme();
+            this.gameModel.setPlayerName(this.gameGui.getPlayerName());
             this.gameGui.showPanels(GameGui.MAP_NAME);
         };
         this.gameGui.setActionListenerStart(actionListener);
     }
 
     private void setActionListenerSave() {
-        this.gameGui.setActionListenerButtons(e -> this.gameModel.serializeGameData(), SouthPanel.BUTTONS_NAME.SAVE);
+        this.gameGui.setActionListenerButtons(e -> this.gameModel.serializeGameData(), SouthPanel.BUTTONS_SOUTH.SAVE);
     }
 
     private void setActionListenerContinue() {
-        this.gameGui.setActionListenerContinue(e -> this.gameGui.showPanels(GameGui.MAP_NAME));
+        this.gameGui.setActionListenerContinue(e -> {
+            this.gameGui.showPanels(GameGui.MAP_NAME);
+            this.gameGui.getSoundManager().startMapTheme();
+        });
     }
 
     private void setActionListenerMenu() {
         this.gameGui.setActionListenerButtons(e -> {
             this.gameGui.getSoundManager().startMenuTheme();
             this.gameGui.showMenuPanel();
-        }, SouthPanel.BUTTONS_NAME.MENU);
+        }, SouthPanel.BUTTONS_SOUTH.MENU);
     }
-
 
     private void setActionListenerMusic() {
         this.gameGui.setActionListenerButtons(
-                e -> this.gameGui.getSoundManager().changeMute(), SouthPanel.BUTTONS_NAME.MUSIC);
+                e -> this.gameGui.getSoundManager().changeMute(), SouthPanel.BUTTONS_SOUTH.MUSIC);
     }
 
     private void setActionListenerBattle() {
         this.gameGui.setMapBattleActionListener(e -> {
             this.gameGui.getSoundManager().startBattleTheme();
             this.gameGui.showPanels(PanelsName.BATTLE.getName());
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.SAVE, false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.MENU, false);
         });
     }
 
@@ -165,6 +163,21 @@ public class GameController {
     private void setActionListenerQuit() {
         this.gameGui.setActionListenerButtons(e -> {
             System.exit(0);
-        }, SouthPanel.BUTTONS_NAME.QUIT);
+        }, SouthPanel.BUTTONS_SOUTH.QUIT);
+    }
+
+    private enum PanelsName {
+        BATTLE("BATTLE"),
+        CITY("CITY");
+
+        private final String name;
+
+        PanelsName(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
     }
 }

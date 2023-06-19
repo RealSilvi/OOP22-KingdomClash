@@ -2,16 +2,21 @@ package it.unibo.controller;
 
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
 /**
- * A very simple standardized controller interface
+ * A very simple standardized controller interface.
  */
- public interface Controller {
+public interface Controller {
 
-    JPanel getGuiPanel();
     /**
-     * Sets an action listener that tells the view to return to the main menu.
+     * @return the main panel of the controller which will be registered to the gui.
+     */
+    JPanel getGuiPanel();
+
+    /**
+     * Sets an action listener that switches the panel in the mainPanel of the gui.
+     *
      * @param returnActionToAdd the ActionListener to add.
      */
     void setReturnActionListener(ActionListener returnActionToAdd);

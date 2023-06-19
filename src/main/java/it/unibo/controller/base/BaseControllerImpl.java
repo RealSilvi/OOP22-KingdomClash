@@ -46,8 +46,20 @@ public final class BaseControllerImpl implements Controller, BaseController {
      */
     public BaseControllerImpl(final @Nonnull GameData gameData) {
         this.baseModel = new BaseModelImpl(gameData);
-        this.baseView = new CityPanelImpl(this, gameData.getGameConfiguration());
+        this.baseView = new CityPanelImpl(this,
+            gameData.getGameConfiguration());
         this.baseModel.refreshBuildings();
+        int validResources = this.baseModel
+            .getResourceCount().stream().filter(resource ->
+                resource.getAmount() != 0).toList().size();
+        int buildings = this.baseModel.getBuildingMap().size();
+        Point2D centerPosition = new Point2D.Float(
+            gameData.getGameConfiguration().getCityConfiguration().getWidth() / 2.0f,
+            gameData.getGameConfiguration().getCityConfiguration().getHeight() / 2.0f);
+        if (validResources == 0 && buildings == 0) {
+            this.handleBuildingPlaced(centerPosition,
+                BuildingTypes.HALL, 0, true);
+        }
     }
 
     @Override

@@ -19,19 +19,36 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
 import it.unibo.model.data.Resource.ResourceType;
-
-public class ThreadManagerImplTest {
+/**
+ * Tests the base model's thread manager.
+ */
+public final class ThreadManagerImplTest {
     private Logger logger = Logger.getLogger(this.getClass().getName());
 
     private GameData gameData;
     private BaseModel baseModel;
 
+    /**
+     * Initializes the game model.
+     */
     @BeforeEach
     public void initModel() {
         this.gameData = new GameData();
         this.baseModel = new BaseModelImpl(this.gameData);
     }
-
+    /**
+     * Checks the full building and upgrade cycle.
+     * @throws NotEnoughResourceException           thrown when an action that
+     *                                              requires resources is being
+     *                                              done when not present
+     * @throws InvalidBuildingPlacementException    
+     * @throws BuildingMaxedOutException            thrown when the level limit
+     *                                              is exceeded
+     * @throws InvalidStructureReferenceException   thrown if a non existing building is
+     *                                              being referenced
+     * @throws MaxBuildingLimitReachedException     thrown when the maximum number
+     *                                              of building is reached
+     */
     @Test
     public void testBuildingAndProductionCycle() throws NotEnoughResourceException, InvalidBuildingPlacementException, BuildingMaxedOutException, InvalidStructureReferenceException, MaxBuildingLimitReachedException {
         Object lock = new Object();

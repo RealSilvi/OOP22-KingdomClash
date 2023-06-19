@@ -162,7 +162,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     @Override
     public void clickedButtonPlayer(final Integer key) {
-        if (fightData.getPlayerData().getCells(key).getClicked()) {
+        if (Boolean.TRUE.equals(fightData.getPlayerData().getCells(key).getClicked())) {
             fightData.getPlayerData().removeEntityTroop(key);
         } else {
             fightData.getPlayerData().addEntityTroop(key);
@@ -213,7 +213,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
     }
 
     @Override
-    public void setReturnActionListener(ActionListener returnActionToAdd) {
+    public void setReturnActionListener(final ActionListener returnActionToAdd) {
         this.battlePanel.setBackActionListener(returnActionToAdd);
     }
 
@@ -227,12 +227,14 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.setActionListenerSpinButton(actionListenerInfo);
     }
 
+    @SuppressWarnings(value = "unchecked")
     private void setActionListenerSlots() {
         ActionListener actionListenerInfo = e -> {
-            TroopButtonImpl.PositionJbutton<Integer> button;
-            button = (TroopButtonImpl.PositionJbutton<Integer>) e.getSource();
-            clickedButtonPlayer(button.getData());
-            button.updateBorder();
+            if (e.getSource() instanceof TroopButtonImpl.PositionJbutton<?>) {
+                var button = (TroopButtonImpl.PositionJbutton<Integer>) e.getSource();
+                clickedButtonPlayer(button.getData());
+                button.updateBorder();
+            }
         };
         this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);
     }
