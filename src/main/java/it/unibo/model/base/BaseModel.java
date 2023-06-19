@@ -182,7 +182,7 @@ public interface BaseModel {
      * @param troopToUpgrade
      */
     void upgradeTroop(TroopType troopToUpgrade)
-        throws InvalidTroopLevelException;
+        throws InvalidTroopLevelException, NotEnoughResourceException;
 
     /**
      * Upgrades a troop to a given level.
@@ -191,7 +191,7 @@ public interface BaseModel {
      * @param level          the level wich the troop has to be upgraded to
      */
     void upgradeTroop(TroopType troopToUpgrade, int level)
-        throws InvalidTroopLevelException;
+        throws InvalidTroopLevelException, NotEnoughResourceException;
 
     /**
      * @return a map containing the player's troops with their corresponding stats.

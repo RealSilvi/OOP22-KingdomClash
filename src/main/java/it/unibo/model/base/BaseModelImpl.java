@@ -239,16 +239,19 @@ public final class BaseModelImpl implements BaseModel {
 
     @Override
     public void upgradeTroop(final TroopType troopToUpgrade)
-        throws InvalidTroopLevelException {
+        throws InvalidTroopLevelException, NotEnoughResourceException {
         upgradeTroop(troopToUpgrade, gameData.getPlayerArmyLevel().get(troopToUpgrade) + 1);
     }
 
     @Override
     public void upgradeTroop(final TroopType troopToUpgrade, final int level)
-        throws InvalidTroopLevelException {
+        throws InvalidTroopLevelException, NotEnoughResourceException {
         if (level >= baseModelConfiguration.getMaximumTroopLevel()) {
             throw new InvalidTroopLevelException(troopToUpgrade, level);
         }
+        gameData.setResources(subtractResources(gameData.getResources(),
+            this.configuration.getBaseConfiguration().getCostPerTroop()
+                .get(troopToUpgrade).get(level)));
         gameData.getPlayerArmyLevel().put(troopToUpgrade, level);
     }
 
