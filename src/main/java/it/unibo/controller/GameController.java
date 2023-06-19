@@ -10,6 +10,9 @@ import it.unibo.view.menu.SouthPanel;
 
 import java.awt.event.ActionListener;
 
+/**
+ * The game controller handles the communication between the controllers, model and the views.
+ */
 public class GameController {
 
     private final GameModel gameModel;
@@ -20,10 +23,13 @@ public class GameController {
 
     private final ActionListener toMainPanel;
 
+    /**
+     * Initialize the game.
+     */
     public GameController() {
 
         this.gameModel = new GameModel();
-        this.gameGui = new GameGui(new LoadConfiguration().getConfiguration());
+        this.gameGui = new GameGui(gameModel.getDefaultConfiguration());
 
         this.toMainPanel = this.backActionListener();
 
@@ -109,6 +115,7 @@ public class GameController {
     private void setActionListenerName() {
         final ActionListener actionListener = e -> {
             this.gameGui.getSoundManager().startMapTheme();
+            this.gameModel.setPlayerName(this.gameGui.getPlayerName());
             this.gameGui.showPanels(GameGui.MAP_NAME);
         };
         this.gameGui.setActionListenerStart(actionListener);

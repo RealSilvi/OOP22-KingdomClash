@@ -5,6 +5,12 @@ package it.unibo.kingdomclash.config;
  */
 public class BattleConfiguration {
 
+    private static final int NR_OF_SLOTS = 5;
+    private static final int NR_OF_LIVES = 8;
+    private static final int NR_OF_FIELD_SPOTS = NR_OF_SLOTS * 2;
+    private static final int MAX_ROUND = 3;
+
+
     private final TextConfigurationBattle textConfigurationBattle;
 
     private final int nrOfSlots;
@@ -12,11 +18,15 @@ public class BattleConfiguration {
     private final int nrOfFieldSpots;
     private final int maxRound;
 
+    /**
+     * Initialize the default configuration.
+     */
     public BattleConfiguration() {
-        nrOfSlots = 5;
-        nrOfLives = 8;
-        nrOfFieldSpots = nrOfSlots * 2;
-        maxRound = 3;
+
+        nrOfSlots = NR_OF_SLOTS;
+        nrOfLives = NR_OF_LIVES;
+        nrOfFieldSpots = NR_OF_FIELD_SPOTS;
+        maxRound = MAX_ROUND;
         this.textConfigurationBattle = new TextConfigurationBattle();
     }
 
@@ -42,7 +52,7 @@ public class BattleConfiguration {
     }
 
     /**
-     * @return the number of max raund in the battle.
+     * @return the number of max round in the battle.
      */
     public int getMaxRound() {
         return maxRound;

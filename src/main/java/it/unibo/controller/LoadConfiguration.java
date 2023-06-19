@@ -76,6 +76,9 @@ public final class LoadConfiguration {
         return appData + File.separator + "KingdomClash";
     }
 
+    /**
+     * @return the configuration of the game.
+     */
     public GameConfiguration getConfiguration() {
         return this.configuration;
     }

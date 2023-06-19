@@ -20,18 +20,30 @@ public class TextConfigurationBattle {
     private final String endLosePanelTitle;
     private final String endLosePanelText;
 
-
+    /**
+     * Set's the default configuration.
+     */
     public TextConfigurationBattle() {
         this.tutorialNorthTitle = " ";
         this.tutorialNorthText = "This panel contains the opponent's set of dice.";
         this.tutorialSouthTitle = " ";
-        this.tutorialSouthText = " In this panel, you'll find your set of data, where you can select troops to deploy on the battlefield. The chosen troops are automatically arranged on the battlefield.";
+        this.tutorialSouthText = " In this panel, you'll find your set of data,"
+                + " where you can select troops to deploy on the battlefield. "
+                + "The chosen troops are automatically arranged on the battlefield.";
         this.tutorialEastTitle = " ";
-        this.tutorialEastText = "This panel provides information about the troops currently on the battlefield. ";
+        this.tutorialEastText = "This panel provides information about the "
+                + "troops currently on the battlefield. ";
         this.tutorialWestTitle = " ";
-        this.tutorialWestText = "Here, the combat effectiveness of each troop is compared to the level of the opponent's troops. If two troops of the same level clash, they cancel each other out. However, if one troop has a higher level than the other, it prevails over the other. ";
+        this.tutorialWestText = "Here, the combat effectiveness of each troop "
+                + "is compared to the level of the opponent's troops. "
+                + "If two troops of the same level clash, they cancel each other out. "
+                + "However, if one troop has a higher level than the other, "
+                + "it prevails over the other. ";
         this.tutorialCenterTitle = " ";
-        this.tutorialCenterText = "Within this panel, you'll find the battlefield,where deployed troops are automatically arranged. The outcome of the combat between one troop and another is displayed in the information panel. ";
+        this.tutorialCenterText = "Within this panel, you'll find the battlefield"
+                + ",where deployed troops are automatically arranged. "
+                + "The outcome of the combat between one troop and another "
+                + "is displayed in the information panel. ";
         this.endWinPanelTitle = "YOU WIN";
         this.endWinPanelText = " ";
         this.endLosePanelTitle = "YOU LOSE ";
@@ -116,7 +128,7 @@ public class TextConfigurationBattle {
     }
 
     /**
-     * @return the title of the end lose Panel of Tutorial.
+     * @return the title of the end loses Panel of Tutorial.
      */
     public String getEndLosePanelTitle() {
         return endLosePanelTitle;
@@ -130,7 +142,7 @@ public class TextConfigurationBattle {
     }
 
     /**
-     * @return the text of the end lose Panel of Tutorial.
+     * @return the text of the end loses Panel of Tutorial.
      */
     public String getEndLosePanelText() {
         return endLosePanelText;
