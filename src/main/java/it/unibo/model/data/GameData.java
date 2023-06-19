@@ -46,7 +46,7 @@ public final class GameData implements Serializable {
     /**
      * Construct an instance following the game configuration.
      *
-     * @param gameConfiguration the confiugration of the game.
+     * @param gameConfiguration the configuration of the game.
      */
     public GameData(final GameConfiguration gameConfiguration) {
         this.currentLevel = 1;
@@ -60,7 +60,7 @@ public final class GameData implements Serializable {
 
     /**
      * Constructs a GameData instance given an already existing GameData.
-     * and a configuration in order easily restore transient fields.
+     * And a configuration in order to easily restore transient fields.
      *
      * @param gameData      an already existing GameData object.
      * @param configuration the configuration for the game.
@@ -73,20 +73,6 @@ public final class GameData implements Serializable {
         this.playerArmyLevel = gameData.getPlayerArmyLevel();
         this.configuration = configuration;
         this.fightData = gameData.getFightData();
-    }
-
-    /* No defensive copy needed because the base model already
-     * handles data integrity
-     */
-    @SuppressFBWarnings(value = "EI2",
-            justification = "No encapsulation needed as BaseModel handles everything")
-    public GameData(final Set<Resource> resources, final ConcurrentMap<UUID, Building> buildings,
-                    final FightData fightData, final GameConfiguration configuration, final Integer level) {
-        this.currentLevel = level;
-        this.resources = resources;
-        this.buildings = buildings;
-        this.fightData = fightData;
-        this.configuration = configuration;
     }
 
     /**
@@ -121,47 +107,61 @@ public final class GameData implements Serializable {
         this.playerName = playerName;
     }
 
+
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
+
     /**
      * Gets the resources owned by the player.
      *
      * @return a set of resources owned by the player.
      */
-    /* No defensive copy needed because the base model already
-     * handles data integrity
-     */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
+
     public synchronized Set<Resource> getResources() {
         return resources;
     }
+
+
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
 
     /**
      * Sets the resources owned by the player.
      *
      * @param resources A set representing the resources owned.
      */
-    /* No defensive copy needed because the base model already
-     * handles data integrity
-     */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
+
     public synchronized void setResources(final Set<Resource> resources) {
         this.resources = resources;
     }
+
+
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
 
     /**
      * Gets the currently built buildings owned by the player.
      *
      * @return a map containing all the buildings and their corresponding identifier.
      */
-    /* No defensive copy needed because the base model already
-     * handles data integrity
-     */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
+
     public ConcurrentMap<UUID, Building> getBuildings() {
         return buildings;
     }
+
+
+    /* No defensive copy needed because the base model already
+     * handles data integrity
+     */
 
     /**
      * Sets a map of buildings currently owned by the player.
@@ -169,36 +169,39 @@ public final class GameData implements Serializable {
      * @param buildings a map containing all buildings owned by the player and
      *                  their corresponding identifier.
      */
-    /* No defensive copy needed because the base model already
-     * handles data integrity
-     */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
+
     public void setBuildings(final ConcurrentMap<UUID, Building> buildings) {
         this.buildings = buildings;
     }
 
-    /**
-     * Gets a map with a troop type and it's corresponding level for the player.
-     *
-     * @return a map with the troop and the level of the troop as an integer.
-     */
+
     /* No defensive copy needed because the base model already
      * handles data integrity
      */
+
+    /**
+     * Gets a map with a troop type, and it's corresponding level for the player.
+     *
+     * @return a map with the troop and the level of the troop as an integer.
+     */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
+
     public Map<TroopType, Integer> getPlayerArmyLevel() {
         return this.playerArmyLevel;
     }
 
-    /**
-     * Sets a map with a troop type and it's corresponding level for the player.
-     *
-     * @param playerArmyLevel a map with the troop and the level of the troop as an integer.
-     */
+
     /* No defensive copy needed because the base model already
      * handles data integrity
+     */
+
+    /**
+     * Sets a map with a troop type, and it's corresponding level for the player.
+     *
+     * @param playerArmyLevel a map with the troop and the level of the troop as an integer.
      */
     @SuppressFBWarnings(value = "EI2",
             justification = "No encapsulation needed as BaseModel handles everything")
@@ -217,7 +220,7 @@ public final class GameData implements Serializable {
     }
 
     /**
-     * @param fightData sets a new fight data.
+     * @param fightData sets new fight data.
      */
     @SuppressFBWarnings(value = "EI2",
             justification = "I want to store the input, to get its reference and use it")

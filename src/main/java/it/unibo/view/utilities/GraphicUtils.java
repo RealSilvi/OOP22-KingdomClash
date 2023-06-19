@@ -20,8 +20,8 @@ public interface GraphicUtils {
     //The assignment is necessary to avoid an exception
     @SuppressWarnings("java:S1488")
     static Image resizeImage(final Image image, final int width, final int height) {
-        Image changedImage = width == 0 || height == 0 ? image :
-            image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        Image changedImage = width == 0 || height == 0 ? image
+        : image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         return changedImage;
     }
     /**
@@ -33,7 +33,7 @@ public interface GraphicUtils {
      */
     static Image resizeImageWithProportion(final Image image,
         final int width, final int height) {
-        if (width == 0 || height == 9) {
+        if (width == 0 || height == 0) {
             return image;
         }
         int checkedWidth = width <= height ? width : -1; 

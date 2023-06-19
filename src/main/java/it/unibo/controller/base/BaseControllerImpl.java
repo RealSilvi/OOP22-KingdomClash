@@ -54,8 +54,8 @@ public final class BaseControllerImpl implements Controller, BaseController {
                 resource.getAmount() != 0).toList().size();
         int buildings = this.baseModel.getBuildingMap().size();
         Point2D centerPosition = new Point2D.Float(
-            gameData.getGameConfiguration().getCityConfiguration().getWidth()/2.0f,
-            gameData.getGameConfiguration().getCityConfiguration().getHeight()/2.0f);
+            gameData.getGameConfiguration().getCityConfiguration().getWidth() / 2.0f,
+            gameData.getGameConfiguration().getCityConfiguration().getHeight() / 2.0f);
         if (validResources == 0 && buildings == 0) {
             this.handleBuildingPlaced(centerPosition,
                 BuildingTypes.HALL, 0, true);

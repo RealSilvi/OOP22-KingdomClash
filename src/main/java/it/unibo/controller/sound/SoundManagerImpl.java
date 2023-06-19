@@ -93,7 +93,8 @@ public final class SoundManagerImpl implements SoundManager {
 
     private Optional<Clip> createClip(final String themeFile) {
         try {
-            final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(Objects.requireNonNull(SoundManagerImpl.class.getResourceAsStream(themeFile)));
+            final AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    Objects.requireNonNull(SoundManagerImpl.class.getResourceAsStream(themeFile)));
             final Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             return Optional.of(clip);
