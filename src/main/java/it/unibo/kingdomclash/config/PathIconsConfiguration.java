@@ -8,7 +8,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * Configuration of the icons paths.
+ * Configuration of the icon paths.
  */
 public class PathIconsConfiguration {
 
@@ -31,6 +31,9 @@ public class PathIconsConfiguration {
     private final String life;
     private final String death;
 
+    /**
+     * Create a default configuration.
+     */
     public PathIconsConfiguration() {
         final String battleDirectory = TEXTURES_DIRECTORY + "battle/";
         final String mapDirectory = TEXTURES_DIRECTORY + "map/";
@@ -114,24 +117,28 @@ public class PathIconsConfiguration {
     public String getInfo() {
         return this.info;
     }
+
     /**
      * @return the path to the exit button's texture of battle.
      */
     public String getExit() {
         return this.exit;
     }
+
     /**
      * @return the path to the check button's texture of battle.
      */
     public String getCheck() {
         return this.check;
     }
+
     /**
      * @return the path to the X button's texture of battle.
      */
     public String getX() {
         return this.x;
     }
+
     /**
      * @return the path to the indicator button's texture of battle.
      */
@@ -164,13 +171,13 @@ public class PathIconsConfiguration {
     }
 
     /**
-     * @param type indicates the required building type's texture.
+     * @param type  indicates the required building type's texture.
      * @param level indicates the level of the building.
      * @return the texture of the building required.
      */
     public String getBuilding(final BuildingBuilder.BuildingTypes type, final Integer level) {
-        return level > 3 || level < 1 ?
-                this.buildings.get(type).get(1) :
-                this.buildings.get(type).get(level);
+        return level > 3 || level < 1
+                ? this.buildings.get(type).get(1)
+                : this.buildings.get(type).get(level);
     }
 }

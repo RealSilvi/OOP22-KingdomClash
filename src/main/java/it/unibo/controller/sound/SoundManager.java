@@ -7,22 +7,22 @@ package it.unibo.controller.sound;
 public interface SoundManager {
 
     /**
-     * Starts the city theme
+     * Starts the city theme.
      */
     void startCityTheme();
 
     /**
-     * Starts the map theme
+     * Starts the map theme.
      */
     void startMapTheme();
 
     /**
-     * Starts the battle theme
+     * Starts the battle theme.
      */
     void startBattleTheme();
 
     /**
-     * Starts the menu theme
+     * Starts the menu theme.
      */
     void startMenuTheme();
 

@@ -92,24 +92,40 @@ public final class GameModel {
         return Optional.empty();
     }
 
-
+    /**
+     * @return the game data.
+     */
     public GameData getGameData() {
         return this.gameData;
     }
 
+    /**
+     * @return the current level of the game.
+     */
     public int getCurrentLevel() {
         return this.gameData.getCurrentLevel();
     }
 
+    /**
+     * @return true if a saved file exists.
+     */
     public boolean isSaved() {
         return saveDataLocation.exists();
     }
 
-    public String getPlayerName() {
-        return this.gameData.getPlayerName();
-    }
-
+    /**
+     * Sets the name of the player in this game.
+     *
+     * @param name the name to set.
+     */
     public void setPlayerName(final String name) {
         this.gameData.setPlayerName(name);
+    }
+
+    /**
+     * @return the default game configuration.
+     */
+    public GameConfiguration getDefaultConfiguration() {
+        return this.configuration;
     }
 }
