@@ -9,11 +9,7 @@ import it.unibo.view.utilities.ImageIconsSupplier;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +60,8 @@ public final class SouthPanel {
     /** The dimension of the images in the buttons.*/
     private static final ImageIcon BACKGROUND_BUTTON_SOUTH = ImageIconsSupplier.
             getScaledImageIcon(GameMenuImpl.PATH_BUTTON, BUTTONS_DIMENSION);
+    /** Used to create distance between buttons.*/
+    private static final int DISTANCE_SOUTH_BUTTONS = BUTTONS_DIMENSION.width / 20;
     private final JPanel southPanel;
     private final Map<BUTTONS_SOUTH, JButton> buttons;
 
@@ -92,6 +90,7 @@ public final class SouthPanel {
 
         grid.gridx = 0;
         grid.gridy = 0;
+        grid.insets = new Insets(0, DISTANCE_SOUTH_BUTTONS, 0, 0);
 
         for (int i = 0; i < this.buttons.size(); i++) {
             this.buttons.get(BUTTONS_SOUTH.values()[i]).setFont(font);
