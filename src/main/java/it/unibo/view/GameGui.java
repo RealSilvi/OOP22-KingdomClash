@@ -162,12 +162,12 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_NAME name){
+    public void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_SOUTH name){
         this.southPanel.setActionListenerButtons(actionListener, name);
     }
 
     @Override
-    public void setButtonsVisibility(SouthPanel.BUTTONS_NAME name, Boolean visibility){
+    public void setButtonsVisibility(SouthPanel.BUTTONS_SOUTH name, Boolean visibility){
         this.southPanel.setButtonsVisibility(name, visibility);
     }
 

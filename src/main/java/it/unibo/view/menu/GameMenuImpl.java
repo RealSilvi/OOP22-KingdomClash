@@ -50,19 +50,19 @@ public class GameMenuImpl implements GameMenu {
 
     public GameMenuImpl() {
         this.buttons = new HashMap<>();
-        this.buttons.put(BUTTONS_MENU.NEW_GAME, new ImageButton("NEW GAME", BACKGROUND_BUTTON,
+        this.buttons.put(BUTTONS_MENU.NEW_GAME, new ImageButton(BUTTONS_MENU.NEW_GAME.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
-        this.buttons.put(BUTTONS_MENU.LOAD, new ImageButton("LOAD", BACKGROUND_BUTTON,
+        this.buttons.put(BUTTONS_MENU.LOAD, new ImageButton(BUTTONS_MENU.LOAD.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
-        ImageButton continues = new ImageButton("CONTINUE", BACKGROUND_BUTTON,
+        ImageButton continues = new ImageButton(BUTTONS_MENU.CONTINUE.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
         continues.setVisible(false);
         this.buttons.put(BUTTONS_MENU.CONTINUE, continues);
-        this.buttons.put(BUTTONS_MENU.MUSIC, new ImageButton("MUSIC", BACKGROUND_BUTTON,
+        this.buttons.put(BUTTONS_MENU.MUSIC, new ImageButton(BUTTONS_MENU.MUSIC.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
-        this.buttons.put(BUTTONS_MENU.INFO, new ImageButton("INFO", BACKGROUND_BUTTON,
+        this.buttons.put(BUTTONS_MENU.INFO, new ImageButton(BUTTONS_MENU.INFO.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
-        this.buttons.put(BUTTONS_MENU.EXIT, new ImageButton("EXIT", BACKGROUND_BUTTON,
+        this.buttons.put(BUTTONS_MENU.EXIT, new ImageButton(BUTTONS_MENU.EXIT.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
 
         Font font = BattlePanelStyle.getPrimaryFont();

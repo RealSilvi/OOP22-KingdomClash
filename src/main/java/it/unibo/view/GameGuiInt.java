@@ -36,9 +36,9 @@ public interface GameGuiInt {
 
     void setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU name, Boolean visibility);
 
-    void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_NAME name);
+    void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_SOUTH name);
 
-    void setButtonsVisibility(SouthPanel.BUTTONS_NAME name, Boolean visibility);
+    void setButtonsVisibility(SouthPanel.BUTTONS_SOUTH name, Boolean visibility);
 
     void setActionListenerNewGame(ActionListener actionListener);
 

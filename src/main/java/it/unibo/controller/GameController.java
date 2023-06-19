@@ -99,8 +99,8 @@ public class GameController {
         return e -> {
             this.gameGui.getSoundManager().startMapTheme();
             this.gameGui.showPanels(GameGui.MAP_NAME);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE, true);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU, true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.SAVE, true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.MENU, true);
             this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
             this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         };
@@ -115,7 +115,7 @@ public class GameController {
     }
 
     private void setActionListenerSave() {
-        this.gameGui.setActionListenerButtons(e -> this.gameModel.serializeGameData(), SouthPanel.BUTTONS_NAME.SAVE);
+        this.gameGui.setActionListenerButtons(e -> this.gameModel.serializeGameData(), SouthPanel.BUTTONS_SOUTH.SAVE);
     }
 
     private void setActionListenerContinue() {
@@ -129,20 +129,20 @@ public class GameController {
         this.gameGui.setActionListenerButtons(e -> {
             this.gameGui.getSoundManager().startMenuTheme();
             this.gameGui.showMenuPanel();
-        }, SouthPanel.BUTTONS_NAME.MENU);
+        }, SouthPanel.BUTTONS_SOUTH.MENU);
     }
 
     private void setActionListenerMusic() {
         this.gameGui.setActionListenerButtons(
-                e -> this.gameGui.getSoundManager().changeMute(), SouthPanel.BUTTONS_NAME.MUSIC);
+                e -> this.gameGui.getSoundManager().changeMute(), SouthPanel.BUTTONS_SOUTH.MUSIC);
     }
 
     private void setActionListenerBattle() {
         this.gameGui.setMapBattleActionListener(e -> {
             this.gameGui.getSoundManager().startBattleTheme();
             this.gameGui.showPanels(PanelsName.BATTLE.getName());
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.SAVE, false);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_NAME.MENU, false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.SAVE, false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.MENU, false);
         });
     }
 
@@ -156,7 +156,7 @@ public class GameController {
     private void setActionListenerQuit() {
         this.gameGui.setActionListenerButtons(e -> {
             System.exit(0);
-        }, SouthPanel.BUTTONS_NAME.QUIT);
+        }, SouthPanel.BUTTONS_SOUTH.QUIT);
     }
 
     private enum PanelsName {
