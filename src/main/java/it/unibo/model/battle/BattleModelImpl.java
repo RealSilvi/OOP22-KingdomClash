@@ -192,7 +192,7 @@ public final class BattleModelImpl implements BattleModel {
         fightData.setPlayerData(new EntityDataImpl(this.gameData.getGameConfiguration().getBattleConfiguration()));
         if (increment) {
             this.gameData.incrementLevel();
-            for(TroopType troopType : TroopType.values()){
+            for (TroopType troopType : TroopType.values()) {
                 this.troopBotLevel.put(troopType, this.gameData.getCurrentLevel());
             }
         }

@@ -6,19 +6,36 @@ import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
-import javax.swing.*;
-
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SouthPanel {
+/**
+ * The class creates a new south panel in each panel of the game
+ * (except of the menu).
+ */
+public final class SouthPanel {
 
+    /**
+     * This enum it's used to give symbol to the buttons,
+     * to help the gui and the controller in searching for buttons.
+     */
     public enum BUTTONS_SOUTH {
+        /** The symbol represents the music button.*/
         MUSIC("MUSIC"),
+        /** The symbol represents the menu button.*/
         MENU("MENU"),
+        /** The symbol represents the save button.*/
         SAVE("SAVE"),
+        /** The symbol represents the quit button.*/
         QUIT("QUIT");
 
         private final String name;
@@ -27,22 +44,34 @@ public class SouthPanel {
             this.name = name;
         }
 
-        public String getName(){
+        /**
+         * Gets the name of the symbol in the enum.
+         * @return The name of the symbol.
+         */
+        public String getName() {
             return this.name;
         }
 
     }
 
-    public static final Dimension DIMENSION_SCREEN = GameGui.DIMENSION_SCREEN;
+    /** Used to increment the width of a dimension.*/
     private static final double MENU_WIDTH_SCALE = 1;
+    /** Used to increment the height of a dimension.*/
     private static final double MENU_HEIGHT_SCALE = 0.05;
-    private static final Integer NUMBER_BUTTONS = BUTTONS_SOUTH.values().length;
-    private static final Dimension BUTTONS_DIMENSION = new Dimension(getMenuPanel().width / (NUMBER_BUTTONS + 1), (int) (getMenuPanel().height * 0.9));
-    public static final ImageIcon BACKGROUND_BUTTON_SOUTH = ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON, BUTTONS_DIMENSION);
+    /** The dimension of the buttons.*/
+    private static final Dimension BUTTONS_DIMENSION = new Dimension(getMenuPanel().width / (BUTTONS_SOUTH.values().length + 1),
+            (int) (getMenuPanel().height * 0.9));
+    /** The dimension of the images in the buttons.*/
+    private static final ImageIcon BACKGROUND_BUTTON_SOUTH = ImageIconsSupplier.
+            getScaledImageIcon(GameMenuImpl.PATH_BUTTON, BUTTONS_DIMENSION);
     private final JPanel southPanel;
     private final Map<BUTTONS_SOUTH, JButton> buttons;
 
-    public SouthPanel(){
+    /**
+     * The constructor takes care to create all the south panel
+     * and the buttons which are included in it.
+     */
+    public SouthPanel() {
         buttons = new HashMap<>();
         this.southPanel = new JPanel();
         this.southPanel.setBackground(Color.BLACK);
@@ -50,17 +79,21 @@ public class SouthPanel {
         this.southPanel.setLayout(new GridBagLayout());
         GridBagConstraints grid = new GridBagConstraints();
 
-        this.buttons.put(BUTTONS_SOUTH.MUSIC, new ImageButton(BUTTONS_SOUTH.MUSIC.getName(), BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
-        this.buttons.put(BUTTONS_SOUTH.MENU, new ImageButton(BUTTONS_SOUTH.MENU.getName(), BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
-        this.buttons.put(BUTTONS_SOUTH.SAVE, new ImageButton(BUTTONS_SOUTH.SAVE.getName(), BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
-        this.buttons.put(BUTTONS_SOUTH.QUIT, new ImageButton(BUTTONS_SOUTH.QUIT.getName(), BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
+        this.buttons.put(BUTTONS_SOUTH.MUSIC, new ImageButton(BUTTONS_SOUTH.MUSIC.getName(),
+                BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
+        this.buttons.put(BUTTONS_SOUTH.MENU, new ImageButton(BUTTONS_SOUTH.MENU.getName(),
+                BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
+        this.buttons.put(BUTTONS_SOUTH.SAVE, new ImageButton(BUTTONS_SOUTH.SAVE.getName(),
+                BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
+        this.buttons.put(BUTTONS_SOUTH.QUIT, new ImageButton(BUTTONS_SOUTH.QUIT.getName(),
+                BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
 
         Font font = BattlePanelStyle.getPrimaryFont();
 
         grid.gridx = 0;
         grid.gridy = 0;
 
-        for(int i = 0; i < this.buttons.size(); i++){
+        for (int i = 0; i < this.buttons.size(); i++) {
             this.buttons.get(BUTTONS_SOUTH.values()[i]).setFont(font);
             this.buttons.get(BUTTONS_SOUTH.values()[i]).setForeground(Color.BLACK);
             this.southPanel.add(this.buttons.get(BUTTONS_SOUTH.values()[i]), grid);
@@ -68,23 +101,41 @@ public class SouthPanel {
         }
     }
 
+    /**
+     * Gets the south panel.
+     * @return The panel.
+     */
     @SuppressFBWarnings(value = "EI",
             justification = "I need changes to the panel in its references")
-    public JPanel getPanel(){
+    public JPanel getPanel() {
         return this.southPanel;
     }
 
+    /**
+     * It's used to get a lower dimension of the entire screen.
+     * @return The dimension used by the south panel.
+     */
     public static Dimension getMenuPanel() {
         return new Dimension(
-                (int) (DIMENSION_SCREEN.getWidth() * MENU_WIDTH_SCALE),
-                (int) (DIMENSION_SCREEN.getHeight() * MENU_HEIGHT_SCALE));
+                (int) (GameGui.DIMENSION_SCREEN.getWidth() * MENU_WIDTH_SCALE),
+                (int) (GameGui.DIMENSION_SCREEN.getHeight() * MENU_HEIGHT_SCALE));
     }
 
-    public void setActionListenerButtons(ActionListener actionListener, BUTTONS_SOUTH name){
+    /**
+     * It takes care to set the action listener to the required button.
+     * @param actionListener The action listener to set.
+     * @param name The name of the button.
+     */
+    public void setActionListenerButtons(final ActionListener actionListener, final BUTTONS_SOUTH name) {
         this.buttons.get(name).addActionListener(actionListener);
     }
 
-    public void setButtonsVisibility(BUTTONS_SOUTH name, Boolean visibility){
+    /**
+     * It takes care of changing the visibility of the south panel's buttons.
+     * @param name the name of the button.
+     * @param visibility the visibility required to be set.
+     */
+    public void setButtonsVisibility(final BUTTONS_SOUTH name, final Boolean visibility) {
         this.buttons.get(name).setVisible(visibility);
     }
 

@@ -213,7 +213,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
     }
 
     @Override
-    public void setReturnActionListener(ActionListener returnActionToAdd) {
+    public void setReturnActionListener(final ActionListener returnActionToAdd) {
         this.battlePanel.setBackActionListener(returnActionToAdd);
     }
 
@@ -230,7 +230,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
     @SuppressWarnings(value = "unchecked")
     private void setActionListenerSlots() {
         ActionListener actionListenerInfo = e -> {
-            if(e.getSource() instanceof TroopButtonImpl.PositionJbutton<?>){
+            if (e.getSource() instanceof TroopButtonImpl.PositionJbutton<?>) {
                 var button = (TroopButtonImpl.PositionJbutton<Integer>) e.getSource();
                 clickedButtonPlayer(button.getData());
                 button.updateBorder();

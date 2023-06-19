@@ -210,8 +210,8 @@ public final class GameData implements Serializable {
      * @return the fight data.
      */
     @SuppressFBWarnings(value = "EI",
-            justification = "I want to return the object to let other classes" +
-                    "getting that reference and use it")
+            justification = "I want to return the object to let other classes"
+                    + "getting that reference and use it")
     public FightData getFightData() {
         return fightData;
     }
