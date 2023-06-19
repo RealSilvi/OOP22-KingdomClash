@@ -32,7 +32,7 @@ public final class BattleModelImpl implements BattleModel {
     private final FightData fightData;
     private final GameData gameData;
     private final Map<TroopType, Integer> troopPlayerLevel;
-    private Map<TroopType, Integer> troopBotLevel;
+    private final Map<TroopType, Integer> troopBotLevel;
 
     /**MAX_ROUND represents the max rounds available during one match of the battle.*/
     private final int maxRound;

@@ -32,7 +32,6 @@ public interface GameGuiInt {
 
     void showLoadOptions();
 
-    Integer showMenuSouthOptions();
 
     void setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU name, Boolean visibility);
 
@@ -48,11 +47,12 @@ public interface GameGuiInt {
 
     void setActionListenerLoad(ActionListener actionListener);
 
+    void setActionListenerExit(ActionListener actionListener);
+
     void setMapBaseActionListener(ActionListener actionListener);
 
     void setMapBattleActionListener(ActionListener actionListener);
 
-    void setActionListenerQuit(ActionListener actionListener);
 
     /**
      * Used to activate the next battle

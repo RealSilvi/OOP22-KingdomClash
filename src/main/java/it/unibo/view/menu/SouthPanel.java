@@ -21,7 +21,7 @@ public class SouthPanel {
         SAVE("SAVE"),
         QUIT("QUIT");
 
-        private String name;
+        private final String name;
 
         BUTTONS_SOUTH(final String name) {
             this.name = name;

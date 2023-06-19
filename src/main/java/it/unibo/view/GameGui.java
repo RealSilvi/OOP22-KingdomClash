@@ -29,11 +29,8 @@ public final class GameGui implements GameGuiInt {
     public static final int WIDTH_BUTTON = (int) DIMENSION_SCREEN.getWidth() / 20;
     /** Height of the buttons.*/
     public static final int HEIGHT_BUTTON = (int) DIMENSION_SCREEN.getHeight() / 20;
-    public static final int YES = 0;
-    public static final int NO = 1;
 
     public static final String MAP_NAME = "MAP" ;
-    private final JFrame frame;
     private final CardLayout switchLayout;
     private final CardLayout switchLayout2;
     private final JPanel allPanel;
@@ -53,11 +50,11 @@ public final class GameGui implements GameGuiInt {
      */
     public GameGui(final GameConfiguration gameConfiguration) {
         this.panel = new HashMap<>();
-        this.frame = new JFrame();
-        this.frame.setSize((int) (DIMENSION_SCREEN.getWidth()), (int) (DIMENSION_SCREEN.getHeight()));
-        this.frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.frame.setResizable(false);
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame();
+        frame.setSize((int) (DIMENSION_SCREEN.getWidth()), (int) (DIMENSION_SCREEN.getHeight()));
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.soundManagerImpl = new SoundManagerImpl();
         this.soundManagerImpl.changeMute();
 
@@ -144,19 +141,6 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public Integer showMenuSouthOptions() {
-        if(JOptionPane.showConfirmDialog(null, "Do you want to save",
-                "Come Back To Menu", JOptionPane.YES_NO_CANCEL_OPTION) == YES){
-            return 0;
-        }else if(JOptionPane.showConfirmDialog(null, "Do you want to save",
-                "Come Back To Menu", JOptionPane.YES_NO_CANCEL_OPTION) == NO){
-            return 1;
-        }else{
-            return 2;
-        }
-    }
-
-    @Override
     public void setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU name, Boolean visibility){
         this.menuPanel.setButtonsVisibilityMenu(name, visibility);
     }
@@ -192,6 +176,11 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
+    public void setActionListenerExit(ActionListener actionListener) {
+        this.menuPanel.setActionListenerExit(actionListener);
+    }
+
+    @Override
     public void setMapBaseActionListener(ActionListener actionListener) {
         this.mapPanel.setBaseActionListener(actionListener);
     }
@@ -199,11 +188,6 @@ public final class GameGui implements GameGuiInt {
     @Override
     public void setMapBattleActionListener(ActionListener actionListener) {
         this.mapPanel.setBattleActionListener(actionListener);
-    }
-
-    @Override
-    public void setActionListenerQuit(ActionListener actionListener) {
-        this.menuPanel.setActionListenerExit(actionListener);
     }
 
     @Override

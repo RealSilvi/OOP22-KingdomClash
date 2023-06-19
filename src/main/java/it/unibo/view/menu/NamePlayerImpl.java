@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 
 public class NamePlayerImpl {
 
-    private JPanel namePanel;
-    private ImageButton start;
-    private JTextField textField;
+    private final JPanel namePanel;
+    private final ImageButton start;
+    private final JTextField textField;
 
     public NamePlayerImpl(){
 
