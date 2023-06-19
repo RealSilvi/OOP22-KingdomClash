@@ -20,6 +20,8 @@ import it.unibo.controller.base.BaseController;
  */
 public class TroopPopupPanel {
 
+    private static final int UPGRADE_BTN_SPACING = 5;
+
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
 
@@ -52,9 +54,10 @@ public class TroopPopupPanel {
                 JPanel containpanel = new JPanel();
                 containpanel.setLayout(new BorderLayout());
 
-                JLabel label = new JLabel(
-                "" + singletroop.name() + " " + data.requestTroopLevels().get(singletroop));
-                containpanel.add(label, BorderLayout.LINE_START);
+                JLabel troopLevelName = new JLabel(
+                    data.requestTroopLevels().get(singletroop)+" <-- "
+                    + singletroop.name());
+                containpanel.add(troopLevelName, BorderLayout.LINE_START);
                 var buttonOK = new JButton("upgrade");
                 containpanel.add(buttonOK, BorderLayout.LINE_END);
                 buttonOK.addActionListener(new ActionListener() {
@@ -66,7 +69,10 @@ public class TroopPopupPanel {
                 });
                 contentpanel.add(containpanel);
             });
-     }
+    }
+    public void updateElements() {
+        
+    }
     /**
      * This method allows to make the popup visible on each click
      * with a boolean parameter.
