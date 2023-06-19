@@ -7,12 +7,16 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import it.unibo.controller.base.BaseController;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
+import it.unibo.view.utilities.ImageIconsSupplier;
 /**
  * This class create the popup that shows the troop and their levels and contains
  *  a button that can improve the level of the troops.
@@ -31,6 +35,9 @@ public class TroopPopupPanel {
     private Component container;
     private int xposition;
     private int yposition;
+    private JFrame movepopup;
+    private PathIconsConfiguration image;
+    
     /**
      * This costructor create the popup and gave him the name and the level of the troops and an upgrade button for each other.
      * @param container the content of the Popup
@@ -48,6 +55,10 @@ public class TroopPopupPanel {
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
         this.contentpanel.setPreferredSize(new Dimension(HEIGHT, WIDTH));
         this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
+        this.movepopup = new JFrame("troop Info");
+        this.movepopup.getContentPane().add(contentpanel);
+        //this.movepopup.setSize(xposition, yposition);
+        popup.show();
 
        data.requestTroopLevels().keySet().stream().forEach(
             singletroop -> {
@@ -58,6 +69,7 @@ public class TroopPopupPanel {
                     data.requestTroopLevels().get(singletroop)+" <-- "
                     + singletroop.name());
                 containpanel.add(troopLevelName, BorderLayout.LINE_START);
+                containpanel.add(new JLabel(ImageIconsSupplier.loadImageIcon(image.getTroop(singletroop))), BorderLayout.CENTER);
                 var buttonOK = new JButton("upgrade");
                 containpanel.add(buttonOK, BorderLayout.LINE_END);
                 buttonOK.addActionListener(new ActionListener() {
@@ -80,16 +92,23 @@ public class TroopPopupPanel {
     public void changeVisibility() {
         this.visibility = !this.visibility;
         if (visibility) {
-            popup.show();
+            //popup.show();
+            movepopup.setVisible(visibility);
         } else {
-            popup.hide();
-            this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
+            //popup.hide();
+            //this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
+            movepopup.setVisible(visibility);
         }
     }
     /**
      * This method close the popus when is unused or when the game is close.
      */
     public void dispose() {
-        popup.hide();
+        //popup.hide();
+        this.movepopup.setVisible(false);
+    }
+
+    private class TroopSelected {
+        
     }
 }
