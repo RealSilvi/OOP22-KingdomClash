@@ -1,5 +1,6 @@
 package it.unibo.view.menu;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
@@ -44,6 +45,9 @@ public class NamePlayerImpl {
 
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "I want to return the object to let other classes" +
+                    "getting the reference and use it")
     public JPanel getPanel(){
         return this.namePanel;
     }

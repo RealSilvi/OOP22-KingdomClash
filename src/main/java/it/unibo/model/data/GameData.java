@@ -209,6 +209,9 @@ public final class GameData implements Serializable {
     /**
      * @return the fight data.
      */
+    @SuppressFBWarnings(value = "EI",
+            justification = "I want to return the object to let other classes" +
+                    "getting that reference and use it")
     public FightData getFightData() {
         return fightData;
     }
@@ -216,6 +219,8 @@ public final class GameData implements Serializable {
     /**
      * @param fightData sets a new fight data.
      */
+    @SuppressFBWarnings(value = "EI2",
+            justification = "I want to store the input, to get its reference and use it")
     public void setFightData(final FightData fightData) {
         this.fightData = fightData;
     }
