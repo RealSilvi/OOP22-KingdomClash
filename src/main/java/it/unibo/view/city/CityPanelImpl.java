@@ -62,7 +62,7 @@ public class CityPanelImpl implements CityPanel {
                         configuration.getCityConfiguration().getHeight()));
         this.mainPanel.setLayout(new BorderLayout());
 
-        this.barPanel = new BarPanelImpl(this, controller, SIZE, readImages);
+        this.barPanel = new BarPanelImpl(this, controller, SIZE, readImages, configuration.getPathIconsConfiguration());
         this.fieldPanel = new FieldCityPanelImpl(this, controller, configuration, this.readImages);
 
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);

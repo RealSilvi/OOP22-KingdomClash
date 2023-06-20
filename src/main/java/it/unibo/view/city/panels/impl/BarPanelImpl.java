@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -26,6 +25,7 @@ import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 
@@ -35,8 +35,6 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 public class BarPanelImpl extends InternalElement implements BarPanel {
 
     private static final int DEFAULT_HGAP = 5;
-    private static final int X_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.35);
-    private static final int Y_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.25);
     private final JButton mapReturnBtn;
     private final CityPanel cityView;
     private final BaseController basedata;
@@ -59,12 +57,12 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
      * @param cityView 
      */
     public BarPanelImpl(final CityPanel cityView, final BaseController controller,
-        final Dimension size, final Map<BuildingTypes, Map<Integer, Image>> readImages) {
+        final Dimension size, final Map<BuildingTypes, Map<Integer, Image>> readImages, PathIconsConfiguration pathIconsConfiguration) {
         this.setBackground(Color.BLACK);
         this.setSize(size);
         this.cityView = cityView;
         this.basedata = controller;
-        this.trooppopup = new TroopPopupPanel(this, X_POPUP_POSITION, Y_POPUP_POSITION, controller);
+        this.trooppopup = new TroopPopupPanel(this, controller, pathIconsConfiguration);
         this.interactionComponents = new ArrayList<>();
 
         final ActionListener genericBtnAction = new ActionListener() {
