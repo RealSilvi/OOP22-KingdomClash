@@ -59,7 +59,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
     public BarPanelImpl(final CityPanel cityView, final BaseController controller,
         final Dimension size, final Map<BuildingTypes, Map<Integer, Image>> readImages, PathIconsConfiguration pathIconsConfiguration) {
         this.setBackground(Color.BLACK);
-        this.setSize(size);
+        this.setPreferredSize(size);
         this.cityView = cityView;
         this.basedata = controller;
         this.trooppopup = new TroopPopupPanel(this, controller, pathIconsConfiguration);
