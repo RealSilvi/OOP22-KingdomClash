@@ -1,5 +1,7 @@
 package it.unibo.view.city.panels.api;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 
 /**
@@ -9,15 +11,17 @@ public abstract class InternalElement extends JPanel {
     /**
      * Updates the content inside of the panel.
      */
-    public abstract void refreshContent();
+    public void refreshContent(){};
     /**
      * Adds a listener for when an interactive element inside this element is
      * being clicked.
+     * @param selectionObservertoAdd the selection observer to be added
      */
-    public abstract void addSelectionObserver();
+    public void addSelectionObserver(ActionListener selectionObservertoAdd){};
     /**
      * Removes a listener for when an interactive element inside this element is
      * being clicked.
+     * @param selectionObservertoRemove the selection observer to be removed
      */
-    public abstract void removeSelectionObserver();
+    public void removeSelectionObserver(ActionListener selectionObservertoRemove){};
 }

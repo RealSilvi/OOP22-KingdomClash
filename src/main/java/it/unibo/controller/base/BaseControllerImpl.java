@@ -21,6 +21,7 @@ import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.InvalidTroopLevelException;
+import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.exceptions.ResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
@@ -178,7 +179,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
         try {
             baseModel.upgradeTroop(troopToUpgrade, levelToUpgradeTo);
             operationSuccessful = true;
-        } catch (InvalidTroopLevelException e) {
+        } catch (InvalidTroopLevelException | NotEnoughResourceException e) {
             JOptionPane.showMessageDialog(null,
                 e.getMessage(), "HEY",
                 JOptionPane.ERROR_MESSAGE);
