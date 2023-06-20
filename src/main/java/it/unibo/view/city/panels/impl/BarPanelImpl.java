@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -17,7 +16,6 @@ import javax.swing.JComponent;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.Map.Entry;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -27,17 +25,16 @@ import it.unibo.view.city.panels.api.BarPanel;
 import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
+import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 
 /**
  * This class implement the panel on the top of the city panel.
  */
-public class BarPanelImpl extends JLabel implements BarPanel {
+public class BarPanelImpl implements BarPanel {
 
     private static final int DEFAULT_HGAP = 5;
-    private static final int X_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.35);
-    private static final int Y_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.25);
     private final JButton mapReturnBtn;
     private final CityPanel cityView;
     private final JPanel mainpanel;
@@ -62,11 +59,11 @@ public class BarPanelImpl extends JLabel implements BarPanel {
      */
     public BarPanelImpl(final CityPanel cityView, final BaseController controller, final
     Dimension size,
-                        final Map<BuildingTypes, Map<Integer, Image>> readImages) {
+                        final Map<BuildingTypes, Map<Integer, Image>> readImages, PathIconsConfiguration pathIconsConfiguration) {
         this.cityView = cityView;
         this.mainpanel = new DrawPanelImpl(Color.BLACK, size);
         this.basedata = controller;
-        this.trooppopup = new TroopPopupPanel(mainpanel, X_POPUP_POSITION, Y_POPUP_POSITION, controller);
+        this.trooppopup = new TroopPopupPanel(mainpanel, controller, pathIconsConfiguration);
         this.interactionComponents = new ArrayList<>();
 
         final ActionListener genericBtnAction = new ActionListener() {
