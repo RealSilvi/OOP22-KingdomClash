@@ -20,10 +20,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
+import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.utilities.GraphicUtils;
 import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.map.MapPanel.ButtonIdentification;
@@ -31,7 +33,9 @@ import it.unibo.view.map.MapPanel.ButtonIdentification;
 /**
  * This class create the field where you can place the field.
  */
-public class FieldCityPanelImpl implements FieldCityPanel {
+@SuppressFBWarnings(value = "Se", 
+justification = "This GUI element will never be serialized")
+public class FieldCityPanelImpl extends InternalElement implements FieldCityPanel {
 
     private final JPanel mainpanel;
     private final CityPanel cityView;
@@ -50,6 +54,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
      * @param readImages        reference of a map composed of loaded images
      *                          with textures for building types and level
      */
+    @SuppressFBWarnings(value = "EI2", 
+    justification = "Intended behaviour")
     public FieldCityPanelImpl(final CityPanel cityView,
                               final BaseController baseController,
                               final GameConfiguration gameConfig,
@@ -74,13 +80,16 @@ public class FieldCityPanelImpl implements FieldCityPanel {
         this.mainpanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
-                baseController.requestBuildingMap()
-                    .keySet()
-                    .forEach(FieldCityPanelImpl.this::updateBuildingOnField);
+                refreshContent();
             }
         });
     }
-
+    @Override
+    public void refreshContent() {
+        baseController.requestBuildingMap()
+            .keySet()
+            .forEach(FieldCityPanelImpl.this::updateBuildingOnField);
+    }
     private void setfield(final int width, final int height) {
         for (int i = 0; i < width; i++) {
             List<JButton> cols = new ArrayList<>();
@@ -109,6 +118,8 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(value = "EI", 
+    justification = "Returned panel should be adjusted")
     public JPanel getPanel() {
         return this.mainpanel;
     }

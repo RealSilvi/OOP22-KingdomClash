@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.BarPanel;
 import it.unibo.view.city.panels.api.InternalElement;
@@ -32,6 +33,8 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 /**
  * This class implement the panel on the top of the city panel.
  */
+@SuppressFBWarnings(value = "Se", 
+justification = "This GUI element will never be serialized")
 public class BarPanelImpl extends InternalElement implements BarPanel {
 
     private static final int DEFAULT_HGAP = 5;
@@ -56,6 +59,8 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
      * @param readImages a for each building level gave his texture
      * @param cityView 
      */
+    @SuppressFBWarnings(value = "EI2", 
+    justification = "Intended behaviour")
     public BarPanelImpl(final CityPanel cityView, final BaseController controller,
         final Dimension size, final Map<BuildingTypes, Map<Integer, Image>> readImages, PathIconsConfiguration pathIconsConfiguration) {
         this.setBackground(Color.BLACK);
@@ -78,9 +83,9 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
             }
         };
 
-        final BuildingPanel buildingPanel = new BuildingPanel(readImages);
-        buildingPanel.addBuildingSelectActionListener(genericBtnAction);
-        buildingPanel.addBuildingSelectActionListener(new ActionListener() {
+        final InternalElement buildingPanel = new BuildingPanel(readImages);
+        buildingPanel.addSelectionObserver(genericBtnAction);
+        buildingPanel.addSelectionObserver(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (actionCommand.isPresent()) {
