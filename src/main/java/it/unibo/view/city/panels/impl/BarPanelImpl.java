@@ -17,13 +17,12 @@ import javax.swing.JComponent;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.Map.Entry;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.BarPanel;
+import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.utilities.TroopPopupPanel;
 import it.unibo.controller.base.BaseController;
@@ -33,14 +32,13 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 /**
  * This class implement the panel on the top of the city panel.
  */
-public class BarPanelImpl extends JLabel implements BarPanel {
+public class BarPanelImpl extends InternalElement implements BarPanel {
 
     private static final int DEFAULT_HGAP = 5;
     private static final int X_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.35);
     private static final int Y_POPUP_POSITION = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.25);
     private final JButton mapReturnBtn;
     private final CityPanel cityView;
-    private final JPanel mainpanel;
     private final BaseController basedata;
     private final TroopPopupPanel trooppopup;
     private final List<JComponent> interactionComponents;
@@ -60,13 +58,13 @@ public class BarPanelImpl extends JLabel implements BarPanel {
      * @param readImages a for each building level gave his texture
      * @param cityView 
      */
-    public BarPanelImpl(final CityPanel cityView, final BaseController controller, final
-    Dimension size,
-                        final Map<BuildingTypes, Map<Integer, Image>> readImages) {
+    public BarPanelImpl(final CityPanel cityView, final BaseController controller,
+        final Dimension size, final Map<BuildingTypes, Map<Integer, Image>> readImages) {
+        this.setBackground(Color.BLACK);
+        this.setSize(size);
         this.cityView = cityView;
-        this.mainpanel = new DrawPanelImpl(Color.BLACK, size);
         this.basedata = controller;
-        this.trooppopup = new TroopPopupPanel(mainpanel, X_POPUP_POSITION, Y_POPUP_POSITION, controller);
+        this.trooppopup = new TroopPopupPanel(this, X_POPUP_POSITION, Y_POPUP_POSITION, controller);
         this.interactionComponents = new ArrayList<>();
 
         final ActionListener genericBtnAction = new ActionListener() {
@@ -96,11 +94,11 @@ public class BarPanelImpl extends JLabel implements BarPanel {
             }
         });
 
-        final ResourcePanelImpl resourcePanel = new ResourcePanelImpl(controller);
+        final InternalElement resourcePanel = new ResourcePanelImpl(controller);
 
         GridLayout barGridLayout = new GridLayout();
         barGridLayout.setHgap(DEFAULT_HGAP);
-        this.mainpanel.setLayout(barGridLayout);
+        this.setLayout(barGridLayout);
         final JButton troop = new JButton("Upgrade Troops");
         final JButton playerinfo = new JButton("player info");
         final JButton upgradeBtn = new JButton("Upgrade Building");
@@ -144,7 +142,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
                             demolishBtn.setEnabled(false);
                         }
                     }
-                    resourcePanel.updateResourceDisplay();
+                    resourcePanel.refreshContent();;
                     setOptionsLocked();
                     resetConditions();
                     selectionActive = false;
@@ -157,13 +155,13 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         interactionComponents.add(upgradeBtn);
         interactionComponents.add(demolishBtn);
         interactionComponents.add(buildingPanel);
-        this.mainpanel.add(buildingPanel);
-        this.mainpanel.add(troop);
-        this.mainpanel.add(upgradeBtn);
-        this.mainpanel.add(demolishBtn);
-        this.mainpanel.add(playerinfo);
-        this.mainpanel.add(mapReturnBtn);
-        this.mainpanel.add(resourcePanel);
+        this.add(buildingPanel);
+        this.add(troop);
+        this.add(upgradeBtn);
+        this.add(demolishBtn);
+        this.add(playerinfo);
+        this.add(mapReturnBtn);
+        this.add(resourcePanel);
         troop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
@@ -173,8 +171,9 @@ public class BarPanelImpl extends JLabel implements BarPanel {
         playerinfo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                JOptionPane.showMessageDialog(mainpanel, controller.requestPlayerName(),
-                        "Player Name", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(BarPanelImpl.this,
+                    controller.requestPlayerName(),
+                    "Player Name", JOptionPane.INFORMATION_MESSAGE);
             }
         });
     }
@@ -198,7 +197,7 @@ public class BarPanelImpl extends JLabel implements BarPanel {
      * {@inheritDoc}
      */
     public JPanel getPanel() {
-        return this.mainpanel;
+        return this;
     }
 
     /**

@@ -9,17 +9,17 @@ import java.util.UUID;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import it.unibo.controller.base.BaseController;
 import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.data.Resource.ResourceType;
+import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.utilities.BattlePanelStyle;
 
 /**
  * A simple panel class to show available resources to the player.
  */
-public final class ResourcePanelImpl extends JPanel {
+public final class ResourcePanelImpl extends InternalElement {
     private static final float DEFAULT_FONT_SIZE = 18.0f;
 
     private final BaseController baseControllerRef;
@@ -47,16 +47,17 @@ public final class ResourcePanelImpl extends JPanel {
             public void update(final UUID buildingId) {
                 if (baseControllerRef.requestBuildingMap()
                     .get(buildingId).getProductionProgress() == 100) {
-                    updateResourceDisplay();
+                    refreshContent();
                 }
             }
         });
-        updateResourceDisplay();
+        refreshContent();
     }
     /**
      * Updates the resource display of this panel.
      */
-    public void updateResourceDisplay() {
+    @Override
+    public void refreshContent() {
         baseControllerRef.requestResourceCount().stream()
             .forEach(resource -> 
                 labelToResource.get(resource.getResource())
