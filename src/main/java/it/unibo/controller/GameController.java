@@ -33,8 +33,8 @@ public class GameController {
 
         this.toMainPanel = this.backActionListener();
 
-        this.setActionListenerSave();
         this.setActionListenerLoad();
+        this.setActionListenerExit();
 
         this.init();
     }
@@ -81,8 +81,9 @@ public class GameController {
         this.setActionListenerMenu();
         this.setActionListenerMusic();
         this.setActionListenerSave();
-        this.setActionListenerQuit();
         this.setActionListenerContinue();
+        this.setActionListenerQuit();
+        this.gameGui.setActionListenerExit(e -> this.baseController.closureOperation());
 
     }
 
@@ -160,12 +161,15 @@ public class GameController {
         });
     }
 
-    private void setActionListenerQuit() {
-        ActionListener actionListener = e -> {
+    private void setActionListenerExit() {
+        this.gameGui.setActionListenerExit(e -> this.gameGui.closeGui());
+    }
+
+    private void setActionListenerQuit(){
+        ActionListener actionListener= e -> {
             this.baseController.closureOperation();
             this.gameGui.closeGui();
         };
-        this.gameGui.setActionListenerExit(actionListener);
         this.gameGui.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_SOUTH.QUIT);
     }
 
