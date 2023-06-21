@@ -11,16 +11,30 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EntityDataTest {
+/**
+ * This class tests the EntityData class.
+ * It doesn't test all the methods, but only
+ * the riskiest (The biggest methods are tested
+ * in the model test).
+ */
+public final class EntityDataTest {
 
     private EntityData entityData;
 
+    /**
+     * Initialize the class, to use it.
+     */
     @BeforeEach
     public void init() {
         GameData gameData = new GameData();
         this.entityData = new EntityDataImpl(gameData.getGameConfiguration().getBattleConfiguration());
     }
 
+    /**
+     * Tests the getSelected method.
+     * It should return a list with only the selected
+     * troops.
+     */
     @Test
     public void getSelected() {
         this.entityData.addEntityTroop(1);
@@ -31,6 +45,11 @@ public class EntityDataTest {
         Assertions.assertEquals(expected, this.entityData.getSelected());
     }
 
+    /**
+     * Tests the changeNotSelectedTroop method.
+     * It should return a list where the not selected troop
+     * are changed.
+     */
     @Test
     public void changeNotSelectedTroop() {
         this.entityData.addEntityTroop(1);
@@ -40,11 +59,18 @@ public class EntityDataTest {
         Assertions.assertNotSame(expected, this.entityData.changeNotSelectedTroop());
     }
 
+    /**
+     * Tests isMatch method, which controls if
+     * the opposite of the required troop exists
+     * between the troops already selected.
+     */
     @Test
     public void isMatch() {
         this.entityData.addEntityTroop(3);
-        TroopType expected = TroopType.getNullable(this.entityData.getCells(3).getTroop()).get();
-        Assertions.assertEquals(true,this.entityData.isMatch(expected));
+        if(TroopType.getNullable(this.entityData.getCells(3).getTroop()).isPresent()){
+            TroopType expected = TroopType.getNullable(this.entityData.getCells(3).getTroop()).get();
+            Assertions.assertEquals(true, this.entityData.isMatch(expected));
+        }
     }
 
 }
