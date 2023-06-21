@@ -232,4 +232,9 @@ public final class BaseControllerImpl implements Controller, BaseController {
     public void setReturnActionListener(final ActionListener returnActionToAdd) {
         this.baseView.setReturnActionListener(returnActionToAdd);
     }
+
+    @Override
+    public void closureOperation() {
+        this.baseModel.deactivateModel();
+    }
 }

@@ -296,4 +296,9 @@ public interface BaseModel {
      * Refreshes threadmanager's building list.
      */
     void refreshBuildings();
+    /**
+     * Tells the model to release resources and kill all thread.
+     * @apiNote After this operation the base model has to be re-initialized!
+     */
+    void deactivateModel();
 }

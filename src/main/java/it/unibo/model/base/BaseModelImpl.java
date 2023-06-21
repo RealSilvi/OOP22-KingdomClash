@@ -347,6 +347,11 @@ public final class BaseModelImpl implements BaseModel {
                 this.threadManager.addBuilding(structureId));
     }
 
+    @Override
+    public void deactivateModel() {
+        threadManager.clearBuildings();
+    }
+
     /**
      * Executes an addition between resources of the same type inside the set
      * this operation is unsafe because it doesn't check for negative results.

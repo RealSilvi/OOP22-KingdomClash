@@ -239,5 +239,10 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.setActionListenersPlayerSlot(actionListenerInfo);
     }
 
+    @Override
+    public void closureOperation() {
+        //No operation needed for shutdown
+    }
+
 
 }

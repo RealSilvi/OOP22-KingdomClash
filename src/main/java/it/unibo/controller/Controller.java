@@ -20,4 +20,9 @@ public interface Controller {
      * @param returnActionToAdd the ActionListener to add.
      */
     void setReturnActionListener(ActionListener returnActionToAdd);
+    /**
+     * Tells the controller to stop everything it's doing and prepare for game
+     * exit.
+     */
+    void closureOperation();
 }
