@@ -35,7 +35,7 @@ import it.unibo.view.map.MapPanel.ButtonIdentification;
  */
 @SuppressFBWarnings(value = "Se", 
 justification = "This GUI element will never be serialized")
-public class FieldCityPanelImpl extends InternalElement implements FieldCityPanel {
+public class FieldCityPanelImpl implements FieldCityPanel {
 
     private final JPanel mainpanel;
     private final CityPanel cityView;
@@ -84,7 +84,6 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
             }
         });
     }
-    @Override
     public void refreshContent() {
         baseController.requestBuildingMap()
             .keySet()

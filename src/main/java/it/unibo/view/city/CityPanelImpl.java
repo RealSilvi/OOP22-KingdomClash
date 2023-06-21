@@ -7,6 +7,7 @@ import it.unibo.view.GameGui;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.panels.api.BarPanel;
+import it.unibo.view.city.panels.api.FieldCityPanel;
 import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.panels.impl.BarPanelImpl;
@@ -40,7 +41,7 @@ public class CityPanelImpl extends InternalElement implements CityPanel {
             (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
     private final BarPanel barPanel;
-    private final InternalElement fieldPanel;
+    private final FieldCityPanel fieldPanel;
     private final Map<BuildingTypes, Map<Integer, Image>> readImages =
         new EnumMap<>(BuildingTypes.class);
 
@@ -71,7 +72,7 @@ public class CityPanelImpl extends InternalElement implements CityPanel {
         this.fieldPanel = new FieldCityPanelImpl(this, controller, configuration, this.readImages);
 
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
-        this.mainPanel.add(fieldPanel, BorderLayout.CENTER);
+        this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
     }
 
     /**
