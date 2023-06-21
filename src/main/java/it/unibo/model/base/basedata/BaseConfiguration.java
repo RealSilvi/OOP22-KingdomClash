@@ -1,6 +1,7 @@
 package it.unibo.model.base.basedata;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -56,6 +57,6 @@ public final class BaseConfiguration {
      * @return A map that contains the cost of every single type of troop
      */
     public Map<TroopType, Map<Integer, Set<Resource>>> getCostPerTroop() {
-        return costPerTroop;
+        return Collections.unmodifiableMap(costPerTroop);
     }
 }

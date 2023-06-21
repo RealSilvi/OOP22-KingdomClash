@@ -6,6 +6,8 @@ import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.view.GameGui;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
+import it.unibo.view.city.panels.api.BarPanel;
+import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.panels.impl.BarPanelImpl;
 import it.unibo.view.city.panels.impl.FieldCityPanelImpl;
@@ -23,19 +25,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JPanel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.swing.JComponent;
 
 
 /**
  * * This class show the main city panel.
  */
-public class CityPanelImpl implements CityPanel {
+public class CityPanelImpl extends InternalElement implements CityPanel {
 
     private static final Dimension SIZE = new Dimension((int) (GameGui.getAllPanel().getWidth()),
             (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
-    private final BarPanelImpl barPanel;
-    private final FieldCityPanelImpl fieldPanel;
+    private final BarPanel barPanel;
+    private final InternalElement fieldPanel;
     private final Map<BuildingTypes, Map<Integer, Image>> readImages =
         new EnumMap<>(BuildingTypes.class);
 
@@ -66,7 +71,7 @@ public class CityPanelImpl implements CityPanel {
         this.fieldPanel = new FieldCityPanelImpl(this, controller, configuration, this.readImages);
 
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
-        this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);
+        this.mainPanel.add(fieldPanel, BorderLayout.CENTER);
     }
 
     /**
@@ -87,6 +92,8 @@ public class CityPanelImpl implements CityPanel {
     /**
      * {@inheritDoc}
      */
+    @SuppressFBWarnings(value = "EI", 
+    justification = "Returned panel should be adjusted")
     public JPanel getPanel() {
         return this.mainPanel;
     }
