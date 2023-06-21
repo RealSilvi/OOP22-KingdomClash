@@ -51,13 +51,14 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
     /**
      * The costructor create the panel and add the buttons on the panel that show the troops,
      * which building you can place and applicate an actionlistener on each other.
+     * @param cityView  the main panel where it's going to be add
      * @param controller give all the function the class need
      * @param size       gave the size of the panel
      * @param readImages a for each building level gave his texture
-     * @param cityView 
+     * @param pathIconsConfiguration gave the troop image for the troop popup
      */
-    public BarPanelImpl(final CityPanel cityView, final BaseController controller,
-        final Dimension size, final Map<BuildingTypes, Map<Integer, Image>> readImages, PathIconsConfiguration pathIconsConfiguration) {
+    public BarPanelImpl(final CityPanel cityView, final BaseController controller, final Dimension size,
+         final Map<BuildingTypes, Map<Integer, Image>> readImages, final PathIconsConfiguration pathIconsConfiguration) {
         this.setBackground(Color.BLACK);
         this.setPreferredSize(size);
         this.cityView = cityView;
