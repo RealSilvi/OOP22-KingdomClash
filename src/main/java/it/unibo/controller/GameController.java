@@ -161,10 +161,14 @@ public class GameController {
     }
 
     private void setActionListenerQuit() {
-        this.gameGui.setActionListenerButtons(e -> {
-            System.exit(0);
-        }, SouthPanel.BUTTONS_SOUTH.QUIT);
+        ActionListener actionListener = e -> {
+            this.baseController.closureOperation();
+            this.gameGui.closeGui();
+        };
+        this.gameGui.setActionListenerExit(actionListener);
+        this.gameGui.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_SOUTH.QUIT);
     }
+
 
     private enum PanelsName {
         BATTLE("BATTLE"),
