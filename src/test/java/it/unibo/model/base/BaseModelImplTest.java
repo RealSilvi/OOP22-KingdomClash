@@ -16,6 +16,7 @@ import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
 import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
+import it.unibo.model.base.exceptions.InvalidTroopLevelException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
@@ -183,6 +184,9 @@ public final class BaseModelImplTest {
                     BaseTestUtils.STANDARD_TIME_TOLERANCE));
         }
     }
+    /**
+     * Tests the troop upgrade logic.
+     */
     @Test
     public void testTroopUpgrade() {
         Assertions.assertDoesNotThrow(() -> 
@@ -191,6 +195,9 @@ public final class BaseModelImplTest {
         Arrays.stream(TroopType.values()).forEach(type -> expectedTroops.put(type, 1));
         expectedTroops.put(TroopType.AXE, 2);
         Assertions.assertEquals(expectedTroops, this.baseModel.getTroopMap());
+        Assertions.assertThrowsExactly(InvalidTroopLevelException.class, () -> 
+            baseModel.upgradeTroop(TroopType.AXE, gameData.getGameConfiguration()
+                .getBaseConfiguration().getMaximumTroopLevel() + 1));
     }
 
     private synchronized void increaseCounter() {
