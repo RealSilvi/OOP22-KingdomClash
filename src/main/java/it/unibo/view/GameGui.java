@@ -49,6 +49,7 @@ public final class GameGui implements GameGuiInt {
     private final MapPanel mapPanel;
     private final SoundManagerImpl soundManagerImpl;
     private final Map<String, JPanel> panel;
+    private final JFrame frame;
 
     /**
      * The constructor initialize all the panels,
@@ -57,7 +58,7 @@ public final class GameGui implements GameGuiInt {
      */
     public GameGui(final GameConfiguration gameConfiguration) {
         this.panel = new HashMap<>();
-        JFrame frame = new JFrame();
+        this.frame = new JFrame();
         frame.setSize((int) (DIMENSION_SCREEN.getWidth()), (int) (DIMENSION_SCREEN.getHeight()));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
@@ -218,6 +219,11 @@ public final class GameGui implements GameGuiInt {
     @Override
     public String getPlayerName() {
         return this.namePlayer.getPlayerName();
+    }
+
+    @Override
+    public void closeGui(){
+        this.frame.dispose();
     }
 
     /**

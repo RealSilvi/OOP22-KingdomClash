@@ -147,4 +147,9 @@ public interface GameGuiInt {
      */
     String getPlayerName();
 
+    /**
+     * Closes the main frame.
+     */
+    void closeGui();
+
 }
