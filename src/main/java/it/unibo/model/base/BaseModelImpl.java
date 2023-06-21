@@ -246,7 +246,7 @@ public final class BaseModelImpl implements BaseModel {
     @Override
     public void upgradeTroop(final TroopType troopToUpgrade, final int level)
         throws InvalidTroopLevelException, NotEnoughResourceException {
-        if (level >= baseModelConfiguration.getMaximumTroopLevel()) {
+        if (level > baseModelConfiguration.getMaximumTroopLevel()) {
             throw new InvalidTroopLevelException(troopToUpgrade, level);
         }
         gameData.setResources(subtractResources(gameData.getResources(),
