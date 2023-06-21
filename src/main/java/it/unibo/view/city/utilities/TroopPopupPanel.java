@@ -25,7 +25,6 @@ import it.unibo.view.utilities.ImageIconsSupplier;
  */
 public class TroopPopupPanel {
 
-    private static final int UPGRADE_BTN_SPACING = 5;
 
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
@@ -33,23 +32,22 @@ public class TroopPopupPanel {
     private Popup popup;
     private JPanel contentpanel;
     private boolean visibility;
-    private int xposition;
-    private int yposition;
     private JFrame movepopup;
     private PathIconsConfiguration image;
     private int level = 1;
-    
     /**
      * This costructor create the popup and gave him the name and the level of the troops and an upgrade button for each other.
      * @param container the content of the Popup
      * @param data use for get the information of the troop and the upgrade button
+     * @param pathIconsConfiguration 
      */
-    public TroopPopupPanel(final Component container, final BaseController data, final PathIconsConfiguration pathIconsConfiguration) {
+    public TroopPopupPanel(final Component container, final BaseController data,
+        final PathIconsConfiguration pathIconsConfiguration) {
         this.visibility = false;
         this.contentpanel = new JPanel();
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
         this.contentpanel.setPreferredSize(new Dimension(HEIGHT, WIDTH));
-        this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
+        this.popup = new PopupFactory().getPopup(container, contentpanel, WIDTH, HEIGHT);
         this.movepopup = new JFrame("troop Info");
         this.movepopup.getContentPane().add(contentpanel);
         this.movepopup.setSize(WIDTH, HEIGHT);
@@ -63,13 +61,14 @@ public class TroopPopupPanel {
                 containpanel.setLayout(new BorderLayout());
                 containpanel.setBackground(movepopup.getBackground());
 
-                Font font = new Font("font", Font.ITALIC,movepopup.getPreferredSize().width/15);
+                Font font = new Font("font", Font.ITALIC, movepopup.getPreferredSize().width / 15);
                 JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(image.getTroop(singletroop),
                  new Dimension(movepopup.getPreferredSize().width / 10, movepopup.getPreferredSize().height / 10)));
                  var buttonOK = new JButton("upgrade");
-                 JLabel levels = new JLabel("" +level);
+                 JLabel levels = new JLabel("" + level);
                  levels.setFont(font);
-                 levels.setPreferredSize(new Dimension(movepopup.getPreferredSize().width -(label.getPreferredSize().width + buttonOK.getPreferredSize().width),
+                 levels.setPreferredSize(new Dimension(movepopup.getPreferredSize().width - 
+                 (label.getPreferredSize().width + buttonOK.getPreferredSize().width),
                   buttonOK.getPreferredSize().height));
                 levels.setBackground(new Color(0, 0, 0, 0));
                 levels.setHorizontalAlignment(JLabel.CENTER);
@@ -82,15 +81,15 @@ public class TroopPopupPanel {
                        data.upgradeTroop(singletroop,
                         data.requestTroopLevels().get(singletroop) + 1);
                         level = data.requestTroopLevels().get(singletroop);
-                        levels.setText("" +level);
+                        levels.setText("" + level);
                     }
                 });
                 contentpanel.add(containpanel);
             });
     }
-    public void updateElements() {
-        
-    }
+    //public void updateElements() {
+    //    
+    //}
     /**
      * This method allows to make the popup visible on each click
      * with a boolean parameter.
@@ -98,11 +97,8 @@ public class TroopPopupPanel {
     public void changeVisibility() {
         this.visibility = !this.visibility;
         if (visibility) {
-            //popup.show();
             movepopup.setVisible(visibility);
         } else {
-            //popup.hide();
-            //this.popup = new PopupFactory().getPopup(container, contentpanel, xposition, yposition);
             movepopup.setVisible(visibility);
         }
     }
@@ -110,7 +106,6 @@ public class TroopPopupPanel {
      * This method close the popus when is unused or when the game is close.
      */
     public void dispose() {
-        //popup.hide();
         this.movepopup.setVisible(false);
     }
 }
