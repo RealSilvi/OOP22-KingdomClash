@@ -1,7 +1,10 @@
 package it.unibo.model.base;
 
 import java.awt.geom.Point2D;
+import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,6 +19,7 @@ import it.unibo.model.base.exceptions.InvalidStructureReferenceException;
 import it.unibo.model.base.exceptions.NotEnoughResourceException;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
+import it.unibo.model.data.TroopType;
 
 /**
  * Tests for the model for the base part of the game.
@@ -179,6 +183,16 @@ public final class BaseModelImplTest {
                     BaseTestUtils.STANDARD_TIME_TOLERANCE));
         }
     }
+    @Test
+    public void testTroopUpgrade() {
+        Assertions.assertDoesNotThrow(() -> 
+            this.baseModel.upgradeTroop(TroopType.AXE, 2));
+        Map<TroopType, Integer> expectedTroops = new EnumMap<>(TroopType.class);
+        Arrays.stream(TroopType.values()).forEach(type -> expectedTroops.put(type, 1));
+        expectedTroops.put(TroopType.AXE, 2);
+        Assertions.assertEquals(expectedTroops, this.baseModel.getTroopMap());
+    }
+
     private synchronized void increaseCounter() {
         counter++;
     }

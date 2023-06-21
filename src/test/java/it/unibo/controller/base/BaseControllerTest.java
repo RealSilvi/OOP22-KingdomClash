@@ -15,6 +15,7 @@ import it.unibo.model.base.basedata.Building;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
 import it.unibo.model.data.Resource;
+import it.unibo.model.data.TroopType;
 
 public final class BaseControllerTest {
     private GameData gameDataRef;
@@ -32,16 +33,20 @@ public final class BaseControllerTest {
     }
     @Test
     public void testDataIncapsulation() {
-        Set<Resource> requestSet = this.baseController.requestResourceCount();
+        Set<Resource> resourceSet = this.baseController.requestResourceCount();
+        Map<TroopType, Integer> troopMap = this.baseController.requestTroopLevels();
         Map<UUID, Building> buildingMap = this.baseController.requestBuildingMap();
 
         Optional<UUID> createdBuildingId = baseController.handleBuildingPlaced(new Point2D.Float(11f, 24f), BuildingTypes.FARM);
         Assertions.assertTrue(createdBuildingId.isPresent());
         
         Assertions.assertThrowsExactly(UnsupportedOperationException.class,
-            () -> requestSet.add(new Resource(Resource.ResourceType.WHEAT, 104)));
-        Assertions.assertThrowsExactly(NullPointerException.class,
+            () -> resourceSet.add(new Resource(Resource.ResourceType.WHEAT, 104)));
+        Assertions.assertThrowsExactly(UnsupportedOperationException.class,
+            () -> troopMap.put(TroopType.AXE, 2));
+        Assertions.assertThrowsExactly(UnsupportedOperationException.class,
             () -> buildingMap.put(UUID.randomUUID(), new Building(null, 0, 0,
-             0, false, 0, 0, null, requestSet, requestSet)));
+                0, false, 0, 0,
+                new Point2D.Float(0.0f, 0.0f), resourceSet, resourceSet)));
     }
 }

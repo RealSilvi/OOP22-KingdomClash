@@ -36,8 +36,9 @@ public final class GameModel {
     }
 
     public void resetSaved() {
-        if (!this.saveDataLocation.delete()) {
-            logger.severe("Delete old saving FAILURE");
+        if(this.isSaved() && (!this.saveDataLocation.delete())) {
+                logger.severe("Delete old saving FAILURE");
+
         }
         this.gameData = new GameData();
     }
@@ -86,7 +87,7 @@ public final class GameModel {
             } catch (FileNotFoundException | ClassNotFoundException exc) {
                 logger.warning("Cannot read game data!" + exc);
             } catch (IOException exc) {
-                logger.severe("IOException occourred while loading GameData!" + exc);
+                logger.severe("IOException occurred while loading GameData!" + exc);
             } catch (IllegalArgumentException | SecurityException
                      | IllegalClassFormatException exc) {
                 logger.severe("Data class is incompatible or a different version!" + exc);
