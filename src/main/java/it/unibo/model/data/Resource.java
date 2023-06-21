@@ -2,6 +2,7 @@ package it.unibo.model.data;
 
 import java.io.Serializable;
 import java.util.EnumSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -121,7 +122,8 @@ public final class Resource implements Serializable, Cloneable {
         resourceSet.stream().forEach(resource ->
             stringBuilder.append(resource.getResource()
                 .name().substring(0, 1).toUpperCase())
-            .append(resource.getResource().name().substring(1).toLowerCase())
+            .append(resource.getResource().name().substring(1)
+            .toLowerCase(Locale.getDefault()))
             .append(": ")
             .append(resource.getAmount())
             .append("\n")
