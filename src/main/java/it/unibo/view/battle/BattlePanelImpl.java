@@ -1,5 +1,6 @@
 package it.unibo.view.battle;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.TroopType;
 import it.unibo.kingdomclash.config.BattleConfiguration;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
@@ -184,6 +185,8 @@ public final class BattlePanelImpl implements BattlePanel {
         this.buttonsPanel.enablePassButton();
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "This panel has to be mutable from the class which uses it.")
     @Override
     public JPanel getPanel() {
         return this.mainPanel;

@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.battle.panels.entities.api.ButtonsPanel;
@@ -17,7 +18,9 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 
-
+/**
+ * Creates an instance of a ButtonPanel.
+ */
 public final class ButtonsPanelImpl implements ButtonsPanel {
 
     private static final int BUTTON_BORDER_THICKNESS = 4;
@@ -102,6 +105,8 @@ public final class ButtonsPanelImpl implements ButtonsPanel {
         this.info.addActionListener(actionListener);
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "This panel has to be mutable from the class which uses it.")
     @Override
     public JPanel getPanel() {
         return this.mainPanel;

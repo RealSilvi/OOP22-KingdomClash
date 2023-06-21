@@ -117,7 +117,7 @@ public final class GameData implements Serializable {
      *
      * @return a set of resources owned by the player.
      */
-    @SuppressFBWarnings(value = "EI2",
+    @SuppressFBWarnings(value = "EI",
             justification = "No encapsulation needed as BaseModel handles everything")
 
     public synchronized Set<Resource> getResources() {
@@ -151,7 +151,7 @@ public final class GameData implements Serializable {
      *
      * @return a map containing all the buildings and their corresponding identifier.
      */
-    @SuppressFBWarnings(value = "EI2",
+    @SuppressFBWarnings(value = "EI",
             justification = "No encapsulation needed as BaseModel handles everything")
 
     public ConcurrentMap<UUID, Building> getBuildings() {
@@ -186,9 +186,8 @@ public final class GameData implements Serializable {
      *
      * @return a map with the troop and the level of the troop as an integer.
      */
-    @SuppressFBWarnings(value = "EI2",
+    @SuppressFBWarnings(value = "EI",
             justification = "No encapsulation needed as BaseModel handles everything")
-
     public Map<TroopType, Integer> getPlayerArmyLevel() {
         return this.playerArmyLevel;
     }

@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.CommandPanel;
 import it.unibo.view.battle.panels.entities.api.ButtonsPanel;
@@ -92,6 +93,8 @@ public final class CommandPanelImpl implements CommandPanel {
         this.playerLivesPanel.reset();
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "This panel has to be mutable from the class which uses it.")
     @Override
     public JPanel getPanel() {
         return this.mainPanel;

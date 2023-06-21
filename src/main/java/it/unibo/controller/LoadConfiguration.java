@@ -5,10 +5,12 @@ import com.google.gson.GsonBuilder;
 import it.unibo.kingdomclash.config.GameConfiguration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 /**
@@ -31,18 +33,19 @@ public final class LoadConfiguration {
 
 
         Logger logger = Logger.getLogger(this.getClass().getName());
-        try (FileReader content = new FileReader(configDir)) {
+        try (FileReader content = new FileReader(configDir, StandardCharsets.UTF_8)) {
             this.configuration = gson.fromJson(content, GameConfiguration.class);
         } catch (FileNotFoundException e) {
             this.configuration = new GameConfiguration();
             final File file = new File(configDir);
-            if (file.getParentFile().mkdirs()) {
-                try (FileWriter fileWriter = new FileWriter(file)) {
-                    fileWriter.write(gson.toJson(this.configuration));
-                } catch (IOException ex) {
-                    logger.severe("Configuration saving FAILURE");
-                    logger.severe(ex.getMessage());
-                }
+            if (!file.getParentFile().mkdirs()) {
+                logger.severe("Configuration directory saving FAILURE");
+            }
+            try (FileWriter fileWriter = new FileWriter(file, StandardCharsets.UTF_8)) {
+                fileWriter.write(gson.toJson(this.configuration));
+            } catch (IOException ex) {
+                logger.severe("Configuration saving FAILURE");
+                logger.severe(ex.getMessage());
             }
         } catch (IOException e) {
             this.configuration = new GameConfiguration();
@@ -58,7 +61,7 @@ public final class LoadConfiguration {
      * @return a path to the appdata folder
      */
     public static String getAppData() {
-        final String osHome = System.getProperty("os.name").toLowerCase();
+        final String osHome = System.getProperty("os.name").toLowerCase(Locale.ROOT);
         String appData;
 
         if (osHome.contains("win")) {

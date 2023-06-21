@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.kingdomclash.config.TextConfigurationBattle;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
@@ -15,6 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 
+/**
+ * This panel has just to display explanations of the game.
+ * It doesn't interact with the application.
+ */
 public final class TutorialPanel {
 
     private static final int BORDER_LAYOUT_GAP = 3;
@@ -93,6 +98,8 @@ public final class TutorialPanel {
      *
      * @return this instance like a JPanel.
      */
+    @SuppressFBWarnings(value = "EI",
+            justification = "This panel has to be mutable from the class which uses it.")
     public JPanel getPanel() {
         return this.mainPanel;
     }

@@ -16,7 +16,7 @@ import java.awt.Dimension;
 public final class TroopLabelImpl extends JLabel implements TroopLabel {
 
     private final Dimension size;
-    private final PathIconsConfiguration pathIconsConfiguration;
+    private final transient PathIconsConfiguration pathIconsConfiguration;
 
     /**
      * Constructs an instance of a TroopLabel defining the troop.
@@ -30,7 +30,7 @@ public final class TroopLabelImpl extends JLabel implements TroopLabel {
                           final PathIconsConfiguration pathIconsConfiguration) {
         super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getTroop(troop), size));
         this.pathIconsConfiguration = pathIconsConfiguration;
-        this.size = size;
+        this.size = new Dimension(size);
         this.setPreferredSize(this.size);
 
     }
@@ -43,7 +43,7 @@ public final class TroopLabelImpl extends JLabel implements TroopLabel {
      */
     public TroopLabelImpl(final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
         super();
-        this.size = size;
+        this.size = new Dimension(size);
         this.pathIconsConfiguration = pathIconsConfiguration;
     }
 

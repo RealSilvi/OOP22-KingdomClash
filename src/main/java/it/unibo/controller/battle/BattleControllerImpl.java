@@ -230,8 +230,8 @@ public final class BattleControllerImpl implements BattleController, Controller 
     @SuppressWarnings(value = "unchecked")
     private void setActionListenerSlots() {
         ActionListener actionListenerInfo = e -> {
-            if (e.getSource() instanceof TroopButtonImpl.PositionJbutton<?>) {
-                var button = (TroopButtonImpl.PositionJbutton<Integer>) e.getSource();
+            if (e.getSource() instanceof TroopButtonImpl.DataJButton<?>) {
+                var button = (TroopButtonImpl.DataJButton<Integer>) e.getSource();
                 clickedButtonPlayer(button.getData());
                 button.updateBorder();
             }
