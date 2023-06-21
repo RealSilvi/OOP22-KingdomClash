@@ -172,7 +172,7 @@ public class GameController {
 
         private final String name;
 
-        PanelsName(String name) {
+        PanelsName(final String name) {
             this.name = name;
         }
 

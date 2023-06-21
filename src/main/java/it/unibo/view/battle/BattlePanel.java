@@ -56,15 +56,18 @@ public interface BattlePanel {
     void spinBotFreeSlot(Map<Integer, TroopType> troops);
 
     /**
-     * Display a power info of the player's troops.
+     * Display power info of the player's troops.
      *
      * @param troopLv foreach troop indicates if it's strong enough to defeat corresponding bots troop.
      */
     void drawInfoTable(Map<TroopType, Boolean> troopLv);
 
     /**
-     * Update the Field with all the selected troops on it keeping in mind that can
+     * Update the Field with all the selected troops on it, keeping in mind that can
      * exist empty slots.
+     *
+     * @param field represent the field. Set an optional empty to display an empty
+     *              slot otherwise an optional of Trooptype to display the troop.
      */
     void updateField(List<Optional<TroopType>> field);
 

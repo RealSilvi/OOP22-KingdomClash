@@ -37,10 +37,10 @@ public class DrawPanelImpl extends JPanel {
                 WIDTH_IMAGE_FILL_PATTERN,
                 HEIGHT_IMAGE_FILL_PATTERN,
                 Image.SCALE_DEFAULT);
-        this.size = size;
+        this.size = new Dimension(size);
 
         this.setLayout(new FlowLayout(FlowLayout.CENTER, H_GAP, V_GAP));
-        this.setPreferredSize(size);
+        this.setPreferredSize(this.size);
     }
 
     /**
@@ -57,9 +57,9 @@ public class DrawPanelImpl extends JPanel {
      */
     public DrawPanelImpl(final Color color, final Dimension size) {
         this.backgroundImage = null;
-        this.size = size;
+        this.size = new Dimension(size);
 
-        this.setPreferredSize(size);
+        this.setPreferredSize(this.size);
         this.setBackground(color);
     }
 

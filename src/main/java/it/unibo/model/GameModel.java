@@ -1,5 +1,6 @@
 package it.unibo.model;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.LoadConfiguration;
 import it.unibo.kingdomclash.config.GameConfiguration;
 import it.unibo.model.data.GameData;
@@ -35,7 +36,9 @@ public final class GameModel {
     }
 
     public void resetSaved() {
-        this.saveDataLocation.delete();
+        if (!this.saveDataLocation.delete()) {
+            logger.severe("Delete old saving FAILURE");
+        }
         this.gameData = new GameData();
     }
 
@@ -95,6 +98,8 @@ public final class GameModel {
     /**
      * @return the game data.
      */
+    @SuppressFBWarnings(value = "EI",
+            justification = "The game data must be mutable from the class which uses it.")
     public GameData getGameData() {
         return this.gameData;
     }

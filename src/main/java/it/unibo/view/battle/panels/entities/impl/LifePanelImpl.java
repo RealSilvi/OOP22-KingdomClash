@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.battle.panels.entities.api.LifePanel;
@@ -55,6 +56,8 @@ public final class LifePanelImpl implements LifePanel {
         this.lives.forEach(LivesLabelImpl::reset);
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "This panel has to be mutable from the class which uses it.")
     @Override
     public JPanel getPanel() {
         return this.mainPanel;
@@ -68,7 +71,7 @@ public final class LifePanelImpl implements LifePanel {
 
         private final Dimension size;
         private boolean alive;
-        private final PathIconsConfiguration pathIconsConfiguration;
+        private final transient PathIconsConfiguration pathIconsConfiguration;
 
         /**
          * Constructs an instance of a LivesLabel like a JLabel.

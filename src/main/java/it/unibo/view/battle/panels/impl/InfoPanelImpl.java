@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.TroopType;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.InfoPanel;
@@ -14,6 +15,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.Map;
 
+/**
+ * Implements an instance of InfoPanel.
+ */
 public final class InfoPanelImpl implements InfoPanel {
 
     private static final int GRID_LAYOUT_COLS = 3;
@@ -57,6 +61,8 @@ public final class InfoPanelImpl implements InfoPanel {
         });
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "This panel has to be mutable from the class which uses it.")
     @Override
     public JPanel getPanel() {
         return this.mainPanel;

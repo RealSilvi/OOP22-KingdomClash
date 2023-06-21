@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.TroopType;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.api.PlayerPanel;
@@ -78,6 +79,8 @@ public final class PlayerPanelImpl implements PlayerPanel {
         this.slots.forEach(x -> x.getButton().addActionListener(actionListener));
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "This panel has to be mutable from the class which uses it.")
     @Override
     public JPanel getPanel() {
         return this.mainPanel;

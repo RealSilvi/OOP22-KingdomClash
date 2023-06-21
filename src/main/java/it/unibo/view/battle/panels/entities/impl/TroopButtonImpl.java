@@ -1,5 +1,6 @@
 package it.unibo.view.battle.panels.entities.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.data.TroopType;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.battle.panels.entities.api.TroopButton;
@@ -20,7 +21,7 @@ public final class TroopButtonImpl implements TroopButton {
 
     private TroopType troop;
     private final Dimension size;
-    private final PositionJbutton<Integer> button;
+    private final DataJButton<Integer> button;
     private final PathIconsConfiguration pathIconsConfiguration;
 
     /**
@@ -36,11 +37,11 @@ public final class TroopButtonImpl implements TroopButton {
                            final int position,
                            final PathIconsConfiguration pathIconsConfiguration) {
         this.pathIconsConfiguration = pathIconsConfiguration;
-        this.button = new PositionJbutton<>(position);
+        this.button = new DataJButton<>(position);
         this.troop = troop;
-        this.size = size;
+        this.size = new Dimension(size);
 
-        this.button.setPreferredSize(size);
+        this.button.setPreferredSize(new Dimension(size));
 
         this.button.setIcon(
                 ImageIconsSupplier.getScaledImageIcon(
@@ -72,6 +73,8 @@ public final class TroopButtonImpl implements TroopButton {
         this.button.setEnabled(enabled);
     }
 
+    @SuppressFBWarnings(value = "EI",
+            justification = "I need to modify this button externally")
     @Override
     public JButton getButton() {
         return this.button;
@@ -86,14 +89,19 @@ public final class TroopButtonImpl implements TroopButton {
      * @param <X> the type of data to store.
      */
     @SuppressWarnings(value = "serial")
-    public final static class PositionJbutton<X> extends JButton {
+    public static final class DataJButton<X> extends JButton {
 
         private static final int BORDER_THICKNESS = 4;
 
         private final X data;
         private boolean selectedBorder;
 
-        public PositionJbutton(final X data) {
+        /**
+         * Construct an instance of DataJButton.
+         *
+         * @param data the data to save on the DataJButton.
+         */
+        public DataJButton(final X data) {
             this.data = data;
             this.selectedBorder = false;
             this.setEnabled(true);

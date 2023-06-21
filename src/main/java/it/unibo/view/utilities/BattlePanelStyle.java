@@ -44,15 +44,17 @@ public interface BattlePanelStyle {
 
     /**
      * Load the ttf fonts.
+     *
      * @param pathToDirectory the path to the directory.
-     * @param fontName the name of the font file without extension.
+     * @param fontName        the name of the font file without extension.
      * @return the font required, in case of failure return sans serif.
      */
     static Font loadTtfFont(final String pathToDirectory, final String fontName) {
         final float fontSize = 40f;
         Font font;
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(BattlePanelStyle.class.getResourceAsStream(pathToDirectory + fontName + FONT_EXTENSION)));
+            font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(
+                    BattlePanelStyle.class.getResourceAsStream(pathToDirectory + fontName + FONT_EXTENSION)));
             final GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
             g.registerFont(font);
             return font.deriveFont(fontSize);
@@ -64,6 +66,7 @@ public interface BattlePanelStyle {
 
     /**
      * Gives you the primary font of the application.
+     *
      * @return the primary font of the application.
      */
     static Font getPrimaryFont() {
