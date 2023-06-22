@@ -105,6 +105,6 @@ public class TroopPopupPanel {
      * This method close the popus when is unused or when the game is close.
      */
     public void dispose() {
-        this.movepopup.setVisible(false);
+        this.movepopup.dispose();
     }
 }
