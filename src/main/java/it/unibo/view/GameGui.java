@@ -222,7 +222,7 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void closeGui(){
+    public void closeGui() {
         this.frame.dispose();
     }
 

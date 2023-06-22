@@ -2,6 +2,8 @@ package it.unibo.view.utilities;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -10,6 +12,7 @@ import java.awt.image.BufferedImage;
  * A small interface with some utilities to simplify operations with the GUI.
  */
 public interface GraphicUtils {
+    int DEFAULT_FONT_SIZE = 18;
     /**
      * Resizes image to a given size.
      * @param image     image to resize
@@ -77,23 +80,53 @@ public interface GraphicUtils {
 
     /**
      * Applies a color filter to a given image.
-     * @param img           the image to apply the color filter
+     * @param image         the image to apply the color filter
      * @param colorFilter   the color filter to apply
      * @return              an image with the applied color filter
      */
-    static Image applyColorFilterToImage(Image img, Color colorFilter) {
-        int width = img.getWidth(null);
-        int height = img.getHeight(null);
+    static Image applyColorFilterToImage(Image image, Color colorFilter) {
+        int width = image.getWidth(null);
+        int height = image.getHeight(null);
 
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bufferedImage.createGraphics();
 
-        g2d.drawImage(img, 0, 0, null);
+        g2d.drawImage(image, 0, 0, null);
         g2d.setComposite(AlphaComposite.SrcAtop);
         g2d.setColor(colorFilter);
         g2d.fillRect(0, 0, width, height);
         g2d.dispose();
 
         return bufferedImage;
+    }
+    /**
+     * Creates a placeholder image given a width and a height.
+     * @param placeholderWidth  width of the image
+     * @param placeholderHeight height of the image
+     * @return                  a placeholder image
+     */
+    static Image createPlaceholderImage(final int placeholderWidth,
+        final int placeholderHeight) {
+        Image image = new BufferedImage(placeholderWidth,
+            placeholderHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics graphics = image.getGraphics();
+
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0, 0, placeholderWidth, placeholderHeight);
+
+        String placeholderText = "Placeholder Image";
+        Font font = new Font("Arial", Font.BOLD, DEFAULT_FONT_SIZE);
+        graphics.setFont(font);
+        graphics.setColor(Color.BLACK);
+        int textWidth = graphics.getFontMetrics().stringWidth(placeholderText);
+        int textHeight = graphics.getFontMetrics().getHeight();
+        int xTextPos = (placeholderWidth - textWidth) / 2;
+        int yTextPos = (placeholderHeight - textHeight) / 2
+            + graphics.getFontMetrics().getAscent();
+        graphics.drawString(placeholderText, xTextPos, yTextPos);
+
+        graphics.dispose();
+
+        return image;
     }
 }

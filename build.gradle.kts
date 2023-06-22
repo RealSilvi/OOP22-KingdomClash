@@ -28,8 +28,7 @@ dependencies {
     implementation("com.omertron:API-OMDB:1.5")
     implementation("org.jooq:jool:0.9.15")
 
-    //Json-simple
-    implementation ("com.googlecode.json-simple:json-simple:1.1.1")
+    //Google gson for saving application configuration.
     implementation ("com.google.code.gson:gson:2.10.1")
 
     /*
