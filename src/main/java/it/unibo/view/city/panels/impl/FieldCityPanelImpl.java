@@ -25,7 +25,6 @@ import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
-import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.utilities.GraphicUtils;
 import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.map.MapPanel.ButtonIdentification;
