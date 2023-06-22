@@ -251,7 +251,7 @@ public final class BaseModelImpl implements BaseModel {
         }
         gameData.setResources(subtractResources(gameData.getResources(),
             this.configuration.getBaseConfiguration().getCostPerTroop()
-                .get(troopToUpgrade).get(level)));
+                .get(troopToUpgrade).get(level-1)));
         gameData.getPlayerArmyLevel().put(troopToUpgrade, level);
     }
 
