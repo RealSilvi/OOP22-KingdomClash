@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -11,6 +12,8 @@ import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import java.util.Optional;
@@ -25,6 +28,9 @@ import it.unibo.view.city.panels.api.BarPanel;
 import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.city.panels.api.TileClickObserver;
 import it.unibo.view.city.utilities.TroopPopupPanel;
+import it.unibo.view.menu.GameMenuImpl;
+import it.unibo.view.menu.extensiveclasses.ImageButton;
+import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.controller.base.BaseController;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.model.base.basedata.Building;
@@ -37,6 +43,13 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 justification = "This GUI element will never be serialized")
 public class BarPanelImpl extends InternalElement implements BarPanel {
 
+    private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.2);
+    private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.2);
+    private static final Dimension DIMENSION_PANEL = new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+    (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 14 );
+    private static final Dimension DIMENSION_BUTTON = new Dimension(DIMENSION_PANEL.width / 7,DIMENSION_PANEL.height );
+    private static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON, DIMENSION_BUTTON);
+    
     private static final int DEFAULT_HGAP = 5;
     private final JButton mapReturnBtn;
     private final CityPanel cityView;
@@ -65,10 +78,10 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
     public BarPanelImpl(final CityPanel cityView, final BaseController controller, final Dimension size,
          final Map<BuildingTypes, Map<Integer, Image>> readImages, final PathIconsConfiguration pathIconsConfiguration) {
         this.setBackground(Color.BLACK);
-        this.setPreferredSize(size);
+        this.setPreferredSize(new Dimension(size));
         this.cityView = cityView;
         this.basedata = controller;
-        this.trooppopup = new TroopPopupPanel(this, controller, pathIconsConfiguration);
+        this.trooppopup = new TroopPopupPanel(this, controller, pathIconsConfiguration, WIDTH, HEIGHT);
         this.interactionComponents = new ArrayList<>();
 
         final ActionListener genericBtnAction = new ActionListener() {
@@ -99,14 +112,23 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
         });
 
         final InternalElement resourcePanel = new ResourcePanelImpl(controller);
-
         GridLayout barGridLayout = new GridLayout();
         barGridLayout.setHgap(DEFAULT_HGAP);
         this.setLayout(barGridLayout);
-        final JButton troop = new JButton("Upgrade Troops");
-        final JButton playerinfo = new JButton("player info");
-        final JButton upgradeBtn = new JButton("Upgrade Building");
-        this.mapReturnBtn = new JButton("Return to Map");
+        this.setPreferredSize(DIMENSION_PANEL);
+        final JButton troop = new ImageButton("Upgrade Troops", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+
+        final JButton playerinfo = new ImageButton("Player Info", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        final JButton upgradeBtn = new ImageButton("Upgrade Building", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        this.mapReturnBtn = new ImageButton("Return to Map", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        mapReturnBtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                trooppopup.dispose();
+            }
+            
+        });
         upgradeBtn.addActionListener(genericBtnAction);
         upgradeBtn.addActionListener(new ActionListener() {
             @Override
@@ -116,7 +138,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
             }
         });
 
-        final JButton demolishBtn = new JButton("Demolish Building");
+        final JButton demolishBtn = new ImageButton("Demolish Button", BACKGROUND_BUTTON, DIMENSION_BUTTON);
         demolishBtn.addActionListener(genericBtnAction);
         demolishBtn.addActionListener(new ActionListener() {
             @Override
