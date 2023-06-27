@@ -117,10 +117,14 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
         this.setLayout(barGridLayout);
         this.setPreferredSize(DIMENSION_PANEL);
         final JButton troop = new ImageButton("Upgrade Troops", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        troop.setForeground(Color.white);
 
         final JButton playerinfo = new ImageButton("Player Info", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        playerinfo.setForeground(Color.white);
         final JButton upgradeBtn = new ImageButton("Upgrade Building", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        upgradeBtn.setForeground(Color.white);
         this.mapReturnBtn = new ImageButton("Return to Map", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        mapReturnBtn.setForeground(Color.white);
         mapReturnBtn.addActionListener(new ActionListener() {
 
             @Override
@@ -139,6 +143,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
         });
 
         final JButton demolishBtn = new ImageButton("Demolish Button", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        demolishBtn.setForeground(Color.white);
         demolishBtn.addActionListener(genericBtnAction);
         demolishBtn.addActionListener(new ActionListener() {
             @Override
