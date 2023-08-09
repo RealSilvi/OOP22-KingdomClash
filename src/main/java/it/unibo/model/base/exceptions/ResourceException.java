@@ -4,6 +4,8 @@ package it.unibo.model.base.exceptions;
  * A type of exception that signals a problem relating resources.
  */
 public class ResourceException extends Exception {
+    private static final long serialVersionUID = 123456789L;
+
     /**
      * Creates a ResourceException with a given message.
      * @param msg   The exception's message

@@ -19,6 +19,8 @@ import it.unibo.model.base.basedata.Building;
 /**
  * A simple data class to store all the game's information.
  */
+//PMD mistakenly shows warning suppression as a repetition
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public final class GameData implements Serializable {
     /**
      * Serial version UID.

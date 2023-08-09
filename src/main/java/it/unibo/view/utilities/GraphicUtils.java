@@ -23,9 +23,8 @@ public interface GraphicUtils {
     //The assignment is necessary to avoid an exception
     @SuppressWarnings("java:S1488")
     static Image resizeImage(final Image image, final int width, final int height) {
-        Image changedImage = width == 0 || height == 0 ? image
+        return width == 0 || height == 0 ? image
         : image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return changedImage;
     }
     /**
      * Resizes the image while mantaining the aspect ratio.
@@ -39,8 +38,8 @@ public interface GraphicUtils {
         if (width == 0 || height == 0) {
             return image;
         }
-        int checkedWidth = width <= height ? width : -1; 
-        int checkedHeight = height <= width ? height : -1;
+        final int checkedWidth = width <= height ? width : -1; 
+        final int checkedHeight = height <= width ? height : -1;
         return image.getScaledInstance(checkedWidth, checkedHeight, Image.SCALE_SMOOTH);
     }
 
@@ -54,23 +53,23 @@ public interface GraphicUtils {
         final Image overlayImage) {
         Image ovelrayImageTemp = overlayImage;
 
-        int backgroundWidth = backgroundImage.getWidth(null);
-        int backgroundHeight = backgroundImage.getHeight(null);
+        final int backgroundWidth = backgroundImage.getWidth(null);
+        final int backgroundHeight = backgroundImage.getHeight(null);
 
 
         ovelrayImageTemp = resizeImageWithProportion(ovelrayImageTemp,
             backgroundWidth, backgroundHeight);
 
-        int overlayWidth = ovelrayImageTemp.getWidth(null);
-        int overlayHeight = ovelrayImageTemp.getHeight(null);
+        final int overlayWidth = ovelrayImageTemp.getWidth(null);
+        final int overlayHeight = ovelrayImageTemp.getHeight(null);
 
-        int xPosition = (backgroundWidth - overlayWidth) / 2;
-        int yPosition = (backgroundHeight - overlayHeight) / 2;
+        final int xPosition = (backgroundWidth - overlayWidth) / 2;
+        final int yPosition = (backgroundHeight - overlayHeight) / 2;
 
-        BufferedImage overlaidImages = new BufferedImage(
+        final BufferedImage overlaidImages = new BufferedImage(
             backgroundWidth, backgroundHeight, BufferedImage.TYPE_INT_ARGB);
 
-        Graphics2D graphics = overlaidImages.createGraphics();
+        final Graphics2D graphics = overlaidImages.createGraphics();
         graphics.drawImage(backgroundImage, 0, 0, null);
         graphics.drawImage(ovelrayImageTemp, xPosition, yPosition, null);
         graphics.dispose();
@@ -85,11 +84,11 @@ public interface GraphicUtils {
      * @return              an image with the applied color filter
      */
     static Image applyColorFilterToImage(Image image, Color colorFilter) {
-        int width = image.getWidth(null);
-        int height = image.getHeight(null);
+        final int width = image.getWidth(null);
+        final int height = image.getHeight(null);
 
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bufferedImage.createGraphics();
+        final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g2d = bufferedImage.createGraphics();
 
         g2d.drawImage(image, 0, 0, null);
         g2d.setComposite(AlphaComposite.SrcAtop);
@@ -107,21 +106,21 @@ public interface GraphicUtils {
      */
     static Image createPlaceholderImage(final int placeholderWidth,
         final int placeholderHeight) {
-        Image image = new BufferedImage(placeholderWidth,
+        final Image image = new BufferedImage(placeholderWidth,
             placeholderHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics graphics = image.getGraphics();
+        final Graphics graphics = image.getGraphics();
 
         graphics.setColor(Color.WHITE);
         graphics.fillRect(0, 0, placeholderWidth, placeholderHeight);
 
-        String placeholderText = "Placeholder Image";
-        Font font = new Font("Arial", Font.BOLD, DEFAULT_FONT_SIZE);
+        final String placeholderText = "Placeholder Image";
+        final Font font = new Font("Arial", Font.BOLD, DEFAULT_FONT_SIZE);
         graphics.setFont(font);
         graphics.setColor(Color.BLACK);
-        int textWidth = graphics.getFontMetrics().stringWidth(placeholderText);
-        int textHeight = graphics.getFontMetrics().getHeight();
-        int xTextPos = (placeholderWidth - textWidth) / 2;
-        int yTextPos = (placeholderHeight - textHeight) / 2
+        final int textWidth = graphics.getFontMetrics().stringWidth(placeholderText);
+        final int textHeight = graphics.getFontMetrics().getHeight();
+        final int xTextPos = (placeholderWidth - textWidth) / 2;
+        final int yTextPos = (placeholderHeight - textHeight) / 2
             + graphics.getFontMetrics().getAscent();
         graphics.drawString(placeholderText, xTextPos, yTextPos);
 

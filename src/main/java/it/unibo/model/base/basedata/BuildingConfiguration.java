@@ -4,12 +4,6 @@ package it.unibo.model.base.basedata;
  * A data class that contains parameters that configure some actions.
  */
 public final class BuildingConfiguration {
-    /**
-     * Creates a configuration for buildings with default values.
-     */
-    public BuildingConfiguration() {
-        fallbackConfiguration();
-    }
 
     private int maxLevel;
     private int maxBuildings;
@@ -17,6 +11,13 @@ public final class BuildingConfiguration {
     private int upgradeTaxPercentage;
     private int productionMultiplierPercentage;
     private int productionTimeReductionPercentage;
+
+    /**
+     * Creates a configuration for buildings with default values.
+     */
+    public BuildingConfiguration() {
+        fallbackConfiguration();
+    }
 
     /**
      * @return  The max level that the buildings can reach

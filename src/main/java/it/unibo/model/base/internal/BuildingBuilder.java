@@ -170,7 +170,7 @@ public interface BuildingBuilder {
     @SuppressWarnings("java:S2153")
     static Set<Resource> applyIncrementToResourceSet(Set<Resource> resourceSet,
         int incrementPercentage) {
-        Set<Resource> modifiedSet = Resource.deepCopySet(resourceSet);
+        final Set<Resource> modifiedSet = Resource.deepCopySet(resourceSet);
         modifiedSet.forEach(
                 resource ->
                         resource.setAmount(
@@ -188,7 +188,7 @@ public interface BuildingBuilder {
      * @return                      the double with the applied increment
      */
     static double applyIncrementToDouble(double valueToIncrement, int incrementPercentage) {
-        double increment = valueToIncrement * (incrementPercentage / 100.0);
+        final double increment = valueToIncrement * (incrementPercentage / 100.0);
         return valueToIncrement + increment;
     }
 }

@@ -263,7 +263,7 @@ public class Building implements Serializable {
      *
      * @return time in milliseconds
      */
-    public long getProductionTime() {
+    public synchronized long getProductionTime() {
         return productionTime;
     }
 
@@ -272,7 +272,7 @@ public class Building implements Serializable {
      *
      * @param productionTime time in milliseconds
      */
-    public void setProductionTime(final long productionTime) {
+    public synchronized void setProductionTime(final long productionTime) {
         this.productionTime = productionTime;
     }
 

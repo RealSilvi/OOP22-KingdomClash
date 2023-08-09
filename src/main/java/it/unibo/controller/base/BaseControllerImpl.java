@@ -36,8 +36,9 @@ import it.unibo.view.city.CityPanelImpl;
  */
 public final class BaseControllerImpl implements Controller, BaseController {
 
-    private BaseModel baseModel;
-    private CityPanel baseView;
+    private final BaseModel baseModel;
+    private final CityPanel baseView;
+    private static final String ERROR_TITLE = "HEY!";
 
     /**
      * Builds a controller for the Base part of the game using the provided
@@ -50,11 +51,11 @@ public final class BaseControllerImpl implements Controller, BaseController {
         this.baseView = new CityPanelImpl(this,
             gameData.getGameConfiguration());
         this.baseModel.refreshBuildings();
-        int validResources = this.baseModel
+        final int validResources = this.baseModel
             .getResourceCount().stream().filter(resource ->
                 resource.getAmount() != 0).toList().size();
-        int buildings = this.baseModel.getBuildingMap().size();
-        Point2D centerPosition = new Point2D.Float(
+        final int buildings = this.baseModel.getBuildingMap().size();
+        final Point2D centerPosition = new Point2D.Float(
             gameData.getGameConfiguration().getCityConfiguration().getWidth() / 2.0f,
             gameData.getGameConfiguration().getCityConfiguration().getHeight() / 2.0f);
         if (validResources == 0 && buildings == 0) {
@@ -72,7 +73,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             providedUUID = Optional.of(baseModel.buildStructure(position, type, startingLevel, cheatMode));
         } catch (BuildingException | ResourceException e) {
             JOptionPane.showMessageDialog(null,
-                e.getMessage(), "HEY",
+                e.getMessage(), ERROR_TITLE,
                 JOptionPane.ERROR_MESSAGE);
             providedUUID = Optional.empty();
         }
@@ -100,7 +101,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             upgradeSucceded = true;
         } catch (ResourceException | BuildingMaxedOutException | InvalidStructureReferenceException e) {
             JOptionPane.showMessageDialog(null,
-                e.getMessage(), "HEY",
+                e.getMessage(), ERROR_TITLE,
                 JOptionPane.ERROR_MESSAGE);
             upgradeSucceded = false;
         }
@@ -120,7 +121,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             demolitionSucceded = true;
         } catch (InvalidStructureReferenceException e) {
             JOptionPane.showMessageDialog(null,
-                e.getMessage(), "HEY",
+                e.getMessage(), ERROR_TITLE,
                 JOptionPane.ERROR_MESSAGE);
             demolitionSucceded = false;
         }
@@ -136,7 +137,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             relocationSucceded = true;
         } catch (InvalidBuildingPlacementException | InvalidStructureReferenceException e) {
             JOptionPane.showMessageDialog(null,
-                e.getMessage(), "HEY",
+                e.getMessage(), ERROR_TITLE,
                 JOptionPane.ERROR_MESSAGE);
             relocationSucceded = false;
         }
@@ -181,7 +182,7 @@ public final class BaseControllerImpl implements Controller, BaseController {
             operationSuccessful = true;
         } catch (InvalidTroopLevelException | NotEnoughResourceException e) {
             JOptionPane.showMessageDialog(null,
-                e.getMessage(), "HEY",
+                e.getMessage(), ERROR_TITLE,
                 JOptionPane.ERROR_MESSAGE);
         }
         return operationSuccessful;

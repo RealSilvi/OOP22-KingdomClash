@@ -13,7 +13,7 @@ import it.unibo.model.base.basedata.Building;
  * that stores similarly generated buildings.
  */
 public final class BuildingBuilderImpl implements BuildingBuilder {
-    private Map<BuildingTypes, Map<Integer, Building>> cache;
+    private final Map<BuildingTypes, Map<Integer, Building>> cache;
 
     /**
      * Constructs a BuildingBuilderImpl.
@@ -31,7 +31,7 @@ public final class BuildingBuilderImpl implements BuildingBuilder {
         if (cache.get(type).containsKey(level)) {
             return cache.get(type).get(level);
         }
-        Building standardizedBuilding = new Building(type,
+        final Building standardizedBuilding = new Building(type,
                 level,
                 type.getBuildTime(),
                 type.getProductionTime(),

@@ -7,6 +7,8 @@ import it.unibo.model.base.basedata.Building;
  * than is allowed.
  */
 public class MaxBuildingLimitReachedException extends BuildingException {
+    private static final long serialVersionUID = 123456789L;
+
     /**
      * Constructs an MaxBuildingLimitReachedException with a
      * standard message.

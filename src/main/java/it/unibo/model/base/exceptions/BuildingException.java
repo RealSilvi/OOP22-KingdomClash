@@ -4,6 +4,8 @@ package it.unibo.model.base.exceptions;
  * Exception that should be thrown when an operation on a building fails.
  */
 public class BuildingException extends Exception {
+    private static final long serialVersionUID = 123456789L;
+
     /**
      * @see {@link Exception#Exception(String)}
      * @param msg message

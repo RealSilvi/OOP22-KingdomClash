@@ -42,7 +42,10 @@ import it.unibo.model.data.Resource.ResourceType;
  */
 public final class BaseModelImpl implements BaseModel {
 
-    private Logger logger = Logger.getLogger(this.getClass().getName());
+    private static final String BEINGBUILT_ERROR_STRING = 
+        "Selected building is currently being upgraded!";
+
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
     private GameData gameData;
     private GameConfiguration configuration;
     private BuildingConfiguration buildingConfiguration;
@@ -92,8 +95,8 @@ public final class BaseModelImpl implements BaseModel {
         if (gameData.getBuildings().size() >= buildingConfiguration.getMaxBuildings()) {
             throw new MaxBuildingLimitReachedException();
         }
-        BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
-        Building newStructure = buildingBuilder
+        final BuildingBuilder buildingBuilder = new BuildingBuilderImpl();
+        final Building newStructure = buildingBuilder
         .makeStandardBuilding(type, position, startingLevel);
             if (!cheatMode) {
                 newStructure.setBeingBuilt(true);
@@ -102,7 +105,7 @@ public final class BaseModelImpl implements BaseModel {
                         .applyIncrementToResourceSet(newStructure
                         .getType().getCost(), startingLevel)));
             }
-        UUID newStructureId = generateBuildingId();
+        final UUID newStructureId = generateBuildingId();
         gameData.getBuildings().put(newStructureId, newStructure);
         threadManager.addBuilding(newStructureId);
         notifyBuildingStateChangedObservers(newStructureId);
@@ -133,6 +136,9 @@ public final class BaseModelImpl implements BaseModel {
         if (this.gameData.getBuildings().get(structureId).getLevel() >= buildingConfiguration.getMaxLevel()) {
             throw new BuildingMaxedOutException();
         }
+        if (this.gameData.getBuildings().get(structureId).isBeingBuilt()) {
+            throw new InvalidStructureReferenceException(BEINGBUILT_ERROR_STRING);
+        }
         gameData.setResources(subtractResources(gameData.getResources(),
                 this.gameData.getBuildings().get(structureId).getType().getCost(
                         this.gameData.getBuildings().get(structureId).getLevel() + 1)));
@@ -143,8 +149,8 @@ public final class BaseModelImpl implements BaseModel {
             public void update(final UUID buildingId) {
                 if (gameData.getBuildings().containsKey(structureId)
                     && structureId.equals(buildingId)
-                    && (gameData.getBuildings().get(structureId).getBuildingProgress() == 0
-                    && !gameData.getBuildings().get(structureId).isBeingBuilt())) {
+                    && gameData.getBuildings().get(structureId).getBuildingProgress() == 0
+                    && !gameData.getBuildings().get(structureId).isBeingBuilt()) {
                     threadManager.addBuilding(buildingId);
                 }
             }
@@ -163,9 +169,12 @@ public final class BaseModelImpl implements BaseModel {
     public Set<Resource> demolishStructure(final UUID structureId)
     throws InvalidStructureReferenceException {
         checkAndGetBuilding(structureId);
-        Set<Resource> refund = this.gameData.getBuildings().get(structureId).getType().getCost(
+        if (this.gameData.getBuildings().get(structureId).isBeingBuilt()) {
+            throw new InvalidStructureReferenceException(BEINGBUILT_ERROR_STRING);
+        }
+        final Set<Resource> refund = this.gameData.getBuildings().get(structureId).getType().getCost(
                 this.gameData.getBuildings().get(structureId).getLevel() + 1);
-        for (Resource resource : refund) {
+        for (final Resource resource : refund) {
             resource.setAmount(resource.getAmount() % buildingConfiguration.getRefundTaxPercentage());
         }
         try {
@@ -185,8 +194,11 @@ public final class BaseModelImpl implements BaseModel {
     public void relocateStructure(final Point2D position, final UUID structureId)
         throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
         checkAndGetBuilding(structureId);
-        Set<UUID> keys = gameData.getBuildings().keySet();
-        for (UUID key : keys) {
+        if (this.gameData.getBuildings().get(structureId).isBeingBuilt()) {
+            throw new InvalidStructureReferenceException(BEINGBUILT_ERROR_STRING);
+        }
+        final Set<UUID> keys = gameData.getBuildings().keySet();
+        for (final UUID key : keys) {
             if (gameData.getBuildings().get(key)
                 .getStructurePos().equals(position) && !structureId.equals(key)) {
                 throw new InvalidBuildingPlacementException();
@@ -198,21 +210,21 @@ public final class BaseModelImpl implements BaseModel {
     @Override
     public int getBuildingProgress(final UUID structureId)
         throws InvalidStructureReferenceException {
-        Building selectedBuilding = checkAndGetBuilding(structureId);
+        final Building selectedBuilding = checkAndGetBuilding(structureId);
         return selectedBuilding.getBuildingProgress();
     }
 
     @Override
     public Set<Resource> getBuildingProduction(final UUID structureId)
         throws InvalidStructureReferenceException {
-        Building selectedBuilding = checkAndGetBuilding(structureId);
+        final Building selectedBuilding = checkAndGetBuilding(structureId);
         return Collections.unmodifiableSet(selectedBuilding.getProductionAmount());
     }
 
     @Override
     public boolean isBuildingBeingBuilt(final UUID structureId)
         throws InvalidStructureReferenceException {
-        Building selectedBuilding = checkAndGetBuilding(structureId);
+        final Building selectedBuilding = checkAndGetBuilding(structureId);
         return selectedBuilding.isBeingBuilt();
     }
 
@@ -223,7 +235,7 @@ public final class BaseModelImpl implements BaseModel {
 
     @Override
     public int getResourceCount(final ResourceType type) {
-        Optional<Resource> resourceCounter = gameData
+        final Optional<Resource> resourceCounter = gameData
                 .getResources()
                 .stream().filter(x -> x.getResource().equals(type)).findFirst();
         if (resourceCounter.isEmpty()) {
@@ -315,7 +327,7 @@ public final class BaseModelImpl implements BaseModel {
 
     @Override
     public Map<UUID, Building> getBuildingMap() {
-        Map<UUID, Building> unmodMap = gameData.getBuildings();
+        final Map<UUID, Building> unmodMap = gameData.getBuildings();
         return Collections.unmodifiableMap(unmodMap);
     }
 
@@ -363,16 +375,16 @@ public final class BaseModelImpl implements BaseModel {
      */
     private Set<Resource> unsafeOperation(final Set<Resource> resourceStorage,
         final Set<Resource> resourceCost) {
-        Set<Resource> storageResult = new HashSet<>();
-        Iterator<Resource> storageIterator = 
+        final Set<Resource> storageResult = new HashSet<>();
+        final Iterator<Resource> storageIterator = 
             Resource
             .checkAndAddMissingResources(
                 Resource.deepCopySet(resourceStorage)).iterator();
         while (storageIterator.hasNext()) {
-            Resource currentStorageResource = storageIterator.next();
-            Iterator<Resource> costIterator = Resource.checkAndAddMissingResources(Resource.deepCopySet(resourceCost)).iterator();
+            final Resource currentStorageResource = storageIterator.next();
+            final Iterator<Resource> costIterator = Resource.checkAndAddMissingResources(Resource.deepCopySet(resourceCost)).iterator();
             while (costIterator.hasNext()) {
-                Resource currentCostResource = costIterator.next();
+                final Resource currentCostResource = costIterator.next();
                 if (currentStorageResource.equals(currentCostResource)) {
                     storageResult.add(new Resource(currentStorageResource.getResource(),
                             currentStorageResource.getAmount()
@@ -390,7 +402,7 @@ public final class BaseModelImpl implements BaseModel {
      * @return the resources with negative values within the set
      */
     private Set<Resource> filterNegativeValues(final Set<Resource> resourcesToCheck) {
-        Set<Resource> missingResources = new HashSet<>();
+        final Set<Resource> missingResources = new HashSet<>();
         resourcesToCheck.forEach(x -> {
             if (x.getAmount() < 0) {
                 missingResources.add(x);
@@ -406,7 +418,7 @@ public final class BaseModelImpl implements BaseModel {
      * @return a negated set
      */
     private Set<Resource> negateResources(final Set<Resource> resourceToNegate) {
-        Set<Resource> negatedResources = Resource.deepCopySet(resourceToNegate);
+        final Set<Resource> negatedResources = Resource.deepCopySet(resourceToNegate);
         negatedResources.stream().forEach(x -> x.setAmount(-x.getAmount()));
         return negatedResources;
     }
@@ -418,8 +430,8 @@ public final class BaseModelImpl implements BaseModel {
 
     private Set<Resource> addResources(final Set<Resource> resourceStorage,
         final Set<Resource> resourcesAdded) throws NotEnoughResourceException {
-        Set<Resource> updatedList = unsafeOperation(resourceStorage, resourcesAdded);
-        Set<Resource> missingResources = filterNegativeValues(updatedList);
+        final Set<Resource> updatedList = unsafeOperation(resourceStorage, resourcesAdded);
+        final Set<Resource> missingResources = filterNegativeValues(updatedList);
         if (missingResources.isEmpty()) {
             return updatedList;
         }
@@ -437,7 +449,7 @@ public final class BaseModelImpl implements BaseModel {
      */
     private Building checkAndGetBuilding(final UUID structureId)
         throws InvalidStructureReferenceException {
-        Building selectedBuilding = gameData.getBuildings().get(structureId);
+        final Building selectedBuilding = gameData.getBuildings().get(structureId);
         if (selectedBuilding == null) {
             throw new InvalidStructureReferenceException(structureId);
         }

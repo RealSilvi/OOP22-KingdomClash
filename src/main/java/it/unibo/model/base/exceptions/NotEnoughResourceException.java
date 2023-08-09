@@ -9,6 +9,8 @@ import it.unibo.model.data.Resource;
  * requires some resources that are not in the warehouse.
  */
 public class NotEnoughResourceException extends ResourceException {
+    private static final long serialVersionUID = 123456789L;
+
     /**
      * Constructs a NotEnoughResourceException with a
      * standard message that states the amount required to make that action.

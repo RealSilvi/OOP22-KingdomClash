@@ -5,6 +5,8 @@ package it.unibo.model.base.exceptions;
  * a building in an invalid location.
  */
 public class InvalidBuildingPlacementException extends BuildingException {
+    private static final long serialVersionUID = 123456789L;
+
     /**
      * Constructs an InvalidBuildingPlacementException with a
      * standard message for the user.

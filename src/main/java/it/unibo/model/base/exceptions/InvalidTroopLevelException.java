@@ -7,6 +7,8 @@ import it.unibo.model.data.TroopType;
  * a certain limit.
  */
 public class InvalidTroopLevelException extends TroopException {
+    private static final long serialVersionUID = 123456789L;
+
     /**
      * Constructs an InvalidTroopLevelException with a
      * standard message.

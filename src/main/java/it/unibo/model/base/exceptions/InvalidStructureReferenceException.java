@@ -8,6 +8,8 @@ import java.util.UUID;
  * in the code and not by the user.
  */
 public class InvalidStructureReferenceException extends BuildingException {
+    private static final long serialVersionUID = 123456789L;
+
     /**
      * Constructs an InvalidStructureReferenceException with a
      * standard message.

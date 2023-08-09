@@ -19,9 +19,9 @@ public final class BaseConfiguration {
     private static final int DEFAULT_MAX_TROOP_LEVEL = 3;
     private static final int DEFAULT_TROOP_COST_INCREMENT_PERCENTAGE = 25;
 
-    private Map<TroopType, Map<Integer, Set<Resource>>> costPerTroop;
-    private int maximumTroopLevel;
-    private int troopCostIncrementPercentage;
+    private final Map<TroopType, Map<Integer, Set<Resource>>> costPerTroop;
+    private final int maximumTroopLevel;
+    private final int troopCostIncrementPercentage;
 
     /**
      * Creates a configuration for the Base Model with default values.
@@ -32,7 +32,7 @@ public final class BaseConfiguration {
         costPerTroop = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values())
             .forEach(singleTroop -> {
-                Map<Integer, Set<Resource>> levelCostMap = new HashMap<>();
+                final Map<Integer, Set<Resource>> levelCostMap = new HashMap<>();
                 IntStream.range(0, DEFAULT_MAX_TROOP_LEVEL)
                     .forEach(singleTroopLevel -> 
                         levelCostMap.put(singleTroopLevel, 
