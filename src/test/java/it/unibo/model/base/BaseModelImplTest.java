@@ -25,10 +25,10 @@ import it.unibo.model.data.TroopType;
 /**
  * Tests for the model for the base part of the game.
  */
-public final class BaseModelImplTest {
+final class BaseModelImplTest {
     private static final long GAME_PAUSE_MS = 5000L;
     private static final float POSITION_INCREMENT = 5.5f;
-    private static final int BUILDING_TIME_TOLERANCE = 10000;
+    private static final int BUILDING_TIME_TOLERANCE = 10_000;
     private GameData gameData;
     private BaseModel baseModel;
     private int counter;
@@ -37,12 +37,12 @@ public final class BaseModelImplTest {
      * Build all type of buildings.
      */
     @BeforeEach
-    public void buildAllStructures() {
+    void buildAllStructures() {
         initModel();
         float xvariation = 0.0f;
-        for (BuildingTypes currentType : BuildingTypes.values()) {
+        for (final BuildingTypes currentType : BuildingTypes.values()) {
             xvariation++;
-            Point2D pos = new Point2D.Float(xvariation, 0);
+            final Point2D pos = new Point2D.Float(xvariation, 0);
             Assertions.assertDoesNotThrow(() -> baseModel.buildStructure(pos, currentType, 0, true));
         }
     }
@@ -51,16 +51,16 @@ public final class BaseModelImplTest {
      * Tests by building all type of structures.
      */
     @Test
-    public void testBuildMultipleStructures() {
+    void testBuildMultipleStructures() {
         buildAllStructures();
     }
     /**
      * Tests the upgrade of a structure.
      */
     @Test
-    public void testStructureUpgrade() {
-        Object synchronizationObject = new Object();
-        Set<UUID> buildingKeys = baseModel.getBuildingIds();
+    void testStructureUpgrade() {
+        final Object synchronizationObject = new Object();
+        final Set<UUID> buildingKeys = baseModel.getBuildingIds();
         buildingKeys.forEach((buildingIdentifier) -> {
             baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
                 @Override
@@ -101,11 +101,11 @@ public final class BaseModelImplTest {
      *                                              being referenced
      */
     @Test
-    public void testStructureRelocation() throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
+    void testStructureRelocation() throws InvalidBuildingPlacementException, InvalidStructureReferenceException {
         testBuildMultipleStructures();
         float positionIncrement = POSITION_INCREMENT;
-        Set<UUID> identifiers = baseModel.getBuildingIds();
-        for (UUID identifier : identifiers) {
+        final Set<UUID> identifiers = baseModel.getBuildingIds();
+        for (final UUID identifier : identifiers) {
             positionIncrement++;
             baseModel.relocateStructure(
                     new Point2D.Float(positionIncrement, 0.0f), identifier);
@@ -119,8 +119,8 @@ public final class BaseModelImplTest {
      * Tests the demolition of a building.
      */
     @Test
-    public void testStructureDemolition() {
-        Set<UUID> buildingKeys = baseModel.getBuildingIds();
+    void testStructureDemolition() {
+        final Set<UUID> buildingKeys = baseModel.getBuildingIds();
         buildingKeys.forEach((buildingIdentifier) -> 
             Assertions.assertDoesNotThrow(() -> 
                 baseModel.demolishStructure(buildingIdentifier)));
@@ -137,16 +137,16 @@ public final class BaseModelImplTest {
      * @throws InterruptedException                 thrown when thread is interrupted
      */
     @Test
-    public void testGamePause() throws NotEnoughResourceException,
+    void testGamePause() throws NotEnoughResourceException,
         BuildingMaxedOutException, InvalidStructureReferenceException,
         InterruptedException {
-        Object synchronizationObject = new Object();
-        long initialWaitingTime = GAME_PAUSE_MS;
+        final Object synchronizationObject = new Object();
+        final long initialWaitingTime = GAME_PAUSE_MS;
         counter = 0;
         testBuildMultipleStructures();
-        Iterator<UUID> buildingIdentifiers = baseModel.getBuildingIds().iterator();
-        UUID singleBuildingUUID = buildingIdentifiers.next();
-        long buildingTime = baseModel.getBuildingMap().get(singleBuildingUUID).getBuildingTime();
+        final Iterator<UUID> buildingIdentifiers = baseModel.getBuildingIds().iterator();
+        final UUID singleBuildingUUID = buildingIdentifiers.next();
+        final long buildingTime = baseModel.getBuildingMap().get(singleBuildingUUID).getBuildingTime();
         baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
             public void update(final UUID buildingId) {
@@ -171,12 +171,12 @@ public final class BaseModelImplTest {
         synchronized (synchronizationObject) {
             synchronizationObject.wait(buildingTime + BUILDING_TIME_TOLERANCE);
         }
-        long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
         baseModel.setClockTicking(true);
         synchronized (synchronizationObject) {
             synchronizationObject.wait();
-            long endTime = System.currentTimeMillis();
-            long elapsedTime = endTime - startTime;
+            final long endTime = System.currentTimeMillis();
+            final long elapsedTime = endTime - startTime;
             Assertions.assertEquals(1,
                     baseModel.getBuildingMap().get(singleBuildingUUID).getLevel());
             Assertions.assertTrue(BaseTestUtils.checkElapsedTime(elapsedTime,
@@ -188,10 +188,10 @@ public final class BaseModelImplTest {
      * Tests the troop upgrade logic.
      */
     @Test
-    public void testTroopUpgrade() {
+    void testTroopUpgrade() {
         Assertions.assertDoesNotThrow(() -> 
             this.baseModel.upgradeTroop(TroopType.AXE, 2));
-        Map<TroopType, Integer> expectedTroops = new EnumMap<>(TroopType.class);
+        final Map<TroopType, Integer> expectedTroops = new EnumMap<>(TroopType.class);
         Arrays.stream(TroopType.values()).forEach(type -> expectedTroops.put(type, 1));
         expectedTroops.put(TroopType.AXE, 2);
         Assertions.assertEquals(expectedTroops, this.baseModel.getTroopMap());

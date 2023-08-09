@@ -20,19 +20,20 @@ import it.unibo.model.data.TroopType;
 /**
  * Tests for the BaseController logic.
  */
-public final class BaseControllerTest {
+final class BaseControllerTest {
     private GameData gameDataRef;
     private BaseController baseController;
-    private Random randomGen = new Random();
+    private final Random randomGen = new Random();
 
     /**
      * Initializes the Base MVC.
      */
     @BeforeEach
     //In this case, null checking is not necessary.
-    public void initBaseMVC() {
+    @SuppressWarnings("null")
+    void initBaseMVC() {
         gameDataRef = new GameData();
-        Set<Resource> resources = new HashSet<>();
+        final Set<Resource> resources = new HashSet<>();
         resources.add(new Resource(Resource.ResourceType.WHEAT, Integer.MAX_VALUE));
         resources.add(new Resource(Resource.ResourceType.WOOD, Integer.MAX_VALUE));
         this.gameDataRef.setResources(resources);
@@ -42,12 +43,12 @@ public final class BaseControllerTest {
      * Tests if all of the data structures are safely returned.
      */
     @Test
-    public void testDataIncapsulation() {
-        Set<Resource> resourceSet = this.baseController.requestResourceCount();
-        Map<TroopType, Integer> troopMap = this.baseController.requestTroopLevels();
-        Map<UUID, Building> buildingMap = this.baseController.requestBuildingMap();
+    void testDataIncapsulation() {
+        final Set<Resource> resourceSet = this.baseController.requestResourceCount();
+        final Map<TroopType, Integer> troopMap = this.baseController.requestTroopLevels();
+        final Map<UUID, Building> buildingMap = this.baseController.requestBuildingMap();
 
-        Optional<UUID> createdBuildingId = baseController.handleBuildingPlaced(
+        final Optional<UUID> createdBuildingId = baseController.handleBuildingPlaced(
             new Point2D.Float(randomGen.nextFloat(), randomGen.nextFloat()), BuildingTypes.FARM);
         Assertions.assertTrue(createdBuildingId.isPresent());
 

@@ -18,8 +18,8 @@ import it.unibo.model.data.Resource.ResourceType;
 /**
  * Tests the base model's thread manager.
  */
-public final class ThreadManagerImplTest {
-    private Logger logger = Logger.getLogger(this.getClass().getName());
+final class ThreadManagerImplTest {
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     private static final int COMPLETED_PERC = 100;
 
@@ -30,7 +30,7 @@ public final class ThreadManagerImplTest {
      * Initializes the game model.
      */
     @BeforeEach
-    public void initModel() {
+    void initModel() {
         this.gameData = new GameData();
         this.baseModel = new BaseModelImpl(this.gameData);
     }
@@ -38,12 +38,12 @@ public final class ThreadManagerImplTest {
      * Checks the full building and upgrade cycle.
      */
     @Test
-    public void testBuildingAndProductionCycle() {
-        Object lock = new Object();
-        UUID builtStructureId = Assertions.assertDoesNotThrow(() -> 
+    void testBuildingAndProductionCycle() {
+        final Object lock = new Object();
+        final UUID builtStructureId = Assertions.assertDoesNotThrow(() -> 
             baseModel.buildStructure(
                 new Point2D.Float(0.0f, 0.0f), BuildingTypes.FARM, 0, true));
-        long buildingTime = baseModel.getBuildingMap().get(builtStructureId).getBuildingTime();
+        final long buildingTime = baseModel.getBuildingMap().get(builtStructureId).getBuildingTime();
         baseModel.addBuildingStateChangedObserver(new BuildingObserver() {
             @Override
             public void update(final UUID buildingId) {
@@ -66,16 +66,16 @@ public final class ThreadManagerImplTest {
                     gameData.getResources().add(new Resource(singleType, Integer.MAX_VALUE / 2));
                 });
         }
-        long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
         Assertions.assertDoesNotThrow(() -> 
             baseModel.upgradeStructure(builtStructureId));
         synchronized (lock) {
             try {
                 lock.wait();
-                long endTime = System.currentTimeMillis();
-                long elapsedTime = endTime - startTime;
+                final long endTime = System.currentTimeMillis();
+                final long elapsedTime = endTime - startTime;
                 logger.log(Level.FINEST, "Time passed: {0}", elapsedTime);
-                boolean timeElapsedCorrect = BaseTestUtils
+                final boolean timeElapsedCorrect = BaseTestUtils
                     .checkElapsedTime(elapsedTime,
                         buildingTime,
                         BaseTestUtils.STANDARD_TIME_TOLERANCE);

@@ -21,7 +21,7 @@ public interface BaseTestUtils {
      * @param level     the reference building level
      */
     static void applyBuildingResources(final GameData gameData, final BuildingTypes type, final int level) {
-        Set<Resource> cost = type.getCost(level);
+        final Set<Resource> cost = type.getCost(level);
         cost.forEach(resourceType -> {
             gameData.getResources().remove(resourceType);
             gameData.getResources().add(resourceType);
@@ -35,7 +35,7 @@ public interface BaseTestUtils {
      * @return                  true if the time is within the given tolerance
      */
     static boolean checkElapsedTime(final long elapsedTime, final long timeToConfront, final long tolerance) {
-        return (elapsedTime < (timeToConfront + tolerance)) && (elapsedTime > (timeToConfront - tolerance));
+        return (elapsedTime < timeToConfront + tolerance) && (elapsedTime > timeToConfront - tolerance);
     }
     /**
      * Checks if the elapsed time is correct.
