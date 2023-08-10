@@ -138,7 +138,7 @@ public final class Resource implements Serializable, Cloneable {
      * @param resourceSet the set of resources to be checked and modified
      * @return the modified set of resources with all resource types included
      */
-    public static Set<Resource> checkAndAddMissingResources(Set<Resource> resourceSet) {
+    public static Set<Resource> checkAndAddMissingResources(final Set<Resource> resourceSet) {
         EnumSet.allOf(ResourceType.class)
                 .stream()
                 .filter(resourceType -> resourceSet.stream()

@@ -16,9 +16,7 @@ public class InvalidTroopLevelException extends TroopException {
      * @param level         the maximum level of the troop
      */
     public InvalidTroopLevelException(final TroopType troopType, final int level) {
-        //TODO: Ouptut max level to string when ready
-        super("Level " + level + " is invalid for troop: "
-                + troopType.name() + " Max level is: TO BE ADDED");
+        super("Level " + level + " exceeds maximum allowed level!");
     }
     /**
      * Constructs an InvalidTroopLevelException with a
