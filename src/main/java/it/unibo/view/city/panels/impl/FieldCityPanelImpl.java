@@ -25,6 +25,7 @@ import it.unibo.view.GameGui;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.city.CityPanel;
 import it.unibo.view.city.panels.api.FieldCityPanel;
+import it.unibo.view.city.panels.api.InternalElement;
 import it.unibo.view.utilities.GraphicUtils;
 import it.unibo.view.utilities.ImageIconsSupplier;
 import it.unibo.view.map.MapPanel.ButtonIdentification;
@@ -34,7 +35,7 @@ import it.unibo.view.map.MapPanel.ButtonIdentification;
  */
 @SuppressFBWarnings(value = "Se", 
 justification = "This GUI element will never be serialized")
-public class FieldCityPanelImpl implements FieldCityPanel {
+public class FieldCityPanelImpl extends InternalElement implements FieldCityPanel {
 
     private final JPanel mainpanel;
     private final CityPanel cityView;
@@ -83,6 +84,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
             }
         });
     }
+    
     public void refreshContent() {
         baseController.requestBuildingMap()
             .keySet()
@@ -90,7 +92,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
     }
     private void setfield(final int width, final int height) {
         for (int i = 0; i < width; i++) {
-            List<JButton> cols = new ArrayList<>();
+            final List<JButton> cols = new ArrayList<>();
             final int coordX = i;
             for (int j = 0; j < height; j++) {
                 final JButton structure = new JButton();
@@ -118,6 +120,7 @@ public class FieldCityPanelImpl implements FieldCityPanel {
      */
     @SuppressFBWarnings(value = "EI", 
     justification = "Returned panel should be adjusted")
+    @Override
     public JPanel getPanel() {
         return this.mainpanel;
     }

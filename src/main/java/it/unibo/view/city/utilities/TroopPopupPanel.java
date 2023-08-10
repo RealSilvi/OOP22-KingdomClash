@@ -27,12 +27,12 @@ public class TroopPopupPanel {
 
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
-    private static final float FONT_SIZE= (float) 30;
+    private static final float FONT_SIZE = (float) 30;
     private Popup popup;
-    private JPanel contentpanel;
+    private final JPanel contentpanel;
     private boolean visibility;
-    private Component container;
-    private PathIconsConfiguration image;
+    private final Component container;
+    private final PathIconsConfiguration image;
     private int level = 1;
     /**
      * This costructor create the popup and gave him the name and the level of the troops and an upgrade button for each other.
@@ -53,14 +53,14 @@ public class TroopPopupPanel {
         this.image = pathIconsConfiguration;
        data.requestTroopLevels().keySet().stream().forEach(
             singletroop -> {
-                JPanel containpanel = new JPanel();
+                final JPanel containpanel = new JPanel();
                 containpanel.setLayout(new BorderLayout());
                 containpanel.setBackground(Color.BLACK);
-                Font font = BattlePanelStyle.getPrimaryFont().deriveFont(FONT_SIZE);
-                JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(image.getTroop(singletroop),
-                 new Dimension(WIDTH/8, HEIGHT/8)));
-                 var buttonOK = new JButton("upgrade");
-                 JLabel levels = new JLabel("Level " + level);
+                final Font font = BattlePanelStyle.getPrimaryFont().deriveFont(FONT_SIZE);
+                final JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(image.getTroop(singletroop),
+                 new Dimension(WIDTH / 8, HEIGHT / 8)));
+                 final var buttonOK = new JButton("upgrade");
+                 final JLabel levels = new JLabel("Level " + level);
                  levels.setForeground(Color.WHITE);
                  levels.setFont(font);
                 levels.setBackground(new Color(0, 0, 0, 0));
@@ -80,7 +80,7 @@ public class TroopPopupPanel {
                 });
                 contentpanel.add(containpanel);
             });
-    }           
+    }    
     /**
      * This method allows to make the popup visible on each click
      * with a boolean parameter.
