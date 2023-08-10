@@ -262,4 +262,35 @@ public final class BattleModelTest {
 
     }
 
+    /**
+     * Tests if the current round
+     * it's correct.
+     */
+    @Test
+    public void countedRound() {
+
+        int countedRound = 1;
+        this.playerData.getCells(0).setClicked(true);
+        this.playerData.getCells(1).setClicked(false);
+        this.playerData.getCells(2).setClicked(false);
+        this.playerData.getCells(3).setClicked(false);
+        this.playerData.getCells(4).setClicked(false);
+        this.botData.getCells(0).setClicked(false);
+        this.botData.getCells(1).setClicked(false);
+        this.botData.getCells(2).setClicked(false);
+        this.botData.getCells(3).setClicked(false);
+        this.botData.getCells(4).setClicked(false);
+
+        for (int i = 1; i < gameData.getGameConfiguration().getBattleConfiguration().getMaxRound(); i++) {
+            this.battleModel.battlePass(BattleControllerImpl.CONTINUE);
+            Assertions.assertEquals(countedRound, this.battleModel.getCountedRound());
+            countedRound++;
+        }
+
+        this.battleModel.battlePass(BattleControllerImpl.CONTINUE);
+        Assertions.assertEquals(countedRound, this.battleModel.getCountedRound());
+        Assertions.assertEquals(this.battleModel.getCountedRound(), gameData.getGameConfiguration().getBattleConfiguration().getMaxRound());
+
+    }
+
 }

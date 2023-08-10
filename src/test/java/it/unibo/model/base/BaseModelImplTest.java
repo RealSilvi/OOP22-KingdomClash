@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.exceptions.BuildingMaxedOutException;
 import it.unibo.model.base.exceptions.InvalidBuildingPlacementException;
@@ -58,6 +59,8 @@ final class BaseModelImplTest {
      * Tests the upgrade of a structure.
      */
     @Test
+    @SuppressFBWarnings(value = "UW",
+        justification = "Unconditional waiting is intended and necessary")
     void testStructureUpgrade() {
         final Object synchronizationObject = new Object();
         final Set<UUID> buildingKeys = baseModel.getBuildingIds();
@@ -136,13 +139,15 @@ final class BaseModelImplTest {
      *                                              being referenced
      * @throws InterruptedException                 thrown when thread is interrupted
      */
+    @SuppressFBWarnings(value = {"UW", "Wa"},
+        justification = "Controlled and expected behaviour")
     @Test
     void testGamePause() throws NotEnoughResourceException,
         BuildingMaxedOutException, InvalidStructureReferenceException,
         InterruptedException {
         final Object synchronizationObject = new Object();
         final long initialWaitingTime = GAME_PAUSE_MS;
-        counter = 0;
+        resetCounter();
         testBuildMultipleStructures();
         final Iterator<UUID> buildingIdentifiers = baseModel.getBuildingIds().iterator();
         final UUID singleBuildingUUID = buildingIdentifiers.next();
@@ -200,11 +205,14 @@ final class BaseModelImplTest {
                 .getBaseConfiguration().getMaximumTroopLevel() + 1));
     }
 
+    private synchronized void resetCounter() {
+        this.counter = 0;
+    }
     private synchronized void increaseCounter() {
-        counter++;
+        this.counter++;
     }
 
-    private int getCounter() {
+    private synchronized int getCounter() {
         return this.counter;
     }
 

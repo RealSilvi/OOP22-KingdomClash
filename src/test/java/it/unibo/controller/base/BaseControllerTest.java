@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.Assertions;
 
 import it.unibo.model.base.basedata.Building;
@@ -21,8 +22,8 @@ import it.unibo.model.data.TroopType;
  * Tests for the BaseController logic.
  */
 final class BaseControllerTest {
-    private GameData gameDataRef;
-    private BaseController baseController;
+    private GameData gameDataRef = null;
+    private BaseController baseController = null;
     private final Random randomGen = new Random();
 
     /**

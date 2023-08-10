@@ -65,9 +65,9 @@ public class GameController {
     }
 
     private void loadGui() {
-        this.gameGui.setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU.LOAD, false);
-        this.gameGui.setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU.NEW_GAME, false);
-        this.gameGui.setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU.CONTINUE, true);
+        this.gameGui.setButtonsVisibilityMenu(GameMenuImpl.BUTTONSMENU.LOAD, false);
+        this.gameGui.setButtonsVisibilityMenu(GameMenuImpl.BUTTONSMENU.NEW_GAME, false);
+        this.gameGui.setButtonsVisibilityMenu(GameMenuImpl.BUTTONSMENU.CONTINUE, true);
 
         this.gameGui.addPanels(this.baseController.getGuiPanel(), PanelsName.CITY.getName());
         this.gameGui.addPanels(this.battleController.getGuiPanel(), PanelsName.BATTLE.getName());
@@ -106,8 +106,8 @@ public class GameController {
         return e -> {
             this.gameGui.getSoundManager().startMapTheme();
             this.gameGui.showPanels(GameGui.MAP_NAME);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.SAVE, true);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.MENU, true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.SAVE, true);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.MENU, true);
             this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
             this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
         };
@@ -123,7 +123,7 @@ public class GameController {
     }
 
     private void setActionListenerSave() {
-        this.gameGui.setActionListenerButtons(e -> this.gameModel.serializeGameData(), SouthPanel.BUTTONS_SOUTH.SAVE);
+        this.gameGui.setActionListenerButtons(e -> this.gameModel.serializeGameData(), SouthPanel.BUTTONSSOUTH.SAVE);
     }
 
     private void setActionListenerContinue() {
@@ -137,20 +137,20 @@ public class GameController {
         this.gameGui.setActionListenerButtons(e -> {
             this.gameGui.getSoundManager().startMenuTheme();
             this.gameGui.showMenuPanel();
-        }, SouthPanel.BUTTONS_SOUTH.MENU);
+        }, SouthPanel.BUTTONSSOUTH.MENU);
     }
 
     private void setActionListenerMusic() {
         this.gameGui.setActionListenerButtons(
-                e -> this.gameGui.getSoundManager().changeMute(), SouthPanel.BUTTONS_SOUTH.MUSIC);
+                e -> this.gameGui.getSoundManager().changeMute(), SouthPanel.BUTTONSSOUTH.MUSIC);
     }
 
     private void setActionListenerBattle() {
         this.gameGui.setMapBattleActionListener(e -> {
             this.gameGui.getSoundManager().startBattleTheme();
             this.gameGui.showPanels(PanelsName.BATTLE.getName());
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.SAVE, false);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONS_SOUTH.MENU, false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.SAVE, false);
+            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.MENU, false);
         });
     }
 
@@ -170,7 +170,7 @@ public class GameController {
             this.baseController.closureOperation();
             this.gameGui.closeGui();
         };
-        this.gameGui.setActionListenerButtons(actionListener, SouthPanel.BUTTONS_SOUTH.QUIT);
+        this.gameGui.setActionListenerButtons(actionListener, SouthPanel.BUTTONSSOUTH.QUIT);
     }
 
 

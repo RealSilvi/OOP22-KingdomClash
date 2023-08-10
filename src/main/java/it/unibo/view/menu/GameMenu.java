@@ -26,7 +26,7 @@ public interface GameMenu {
      * @param name the name of the button.
      * @param visibility the visibility required to be set.
      */
-    void setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU name, Boolean visibility);
+    void setButtonsVisibilityMenu(GameMenuImpl.BUTTONSMENU name, Boolean visibility);
 
     /**
      * Sets the action listener to the info button.

@@ -23,6 +23,7 @@ dependencies {
     implementation("org.jetbrains:annotations:24.0.1")
     // Suppressions for SpotBugs
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.7.3")
+    testCompileOnly("com.github.spotbugs:spotbugs-annotations:4.7.3")
 
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
     implementation("com.omertron:API-OMDB:1.5")
