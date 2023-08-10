@@ -74,7 +74,7 @@ public final class GameGui implements GameGuiInt {
         this.switchLayout2 = new CardLayout();
         this.allPanel = new JPanel(this.switchLayout2);
 
-        JPanel borderPanel = new JPanel(new BorderLayout());
+        final JPanel borderPanel = new JPanel(new BorderLayout());
 
         this.menuPanel = new GameMenuImpl();
         this.infoPanel = new InfoMenuPanel(gameConfiguration);
@@ -230,7 +230,7 @@ public final class GameGui implements GameGuiInt {
      * Sets the action listener to the music button.
      */
     private void setActionListenerMusic() {
-        ActionListener actionListener = e -> this.soundManagerImpl.changeMute();
+        final ActionListener actionListener = e -> this.soundManagerImpl.changeMute();
         this.menuPanel.setActionListenerMusic(actionListener);
     }
 
@@ -238,7 +238,7 @@ public final class GameGui implements GameGuiInt {
      * Sets the action listener to the info button.
      */
     private void setActionListenerInfo() {
-        ActionListener actionListener = e -> showInfoPanel();
+        final ActionListener actionListener = e -> showInfoPanel();
         this.menuPanel.setActionListenerInfo(actionListener);
     }
 
@@ -246,7 +246,7 @@ public final class GameGui implements GameGuiInt {
      * Sets the action listener to the exit button in the info panel.
      */
     private void setActionListenerExit() {
-        ActionListener actionListener = e -> showMenuPanel();
+        final ActionListener actionListener = e -> showMenuPanel();
         this.infoPanel.setActionListenerExit(actionListener);
     }
 
@@ -255,8 +255,8 @@ public final class GameGui implements GameGuiInt {
      * @return The dimension of the panel.
      */
     public static Dimension getAllPanel() {
-        double width = SouthPanel.getMenuPanel().getWidth();
-        double height = DIMENSION_SCREEN.getHeight() - SouthPanel.getMenuPanel().getHeight();
+        final double width = SouthPanel.getMenuPanel().getWidth();
+        final double height = DIMENSION_SCREEN.getHeight() - SouthPanel.getMenuPanel().getHeight();
         return new Dimension((int) width, (int) height);
     }
 

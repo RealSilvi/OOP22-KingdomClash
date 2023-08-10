@@ -32,7 +32,7 @@ public final class NamePlayerImpl {
      */
     public NamePlayerImpl() {
 
-        Font font = BattlePanelStyle.getPrimaryFont();
+        final Font font = BattlePanelStyle.getPrimaryFont();
         this.namePanel = new ImagePanel(GameMenuImpl.BACKGROUND_PANEL.getImage());
         this.namePanel.setLayout(new GridBagLayout());
         textField = new JTextField();
@@ -42,10 +42,10 @@ public final class NamePlayerImpl {
         textField.setForeground(Color.WHITE);
         textField.setBackground(Color.BLACK);
 
-        GridBagConstraints grid = new GridBagConstraints();
+        final GridBagConstraints grid = new GridBagConstraints();
         grid.insets = new Insets(GameMenuImpl.BUTTONS_DISTANCE, 0, 0, 0);
 
-        JLabel textLabel = new JLabel("Insert your nickname: ");
+        final JLabel textLabel = new JLabel("Insert your nickname: ");
         textLabel.setFont(font);
         textLabel.setForeground(Color.BLACK);
 
@@ -85,7 +85,7 @@ public final class NamePlayerImpl {
      * @return The player's name.
      */
     public String getPlayerName() {
-        if (this.textField.getText().equals("")) {
+        if ("".equals(this.textField.getText())) {
             return "Guest";
         } else {
             return this.textField.getText();

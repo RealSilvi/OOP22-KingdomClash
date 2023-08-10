@@ -76,7 +76,7 @@ public final class EntityDataImpl implements EntityData {
 
     @Override
     public List<TroopType> getSelected() {
-        List<TroopType> selectedTroop = new ArrayList<>();
+        final List<TroopType> selectedTroop = new ArrayList<>();
         for (int i = 0; i < handTroops; i++) {
             if (this.entityTroop.get(i).getClicked()) {
                 selectedTroop.add(this.entityTroop.get(i).getTroop());
@@ -87,7 +87,7 @@ public final class EntityDataImpl implements EntityData {
 
     @Override
     public List<TroopType> getNotSelected() {
-        List<TroopType> notSelectedTroop = new ArrayList<>();
+        final List<TroopType> notSelectedTroop = new ArrayList<>();
         for (int i = 0; i < handTroops; i++) {
             if (!this.entityTroop.get(i).getClicked()) {
                 notSelectedTroop.add(this.entityTroop.get(i).getTroop());
@@ -98,7 +98,7 @@ public final class EntityDataImpl implements EntityData {
 
     @Override
     public Map<Integer, TroopType> changeNotSelectedTroop() {
-        Map<Integer, TroopType> troopChanged = new HashMap<>();
+        final Map<Integer, TroopType> troopChanged = new HashMap<>();
         for (int i = 0; i < handTroops; i++) {
             if (!entityTroop.get(i).getClicked()) {
                 entityTroop.get(i).setTroop(TroopType.getRandomTroop());
@@ -119,7 +119,7 @@ public final class EntityDataImpl implements EntityData {
 
     @Override
     public Integer selectRandomTroop() {
-        List<Integer> keys = new ArrayList<>();
+        final List<Integer> keys = new ArrayList<>();
         for (int i = 0; i < handTroops; i++) {
             if (!entityTroop.get(i).getClicked()) {
                 keys.add(i);
@@ -164,12 +164,12 @@ public final class EntityDataImpl implements EntityData {
      * @return the corrected entity's field.
      */
     public static List<Optional<TroopType>> getOrderedField(final EntityData playerData, final EntityData botData) {
-        List<Optional<TroopType>> playerOptionalList = new ArrayList<>();
-        List<Optional<TroopType>> botOptionalList = new ArrayList<>();
+        final List<Optional<TroopType>> playerOptionalList = new ArrayList<>();
+        final List<Optional<TroopType>> botOptionalList = new ArrayList<>();
         int differenceSize;
 
         for (int i = 0; i < TOTAL_DIFFERENT_TROOP; i++) {
-            int a = i;
+            final int a = i;
             playerOptionalList.addAll(playerData.getSelected().stream().filter(x -> x.ordinal() == a).map(Optional::of).toList());
             botOptionalList.addAll(botData.getSelected().stream()
                     .filter(x ->
@@ -195,7 +195,7 @@ public final class EntityDataImpl implements EntityData {
             }
 
         }
-        int troopsToFill = totalTroops - playerOptionalList.size();
+        final int troopsToFill = totalTroops - playerOptionalList.size();
         for (int a = 0; a < troopsToFill; a++) {
             playerOptionalList.add(Optional.empty());
             botOptionalList.add(Optional.empty());
@@ -216,12 +216,12 @@ public final class EntityDataImpl implements EntityData {
      * @return A new ordered list of troops.
      */
     public static List<Optional<TroopType>> exOrdered(final EntityData botData, final EntityData playerData) {
-        List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(playerData, botData);
-        List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0, (bothOrdered.size() / 2));
-        List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size());
-        List<Optional<TroopType>> finalPlayer = new ArrayList<>(totalTroops);
-        List<Optional<TroopType>> finalBot = new ArrayList<>(totalTroops);
-        int maxPosition = totalTroops - 1;
+        final List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(playerData, botData);
+        final List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0, bothOrdered.size() / 2);
+        final List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size());
+        final List<Optional<TroopType>> finalPlayer = new ArrayList<>(totalTroops);
+        final List<Optional<TroopType>> finalBot = new ArrayList<>(totalTroops);
+        final int maxPosition = totalTroops - 1;
 
         for (int a = 0; a < totalTroops; a++) {
             finalPlayer.add(Optional.empty());

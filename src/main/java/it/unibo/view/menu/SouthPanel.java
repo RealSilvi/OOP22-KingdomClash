@@ -67,7 +67,7 @@ public final class SouthPanel {
             getScaledImageIcon(GameMenuImpl.PATH_BUTTON, BUTTONS_DIMENSION);
     /** Used to create distance between buttons.*/
     private static final int DISTANCE_SOUTH_BUTTONS = BUTTONS_DIMENSION.width / 20;
-    private final JPanel southPanel;
+    private final JPanel sPanel;
     private final Map<BUTTONSSOUTH, JButton> buttons;
 
     /**
@@ -76,10 +76,10 @@ public final class SouthPanel {
      */
     public SouthPanel() {
         buttons = new HashMap<>();
-        this.southPanel = new JPanel();
-        this.southPanel.setBackground(Color.BLACK);
-        this.southPanel.setPreferredSize(getMenuPanel());
-        this.southPanel.setLayout(new GridBagLayout());
+        this.sPanel = new JPanel();
+        this.sPanel.setBackground(Color.BLACK);
+        this.sPanel.setPreferredSize(getMenuPanel());
+        this.sPanel.setLayout(new GridBagLayout());
         GridBagConstraints grid = new GridBagConstraints();
 
         this.buttons.put(BUTTONSSOUTH.MUSIC, new ImageButton(BUTTONSSOUTH.MUSIC.getName(),
@@ -91,7 +91,7 @@ public final class SouthPanel {
         this.buttons.put(BUTTONSSOUTH.QUIT, new ImageButton(BUTTONSSOUTH.QUIT.getName(),
                 BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
 
-        Font font = BattlePanelStyle.getPrimaryFont();
+        final Font font = BattlePanelStyle.getPrimaryFont();
 
         grid.gridx = 0;
         grid.gridy = 0;
@@ -100,7 +100,7 @@ public final class SouthPanel {
         for (int i = 0; i < this.buttons.size(); i++) {
             this.buttons.get(BUTTONSSOUTH.values()[i]).setFont(font);
             this.buttons.get(BUTTONSSOUTH.values()[i]).setForeground(Color.BLACK);
-            this.southPanel.add(this.buttons.get(BUTTONSSOUTH.values()[i]), grid);
+            this.sPanel.add(this.buttons.get(BUTTONSSOUTH.values()[i]), grid);
             grid.gridx += 1;
         }
     }
@@ -112,7 +112,7 @@ public final class SouthPanel {
     @SuppressFBWarnings(value = "EI",
             justification = "I need changes to the panel in its references")
     public JPanel getPanel() {
-        return this.southPanel;
+        return this.sPanel;
     }
 
     /**

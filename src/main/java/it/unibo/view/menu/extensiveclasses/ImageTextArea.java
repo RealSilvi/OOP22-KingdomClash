@@ -20,7 +20,7 @@ public final class ImageTextArea extends JTextArea {
      */
     public ImageTextArea() {
         super();
-        int lenght = TroopType.values().length;
+        final int lenght = TroopType.values().length;
         setForeground(Color.WHITE);
         setText("Welcome in the tutorial of Kingdom Clash:\n"
                 + "In the game are present 3 principal panels which you can switch:\n"
