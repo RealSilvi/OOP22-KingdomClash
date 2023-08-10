@@ -35,8 +35,7 @@ import javax.swing.JComponent;
 /**
  * * This class show the main city panel.
  */
-public class CityPanelImpl extends InternalElement implements CityPanel {
-
+public final class CityPanelImpl extends InternalElement implements CityPanel {
     private static final Dimension SIZE = new Dimension((int) (GameGui.getAllPanel().getWidth()),
             (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
@@ -45,7 +44,7 @@ public class CityPanelImpl extends InternalElement implements CityPanel {
     private final Map<BuildingTypes, Map<Integer, Image>> readImages =
         new EnumMap<>(BuildingTypes.class);
 
-    private List<TileClickObserver> tileClickObservers;
+    private final List<TileClickObserver> tileClickObservers;
 
     /**
      * @param controller    give the configuration and the parameter for each function
@@ -53,9 +52,9 @@ public class CityPanelImpl extends InternalElement implements CityPanel {
      */
     public CityPanelImpl(final BaseControllerImpl controller, final GameConfiguration configuration) {
         this.tileClickObservers = new ArrayList<>();
-        PathIconsConfiguration config = configuration.getPathIconsConfiguration();
-        for (BuildingTypes buildingType : BuildingTypes.values()) {
-            Map<Integer, Image> imageLevel = new HashMap<>();
+        final PathIconsConfiguration config = configuration.getPathIconsConfiguration();
+        for (final BuildingTypes buildingType : BuildingTypes.values()) {
+            final Map<Integer, Image> imageLevel = new HashMap<>();
             for (int index = 0; index < 3; index++) {
                 imageLevel.put(index, ImageIconsSupplier.loadImage(config.getBuilding(buildingType, index)));
             }
@@ -78,6 +77,7 @@ public class CityPanelImpl extends InternalElement implements CityPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void disposeAll() {
         barPanel.disposeAllPopups();
     }
@@ -95,6 +95,7 @@ public class CityPanelImpl extends InternalElement implements CityPanel {
      */
     @SuppressFBWarnings(value = "EI", 
     justification = "Returned panel should be adjusted")
+    @Override
     public JPanel getPanel() {
         return this.mainPanel;
     }

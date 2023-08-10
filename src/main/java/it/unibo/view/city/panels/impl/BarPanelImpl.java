@@ -41,7 +41,7 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
  */
 @SuppressFBWarnings(value = "Se", 
 justification = "This GUI element will never be serialized")
-public class BarPanelImpl extends InternalElement implements BarPanel {
+public final class BarPanelImpl extends InternalElement implements BarPanel {
 
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.2);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.2);
@@ -87,7 +87,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
         final ActionListener genericBtnAction = new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                JComponent responsible = ((JComponent) e.getSource());
+                final JComponent responsible = (JComponent) e.getSource();
                 if (selectionActive) {
                     resetConditions();
                 }
@@ -112,7 +112,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
         });
 
         final InternalElement resourcePanel = new ResourcePanelImpl(controller);
-        GridLayout barGridLayout = new GridLayout();
+        final GridLayout barGridLayout = new GridLayout();
         barGridLayout.setHgap(DEFAULT_HGAP);
         this.setLayout(barGridLayout);
         this.setPreferredSize(DIMENSION_PANEL);
@@ -156,7 +156,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
             @Override
             public void tileClicked(final JComponent tile, final Float position) {
                 if (selectionActive) {
-                    Optional<UUID> building = findBuildingbyPosition(position);
+                    final Optional<UUID> building = findBuildingbyPosition(position);
                     if (building.isEmpty() && actionCommand.isPresent()) {
                         if (constructionAction) {
                             controller.handleBuildingPlaced(position,
@@ -211,6 +211,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setOptionsLocked() {
         this.interactionComponents.stream().forEach(component ->
                 component.setEnabled(!component.isEnabled())
@@ -226,6 +227,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     public JPanel getPanel() {
         return this;
     }
@@ -233,6 +235,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void disposeAllPopups() {
         trooppopup.dispose();
     }
@@ -240,13 +243,14 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
      * {@inheritDoc}
      * @param returnActionListener
      */
+    @Override
     public void setReturnActionListener(final ActionListener returnActionListener) {
         this.mapReturnBtn.addActionListener(returnActionListener);
     }
 
     private Optional<UUID> findBuildingbyPosition(final Point2D.Float position) {
         Optional<UUID> resultIdentifier = Optional.empty();
-        List<Entry<UUID, Building>> idlist = this.basedata.requestBuildingMap()
+        final List<Entry<UUID, Building>> idlist = this.basedata.requestBuildingMap()
                 .entrySet().stream().filter(buildingEntry -> buildingEntry.getValue().getStructurePos().equals(position))
                 .toList();
         if (idlist.size() == 1) {
