@@ -36,11 +36,11 @@ import javax.swing.JComponent;
  * * This class show the main city panel.
  */
 public final class CityPanelImpl extends InternalElement implements CityPanel {
+    private static final long serialVersionUID = 123456789L;
     private static final Dimension SIZE = new Dimension((int) (GameGui.getAllPanel().getWidth()),
             (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
     private final BarPanel barPanel;
-    private final FieldCityPanel fieldPanel;
     private final Map<BuildingTypes, Map<Integer, Image>> readImages =
         new EnumMap<>(BuildingTypes.class);
 
@@ -68,7 +68,7 @@ public final class CityPanelImpl extends InternalElement implements CityPanel {
         this.mainPanel.setLayout(new BorderLayout());
 
         this.barPanel = new BarPanelImpl(this, controller, SIZE, readImages, configuration.getPathIconsConfiguration());
-        this.fieldPanel = new FieldCityPanelImpl(this, controller, configuration, this.readImages);
+        final FieldCityPanel fieldPanel = new FieldCityPanelImpl(this, controller, configuration, this.readImages);
 
         this.mainPanel.add(barPanel.getPanel(), BorderLayout.NORTH);
         this.mainPanel.add(fieldPanel.getPanel(), BorderLayout.CENTER);

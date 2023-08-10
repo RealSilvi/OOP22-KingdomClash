@@ -36,13 +36,12 @@ import it.unibo.view.map.MapPanel.ButtonIdentification;
 @SuppressFBWarnings(value = "Se", 
 justification = "This GUI element will never be serialized")
 public class FieldCityPanelImpl extends InternalElement implements FieldCityPanel {
-
+    private static final long serialVersionUID = 123456789L;
     private final JPanel mainpanel;
     private final CityPanel cityView;
     private final BaseController baseController;
     private final Map<BuildingTypes, Map<Integer, Image>> readImages;
     private final List<List<JButton>> buttonmap;
-    private final CityConfiguration gameConfiguration;
     private final Map<UUID, Point2D> buildingTilePositions;
 
     /**
@@ -64,7 +63,7 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
         this.cityView = cityView;
         this.baseController = baseController;
         this.readImages = readImages;
-        this.gameConfiguration = gameConfig.getCityConfiguration();
+        final CityConfiguration gameConfiguration = gameConfig.getCityConfiguration();
         this.mainpanel = new DrawPanelImpl(ImageIconsSupplier.loadImage(gameConfig
                 .getPathIconsConfiguration()
                 .getImageMap().get(ButtonIdentification.TILE)),
@@ -84,7 +83,10 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
             }
         });
     }
-    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void refreshContent() {
         baseController.requestBuildingMap()
             .keySet()
