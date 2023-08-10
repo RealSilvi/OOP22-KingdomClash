@@ -9,7 +9,12 @@ import it.unibo.view.utilities.ImageIconsSupplier;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +29,7 @@ public final class SouthPanel {
      * This enum it's used to give symbol to the buttons,
      * to help the gui and the controller in searching for buttons.
      */
-    public enum BUTTONS_SOUTH {
+    public enum BUTTONSSOUTH {
         /** The symbol represents the music button.*/
         MUSIC("MUSIC"),
         /** The symbol represents the menu button.*/
@@ -36,7 +41,7 @@ public final class SouthPanel {
 
         private final String name;
 
-        BUTTONS_SOUTH(final String name) {
+        BUTTONSSOUTH(final String name) {
             this.name = name;
         }
 
@@ -55,7 +60,7 @@ public final class SouthPanel {
     /** Used to increment the height of a dimension.*/
     private static final double MENU_HEIGHT_SCALE = 0.05;
     /** The dimension of the buttons.*/
-    private static final Dimension BUTTONS_DIMENSION = new Dimension(getMenuPanel().width / (BUTTONS_SOUTH.values().length + 1),
+    private static final Dimension BUTTONS_DIMENSION = new Dimension(getMenuPanel().width / (BUTTONSSOUTH.values().length + 1),
             (int) (getMenuPanel().height * 0.9));
     /** The dimension of the images in the buttons.*/
     private static final ImageIcon BACKGROUND_BUTTON_SOUTH = ImageIconsSupplier.
@@ -63,7 +68,7 @@ public final class SouthPanel {
     /** Used to create distance between buttons.*/
     private static final int DISTANCE_SOUTH_BUTTONS = BUTTONS_DIMENSION.width / 20;
     private final JPanel southPanel;
-    private final Map<BUTTONS_SOUTH, JButton> buttons;
+    private final Map<BUTTONSSOUTH, JButton> buttons;
 
     /**
      * The constructor takes care to create all the south panel
@@ -77,13 +82,13 @@ public final class SouthPanel {
         this.southPanel.setLayout(new GridBagLayout());
         GridBagConstraints grid = new GridBagConstraints();
 
-        this.buttons.put(BUTTONS_SOUTH.MUSIC, new ImageButton(BUTTONS_SOUTH.MUSIC.getName(),
+        this.buttons.put(BUTTONSSOUTH.MUSIC, new ImageButton(BUTTONSSOUTH.MUSIC.getName(),
                 BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
-        this.buttons.put(BUTTONS_SOUTH.MENU, new ImageButton(BUTTONS_SOUTH.MENU.getName(),
+        this.buttons.put(BUTTONSSOUTH.MENU, new ImageButton(BUTTONSSOUTH.MENU.getName(),
                 BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
-        this.buttons.put(BUTTONS_SOUTH.SAVE, new ImageButton(BUTTONS_SOUTH.SAVE.getName(),
+        this.buttons.put(BUTTONSSOUTH.SAVE, new ImageButton(BUTTONSSOUTH.SAVE.getName(),
                 BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
-        this.buttons.put(BUTTONS_SOUTH.QUIT, new ImageButton(BUTTONS_SOUTH.QUIT.getName(),
+        this.buttons.put(BUTTONSSOUTH.QUIT, new ImageButton(BUTTONSSOUTH.QUIT.getName(),
                 BACKGROUND_BUTTON_SOUTH, BUTTONS_DIMENSION));
 
         Font font = BattlePanelStyle.getPrimaryFont();
@@ -93,9 +98,9 @@ public final class SouthPanel {
         grid.insets = new Insets(0, DISTANCE_SOUTH_BUTTONS, 0, 0);
 
         for (int i = 0; i < this.buttons.size(); i++) {
-            this.buttons.get(BUTTONS_SOUTH.values()[i]).setFont(font);
-            this.buttons.get(BUTTONS_SOUTH.values()[i]).setForeground(Color.BLACK);
-            this.southPanel.add(this.buttons.get(BUTTONS_SOUTH.values()[i]), grid);
+            this.buttons.get(BUTTONSSOUTH.values()[i]).setFont(font);
+            this.buttons.get(BUTTONSSOUTH.values()[i]).setForeground(Color.BLACK);
+            this.southPanel.add(this.buttons.get(BUTTONSSOUTH.values()[i]), grid);
             grid.gridx += 1;
         }
     }
@@ -125,7 +130,7 @@ public final class SouthPanel {
      * @param actionListener The action listener to set.
      * @param name The name of the button.
      */
-    public void setActionListenerButtons(final ActionListener actionListener, final BUTTONS_SOUTH name) {
+    public void setActionListenerButtons(final ActionListener actionListener, final BUTTONSSOUTH name) {
         this.buttons.get(name).addActionListener(actionListener);
     }
 
@@ -134,7 +139,7 @@ public final class SouthPanel {
      * @param name the name of the button.
      * @param visibility the visibility required to be set.
      */
-    public void setButtonsVisibility(final BUTTONS_SOUTH name, final Boolean visibility) {
+    public void setButtonsVisibility(final BUTTONSSOUTH name, final Boolean visibility) {
         this.buttons.get(name).setVisible(visibility);
     }
 

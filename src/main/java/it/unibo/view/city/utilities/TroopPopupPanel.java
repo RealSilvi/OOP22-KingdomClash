@@ -25,22 +25,22 @@ import it.unibo.view.utilities.ImageIconsSupplier;
  */
 public class TroopPopupPanel {
 
-
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
-
+    private static final float FONT_SIZE= (float) 30;
     private Popup popup;
     private JPanel contentpanel;
     private boolean visibility;
     private Component container;
     private PathIconsConfiguration image;
     private int level = 1;
-    
     /**
      * This costructor create the popup and gave him the name and the level of the troops and an upgrade button for each other.
      * @param container the content of the Popup
      * @param data use for get the information of the troop and the upgrade button
      * @param pathIconsConfiguration get the texture for the popup
+     * @param xPos get the x position on the screen 
+     * @param yPos get the y position on the screen
      */
     public TroopPopupPanel(final Component container, final BaseController data,
         final PathIconsConfiguration pathIconsConfiguration, final int xPos, final int yPos) {
@@ -49,19 +49,16 @@ public class TroopPopupPanel {
         this.contentpanel = new JPanel();
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
         this.contentpanel.setPreferredSize(new Dimension(HEIGHT, WIDTH));
-        //this.popup = new PopupFactory().getPopup(container, contentpanel, WIDTH, HEIGHT);
         this.popup = new PopupFactory().getPopup(container, contentpanel, xPos, yPos);
         this.image = pathIconsConfiguration;
-        
        data.requestTroopLevels().keySet().stream().forEach(
             singletroop -> {
                 JPanel containpanel = new JPanel();
                 containpanel.setLayout(new BorderLayout());
                 containpanel.setBackground(Color.BLACK);
-                Font font = BattlePanelStyle.getPrimaryFont().deriveFont(30f);
-                
+                Font font = BattlePanelStyle.getPrimaryFont().deriveFont(FONT_SIZE);
                 JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(image.getTroop(singletroop),
-                 new Dimension(50, 50)));
+                 new Dimension(WIDTH/8, HEIGHT/8)));
                  var buttonOK = new JButton("upgrade");
                  JLabel levels = new JLabel("Level " + level);
                  levels.setForeground(Color.WHITE);
@@ -103,4 +100,5 @@ public class TroopPopupPanel {
     public void dispose() {
         popup.hide();
     }
+
 }

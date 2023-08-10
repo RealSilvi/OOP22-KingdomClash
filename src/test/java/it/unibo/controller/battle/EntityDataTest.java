@@ -67,7 +67,7 @@ public final class EntityDataTest {
     @Test
     public void isMatch() {
         this.entityData.addEntityTroop(3);
-        if(TroopType.getNullable(this.entityData.getCells(3).getTroop()).isPresent()){
+        if (TroopType.getNullable(this.entityData.getCells(3).getTroop()).isPresent()) {
             TroopType expected = TroopType.getNullable(this.entityData.getCells(3).getTroop()).get();
             Assertions.assertEquals(true, this.entityData.isMatch(expected));
         }

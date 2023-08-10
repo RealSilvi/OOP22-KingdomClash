@@ -59,21 +59,21 @@ public interface GameGuiInt {
      * @param name the name of the button.
      * @param visibility the visibility required to be set.
      */
-    void setButtonsVisibilityMenu(GameMenuImpl.BUTTONS_MENU name, Boolean visibility);
+    void setButtonsVisibilityMenu(GameMenuImpl.BUTTONSMENU name, Boolean visibility);
 
     /**
      * Sets the action listener to the required buttons.
      * @param actionListener The action listener to set.
      * @param name The name of the button.
      */
-    void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONS_SOUTH name);
+    void setActionListenerButtons(ActionListener actionListener, SouthPanel.BUTTONSSOUTH name);
 
     /**
      * It takes care of changing the visibility of the south panel's buttons.
      * @param name the name of the button.
      * @param visibility the visibility required to be set.
      */
-    void setButtonsVisibility(SouthPanel.BUTTONS_SOUTH name, Boolean visibility);
+    void setButtonsVisibility(SouthPanel.BUTTONSSOUTH name, Boolean visibility);
 
     /**
      * Sets the action listener to the new game button.
