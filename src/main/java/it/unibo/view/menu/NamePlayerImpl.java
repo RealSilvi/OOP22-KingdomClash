@@ -5,7 +5,9 @@ import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.menu.extensiveclasses.ImagePanel;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;

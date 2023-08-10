@@ -149,17 +149,17 @@ public final class GameGui implements GameGuiInt {
     }
 
     @Override
-    public void setButtonsVisibilityMenu(final GameMenuImpl.BUTTONS_MENU name, final Boolean visibility) {
+    public void setButtonsVisibilityMenu(final GameMenuImpl.BUTTONSMENU name, final Boolean visibility) {
         this.menuPanel.setButtonsVisibilityMenu(name, visibility);
     }
 
     @Override
-    public void setActionListenerButtons(final ActionListener actionListener, final SouthPanel.BUTTONS_SOUTH name) {
+    public void setActionListenerButtons(final ActionListener actionListener, final SouthPanel.BUTTONSSOUTH name) {
         this.southPanel.setActionListenerButtons(actionListener, name);
     }
 
     @Override
-    public void setButtonsVisibility(final SouthPanel.BUTTONS_SOUTH name, final Boolean visibility) {
+    public void setButtonsVisibility(final SouthPanel.BUTTONSSOUTH name, final Boolean visibility) {
         this.southPanel.setButtonsVisibility(name, visibility);
     }
 
