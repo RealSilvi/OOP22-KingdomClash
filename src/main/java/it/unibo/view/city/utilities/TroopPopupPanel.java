@@ -30,7 +30,7 @@ public class TroopPopupPanel {
     
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
-    private static final Dimension DIMENSION_BUTTON = new Dimension(WIDTH / 8, HEIGHT / 8);
+    private static final Dimension DIMENSION_BUTTON = new Dimension(WIDTH / 6, HEIGHT / 8);
     private static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON,
         DIMENSION_BUTTON);
     private static final float FONT_SIZE = (float) 30;
@@ -55,18 +55,18 @@ public class TroopPopupPanel {
         this.contentpanel = new JPanel();
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
         this.contentpanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        this.contentpanel.setBackground(Color.BLACK);
         this.popup = new PopupFactory().getPopup(container, contentpanel, xPos, yPos);
         this.image = pathIconsConfiguration;
        data.requestTroopLevels().keySet().stream().forEach(
             singletroop -> {
                 final JPanel containpanel = new JPanel();
                 containpanel.setLayout(new BorderLayout());
-                containpanel.setBackground(Color.BLACK);
+                containpanel.setBackground(this.contentpanel.getBackground());
                 final Font font = BattlePanelStyle.getPrimaryFont().deriveFont(FONT_SIZE);
                 final JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(image.getTroop(singletroop),
                  new Dimension(WIDTH / 8, HEIGHT / 8)));
-                 final JButton buttonOK = new ImageButton("upgrade", BACKGROUND_BUTTON, new Dimension(contentpanel.getPreferredSize().width / 8,
-                  contentpanel.getPreferredSize().height / 8));
+                 final JButton buttonOK = new ImageButton("upgrade", BACKGROUND_BUTTON, DIMENSION_BUTTON);
                  buttonOK.setForeground(Color.white);
                  final JLabel levels = new JLabel("Level " + level);
                  levels.setForeground(Color.WHITE);
