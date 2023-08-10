@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 import it.unibo.model.data.GameData;
@@ -22,6 +23,7 @@ final class ThreadManagerImplTest {
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     private static final int COMPLETED_PERC = 100;
+    private static final long DEFAULT_WAIT_TIME = 1000L;
 
     private GameData gameData;
     private BaseModel baseModel;
@@ -37,6 +39,8 @@ final class ThreadManagerImplTest {
     /**
      * Checks the full building and upgrade cycle.
      */
+    @SuppressFBWarnings(value = {"SWL", "UW", "WA"},
+        justification = "Controlled and expected behaviour")
     @Test
     void testBuildingAndProductionCycle() {
         final Object lock = new Object();
@@ -99,7 +103,7 @@ final class ThreadManagerImplTest {
         synchronized (lock) {
             try {
                 lock.wait();
-                Thread.sleep(1000L);
+                Thread.sleep(DEFAULT_WAIT_TIME);
                 Assertions.assertEquals(Resource.checkAndAddMissingResources(
                     Resource.deepCopySet(gameData.getBuildings().get(builtStructureId)
                             .getProductionAmount())), gameData.getResources());

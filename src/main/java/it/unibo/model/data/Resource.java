@@ -121,7 +121,7 @@ public final class Resource implements Serializable, Cloneable {
         StringBuilder stringBuilder = new StringBuilder();
         resourceSet.stream().forEach(resource ->
             stringBuilder.append(resource.getResource()
-                .name().substring(0, 1).toUpperCase())
+                .name().substring(0, 1).toUpperCase(Locale.getDefault()))
             .append(resource.getResource().name().substring(1)
             .toLowerCase(Locale.getDefault()))
             .append(": ")

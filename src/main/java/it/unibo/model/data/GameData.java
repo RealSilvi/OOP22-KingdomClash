@@ -21,6 +21,8 @@ import it.unibo.model.base.basedata.Building;
  */
 //PMD mistakenly shows warning suppression as a repetition
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@SuppressFBWarnings(value = "SE", 
+    justification = "configuration and fightData are initialized in a different way")
 public final class GameData implements Serializable {
     /**
      * Serial version UID.
