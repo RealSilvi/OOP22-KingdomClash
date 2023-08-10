@@ -56,6 +56,7 @@ public final class Pair<X extends Serializable, Y extends Serializable> implemen
      * Prints in a formatted way the content of the pair.
      * @return a formatted string with the content of the pair
      */
+    @Override
     public String toString() {
         return "<" + this.first + "," + this.second + ">";
     }
@@ -82,7 +83,7 @@ public final class Pair<X extends Serializable, Y extends Serializable> implemen
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Pair other = (Pair) obj;
+        final Pair other = (Pair) obj;
         if (first == null) {
             if (other.first != null) {
                 return false;
