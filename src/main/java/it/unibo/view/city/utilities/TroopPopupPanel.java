@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,6 +17,8 @@ import javax.swing.Popup;
 import javax.swing.PopupFactory;
 import it.unibo.controller.base.BaseController;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
+import it.unibo.view.menu.GameMenuImpl;
+import it.unibo.view.menu.extensiveclasses.ImageButton;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
 /**
@@ -24,9 +27,12 @@ import it.unibo.view.utilities.ImageIconsSupplier;
  * 
  */
 public class TroopPopupPanel {
-
+    
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
+    private static final Dimension DIMENSION_BUTTON = new Dimension(WIDTH / 8, HEIGHT / 8);
+    private static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON,
+        DIMENSION_BUTTON);
     private static final float FONT_SIZE = (float) 30;
     private Popup popup;
     private final JPanel contentpanel;
@@ -48,7 +54,7 @@ public class TroopPopupPanel {
         this.container = container;
         this.contentpanel = new JPanel();
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
-        this.contentpanel.setPreferredSize(new Dimension(HEIGHT, WIDTH));
+        this.contentpanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.popup = new PopupFactory().getPopup(container, contentpanel, xPos, yPos);
         this.image = pathIconsConfiguration;
        data.requestTroopLevels().keySet().stream().forEach(
@@ -59,7 +65,9 @@ public class TroopPopupPanel {
                 final Font font = BattlePanelStyle.getPrimaryFont().deriveFont(FONT_SIZE);
                 final JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(image.getTroop(singletroop),
                  new Dimension(WIDTH / 8, HEIGHT / 8)));
-                 final var buttonOK = new JButton("upgrade");
+                 final JButton buttonOK = new ImageButton("upgrade", BACKGROUND_BUTTON, new Dimension(contentpanel.getPreferredSize().width / 8,
+                  contentpanel.getPreferredSize().height / 8));
+                 buttonOK.setForeground(Color.white);
                  final JLabel levels = new JLabel("Level " + level);
                  levels.setForeground(Color.WHITE);
                  levels.setFont(font);
