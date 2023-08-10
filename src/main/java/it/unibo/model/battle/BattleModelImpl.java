@@ -125,7 +125,8 @@ public final class BattleModelImpl implements BattleModel {
     @Override
     public Integer battleCombat(final Integer position) {
 
-        final List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData());
+        final List<Optional<TroopType>> bothOrdered = EntityDataImpl
+                .getOrderedField(fightData.getPlayerData(), fightData.getBotData());
         final Optional<TroopType> playerField = bothOrdered.subList(0, bothOrdered.size() / 2).get(position);
         final Optional<TroopType> botField = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size()).get(position);
 
@@ -140,7 +141,8 @@ public final class BattleModelImpl implements BattleModel {
                         return BOT;
                     }
                 }
-            } else if (troopPlayerLevel.get(playerField.get()) < troopBotLevel.get(botField.get()) && TroopType.isDefense(playerField.get())) {
+            } else if (troopPlayerLevel.get(playerField.get()) < troopBotLevel.get(botField.get())
+                    && TroopType.isDefense(playerField.get())) {
                     if (playerLife == 1) {
                         playerLife--;
                         return WIN_BOT;
