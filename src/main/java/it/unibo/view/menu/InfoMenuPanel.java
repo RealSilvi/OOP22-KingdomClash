@@ -59,8 +59,8 @@ public final class InfoMenuPanel {
      */
     public InfoMenuPanel(final GameConfiguration gameConfiguration) {
         this.infoPanel = new ImagePanel(GameMenuImpl.BACKGROUND_PANEL.getImage());
-        JPanel panel = new ImagePanel(GameMenuImpl.BACKGROUND_PANEL.getImage());
-        JPanel panelNorth = new ImagePanel(ImageIconsSupplier.
+        final JPanel panel = new ImagePanel(GameMenuImpl.BACKGROUND_PANEL.getImage());
+        final JPanel panelNorth = new ImagePanel(ImageIconsSupplier.
                 getScaledImageIcon(GameMenuImpl.PATH_BUTTON, TROOPS_PANEL_DIMENSION).getImage());
         panelNorth.setLayout(new BorderLayout());
         panelNorth.setPreferredSize(TROOPS_PANEL_DIMENSION);
@@ -70,19 +70,19 @@ public final class InfoMenuPanel {
         panel.setLayout(new GridBagLayout());
         infoPanel.setLayout(new BorderLayout());
 
-        GridBagConstraints grid1 = new GridBagConstraints();
+        final GridBagConstraints grid1 = new GridBagConstraints();
         grid1.gridx = 1;
         grid1.gridy = 1;
         grid1.insets = new Insets(BUTTONS_DISTANCE, 0, 0, 0);
 
-        this.font2 = new Font("font", Font.ITALIC, ((GameGui.WIDTH_BUTTON) - (GameGui.HEIGHT_BUTTON)) / 2);
-        Font font3 = new Font("font", Font.BOLD, (int) (((GameGui.WIDTH_BUTTON) - (GameGui.HEIGHT_BUTTON)) / FONT_INCREMENT));
-        Font font = BattlePanelStyle.getPrimaryFont();
+        this.font2 = new Font("font", Font.ITALIC, (GameGui.WIDTH_BUTTON - GameGui.HEIGHT_BUTTON) / 2);
+        final Font font3 = new Font("font", Font.BOLD, (int) ((GameGui.WIDTH_BUTTON - GameGui.HEIGHT_BUTTON) / FONT_INCREMENT));
+        final Font font = BattlePanelStyle.getPrimaryFont();
 
-        ImageTextArea textArea = new ImageTextArea();
+        final ImageTextArea textArea = new ImageTextArea();
         textArea.setImage(ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON, SCROLLPANE_DIMENSION).getImage());
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        final JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setWheelScrollingEnabled(true);
         scrollPane.setPreferredSize(SCROLLPANE_DIMENSION);
 
@@ -97,7 +97,7 @@ public final class InfoMenuPanel {
         this.exit = new ImageButton("EXIT", GameMenuImpl.BACKGROUND_BUTTON,
                 new Dimension(GameMenuImpl.BACKGROUND_BUTTON.getIconWidth(), GameMenuImpl.BACKGROUND_BUTTON.getIconHeight()));
 
-        JTextField textField = new JTextField("COUNTERS");
+        final JTextField textField = new JTextField("COUNTERS");
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setFont(font3);
         textField.setFocusable(false);
@@ -136,15 +136,15 @@ public final class InfoMenuPanel {
         grid.insets = new Insets(10, 0, 0, 0);
 
         int i;
-        int lenght = TroopType.values().length;
+        final int lenght = TroopType.values().length;
 
         for (i = 0; i < lenght / 2; i++) {
-            int finalI = i;
-            JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.
+            final int finalI = i;
+            final JLabel label = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.
                             getTroop(Arrays.stream(TroopType.values()).
                             filter(x -> x.ordinal() == finalI).toList().get(0)),
-                    new Dimension(((int) (dimension.getWidth() / (IMAGE_DIMENSION - DECREMENT_IMAGE_DIMENSION))),
-                            ((int) (dimension.getHeight() / IMAGE_DIMENSION)))));
+                    new Dimension((int) (dimension.getWidth() / (IMAGE_DIMENSION - DECREMENT_IMAGE_DIMENSION)),
+                            (int) (dimension.getHeight() / IMAGE_DIMENSION))));
             label.setText("  <---");
             label.setFont(font2);
             label.setForeground(Color.WHITE);
@@ -152,11 +152,11 @@ public final class InfoMenuPanel {
 
             this.panelOvest.add(label, grid);
             grid.gridx = 1;
-            JLabel label1 = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.
+            final JLabel label1 = new JLabel(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.
                             getTroop(Arrays.stream(TroopType.values())
                             .filter(x -> x.ordinal() == (lenght / 2) + finalI).toList().get(0)),
-                    new Dimension(((int) (dimension.getWidth() / (IMAGE_DIMENSION - DECREMENT_IMAGE_DIMENSION))),
-                            ((int) (dimension.getHeight() / IMAGE_DIMENSION)))));
+                    new Dimension((int) (dimension.getWidth() / (IMAGE_DIMENSION - DECREMENT_IMAGE_DIMENSION)),
+                            (int) (dimension.getHeight() / IMAGE_DIMENSION))));
             label1.setText("--->  ");
             label1.setFont(font2);
             label1.setForeground(Color.WHITE);

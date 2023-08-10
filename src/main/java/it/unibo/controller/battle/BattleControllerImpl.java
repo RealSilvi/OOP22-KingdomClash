@@ -119,11 +119,11 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     @Override
     public void battle() {
-        int total = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData()).size() / 2;
+        final int total = EntityDataImpl.getOrderedField(fightData.getPlayerData(), fightData.getBotData()).size() / 2;
         update(NO_SKIP);
         int cont = 0;
         for (int i = 0; i < total; i++) {
-            int value = this.battleModel.battleCombat(i);
+            final int value = this.battleModel.battleCombat(i);
             if (value == BOT) {
                 botLifeDecrease();
             } else if (value == PLAYER) {
@@ -172,11 +172,11 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     @Override
     public void update(final Integer skip) {
-        long delay = 100L * skip;
-        Timer timer = new Timer();
-        List<Optional<TroopType>> orderedList = EntityDataImpl.exOrdered(fightData.getBotData(), fightData.getPlayerData());
-        List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2));
-        List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()));
+        final long delay = 100L * skip;
+        final Timer timer = new Timer();
+        final List<Optional<TroopType>> orderedList = EntityDataImpl.exOrdered(fightData.getBotData(), fightData.getPlayerData());
+        final List<Optional<TroopType>> pList = new ArrayList<>(orderedList.subList(0, orderedList.size() / 2));
+        final List<Optional<TroopType>> bList = new ArrayList<>(orderedList.subList(orderedList.size() / 2, orderedList.size()));
         if (skip > 0) {
             for (int a = 0; a < skip; a++) {
                 pList.set(a, Optional.empty());
@@ -188,7 +188,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (skip == (pList.size())) {
+                if (skip == pList.size()) {
                     battlePanel.enableSpinButton();
                 }
                 battlePanel.updateField(bList);
@@ -218,20 +218,20 @@ public final class BattleControllerImpl implements BattleController, Controller 
     }
 
     private void setActionListenerPass() {
-        ActionListener actionListenerInfo = e -> pass();
+        final ActionListener actionListenerInfo = e -> pass();
         this.battlePanel.setActionListenerPass(actionListenerInfo);
     }
 
     private void setActionListenerSpin() {
-        ActionListener actionListenerInfo = e -> spin();
+        final ActionListener actionListenerInfo = e -> spin();
         this.battlePanel.setActionListenerSpinButton(actionListenerInfo);
     }
 
     @SuppressWarnings(value = "unchecked")
     private void setActionListenerSlots() {
-        ActionListener actionListenerInfo = e -> {
+        final ActionListener actionListenerInfo = e -> {
             if (e.getSource() instanceof TroopButtonImpl.DataJButton<?>) {
-                var button = (TroopButtonImpl.DataJButton<Integer>) e.getSource();
+                final var button = (TroopButtonImpl.DataJButton<Integer>) e.getSource();
                 clickedButtonPlayer(button.getData());
                 button.updateBorder();
             }

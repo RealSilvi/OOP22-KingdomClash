@@ -263,7 +263,7 @@ public final class BaseModelImpl implements BaseModel {
         }
         gameData.setResources(subtractResources(gameData.getResources(),
             this.configuration.getBaseConfiguration().getCostPerTroop()
-                .get(troopToUpgrade).get(level-1)));
+                .get(troopToUpgrade).get(level - 1)));
         gameData.getPlayerArmyLevel().put(troopToUpgrade, level);
     }
 
@@ -382,7 +382,8 @@ public final class BaseModelImpl implements BaseModel {
                 Resource.deepCopySet(resourceStorage)).iterator();
         while (storageIterator.hasNext()) {
             final Resource currentStorageResource = storageIterator.next();
-            final Iterator<Resource> costIterator = Resource.checkAndAddMissingResources(Resource.deepCopySet(resourceCost)).iterator();
+            final Iterator<Resource> costIterator = Resource
+                .checkAndAddMissingResources(Resource.deepCopySet(resourceCost)).iterator();
             while (costIterator.hasNext()) {
                 final Resource currentCostResource = costIterator.next();
                 if (currentStorageResource.equals(currentCostResource)) {

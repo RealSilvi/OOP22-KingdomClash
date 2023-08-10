@@ -293,7 +293,7 @@ public final class ThreadManagerImpl implements ThreadManager {
                     threadClosureOperation();
                     Thread.currentThread().interrupt();
                 }
-                remainingTimeSetter.accept(remainingTimeGetter.get()-waitTime);
+                remainingTimeSetter.accept(remainingTimeGetter.get() - waitTime);
                 if (!threadsRunning.get(threadType)) {
                     synchronized (threadLocks.get(threadType)) {
                         try {

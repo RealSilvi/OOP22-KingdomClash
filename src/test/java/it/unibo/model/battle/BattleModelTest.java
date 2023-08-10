@@ -20,7 +20,7 @@ import java.util.Optional;
  * This class tests Battle Model methods.
  * It tests also a method of the EntityData class.
  */
-public final class BattleModelTest {
+final class BattleModelTest {
 
     /** The address at the 9 position.*/
     private static final int FIELD_ADDRESS_9 = 9;
@@ -45,9 +45,8 @@ public final class BattleModelTest {
      * Creates two hands and set that into the entity classes.
      */
     @BeforeEach
-    public void init() {
+    void init() {
 
-        System.out.println("entered init");
         this.gameData = new GameData();
         this.fightData = new FightData(gameData.getGameConfiguration().getBattleConfiguration());
         this.botLife = gameData.getGameConfiguration().getBattleConfiguration().getNrOfLives();
@@ -61,8 +60,8 @@ public final class BattleModelTest {
         this.battleModel = new BattleModelImpl(gameData);
 
 
-        Map<Integer, CellsImpl> botTroop = new HashMap<>();
-        Map<Integer, CellsImpl> playerTroop = new HashMap<>();
+        final Map<Integer, CellsImpl> botTroop = new HashMap<>();
+        final Map<Integer, CellsImpl> playerTroop = new HashMap<>();
 
         botTroop.put(0, new CellsImpl(TroopType.HAMMER, false));
         botTroop.put(1, new CellsImpl(TroopType.SWORD, false));
@@ -79,11 +78,6 @@ public final class BattleModelTest {
         this.botData.setEntityTroop(botTroop);
         this.playerData.setEntityTroop(playerTroop);
 
-        System.out.println("player troops:"
-                + this.playerData.getEntityTroop().values().stream().map(CellsImpl::getTroop).toList());
-        System.out.println("bot troops:"
-                + this.botData.getEntityTroop().values().stream().map(CellsImpl::getTroop).toList());
-
     }
 
     /**
@@ -94,7 +88,7 @@ public final class BattleModelTest {
      * The troops are inserted and showed in order to the id of the troop in the enum.
      */
     @Test
-    public void exOrdered() {
+    void exOrdered() {
 
         this.playerData.getCells(0).setClicked(true);
         this.playerData.getCells(1).setClicked(false);
@@ -108,12 +102,11 @@ public final class BattleModelTest {
         this.botData.getCells(3).setClicked(true);
         this.botData.getCells(4).setClicked(false);
 
-        System.out.println("entered getOrdered");
-        List<Optional<TroopType>> bothOrdered = EntityDataImpl.exOrdered(this.botData, this.playerData);
-        List<Optional<TroopType>> pc = bothOrdered.subList(0, (bothOrdered.size() / 2));
-        List<Optional<TroopType>> bc = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size());
-        List<Optional<TroopType>> expected = new ArrayList<>();
-        for (int i = 0; i < bothOrdered.size(); i++) {
+        final List<Optional<TroopType>> bothOrdered = EntityDataImpl.exOrdered(this.botData, this.playerData);
+        final List<Optional<TroopType>> pc = bothOrdered.subList(0, bothOrdered.size() / 2);
+        final List<Optional<TroopType>> bc = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size());
+        final List<Optional<TroopType>> expected = new ArrayList<>();
+        for (final Optional<TroopType> ignored : bothOrdered) {
             expected.add(Optional.empty());
         }
         expected.set(0, Optional.of(TroopType.AXE));
@@ -135,7 +128,7 @@ public final class BattleModelTest {
      * a random troop.
      */
     @Test
-    public void getPass() {
+    void pass() {
 
         this.playerData.getCells(0).setClicked(true);
         this.playerData.getCells(1).setClicked(false);
@@ -182,9 +175,9 @@ public final class BattleModelTest {
      * go down when they have to.
      */
     @Test
-    public void getBattle() {
+    void battle() {
 
-        int maxLives = this.playerLife;
+        final int maxLives = this.playerLife;
 
         this.playerData.getCells(0).setClicked(true);
         this.playerData.getCells(1).setClicked(false);
@@ -247,15 +240,15 @@ public final class BattleModelTest {
      * their levels.
      */
     @Test
-    public void endFight() {
-        Map<TroopType, Integer> troops = new HashMap<>();
-        for (TroopType troopType : TroopType.values()) {
+    void endFight() {
+        final Map<TroopType, Integer> troops = new HashMap<>();
+        for (final TroopType troopType : TroopType.values()) {
             troops.put(troopType, 1);
         }
 
         this.gameData.setPlayerArmyLevel(troops);
         this.battleModel.endFight(true);
-        for (TroopType troopType : TroopType.values()) {
+        for (final TroopType troopType : TroopType.values()) {
             troops.put(troopType, 2);
         }
         Assertions.assertEquals(troops, this.gameData.getPlayerArmyLevel());
@@ -267,7 +260,7 @@ public final class BattleModelTest {
      * it's correct.
      */
     @Test
-    public void countedRound() {
+    void countedRound() {
 
         int countedRound = 1;
         this.playerData.getCells(0).setClicked(true);
@@ -289,7 +282,8 @@ public final class BattleModelTest {
 
         this.battleModel.battlePass(BattleControllerImpl.CONTINUE);
         Assertions.assertEquals(countedRound, this.battleModel.getCountedRound());
-        Assertions.assertEquals(this.battleModel.getCountedRound(), gameData.getGameConfiguration().getBattleConfiguration().getMaxRound());
+        Assertions.assertEquals(this.battleModel.getCountedRound(),
+                gameData.getGameConfiguration().getBattleConfiguration().getMaxRound());
 
     }
 

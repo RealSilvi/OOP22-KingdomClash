@@ -88,7 +88,7 @@ public final class GameMenuImpl implements GameMenu {
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
         this.buttons.put(BUTTONSMENU.LOAD, new ImageButton(BUTTONSMENU.LOAD.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
-        ImageButton continues = new ImageButton(BUTTONSMENU.CONTINUE.name, BACKGROUND_BUTTON,
+        final ImageButton continues = new ImageButton(BUTTONSMENU.CONTINUE.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight()));
         continues.setVisible(false);
         this.buttons.put(BUTTONSMENU.CONTINUE, continues);
@@ -99,7 +99,7 @@ public final class GameMenuImpl implements GameMenu {
         this.buttons.put(BUTTONSMENU.EXIT, new ImageButton(BUTTONSMENU.EXIT.name, BACKGROUND_BUTTON,
                 new Dimension(BACKGROUND_BUTTON.getIconWidth(), BACKGROUND_BUTTON.getIconHeight())));
 
-        Font font = BattlePanelStyle.getPrimaryFont();
+        final Font font = BattlePanelStyle.getPrimaryFont();
         GridBagConstraints grid = new GridBagConstraints();
 
         this.menuPanel = new ImagePanel(BACKGROUND_PANEL.getImage());
