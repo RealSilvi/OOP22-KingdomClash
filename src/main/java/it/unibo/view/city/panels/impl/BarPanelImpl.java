@@ -45,11 +45,11 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
 
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.2);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.2);
-    private static final Dimension DIMENSION_PANEL = new Dimension((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
-    (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 14 );
-    private static final Dimension DIMENSION_BUTTON = new Dimension(DIMENSION_PANEL.width / 7,DIMENSION_PANEL.height );
-    private static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON, DIMENSION_BUTTON);
-    
+    private static final Dimension DIMENSION_PANEL = new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+    (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 14);
+    private static final Dimension DIMENSION_BUTTON = new Dimension(DIMENSION_PANEL.width / 7, DIMENSION_PANEL.height);
+    private static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON,
+        DIMENSION_BUTTON);
     private static final int DEFAULT_HGAP = 5;
     private final JButton mapReturnBtn;
     private final CityPanel cityView;
@@ -128,10 +128,9 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
         mapReturnBtn.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
+            public void actionPerformed(final ActionEvent arg0) {
                 trooppopup.dispose();
             }
-            
         });
         upgradeBtn.addActionListener(genericBtnAction);
         upgradeBtn.addActionListener(new ActionListener() {
@@ -173,7 +172,7 @@ public class BarPanelImpl extends InternalElement implements BarPanel {
                             demolishBtn.setEnabled(false);
                         }
                     }
-                    resourcePanel.refreshContent();;
+                    resourcePanel.refreshContent();
                     setOptionsLocked();
                     resetConditions();
                     selectionActive = false;
