@@ -17,7 +17,7 @@ import java.util.List;
  * the riskiest (The biggest methods are tested
  * in the model test).
  */
-public final class EntityDataTest {
+final class EntityDataTest {
 
     private EntityData entityData;
 
@@ -25,8 +25,8 @@ public final class EntityDataTest {
      * Initialize the class, to use it.
      */
     @BeforeEach
-    public void init() {
-        GameData gameData = new GameData();
+    void init() {
+        final GameData gameData = new GameData();
         this.entityData = new EntityDataImpl(gameData.getGameConfiguration().getBattleConfiguration());
     }
 
@@ -36,10 +36,10 @@ public final class EntityDataTest {
      * troops.
      */
     @Test
-    public void getSelected() {
+    void selected() {
         this.entityData.addEntityTroop(1);
         this.entityData.addEntityTroop(3);
-        List<TroopType> expected = new ArrayList<>();
+        final List<TroopType> expected = new ArrayList<>();
         expected.add(this.entityData.getEntityTroop().get(1).getTroop());
         expected.add(this.entityData.getEntityTroop().get(3).getTroop());
         Assertions.assertEquals(expected, this.entityData.getSelected());
@@ -51,11 +51,11 @@ public final class EntityDataTest {
      * are changed.
      */
     @Test
-    public void changeNotSelectedTroop() {
+    void changeNotSelectedTroop() {
         this.entityData.addEntityTroop(1);
         this.entityData.addEntityTroop(3);
         this.entityData.addEntityTroop(2);
-        List<TroopType> expected = this.entityData.getNotSelected();
+        final List<TroopType> expected = this.entityData.getNotSelected();
         Assertions.assertNotSame(expected, this.entityData.changeNotSelectedTroop());
     }
 
@@ -65,10 +65,10 @@ public final class EntityDataTest {
      * between the troops already selected.
      */
     @Test
-    public void isMatch() {
+    void isMatch() {
         this.entityData.addEntityTroop(3);
         if (TroopType.getNullable(this.entityData.getCells(3).getTroop()).isPresent()) {
-            TroopType expected = TroopType.getNullable(this.entityData.getCells(3).getTroop()).get();
+            final TroopType expected = TroopType.getNullable(this.entityData.getCells(3).getTroop()).get();
             Assertions.assertEquals(true, this.entityData.isMatch(expected));
         }
     }
