@@ -1,9 +1,12 @@
 package it.unibo.model.base.exceptions;
 
+import java.io.Serial;
+
 /**
  * Exception that should be thrown when an operation on a building fails.
  */
 public class BuildingException extends Exception {
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     /**

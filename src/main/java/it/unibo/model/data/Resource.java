@@ -1,5 +1,6 @@
 package it.unibo.model.data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.EnumSet;
 import java.util.Locale;
@@ -13,6 +14,7 @@ public final class Resource implements Serializable, Cloneable {
     /**
      * Serial version UID.
      */
+    @Serial
     private static final long serialVersionUID = 142745963L;
 
     /**
@@ -28,36 +30,35 @@ public final class Resource implements Serializable, Cloneable {
          */
         WOOD
     }
-
-    private ResourceType resource;
+    private ResourceType resourceType;
     private int amount;
     /**
      * Constructs a new resource with a given amount and type.
-     * @param resource  the type of resource
+     * @param resourceType  the type of resource
      * @param amount    the amount of the resource
      */
-    public Resource(final ResourceType resource, final int amount) {
-        this.resource = resource;
+    public Resource(final ResourceType resourceType, final int amount) {
+        this.resourceType = resourceType;
         this.amount = amount;
     }
     /**
      * Constructs a new resource with a given type and 0 amount.
-     * @param resource  the type of resource
+     * @param resourceType  the type of resource
      */
-    public Resource(final ResourceType resource) {
-        this(resource, 0);
+    public Resource(final ResourceType resourceType) {
+        this(resourceType, 0);
     }
     /**
      * @return          the type of this resource
      */
     public ResourceType getResource() {
-        return resource;
+        return resourceType;
     }
     /**
-     * @param resource  the type of this resource
+     * @param resourceType  the type of this resource
      */
-    public void setResource(final ResourceType resource) {
-        this.resource = resource;
+    public void setResource(final ResourceType resourceType) {
+        this.resourceType = resourceType;
     }
     /**
      * @return          the amount of this resource
@@ -74,7 +75,7 @@ public final class Resource implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "ResourceType: " + resource.name() + "\nAmount: " + amount;
+        return "ResourceType: " + resourceType.name() + "\nAmount: " + amount;
     }
 
     @Override
@@ -87,8 +88,8 @@ public final class Resource implements Serializable, Cloneable {
         if (otherResource == null) {
             return false;
         }
-        if ((getClass() == otherResource.getClass()) 
-            && (this.getResource() == ((Resource) otherResource).getResource())) {
+        if (getClass() == otherResource.getClass() 
+            && this.getResource() == ((Resource) otherResource).getResource()) {
             return true;
         }
         return super.equals(otherResource);
@@ -97,8 +98,9 @@ public final class Resource implements Serializable, Cloneable {
      * Constructs a copy of this resource.
      * @return a deep copy of this resource
      */
+    @Override
     public Resource clone() {
-        return new Resource(this.resource, this.amount);
+        return new Resource(this.resourceType, this.amount);
     }
 
     /**
@@ -117,8 +119,10 @@ public final class Resource implements Serializable, Cloneable {
      * @param resourceSet the set to format
      * @return          a formatted resource set string
      */
+    //Non important warning
+    @SuppressWarnings("PMD.AppendCharacterWithChar")
     public static String beautifyToString(final Set<Resource> resourceSet) {
-        StringBuilder stringBuilder = new StringBuilder();
+        final StringBuilder stringBuilder = new StringBuilder();
         resourceSet.stream().forEach(resource ->
             stringBuilder.append(resource.getResource()
                 .name().substring(0, 1).toUpperCase(Locale.getDefault()))
@@ -128,7 +132,7 @@ public final class Resource implements Serializable, Cloneable {
             .append(resource.getAmount())
             .append("\n")
         );
-        String beautifiedOutput = stringBuilder.toString();
+        final String beautifiedOutput = stringBuilder.toString();
         return beautifiedOutput.trim();
     }
     /**

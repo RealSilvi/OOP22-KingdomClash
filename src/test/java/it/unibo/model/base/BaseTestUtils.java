@@ -35,7 +35,7 @@ public interface BaseTestUtils {
      * @return                  true if the time is within the given tolerance
      */
     static boolean checkElapsedTime(final long elapsedTime, final long timeToConfront, final long tolerance) {
-        return (elapsedTime < timeToConfront + tolerance) && (elapsedTime > timeToConfront - tolerance);
+        return elapsedTime < timeToConfront + tolerance && elapsedTime > timeToConfront - tolerance;
     }
     /**
      * Checks if the elapsed time is correct.

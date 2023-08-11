@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -37,10 +38,12 @@ import it.unibo.view.utilities.ImageIconsSupplier;
 @SuppressFBWarnings(value = "Se",
     justification = "This class will never be serialized")
 public final class MapPanelImpl extends JPanel implements MapPanel {
+    @Serial
+    private static final long serialVersionUID = 123456789L;
 
     private final transient Logger logger = Logger.getLogger(this.getClass().getName());
 
-    private static final int RANDOM_SEED = 65455;
+    private static final int RANDOM_SEED = 65_455;
 
     private final transient Map<ButtonIdentification, Image> rawImageMap =
         new EnumMap<>(ButtonIdentification.class);
@@ -90,8 +93,8 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
 
     @Override
     public void setBeatenLevels(final int beatenLevels) {
-        IntConsumer setBeatenAction = tileIndex -> {
-            JButton tile = tiles.get(specialTileIndexes.get(tileIndex));
+        final IntConsumer setBeatenAction = tileIndex -> {
+            final JButton tile = tiles.get(specialTileIndexes.get(tileIndex));
             if (tileIndex > beatenLevels) {
                 tile.setActionCommand(ButtonIdentification.ENEMY.getActionCommand());
             } else {
@@ -109,8 +112,8 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
 
     @Override
     public void setActiveBattle(final int battleIndex) {
-        IntConsumer setActiveAction = tileIndex -> {
-            JButton tile = tiles.get(specialTileIndexes.get(tileIndex));
+        final IntConsumer setActiveAction = tileIndex -> {
+            final JButton tile = tiles.get(specialTileIndexes.get(tileIndex));
             if (tileIndex == battleIndex) {
                 tile.setEnabled(true);
                 tile.setActionCommand(ButtonIdentification.ENEMY.getActionCommand());
@@ -144,11 +147,11 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
     }
 
     private Dimension calculateCellSize() {
-        int width = getWidth();
-        int height = getHeight();
+        final int width = getWidth();
+        final int height = getHeight();
 
-        int cellWidth = width / mapConfiguration.getColumns();
-        int cellHeight = height / mapConfiguration.getRows();
+        final int cellWidth = width / mapConfiguration.getColumns();
+        final int cellHeight = height / mapConfiguration.getRows();
 
         return new Dimension(cellWidth, cellHeight);
     }
@@ -156,7 +159,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
      * Updates the icons of the buttons.
      */
     private void updateButtonIcons() {
-        JButton newBtnDim = tiles.get(0);
+        final JButton newBtnDim = tiles.get(0);
         Arrays.stream(ButtonIdentification.values()).forEach(identifier -> {
             Image activeVariantResized;
             Image inactiveVariantResized;
@@ -187,7 +190,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
             .getLevels(); index++) {
             ImageIcon imageReference;
             ButtonIdentification command;
-            Cursor tempCursor = new Cursor(Cursor.HAND_CURSOR);
+            final Cursor tempCursor = new Cursor(Cursor.HAND_CURSOR);
             int temporaryIndex = configuration
                 .getMapConfiguration().getInitialPlayerTile();
             if (index == 0) {
@@ -242,12 +245,12 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
      * Generates the tile map.
      */
     private void generateTileGrid() {
-        Dimension cellSize = calculateCellSize();
+        final Dimension cellSize = calculateCellSize();
         this.setLayout(new GridLayout(mapConfiguration.getRows(), mapConfiguration.getColumns()));
         for (int rowIndex = 0; rowIndex < mapConfiguration.getRows(); rowIndex++) {
             for (int columnIndex = 0;
                 columnIndex < mapConfiguration.getColumns(); columnIndex++) {
-                JButton button = new JButton();
+                final JButton button = new JButton();
                 button.setBorderPainted(false);
                 button.setPreferredSize(cellSize);
                 button.setActionCommand(ButtonIdentification.TILE.getActionCommand());

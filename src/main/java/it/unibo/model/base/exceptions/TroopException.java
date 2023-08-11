@@ -1,9 +1,12 @@
 package it.unibo.model.base.exceptions;
 
+import java.io.Serial;
+
 /**
  * A type of exception that signals a problem relating the troops.
  */
 public class TroopException extends Exception {
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     /**
