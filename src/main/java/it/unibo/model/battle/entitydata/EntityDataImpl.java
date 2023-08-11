@@ -20,7 +20,7 @@ import java.util.Arrays;
 public final class EntityDataImpl implements EntityData {
 
     /** The number of total troops (player + bot).*/
-    private static int totalTroops;
+    private final int totalTroops;
     /** Variable used to indicate the number of troops in the hand.*/
     private final int handTroops;
     /** Indicates all the different troops present in the game.*/
@@ -39,7 +39,7 @@ public final class EntityDataImpl implements EntityData {
     public EntityDataImpl(final BattleConfiguration battlePanelConfiguration) {
         this.entityTroop = new HashMap<>();
         this.handTroops = battlePanelConfiguration.getNrOfSlots();
-        totalTroops = battlePanelConfiguration.getNrOfFieldSpots();
+        this.totalTroops = battlePanelConfiguration.getNrOfFieldSpots();
         for (int i = 0; i < handTroops; i++) {
             this.entityTroop.put(i, new CellsImpl(TroopType.getRandomTroop(), false));
         }
@@ -195,7 +195,7 @@ public final class EntityDataImpl implements EntityData {
             }
 
         }
-        final int troopsToFill = totalTroops - playerOptionalList.size();
+        final int troopsToFill = playerData.getTotalTroops() - playerOptionalList.size();
         for (int a = 0; a < troopsToFill; a++) {
             playerOptionalList.add(Optional.empty());
             botOptionalList.add(Optional.empty());
@@ -219,11 +219,11 @@ public final class EntityDataImpl implements EntityData {
         final List<Optional<TroopType>> bothOrdered = EntityDataImpl.getOrderedField(playerData, botData);
         final List<Optional<TroopType>> playerOrdered = bothOrdered.subList(0, bothOrdered.size() / 2);
         final List<Optional<TroopType>> botOrdered = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size());
-        final List<Optional<TroopType>> finalPlayer = new ArrayList<>(totalTroops);
-        final List<Optional<TroopType>> finalBot = new ArrayList<>(totalTroops);
-        final int maxPosition = totalTroops - 1;
+        final List<Optional<TroopType>> finalPlayer = new ArrayList<>(playerData.getTotalTroops());
+        final List<Optional<TroopType>> finalBot = new ArrayList<>(playerData.getTotalTroops());
+        final int maxPosition = playerData.getTotalTroops() - 1;
 
-        for (int a = 0; a < totalTroops; a++) {
+        for (int a = 0; a < playerData.getTotalTroops(); a++) {
             finalPlayer.add(Optional.empty());
             finalBot.add(Optional.empty());
         }
@@ -257,6 +257,11 @@ public final class EntityDataImpl implements EntityData {
 
         finalPlayer.addAll(finalBot);
         return finalPlayer;
+    }
+
+    @Override
+    public Integer getTotalTroops() {
+        return totalTroops;
     }
 
 }

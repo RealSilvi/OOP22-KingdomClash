@@ -9,6 +9,7 @@ import javax.swing.SwingConstants;
  * This class is used to extend the JButton class.
  * It helps in creating in a faster way a button with specific values.
  */
+@SuppressWarnings("serial")
 public class ImageButton extends JButton {
 
     /**

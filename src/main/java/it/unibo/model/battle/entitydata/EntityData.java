@@ -107,4 +107,10 @@ public interface EntityData {
 
     void setAllChosen();
 
+    /**
+     * Return the number of the total troops possible in the field.
+     * @return The amount of the possible troops.
+     */
+    Integer getTotalTroops();
+
 }

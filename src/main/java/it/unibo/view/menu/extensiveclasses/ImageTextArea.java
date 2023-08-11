@@ -12,6 +12,7 @@ import java.awt.Graphics;
  * This class is used to extend the JTextArea class.
  * It helps in creating in a faster way a textArea with specific values.
  */
+@SuppressWarnings("serial")
 public final class ImageTextArea extends JTextArea {
     private Image backgroundImage;
 

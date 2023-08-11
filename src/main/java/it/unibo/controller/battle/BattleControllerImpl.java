@@ -227,7 +227,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.setActionListenerSpinButton(actionListenerInfo);
     }
 
-    @SuppressWarnings(value = "unchecked")
+    @SuppressWarnings("unchecked")
     private void setActionListenerSlots() {
         final ActionListener actionListenerInfo = e -> {
             if (e.getSource() instanceof TroopButtonImpl.DataJButton<?>) {
