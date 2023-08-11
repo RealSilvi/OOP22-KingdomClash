@@ -16,6 +16,9 @@ import java.util.Objects;
  */
 public interface ImageIconsSupplier {
 
+    /**
+     * Default path image.
+     */
     String PLACE_HOLDER_PATH = "/it/unibo/textures/Placeholder";
 
     /**

@@ -9,11 +9,14 @@ import it.unibo.view.battle.panels.api.FieldPanel;
 import it.unibo.view.battle.panels.api.InfoPanel;
 import it.unibo.view.battle.panels.api.PlayerPanel;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
-import it.unibo.view.battle.panels.impl.*;
+import it.unibo.view.battle.panels.impl.CommandPanelImpl;
+import it.unibo.view.battle.panels.impl.PlayerPanelImpl;
+import it.unibo.view.battle.panels.impl.InfoPanelImpl;
+import it.unibo.view.battle.panels.impl.FieldPanelImpl;
+import it.unibo.view.battle.panels.impl.TutorialPanel;
+import it.unibo.view.battle.panels.impl.TextPanelImpl;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.battle.panels.PanelDimensions;
-import it.unibo.view.battle.panels.impl.TextPanelImpl;
-import it.unibo.view.battle.panels.impl.TutorialPanel;
 import it.unibo.view.utilities.ImageIconsSupplier;
 
 import java.awt.Dimension;
@@ -29,6 +32,9 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 
+/**
+ * This class implements BattlePanel and handle all the features of the Battle View.
+ */
 public final class BattlePanelImpl implements BattlePanel {
 
     private static final int BORDER_LAYOUT_GAP = 3;

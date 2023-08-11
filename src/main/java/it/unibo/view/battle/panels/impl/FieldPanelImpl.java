@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+/**
+ * Implementation of FieldPanel.
+ */
 public final class FieldPanelImpl implements FieldPanel {
 
     private static final double LABEL_SCALE = 0.1;
@@ -37,11 +40,14 @@ public final class FieldPanelImpl implements FieldPanel {
      */
     public FieldPanelImpl(final int nrOfFieldSpot, final PathIconsConfiguration pathIconsConfiguration) {
         this.field = new ArrayList<>();
-        this.mainPanel = new DrawPanelImpl(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()),
+        this.mainPanel = new DrawPanelImpl(
+                ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()),
                 PanelDimensions.getFieldPanel());
 
         this.mainPanel.setLayout(new GridLayout(ROWS, nrOfFieldSpot / ROWS));
-        IntStream.range(0, nrOfFieldSpot * ROWS).forEach(x -> this.field.add(new TroopLabelImpl(LABEL_DIMENSION, pathIconsConfiguration)));
+        IntStream.range(0, nrOfFieldSpot * ROWS).forEach(
+                x -> this.field
+                        .add(new TroopLabelImpl(LABEL_DIMENSION, pathIconsConfiguration)));
 
 
         this.restart();
