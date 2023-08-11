@@ -287,7 +287,7 @@ public final class ThreadManagerImpl implements ThreadManager {
                 final long waitTime = remainingAvailableTime > 0 ? remainingAvailableTime / remainingWork : 0;
                 logger.log(Level.FINEST, "Sleeping for: {0}ms", waitTime);
                 try {
-                    sleep(waitTime);
+                    sleep(waitTime > 0 ? waitTime : 0);
                 } catch (InterruptedException e) {
                     logger.severe("Thread killed!");
                     threadClosureOperation();
