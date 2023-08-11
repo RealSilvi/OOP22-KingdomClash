@@ -71,8 +71,7 @@ public final class GameGui implements GameGuiInt {
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
         final TextPanelImpl endPanel = new TextPanelImpl(getAllPanel(), gameConfiguration.getPathIconsConfiguration());
-        endPanel.setTitle("YOU WIN");
-        endPanel.setContent("END");
+        endPanel.setTitle("YOU WIN - END GAME");
 
         this.switchLayout = new CardLayout();
         this.mainPanel = new JPanel(this.switchLayout);
