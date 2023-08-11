@@ -16,7 +16,9 @@ import java.lang.instrument.IllegalClassFormatException;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-
+/**
+ * This class represents the main model of the application.
+ */
 public final class GameModel {
 
     private GameData gameData;
@@ -35,14 +37,21 @@ public final class GameModel {
         this.configuration = loadConfiguration.getConfiguration();
     }
 
+    /**
+     * Delete the save file.
+     */
     public void resetSaved() {
         if (this.isSaved() && !this.saveDataLocation.delete()) {
-                logger.severe("Delete old saving FAILURE");
-
+            logger.severe("Delete old saving FAILURE");
         }
         this.gameData = new GameData();
     }
 
+    /**
+     * Load the game if it's present a saving.
+     *
+     * @return true success or false for generating new game.
+     */
     public boolean load() {
         final Optional<GameData> gameDataOptional = deserializeGameData(this.configuration);
         if (gameDataOptional.isPresent()) {
@@ -55,6 +64,11 @@ public final class GameModel {
         }
     }
 
+    /**
+     * Save the game.
+     *
+     * @return success
+     */
     public boolean serializeGameData() {
         try (ObjectOutputStream gameDataOutputStream = new ObjectOutputStream(new FileOutputStream(saveDataLocation))) {
             gameDataOutputStream.writeObject(gameData);

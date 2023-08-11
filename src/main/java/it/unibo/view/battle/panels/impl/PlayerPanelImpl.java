@@ -17,8 +17,12 @@ import java.util.Map;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * Implementation of PlayerPanel.
+ */
 public final class PlayerPanelImpl implements PlayerPanel {
 
+    private static final int FIRST_DELAY = 600;
     private static final double BUTTON_SCALE = 0.90;
     private static final int UPDATING_DELAY = 200;
     private static final Dimension BUTTON_DIMENSION = new Dimension(
@@ -32,16 +36,24 @@ public final class PlayerPanelImpl implements PlayerPanel {
     /**
      * Construct an instance of the PlayerPanel.
      *
-     * @param nrOfSlots              sets how many slots should the player have
+     * @param nrOfSlots              sets how many slots should the player have.
      * @param pathIconsConfiguration where are defined the paths of the textures.
      */
     public PlayerPanelImpl(final Integer nrOfSlots, final PathIconsConfiguration pathIconsConfiguration) {
         this.pathIconsConfiguration = pathIconsConfiguration;
         this.mainPanel = new DrawPanelImpl(
                 ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundFillPattern())
-                , PanelDimensions.getPlayersPanel());
+                ,PanelDimensions.getPlayersPanel()
+        );
         this.slots = new ArrayList<>();
-        IntStream.range(0, nrOfSlots).forEach(position -> this.slots.add(new TroopButtonImpl(TroopType.getRandomTroop(), BUTTON_DIMENSION, position, this.pathIconsConfiguration)));
+        IntStream.range(0, nrOfSlots).forEach(
+                position -> this.slots.add(
+                        new TroopButtonImpl(
+                                TroopType.getRandomTroop()
+                                ,BUTTON_DIMENSION,
+                                position,
+                                this.pathIconsConfiguration
+                        )));
 
         this.slots.forEach(x -> mainPanel.add(x.getButton()));
 
@@ -50,7 +62,7 @@ public final class PlayerPanelImpl implements PlayerPanel {
 
     @Override
     public void update(final Map<Integer, TroopType> troops) {
-        int delay = 600;
+        int delay = FIRST_DELAY;
 
         for (int x = 0; x < this.slots.size(); x++) {
             if (troops.containsKey(x)) {

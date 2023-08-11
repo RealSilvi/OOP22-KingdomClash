@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * Implementation of LifePanel.
+ */
 public final class LifePanelImpl implements LifePanel {
 
     private static final double LABEL_SCALE = 0.2;
@@ -67,7 +70,7 @@ public final class LifePanelImpl implements LifePanel {
      * This class is not designed to handle serialization.
      */
     @SuppressWarnings("serial")
-    private static class LivesLabelImpl extends JLabel implements LivesLabel {
+    private static final class LivesLabelImpl extends JLabel implements LivesLabel {
 
         private final Dimension size;
         private boolean alive;
@@ -79,7 +82,7 @@ public final class LifePanelImpl implements LifePanel {
          * @param size                   set the size of the JLabel.
          * @param pathIconsConfiguration where are defined the paths of the textures.
          */
-        private LivesLabelImpl(final Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
+        private LivesLabelImpl(final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
             super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true), size));
 
             this.size = size;

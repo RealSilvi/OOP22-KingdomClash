@@ -15,6 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.BoxLayout;
 import java.awt.event.ActionListener;
 
+/**
+ * Implementation of CommandPanel.
+ */
 public final class CommandPanelImpl implements CommandPanel {
 
     private final JPanel mainPanel;
@@ -24,13 +27,16 @@ public final class CommandPanelImpl implements CommandPanel {
     private final ButtonsPanel buttonsPanel;
 
     /**
-     * Constructs an instance of the CommandPanel
+     * Constructs an instance of the CommandPanel.
      *
      * @param numberOfLives          sets the number of lives for each player.
      * @param pathIconsConfiguration where are defined the paths of the textures.
      */
     public CommandPanelImpl(final int numberOfLives, final PathIconsConfiguration pathIconsConfiguration) {
-        this.mainPanel = new DrawPanelImpl(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), PanelDimensions.getSidePanel());
+        this.mainPanel = new DrawPanelImpl(
+                ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()),
+                PanelDimensions.getSidePanel()
+        );
         this.botLivesPanel = new LifePanelImpl(numberOfLives, pathIconsConfiguration);
         this.playerLivesPanel = new LifePanelImpl(numberOfLives, pathIconsConfiguration);
         this.buttonsPanel = new ButtonsPanelImpl(pathIconsConfiguration);

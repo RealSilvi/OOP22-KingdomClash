@@ -35,7 +35,11 @@ public final class TextPanelImpl extends DrawPanelImpl {
      * @param size                   the size of the panel.
      * @param pathIconsConfiguration where are defined the paths of the textures.
      */
-    public TextPanelImpl(final String title, final String content, final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
+    public TextPanelImpl(
+            final String title,
+            final String content,
+            final Dimension size,
+            final PathIconsConfiguration pathIconsConfiguration) {
         this(size, pathIconsConfiguration);
         this.setTitle(title);
         this.setContent(content);
@@ -44,7 +48,7 @@ public final class TextPanelImpl extends DrawPanelImpl {
     /**
      * Constructs a DrawPanelImpl with an empty title section and an empty text section.
      *
-     * @param size the size of the panel.
+     * @param size                   the size of the panel.
      * @param pathIconsConfiguration where are defined the paths of the textures..
      */
     public TextPanelImpl(final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
