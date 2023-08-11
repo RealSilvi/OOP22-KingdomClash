@@ -59,4 +59,9 @@ public interface BattleController {
 
     void botLifeDecrease();
 
+    /**
+     * update again the view of the troops.
+     */
+    void updateTroopsView();
+
 }
