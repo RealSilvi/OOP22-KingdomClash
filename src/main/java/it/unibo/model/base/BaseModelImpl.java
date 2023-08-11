@@ -474,7 +474,6 @@ public final class BaseModelImpl implements BaseModel {
      */
     private void initializeDataStructures() {
         initializeResourceSet();
-        initializeBuildingThreads();
     }
 
     /**
@@ -489,13 +488,5 @@ public final class BaseModelImpl implements BaseModel {
                     resourceType -> gameData
                         .getResources().add(new Resource(resourceType)));
         }
-    }
-
-    /**
-     * If buildings are present, this function adds them to the threadManager.
-     */
-    private void initializeBuildingThreads() {
-        this.gameData.getBuildings()
-            .keySet().forEach(singleEntry -> this.threadManager.addBuilding(singleEntry));
     }
 }
