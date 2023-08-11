@@ -217,6 +217,12 @@ public final class BattleControllerImpl implements BattleController, Controller 
         this.battlePanel.setBackActionListener(returnActionToAdd);
     }
 
+    @Override
+    public void updateTroopsView() {
+        this.battleModel.endFight(false);
+        this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
+    }
+
     private void setActionListenerPass() {
         final ActionListener actionListenerInfo = e -> pass();
         this.battlePanel.setActionListenerPass(actionListenerInfo);
