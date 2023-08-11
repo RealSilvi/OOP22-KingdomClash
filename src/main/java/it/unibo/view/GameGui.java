@@ -3,7 +3,6 @@ package it.unibo.view;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.sound.SoundManagerImpl;
 import it.unibo.kingdomclash.config.GameConfiguration;
-import it.unibo.view.battle.panels.PanelDimensions;
 import it.unibo.view.battle.panels.impl.TextPanelImpl;
 import it.unibo.view.map.MapPanel;
 import it.unibo.view.map.MapPanelImpl;
@@ -46,7 +45,6 @@ public final class GameGui implements GameGuiInt {
     private final CardLayout switchLayout2;
     private final JPanel allPanel;
     private final JPanel mainPanel;
-    private final TextPanelImpl endPanel;
     private final SouthPanel southPanel;
     private final GameMenu menuPanel;
     private final InfoMenuPanel infoPanel;
@@ -72,9 +70,9 @@ public final class GameGui implements GameGuiInt {
         this.soundManagerImpl.changeMute();
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
-        this.endPanel = new TextPanelImpl(getAllPanel(), gameConfiguration.getPathIconsConfiguration());
-        this.endPanel.setTitle("YOU WIN");
-        this.endPanel.setContent("END");
+        final TextPanelImpl endPanel = new TextPanelImpl(getAllPanel(), gameConfiguration.getPathIconsConfiguration());
+        endPanel.setTitle("YOU WIN");
+        endPanel.setContent("END");
 
         this.switchLayout = new CardLayout();
         this.mainPanel = new JPanel(this.switchLayout);
@@ -90,9 +88,9 @@ public final class GameGui implements GameGuiInt {
         this.southPanel = new SouthPanel();
 
         this.panel.put(MAP_NAME, this.mapPanel.getAsJPanel());
-        this.panel.put(END_NAME, this.endPanel);
+        this.panel.put(END_NAME, endPanel);
         this.allPanel.add(this.mapPanel.getAsJPanel(), MAP_NAME);
-        this.allPanel.add(this.endPanel, END_NAME);
+        this.allPanel.add(endPanel, END_NAME);
 
         borderPanel.add(this.allPanel, BorderLayout.CENTER);
         borderPanel.add(this.southPanel.getPanel(), BorderLayout.SOUTH);
