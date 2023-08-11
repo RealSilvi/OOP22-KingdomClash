@@ -10,6 +10,7 @@ import it.unibo.model.data.Resource;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.geom.Point2D;
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -22,6 +23,7 @@ public class Building implements Serializable {
     /**
      * Serial version UID.
      */
+    @Serial
     private static final long serialVersionUID = 211022001L;
 
     /**

@@ -22,8 +22,8 @@ import it.unibo.model.data.TroopType;
  * Tests for the BaseController logic.
  */
 final class BaseControllerTest {
-    private GameData gameDataRef = null;
-    private BaseController baseController = null;
+    private GameData gameDataRef;
+    private BaseController baseController;
     private final Random randomGen = new Random();
 
     /**

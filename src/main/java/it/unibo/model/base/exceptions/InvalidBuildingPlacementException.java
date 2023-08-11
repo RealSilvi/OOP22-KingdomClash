@@ -1,10 +1,13 @@
 package it.unibo.model.base.exceptions;
 
+import java.io.Serial;
+
 /**
  * An exception usually thrown when the player tries to place or relocate
  * a building in an invalid location.
  */
 public class InvalidBuildingPlacementException extends BuildingException {
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     /**

@@ -13,29 +13,29 @@ import it.unibo.model.data.Resource.ResourceType;
 /**
  * Tests the Base Model's exception logic.
  */
-public final class ExceptionsTest {
-    private Random randomGen = new Random();
+final class ExceptionsTest {
+    private final Random randomGen = new Random();
     /**
      * Tests wether the NotEnoughResourcesException creates a correct error
      * message or not.
      */
     @Test
     @SuppressWarnings("checkstyle:magicnumber")
-    public void testNotEnoughResourcesException() {
-        int exampleWheat = randomGen.nextInt();
-        int exampleWood = randomGen.nextInt();
-        Set<Resource> expectedResources = 
+    void testNotEnoughResourcesException() {
+        final int exampleWheat = randomGen.nextInt();
+        final int exampleWood = randomGen.nextInt();
+        final Set<Resource> expectedResources = 
             Set.of(new Resource(ResourceType.WHEAT, exampleWheat),
                 new Resource(ResourceType.WOOD, exampleWood));
         try {
             throw new NotEnoughResourceException(expectedResources);
         } catch (NotEnoughResourceException e) {
-            String[] expected = ("You still need "
+            final String[] expected = ("You still need "
                 + exampleWheat + " WHEAT "
                 + exampleWood + " WOOD to build this!")
                 .split(" ");
             Arrays.sort(expected);
-            String[] result = e.getMessage().split(" ");
+            final String[] result = e.getMessage().split(" ");
             Arrays.sort(result);
             Assertions.assertArrayEquals(expected, result);
         }

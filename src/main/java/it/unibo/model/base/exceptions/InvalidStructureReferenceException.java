@@ -1,5 +1,6 @@
 package it.unibo.model.base.exceptions;
 
+import java.io.Serial;
 import java.util.UUID;
 
 /**
@@ -8,6 +9,7 @@ import java.util.UUID;
  * in the code and not by the user.
  */
 public class InvalidStructureReferenceException extends BuildingException {
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     /**
