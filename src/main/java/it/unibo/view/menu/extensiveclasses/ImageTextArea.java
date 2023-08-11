@@ -7,13 +7,17 @@ import javax.swing.JTextArea;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serial;
 
 /**
  * This class is used to extend the JTextArea class.
  * It helps in creating in a faster way a textArea with specific values.
  */
-@SuppressWarnings("serial")
 public final class ImageTextArea extends JTextArea {
+
+    @Serial
+    private static final long serialVersionUID = 123456789L;
+
     private Image backgroundImage;
 
     /**
@@ -21,7 +25,7 @@ public final class ImageTextArea extends JTextArea {
      */
     public ImageTextArea() {
         super();
-        final int lenght = TroopType.values().length;
+        final int length = TroopType.values().length;
         setForeground(Color.WHITE);
         setText("Welcome in the tutorial of Kingdom Clash:\n"
                 + "In the game are present 3 principal panels which you can switch:\n"
@@ -58,8 +62,8 @@ public final class ImageTextArea extends JTextArea {
                 + "the bot lose all its life, otherwise you lose, and you have to repeat "
                 + "the level (you don't lose your upgrades).\n"
                 + "You can find more information about the battle, inside of the battle clicking on the 'info' button. "
-                + "In the game there are " + lenght + " different troops, and each troop can have only one correspondence. "
-                + "There are " + lenght / 2 + " correspondences (you can see it on the left).\n "
+                + "In the game there are " + length + " different troops, and each troop can have only one correspondence. "
+                + "There are " + length / 2 + " correspondences (you can see it on the left).\n "
                 + "If an attack troop doesn't find any troop of the enemy in front of it, then the enemy lose 1 life. "
                 + "If an attack troop finds a defense troop against it, and they have the same level, then none take damage.\n"
                 + "If an attack troop finds a defense troop against it, and the level of the attack troop is higher, then the "

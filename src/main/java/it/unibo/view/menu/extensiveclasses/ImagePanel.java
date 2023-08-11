@@ -5,13 +5,17 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.Image;
 import java.awt.Graphics;
+import java.io.Serial;
 
 /**
  * This class is used to extend the JPanel class.
  * It helps in creating in a faster way a panel with specific image.
  */
-@SuppressWarnings("serial")
 public final class ImagePanel extends JPanel {
+
+    @Serial
+    private static final long serialVersionUID = 123456789L;
+
     /** The dimension of the screen.*/
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
     private final Image backgroundImage;
