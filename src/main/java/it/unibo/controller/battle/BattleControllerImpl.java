@@ -219,6 +219,7 @@ public final class BattleControllerImpl implements BattleController, Controller 
 
     @Override
     public void updateTroopsView() {
+        this.battleModel.endFight(false);
         this.battlePanel.drawInfoTable(this.battleModel.getInfoTable());
     }
 
