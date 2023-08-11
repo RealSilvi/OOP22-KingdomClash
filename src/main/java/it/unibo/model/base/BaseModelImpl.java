@@ -469,13 +469,17 @@ public final class BaseModelImpl implements BaseModel {
     }
 
     /**
-     * Check if data structures in GameData are initialized, if not
+     * Checks if data structures in GameData are initialized, if not
      * this method will correctly initialize the data structures.
      */
     private void initializeDataStructures() {
         initializeResourceSet();
+        initializeBuildingThreads();
     }
 
+    /**
+     * Initializes resource set.
+     */
     private void initializeResourceSet() {
         if (gameData.getResources() == null) {
             gameData.setResources(new HashSet<>());
@@ -485,5 +489,13 @@ public final class BaseModelImpl implements BaseModel {
                     resourceType -> gameData
                         .getResources().add(new Resource(resourceType)));
         }
+    }
+
+    /**
+     * If buildings are present, this function adds them to the threadManager.
+     */
+    private void initializeBuildingThreads() {
+        this.gameData.getBuildings()
+            .keySet().forEach(singleEntry -> this.threadManager.addBuilding(singleEntry));
     }
 }
