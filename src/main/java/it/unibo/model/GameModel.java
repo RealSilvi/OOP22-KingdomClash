@@ -36,7 +36,7 @@ public final class GameModel {
     }
 
     public void resetSaved() {
-        if(this.isSaved() && (!this.saveDataLocation.delete())) {
+        if (this.isSaved() && (!this.saveDataLocation.delete())) {
                 logger.severe("Delete old saving FAILURE");
 
         }

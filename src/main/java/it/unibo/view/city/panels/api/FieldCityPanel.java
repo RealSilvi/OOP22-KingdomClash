@@ -9,11 +9,11 @@ public interface FieldCityPanel {
 
     /**
      * 
-     * @return the main panel implented in the class
+     * @return the main panel implented in the class.
      */
     JPanel getPanel();
     /**
-     * This method refresh the building image when the building is upgrading
+     * This method refresh the building image when the building is upgrading.
      */
     void refreshContent();
 

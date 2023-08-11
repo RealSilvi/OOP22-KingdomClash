@@ -76,7 +76,7 @@ public final class BuildingPanel extends InternalElement {
         );
     }
     @Override
-    public void refreshContent(){
+    public void refreshContent() {
         buildingButtonType.keySet().stream().forEach(buttonType -> 
             buildingButtonType.get(buttonType).setIcon(new ImageIcon(GraphicUtils
                 .resizeImageWithProportion(this.buildingImages.get(buttonType).get(0),

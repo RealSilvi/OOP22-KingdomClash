@@ -52,7 +52,8 @@ public interface ImageIconsSupplier {
      */
     static ImageIcon getScaledImageIcon(String pathToFile, final Dimension size) {
         try {
-            return new ImageIcon(ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFile))).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
+            return new ImageIcon(ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFile))).
+                getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
         } catch (NullPointerException | IOException exception) {
             return new ImageIcon();
         }

@@ -42,7 +42,6 @@ import it.unibo.model.base.internal.BuildingBuilder.BuildingTypes;
 @SuppressFBWarnings(value = "Se", 
 justification = "This GUI element will never be serialized")
 public final class BarPanelImpl extends InternalElement implements BarPanel {
-    
     private static final long serialVersionUID = 123456789L;
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.2);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.2);

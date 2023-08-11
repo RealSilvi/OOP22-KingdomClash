@@ -27,7 +27,6 @@ import it.unibo.view.utilities.ImageIconsSupplier;
  * 
  */
 public class TroopPopupPanel {
-    
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
     private static final Dimension DIMENSION_BUTTON = new Dimension(WIDTH / 6, HEIGHT / 8);
@@ -88,7 +87,7 @@ public class TroopPopupPanel {
                 });
                 contentpanel.add(containpanel);
             });
-    }    
+    }
     /**
      * This method allows to make the popup visible on each click
      * with a boolean parameter.
@@ -108,5 +107,4 @@ public class TroopPopupPanel {
     public void dispose() {
         popup.hide();
     }
-
 }
