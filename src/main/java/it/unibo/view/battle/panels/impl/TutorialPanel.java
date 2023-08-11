@@ -2,7 +2,7 @@ package it.unibo.view.battle.panels.impl;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
-import it.unibo.kingdomclash.config.TextConfigurationBattle;
+import it.unibo.kingdomclash.config.TextBattleConfiguration;
 import it.unibo.view.battle.panels.entities.DrawPanelImpl;
 import it.unibo.view.utilities.BattlePanelStyle;
 import it.unibo.view.utilities.ImageIconsSupplier;
@@ -38,7 +38,7 @@ public final class TutorialPanel {
      * @param configuration          where are defined the texts.
      * @param pathIconsConfiguration where are defined the paths of the textures.
      */
-    public TutorialPanel(final TextConfigurationBattle configuration, final PathIconsConfiguration pathIconsConfiguration) {
+    public TutorialPanel(final TextBattleConfiguration configuration, final PathIconsConfiguration pathIconsConfiguration) {
         this.turnBack = new JButton(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getExit(),
                 EXIT_DIMENSION));
         final JPanel backPanel = new TextPanelImpl(

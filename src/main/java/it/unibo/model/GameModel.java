@@ -31,7 +31,7 @@ public final class GameModel {
      */
     public GameModel() {
         LoadConfiguration loadConfiguration = new LoadConfiguration();
-        this.saveDataLocation = new File(LoadConfiguration.getAppData() + File.separator + "game.dat");
+        this.saveDataLocation = new File(LoadConfiguration.getAppDataDirectory() + File.separator + "game.dat");
         this.configuration = loadConfiguration.getConfiguration();
     }
 

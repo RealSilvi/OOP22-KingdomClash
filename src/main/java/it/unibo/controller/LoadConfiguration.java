@@ -29,7 +29,7 @@ public final class LoadConfiguration {
 
         final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        final String configDir = getAppData() + File.separator + "configuration.json";
+        final String configDir = getAppDataDirectory() + File.separator + "configuration.json";
 
 
         Logger logger = Logger.getLogger(this.getClass().getName());
@@ -60,7 +60,7 @@ public final class LoadConfiguration {
      *
      * @return a path to the appdata folder
      */
-    public static String getAppData() {
+    public static String getAppDataDirectory() {
         final String osHome = System.getProperty("os.name").toLowerCase(Locale.ROOT);
         String appData;
 

@@ -11,7 +11,7 @@ public class BattleConfiguration {
     private static final int MAX_ROUND = 3;
 
 
-    private final TextConfigurationBattle textConfigurationBattle;
+    private final TextBattleConfiguration textBattleConfiguration;
 
     private final int nrOfSlots;
     private final int nrOfLives;
@@ -27,7 +27,7 @@ public class BattleConfiguration {
         nrOfLives = NR_OF_LIVES;
         nrOfFieldSpots = NR_OF_FIELD_SPOTS;
         maxRound = MAX_ROUND;
-        this.textConfigurationBattle = new TextConfigurationBattle();
+        this.textBattleConfiguration = new TextBattleConfiguration();
     }
 
     /**
@@ -61,8 +61,8 @@ public class BattleConfiguration {
     /**
      * @return the configuration for the text areas.
      */
-    public TextConfigurationBattle getTextConfiguration() {
-        return textConfigurationBattle;
+    public TextBattleConfiguration getTextConfiguration() {
+        return textBattleConfiguration;
     }
 }
 

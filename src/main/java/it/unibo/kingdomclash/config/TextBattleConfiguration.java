@@ -3,7 +3,7 @@ package it.unibo.kingdomclash.config;
 /**
  * Configuration of text areas in the battle.
  */
-public class TextConfigurationBattle {
+public class TextBattleConfiguration {
 
     private final String tutorialNorthTitle;
     private final String tutorialNorthText;
@@ -23,7 +23,7 @@ public class TextConfigurationBattle {
     /**
      * Set's the default configuration.
      */
-    public TextConfigurationBattle() {
+    public TextBattleConfiguration() {
         this.tutorialNorthTitle = " ";
         this.tutorialNorthText = "This panel contains the opponent's set of dice.";
         this.tutorialSouthTitle = " ";
