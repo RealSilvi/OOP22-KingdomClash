@@ -59,7 +59,6 @@ public interface ImageIconsSupplier {
             return new ImageIcon(ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFile))).
                     getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
         } catch (NullPointerException | IOException exception) {
-
             return new ImageIcon(loadImage(pathToFile).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
         }
     }

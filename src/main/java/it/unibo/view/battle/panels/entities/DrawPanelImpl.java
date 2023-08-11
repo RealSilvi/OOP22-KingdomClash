@@ -17,14 +17,13 @@ import java.awt.Graphics2D;
  * ps. This class is not designed to handle serialization.
  */
 
-@SuppressWarnings(value = "serial")
+@SuppressWarnings("serial")
 public class DrawPanelImpl extends JPanel {
 
     private static final int WIDTH_IMAGE_FILL_PATTERN = 200;
     private static final int HEIGHT_IMAGE_FILL_PATTERN = 200;
     private static final int H_GAP = 20;
     private static final int V_GAP = 10;
-
     private final Image backgroundImage;
     private final Dimension size;
 

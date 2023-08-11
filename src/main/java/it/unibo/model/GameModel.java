@@ -30,13 +30,13 @@ public final class GameModel {
      * Intended behaviour of File.mkdirs().
      */
     public GameModel() {
-        LoadConfiguration loadConfiguration = new LoadConfiguration();
+        final LoadConfiguration loadConfiguration = new LoadConfiguration();
         this.saveDataLocation = new File(LoadConfiguration.getAppDataDirectory() + File.separator + "game.dat");
         this.configuration = loadConfiguration.getConfiguration();
     }
 
     public void resetSaved() {
-        if (this.isSaved() && (!this.saveDataLocation.delete())) {
+        if (this.isSaved() && !this.saveDataLocation.delete()) {
                 logger.severe("Delete old saving FAILURE");
 
         }

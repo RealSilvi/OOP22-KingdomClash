@@ -165,8 +165,8 @@ public class GameController {
         this.gameGui.setActionListenerExit(e -> this.gameGui.closeGui());
     }
 
-    private void setActionListenerQuit(){
-        ActionListener actionListener= e -> {
+    private void setActionListenerQuit() {
+        final ActionListener actionListener = e -> {
             this.baseController.closureOperation();
             this.gameGui.closeGui();
         };

@@ -12,7 +12,7 @@ import java.awt.Dimension;
  * This class is not designed to handle serialization.
  */
 
-@SuppressWarnings(value = "serial")
+@SuppressWarnings("serial")
 public final class TroopLabelImpl extends JLabel implements TroopLabel {
 
     private final Dimension size;

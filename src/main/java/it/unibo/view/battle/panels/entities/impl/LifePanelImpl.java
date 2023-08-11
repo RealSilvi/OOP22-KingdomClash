@@ -66,7 +66,7 @@ public final class LifePanelImpl implements LifePanel {
     /**
      * This class is not designed to handle serialization.
      */
-    @SuppressWarnings(value = "serial")
+    @SuppressWarnings("serial")
     private static class LivesLabelImpl extends JLabel implements LivesLabel {
 
         private final Dimension size;
@@ -79,7 +79,7 @@ public final class LifePanelImpl implements LifePanel {
          * @param size                   set the size of the JLabel.
          * @param pathIconsConfiguration where are defined the paths of the textures.
          */
-        private LivesLabelImpl(final Dimension size, PathIconsConfiguration pathIconsConfiguration) {
+        private LivesLabelImpl(final Dimension size,final PathIconsConfiguration pathIconsConfiguration) {
             super(ImageIconsSupplier.getScaledImageIcon(pathIconsConfiguration.getLife(true), size));
 
             this.size = size;

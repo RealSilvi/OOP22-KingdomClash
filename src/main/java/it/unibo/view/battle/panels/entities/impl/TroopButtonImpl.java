@@ -88,7 +88,7 @@ public final class TroopButtonImpl implements TroopButton {
      *
      * @param <X> the type of data to store.
      */
-    @SuppressWarnings(value = "serial")
+    @SuppressWarnings("serial")
     public static final class DataJButton<X> extends JButton {
 
         private static final int BORDER_THICKNESS = 4;

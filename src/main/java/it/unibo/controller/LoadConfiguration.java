@@ -32,7 +32,7 @@ public final class LoadConfiguration {
         final String configDir = getAppDataDirectory() + File.separator + "configuration.json";
 
 
-        Logger logger = Logger.getLogger(this.getClass().getName());
+        final Logger logger = Logger.getLogger(this.getClass().getName());
         try (FileReader content = new FileReader(configDir, StandardCharsets.UTF_8)) {
             this.configuration = gson.fromJson(content, GameConfiguration.class);
         } catch (FileNotFoundException e) {

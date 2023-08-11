@@ -16,7 +16,7 @@ import java.awt.Component;
 /**
  * This class is not designed to handle serialization.
  */
-@SuppressWarnings(value = "serial")
+@SuppressWarnings("serial")
 public final class TextPanelImpl extends DrawPanelImpl {
 
     private static final int VERTICAL_PADDING = 10;
@@ -47,7 +47,7 @@ public final class TextPanelImpl extends DrawPanelImpl {
      * @param size the size of the panel.
      * @param pathIconsConfiguration where are defined the paths of the textures..
      */
-    public TextPanelImpl(Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
+    public TextPanelImpl(final Dimension size, final PathIconsConfiguration pathIconsConfiguration) {
         super(ImageIconsSupplier.loadImageIcon(pathIconsConfiguration.getBackgroundFillPattern()), size);
         this.titleLabel = new JLabel();
         this.contentText = new JTextArea();

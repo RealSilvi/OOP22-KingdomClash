@@ -240,7 +240,7 @@ public final class BattlePanelImpl implements BattlePanel {
 
         private final String name;
 
-        PanelsName(String name) {
+        PanelsName(final String name) {
             this.name = name;
         }
     }

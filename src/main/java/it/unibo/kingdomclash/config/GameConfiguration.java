@@ -2,8 +2,6 @@ package it.unibo.kingdomclash.config;
 
 import it.unibo.model.base.basedata.BaseConfiguration;
 import it.unibo.model.base.basedata.BuildingConfiguration;
-import it.unibo.kingdomclash.config.BattleConfiguration;
-import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.city.panels.impl.CityConfiguration;
 import it.unibo.view.map.mapdata.MapConfiguration;
 
@@ -37,7 +35,7 @@ public class GameConfiguration {
     /**
      * @return configuration for the paths of the icons to load.
      */
-    public PathIconsConfiguration getPathIconsConfiguration(){
+    public PathIconsConfiguration getPathIconsConfiguration() {
         return this.pathIconsConfiguration;
     }
 
