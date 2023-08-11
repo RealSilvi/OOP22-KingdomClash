@@ -28,6 +28,10 @@ final class BattleModelTest {
     private static final int FIELD_ADDRESS_11 = 11;
     /** The address at the 19 position.*/
     private static final int FIELD_ADDRESS_19 = 19;
+    /** The symbol represents human*/
+    private static final int HUMAN = 0;
+    /** The symbol represents bot*/
+    private static final int BOT = 1;
 
     private BattleModel battleModel;
     private FightData fightData;
@@ -130,16 +134,9 @@ final class BattleModelTest {
     @Test
     void pass() {
 
+        changeClicked(HUMAN, false);
         this.playerData.getCells(0).setClicked(true);
-        this.playerData.getCells(1).setClicked(false);
-        this.playerData.getCells(2).setClicked(false);
-        this.playerData.getCells(3).setClicked(false);
-        this.playerData.getCells(4).setClicked(false);
-        this.botData.getCells(0).setClicked(false);
-        this.botData.getCells(1).setClicked(false);
-        this.botData.getCells(2).setClicked(false);
-        this.botData.getCells(3).setClicked(false);
-        this.botData.getCells(4).setClicked(false);
+        changeClicked(BOT, false);
 
         this.battleModel.battlePass(BattleControllerImpl.CONTINUE);
         List<TroopType> bot = this.fightData.getBotData().getSelected();
@@ -148,16 +145,8 @@ final class BattleModelTest {
 
         Assertions.assertEquals(expected, bot);
 
-        this.playerData.getCells(0).setClicked(true);
-        this.playerData.getCells(1).setClicked(true);
-        this.playerData.getCells(2).setClicked(true);
-        this.playerData.getCells(3).setClicked(true);
-        this.playerData.getCells(4).setClicked(true);
-        this.botData.getCells(0).setClicked(false);
-        this.botData.getCells(1).setClicked(false);
-        this.botData.getCells(2).setClicked(false);
-        this.botData.getCells(3).setClicked(false);
-        this.botData.getCells(4).setClicked(false);
+        changeClicked(HUMAN, true);
+        changeClicked(BOT, false);
 
         this.battleModel.battlePass(BattleControllerImpl.PLAYER_FINISH);
         bot = this.fightData.getBotData().getSelected();
@@ -184,11 +173,9 @@ final class BattleModelTest {
         this.playerData.getCells(2).setClicked(false);
         this.playerData.getCells(3).setClicked(true);
         this.playerData.getCells(4).setClicked(true);
+        changeClicked(BOT, true);
         this.botData.getCells(0).setClicked(false);
-        this.botData.getCells(1).setClicked(true);
-        this.botData.getCells(2).setClicked(true);
-        this.botData.getCells(3).setClicked(true);
-        this.botData.getCells(4).setClicked(true);
+
         int contB = 0;
         int contP = 0;
         for (int i = 0; i < this.field; i++) {
@@ -203,16 +190,9 @@ final class BattleModelTest {
         Assertions.assertEquals(this.playerLife, maxLives - 1);
         Assertions.assertEquals(this.botLife, maxLives);
 
-        this.playerData.getCells(0).setClicked(true);
-        this.playerData.getCells(1).setClicked(true);
-        this.playerData.getCells(2).setClicked(true);
-        this.playerData.getCells(3).setClicked(true);
-        this.playerData.getCells(4).setClicked(true);
-        this.botData.getCells(0).setClicked(true);
-        this.botData.getCells(1).setClicked(true);
-        this.botData.getCells(2).setClicked(true);
-        this.botData.getCells(3).setClicked(true);
-        this.botData.getCells(4).setClicked(true);
+        changeClicked(HUMAN, true);
+        changeClicked(BOT, true);
+
         this.botLife += contB;
         this.playerLife += contP;
         contP = 0;
@@ -263,16 +243,9 @@ final class BattleModelTest {
     void countedRound() {
 
         int countedRound = 1;
-        this.playerData.getCells(0).setClicked(true);
-        this.playerData.getCells(1).setClicked(false);
-        this.playerData.getCells(2).setClicked(false);
-        this.playerData.getCells(3).setClicked(false);
-        this.playerData.getCells(4).setClicked(false);
-        this.botData.getCells(0).setClicked(false);
-        this.botData.getCells(1).setClicked(false);
-        this.botData.getCells(2).setClicked(false);
-        this.botData.getCells(3).setClicked(false);
-        this.botData.getCells(4).setClicked(false);
+
+        changeClicked(HUMAN, false);
+        changeClicked(BOT, false);
 
         for (int i = 1; i < gameData.getGameConfiguration().getBattleConfiguration().getMaxRound(); i++) {
             this.battleModel.battlePass(BattleControllerImpl.CONTINUE);
@@ -284,6 +257,40 @@ final class BattleModelTest {
         Assertions.assertEquals(countedRound, this.battleModel.getCountedRound());
         Assertions.assertEquals(this.battleModel.getCountedRound(),
                 gameData.getGameConfiguration().getBattleConfiguration().getMaxRound());
+
+    }
+
+    void changeClicked(Integer entity, Boolean clicked) {
+
+        if (clicked) {
+            if (entity == HUMAN) {
+                this.playerData.getCells(0).setClicked(true);
+                this.playerData.getCells(1).setClicked(true);
+                this.playerData.getCells(2).setClicked(true);
+                this.playerData.getCells(3).setClicked(true);
+                this.playerData.getCells(4).setClicked(true);
+            } else {
+                this.botData.getCells(0).setClicked(true);
+                this.botData.getCells(1).setClicked(true);
+                this.botData.getCells(2).setClicked(true);
+                this.botData.getCells(3).setClicked(true);
+                this.botData.getCells(4).setClicked(true);
+            }
+        } else {
+            if (entity == HUMAN) {
+                this.playerData.getCells(0).setClicked(false);
+                this.playerData.getCells(1).setClicked(false);
+                this.playerData.getCells(2).setClicked(false);
+                this.playerData.getCells(3).setClicked(false);
+                this.playerData.getCells(4).setClicked(false);
+            } else {
+                this.botData.getCells(0).setClicked(false);
+                this.botData.getCells(1).setClicked(false);
+                this.botData.getCells(2).setClicked(false);
+                this.botData.getCells(3).setClicked(false);
+                this.botData.getCells(4).setClicked(false);
+            }
+        }
 
     }
 
