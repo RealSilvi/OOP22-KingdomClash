@@ -1,5 +1,6 @@
 package it.unibo.model.base.exceptions;
 
+import java.io.Serial;
 import java.util.Set;
 
 import it.unibo.model.data.Resource;
@@ -9,6 +10,7 @@ import it.unibo.model.data.Resource;
  * requires some resources that are not in the warehouse.
  */
 public class NotEnoughResourceException extends ResourceException {
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     /**

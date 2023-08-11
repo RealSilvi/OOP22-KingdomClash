@@ -1,5 +1,7 @@
 package it.unibo.model.base.exceptions;
 
+import java.io.Serial;
+
 import it.unibo.model.data.TroopType;
 
 /**
@@ -7,6 +9,7 @@ import it.unibo.model.data.TroopType;
  * a certain limit.
  */
 public class InvalidTroopLevelException extends TroopException {
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     /**
@@ -16,7 +19,9 @@ public class InvalidTroopLevelException extends TroopException {
      * @param level         the maximum level of the troop
      */
     public InvalidTroopLevelException(final TroopType troopType, final int level) {
-        super("Level " + level + " exceeds maximum allowed level!");
+        super("Level " + level + "for troop "
+            + troopType.name()
+            + " exceeds maximum allowed level!");
     }
     /**
      * Constructs an InvalidTroopLevelException with a

@@ -1,5 +1,7 @@
 package it.unibo.model.base.exceptions;
 
+import java.io.Serial;
+
 import it.unibo.model.base.basedata.Building;
 
 /**
@@ -7,6 +9,7 @@ import it.unibo.model.base.basedata.Building;
  * than is allowed.
  */
 public class MaxBuildingLimitReachedException extends BuildingException {
+    @Serial
     private static final long serialVersionUID = 123456789L;
 
     /**

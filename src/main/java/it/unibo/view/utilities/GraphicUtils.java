@@ -12,6 +12,9 @@ import java.awt.image.BufferedImage;
  * A small interface with some utilities to simplify operations with the GUI.
  */
 public interface GraphicUtils {
+    /**
+     * Default font size used.
+     */
     int DEFAULT_FONT_SIZE = 18;
     /**
      * Resizes image to a given size.
