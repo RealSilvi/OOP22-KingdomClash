@@ -71,9 +71,9 @@ public final class BaseModelImpl implements BaseModel {
         this.configuration = configuration;
         this.buildingConfiguration = this.configuration.getBuildingConfig();
         this.baseModelConfiguration = this.configuration.getBaseConfiguration();
-        this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         this.buildingStateChangedObservers = new ArrayList<>();
         this.buildingProductionObservers = new ArrayList<>();
+        this.threadManager = new ThreadManagerImpl(this, gameData.getBuildings());
         initializeDataStructures();
         logger.finest("Base model succesfully initialized!");
     }
