@@ -60,8 +60,6 @@ public final class ThreadManagerImpl implements ThreadManager {
             this.threadsRunning.put(selection, true);
             this.threadLocks.put(selection, new Object());
         }
-        buildingMapRef.forEach((id, building) -> 
-            this.addBuilding(id));
     }
 
     @Override
@@ -230,7 +228,7 @@ public final class ThreadManagerImpl implements ThreadManager {
                     return productionPercentage;
                 }
             };
-            return new WorkerThread(ThreadSelector.CONSTRUCTION,
+            return new WorkerThread(ThreadSelector.PRODUCTION,
                     () -> buildingMapRef.get(identifier).getProductionTime(),
                     time -> buildingMapRef.get(identifier).setProductionTime(time),
                     productionOperation,
@@ -325,6 +323,9 @@ public final class ThreadManagerImpl implements ThreadManager {
         boolean threadFound = false;
         for (final ThreadSelector selector : ThreadSelector.values()) {
             threadFound = threadMap.get(selector).containsKey(buildingId);
+            if (threadFound) {
+                return threadFound;
+            }
         }
         return threadFound;
     }
