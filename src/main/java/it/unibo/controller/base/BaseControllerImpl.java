@@ -237,5 +237,6 @@ public final class BaseControllerImpl implements Controller, BaseController {
     @Override
     public void closureOperation() {
         this.baseModel.deactivateModel();
+        this.baseView.disposeAll();
     }
 }

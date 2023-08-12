@@ -8,6 +8,12 @@ import it.unibo.controller.GameController;
 public final class KingdomClash {
 
     /**
+     * Private constructor.
+     */
+    private KingdomClash() {
+    }
+
+    /**
      * Main.
      *
      * @param args the args

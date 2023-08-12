@@ -42,15 +42,15 @@ public final class PlayerPanelImpl implements PlayerPanel {
     public PlayerPanelImpl(final Integer nrOfSlots, final PathIconsConfiguration pathIconsConfiguration) {
         this.pathIconsConfiguration = pathIconsConfiguration;
         this.mainPanel = new DrawPanelImpl(
-                ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundFillPattern())
-                ,PanelDimensions.getPlayersPanel()
+                ImageIconsSupplier.loadImage(pathIconsConfiguration.getBackgroundFillPattern()),
+                PanelDimensions.getPlayersPanel()
         );
         this.slots = new ArrayList<>();
         IntStream.range(0, nrOfSlots).forEach(
                 position -> this.slots.add(
                         new TroopButtonImpl(
-                                TroopType.getRandomTroop()
-                                ,BUTTON_DIMENSION,
+                                TroopType.getRandomTroop(),
+                                BUTTON_DIMENSION,
                                 position,
                                 this.pathIconsConfiguration
                         )));

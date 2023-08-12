@@ -23,10 +23,11 @@ import it.unibo.view.utilities.GraphicUtils;
  * player can build.
  */
 public final class BuildingPanel extends InternalElement {
+    private static final long serialVersionUID = 123456789L;
     private static final int ELEMENT_SPACING = 5;
     private static final int INITIAL_IMAGE_DIM = 5;
 
-    private Map<BuildingTypes, JButton> buildingButtonType;
+    private final Map<BuildingTypes, JButton> buildingButtonType;
     private final Map<BuildingTypes, Map<Integer, Image>> buildingImages;
     /**
      * Constructs a BuildingPanel given a map of textures.
@@ -40,13 +41,13 @@ public final class BuildingPanel extends InternalElement {
         this.buildingButtonType = new EnumMap<>(BuildingTypes.class);
         this.buildingImages = buildingImages;
         this.setOpaque(false);
-        GridLayout gridLayout = new GridLayout();
+        final GridLayout gridLayout = new GridLayout();
         gridLayout.setHgap(10);
         this.setLayout(gridLayout);
         this.setBorder(new EmptyBorder(ELEMENT_SPACING,
             ELEMENT_SPACING, ELEMENT_SPACING, ELEMENT_SPACING));
-        for (BuildingTypes type : BuildingTypes.values()) {
-            JButton buildingToBuildBtn = new JButton();
+        for (final BuildingTypes type : BuildingTypes.values()) {
+            final JButton buildingToBuildBtn = new JButton();
             buildingToBuildBtn.setIcon(new ImageIcon(GraphicUtils
                 .resizeImageWithProportion(this.buildingImages.get(type).get(0),
                     INITIAL_IMAGE_DIM, INITIAL_IMAGE_DIM)));
