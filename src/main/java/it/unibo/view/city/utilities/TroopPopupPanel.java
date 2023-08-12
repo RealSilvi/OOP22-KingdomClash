@@ -39,7 +39,7 @@ public class TroopPopupPanel {
     private boolean visibility;
     private final Component container;
     private final PathIconsConfiguration image;
-    private int level = 1;
+    private int level;
     private final int x;
     private final int y;
 
@@ -74,7 +74,7 @@ public class TroopPopupPanel {
                             new Dimension(WIDTH / 8, HEIGHT / 8)));
                     final JButton buttonOK = new ImageButton("upgrade", BACKGROUND_BUTTON, DIMENSION_BUTTON);
                     buttonOK.setForeground(Color.white);
-                    final JLabel levels = new JLabel("Level " + level);
+                    final JLabel levels = new JLabel("Level " + data.requestTroopLevels().get(singletroop));
                     levels.setForeground(Color.WHITE);
                     levels.setFont(font);
                     levels.setBackground(new Color(0, 0, 0, 0));
