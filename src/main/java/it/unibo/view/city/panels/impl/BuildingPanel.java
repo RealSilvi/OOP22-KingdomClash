@@ -24,12 +24,11 @@ import it.unibo.view.utilities.GraphicUtils;
  */
 @SuppressWarnings("serial")
 public final class BuildingPanel extends InternalElement {
-    private static final long serialVersionUID = 123456789L;
     private static final int ELEMENT_SPACING = 5;
     private static final int INITIAL_IMAGE_DIM = 5;
 
     private final Map<BuildingTypes, JButton> buildingButtonType;
-    private final transient Map<BuildingTypes, Map<Integer, Image>> buildingImages;
+    private final Map<BuildingTypes, Map<Integer, Image>> buildingImages;
     /**
      * Constructs a BuildingPanel given a map of textures.
      * @param buildingImages    a map composed of already loaded images

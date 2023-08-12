@@ -37,14 +37,13 @@ import javax.swing.JComponent;
  */
 @SuppressWarnings("serial")
 public final class CityPanelImpl extends InternalElement implements CityPanel {
-    private static final long serialVersionUID = 123456789L;
     private static final Dimension SIZE = new Dimension((int) (GameGui.getAllPanel().getWidth()),
             (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
     private final BarPanel barPanel;
-    private final transient Map<BuildingTypes, Map<Integer, Image>> readImages =
+    private final Map<BuildingTypes, Map<Integer, Image>> readImages =
         new EnumMap<>(BuildingTypes.class);
-    private final transient List<TileClickObserver> tileClickObservers;
+    private final List<TileClickObserver> tileClickObservers;
 
     /**
      * @param controller    give the configuration and the parameter for each function
