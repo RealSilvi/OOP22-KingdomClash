@@ -42,9 +42,9 @@ public final class CityPanelImpl extends InternalElement implements CityPanel {
             (int) (GameGui.getAllPanel().getHeight() * 0.05));
     private final JPanel mainPanel;
     private final BarPanel barPanel;
-    private final Map<BuildingTypes, Map<Integer, Image>> readImages =
+    private final transient Map<BuildingTypes, Map<Integer, Image>> readImages =
         new EnumMap<>(BuildingTypes.class);
-    private final List<TileClickObserver> tileClickObservers;
+    private final transient List<TileClickObserver> tileClickObservers;
 
     /**
      * @param controller    give the configuration and the parameter for each function
