@@ -52,18 +52,15 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
         DIMENSION_BUTTON);
     private static final int DEFAULT_HGAP = 5;
     private final JButton mapReturnBtn;
-    private final CityPanel cityView;
+    //private final CityPanel cityView;
     private final BaseController basedata;
     private final TroopPopupPanel trooppopup;
     private final List<JComponent> interactionComponents;
     private Optional<String> actionCommand = Optional.empty();
-
-
-    private boolean selectionActive = false;
-    private boolean constructionAction = false;
-    private boolean upgradeAction = false;
-    private boolean demolishAction = false;
-
+    private boolean selectionActive;
+    private boolean constructionAction;
+    private boolean upgradeAction;
+    private boolean demolishAction;
     /**
      * The costructor create the panel and add the buttons on the panel that show the troops,
      * which building you can place and applicate an actionlistener on each other.
@@ -79,11 +76,13 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
          final Map<BuildingTypes, Map<Integer, Image>> readImages, final PathIconsConfiguration pathIconsConfiguration) {
         this.setBackground(Color.BLACK);
         this.setPreferredSize(new Dimension(size));
-        this.cityView = cityView;
         this.basedata = controller;
         this.trooppopup = new TroopPopupPanel(this, controller, pathIconsConfiguration, WIDTH, HEIGHT);
         this.interactionComponents = new ArrayList<>();
-
+        this.selectionActive = false;
+        this.constructionAction = false;
+        this.upgradeAction = false;
+        this.demolishAction = false;
         final ActionListener genericBtnAction = new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -152,7 +151,7 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
             }
         });
 
-        this.cityView.registerTileClickObserver(new TileClickObserver() {
+        cityView.registerTileClickObserver(new TileClickObserver() {
             @Override
             public void tileClicked(final JComponent tile, final Float position) {
                 final Optional<UUID> building = findBuildingbyPosition(position);
@@ -249,7 +248,6 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
     @Override
     public void setReturnActionListener(final ActionListener returnActionListener) {
         this.mapReturnBtn.addActionListener(returnActionListener);
-        System.out.println("ci passa");
     }
 
     private Optional<UUID> findBuildingbyPosition(final Point2D.Float position) {

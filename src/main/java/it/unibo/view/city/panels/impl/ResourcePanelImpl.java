@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,8 +63,8 @@ public final class ResourcePanelImpl extends InternalElement {
         baseControllerRef.requestResourceCount().stream()
             .forEach(resource -> 
                 labelToResource.get(resource.getResource())
-                    .setText(resource.getResource().name().toUpperCase()
-                        + ": " + resource.getAmount())
+                    .setText(resource.getResource().name().toUpperCase(Locale.getDefault()).
+                    toLowerCase(Locale.getDefault())    + ": " + resource.getAmount())
             );
     }
 }
