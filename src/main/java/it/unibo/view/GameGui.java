@@ -62,7 +62,6 @@ public final class GameGui implements GameGuiInt {
     public GameGui(final GameConfiguration gameConfiguration) {
         this.panel = new HashMap<>();
         this.frame = new JFrame();
-        frame.setSize((int) (DIMENSION_SCREEN.getWidth()), (int) (DIMENSION_SCREEN.getHeight()));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setUndecorated(true);
@@ -115,6 +114,10 @@ public final class GameGui implements GameGuiInt {
     public void addPanels(final JPanel panel, final String name) {
         if (!this.panel.containsKey(name)) {
             this.panel.put(name, panel);
+            this.allPanel.add(panel, name);
+        } else {
+            this.panel.put(name, panel);
+            this.allPanel.remove(panel);
             this.allPanel.add(panel, name);
         }
     }
