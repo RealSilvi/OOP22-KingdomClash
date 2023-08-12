@@ -156,7 +156,7 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
             public void tileClicked(final JComponent tile, final Float position) {
                 final Optional<UUID> building = findBuildingbyPosition(position);
                 if (building.isEmpty() && (demolishAction || upgradeAction)) {
-                    return ;
+                    return;
                 }
                 if (selectionActive) {
                     if (building.isEmpty() && actionCommand.isPresent()) {

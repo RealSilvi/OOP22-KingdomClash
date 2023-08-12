@@ -18,7 +18,7 @@ public final class ImageTextArea extends JTextArea {
     @Serial
     private static final long serialVersionUID = 123456789L;
 
-    private Image backgroundImage;
+    transient private Image backgroundImage;
 
     /**
      * The constructor sets the text of the textArea.

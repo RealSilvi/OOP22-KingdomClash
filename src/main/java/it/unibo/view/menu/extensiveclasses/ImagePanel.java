@@ -18,7 +18,7 @@ public final class ImagePanel extends JPanel {
 
     /** The dimension of the screen.*/
     public static final Dimension DIMENSION_SCREEN = Toolkit.getDefaultToolkit().getScreenSize();
-    private final Image backgroundImage;
+    transient private final Image backgroundImage;
 
     /**
      * The constructor sets the image of the panel.

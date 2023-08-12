@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.Popup;
 import javax.swing.PopupFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.base.BaseController;
 import it.unibo.kingdomclash.config.PathIconsConfiguration;
 import it.unibo.view.menu.GameMenuImpl;
@@ -52,6 +53,8 @@ public class TroopPopupPanel {
      * @param xPos                   get the x position on the screen
      * @param yPos                   get the y position on the screen
      */
+    @SuppressFBWarnings(value = "EI2", 
+    justification = "Intended behaviour")
     public TroopPopupPanel(final Component container, final BaseController data,
                            final PathIconsConfiguration pathIconsConfiguration, final int xPos, final int yPos) {
         this.visibility = false;
