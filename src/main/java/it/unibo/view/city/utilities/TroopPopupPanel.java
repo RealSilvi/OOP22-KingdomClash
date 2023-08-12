@@ -30,7 +30,7 @@ import it.unibo.view.utilities.ImageIconsSupplier;
 public class TroopPopupPanel {
     private static final int HEIGHT = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5);
     private static final int WIDTH = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.3);
-    private static final Dimension DIMENSION_BUTTON = new Dimension(WIDTH / 6, HEIGHT / 8);
+    private static final Dimension DIMENSION_BUTTON = new Dimension(WIDTH / 4, HEIGHT / 8);
     private static final ImageIcon BACKGROUND_BUTTON = ImageIconsSupplier.getScaledImageIcon(GameMenuImpl.PATH_BUTTON,
             DIMENSION_BUTTON);
     private static final float FONT_SIZE = (float) 30;
@@ -40,6 +40,8 @@ public class TroopPopupPanel {
     private final Component container;
     private final PathIconsConfiguration image;
     private int level = 1;
+    private final int x;
+    private final int y;
 
     /**
      * This costructor create the popup and gave him the name and the level of the troops and an upgrade button for each other.
@@ -58,8 +60,10 @@ public class TroopPopupPanel {
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
         this.contentpanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.contentpanel.setBackground(Color.BLACK);
-        this.popup = new PopupFactory().getPopup(container, contentpanel, xPos, yPos);
+        this.popup = new PopupFactory().getPopup(container, contentpanel, xPos, yPos / 2);
         this.image = pathIconsConfiguration;
+        this.x = xPos;
+        this.y = yPos / 2;
         data.requestTroopLevels().keySet().stream().forEach(
                 singletroop -> {
                     final JPanel containpanel = new JPanel();
@@ -102,7 +106,7 @@ public class TroopPopupPanel {
             popup.show();
         } else {
             popup.hide();
-            this.popup = new PopupFactory().getPopup(container, contentpanel, WIDTH, HEIGHT);
+            this.popup = new PopupFactory().getPopup(container, contentpanel, this.x, this.y);
         }
     }
 
