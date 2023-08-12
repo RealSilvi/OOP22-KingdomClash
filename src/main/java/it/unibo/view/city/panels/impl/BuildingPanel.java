@@ -29,7 +29,7 @@ public final class BuildingPanel extends InternalElement {
 
     private final Map<BuildingTypes, JButton> buildingButtonType;
     @SuppressFBWarnings("serial")
-    private transient final Map<BuildingTypes, Map<Integer, Image>> buildingImages;
+    private final transient Map<BuildingTypes, Map<Integer, Image>> buildingImages;
     /**
      * Constructs a BuildingPanel given a map of textures.
      * @param buildingImages    a map composed of already loaded images

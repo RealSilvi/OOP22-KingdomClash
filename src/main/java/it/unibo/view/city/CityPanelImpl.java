@@ -42,10 +42,10 @@ public final class CityPanelImpl extends InternalElement implements CityPanel {
     private final JPanel mainPanel;
     private final BarPanel barPanel;
     @SuppressFBWarnings("serial")
-    private transient final Map<BuildingTypes, Map<Integer, Image>> readImages =
+    private final transient Map<BuildingTypes, Map<Integer, Image>> readImages =
         new EnumMap<>(BuildingTypes.class);
     @SuppressFBWarnings("serial")
-    private transient final List<TileClickObserver> tileClickObservers;
+    private final transient List<TileClickObserver> tileClickObservers;
 
     /**
      * @param controller    give the configuration and the parameter for each function

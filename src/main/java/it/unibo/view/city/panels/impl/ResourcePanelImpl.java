@@ -27,7 +27,7 @@ public final class ResourcePanelImpl extends InternalElement {
     private static final long serialVersionUID = 123456789L;
     private static final float DEFAULT_FONT_SIZE = 18.0f;
 
-    private transient final BaseController baseControllerRef;
+    private final transient BaseController baseControllerRef;
     private final Map<ResourceType, JLabel> labelToResource = new EnumMap<>(ResourceType.class);
 
     /**
