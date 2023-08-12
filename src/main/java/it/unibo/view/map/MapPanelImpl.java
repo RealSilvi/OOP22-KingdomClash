@@ -70,6 +70,7 @@ public final class MapPanelImpl extends JPanel implements MapPanel {
         this.configuration = configuration;
         this.mapConfiguration = configuration.getMapConfiguration();
         this.pathIconsConfiguration = configuration.getPathIconsConfiguration();
+        this.setBackground(Color.BLACK);
         initialize();
     }
 
