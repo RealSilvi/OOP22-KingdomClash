@@ -60,10 +60,10 @@ public class TroopPopupPanel {
         this.contentpanel.setLayout(new BoxLayout(contentpanel, BoxLayout.Y_AXIS));
         this.contentpanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.contentpanel.setBackground(Color.BLACK);
-        this.popup = new PopupFactory().getPopup(container, contentpanel, xPos, yPos);
+        this.popup = new PopupFactory().getPopup(container, contentpanel, xPos, yPos / 2);
         this.image = pathIconsConfiguration;
         this.x = xPos;
-        this.y = yPos;
+        this.y = yPos / 2;
         data.requestTroopLevels().keySet().stream().forEach(
                 singletroop -> {
                     final JPanel containpanel = new JPanel();
