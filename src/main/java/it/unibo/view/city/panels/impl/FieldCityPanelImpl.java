@@ -106,12 +106,18 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
                 this.mainpanel.add(structure);
                 structure.setBorder(null);
                 final int coordY = j;
-                structure.addActionListener(e -> {
+                if (j == height/2 && i == width/2) {
+                    structure.setEnabled(false);
+                }
+
+                    structure.addActionListener(e -> {
                     if (e.getSource() instanceof JComponent) {
                         cityView.notifyTileClick((JComponent) e.getSource(),
                                 new Point2D.Float(coordX, coordY));
                     }
                 });
+                
+                
             }
             buttonmap.add(i, cols);
         }
@@ -151,6 +157,8 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
                                 .get(buildingToUpdate).getStructurePos());
                 tile = this.buttonmap.get((int) xPos).get((int) yPos);
                 tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
+                    tile.getWidth(), tile.getHeight())));
+                tile.setDisabledIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
                     tile.getWidth(), tile.getHeight())));
             }
         }
