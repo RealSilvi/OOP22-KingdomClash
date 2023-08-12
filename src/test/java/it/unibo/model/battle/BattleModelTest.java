@@ -22,15 +22,25 @@ import java.util.Optional;
  */
 final class BattleModelTest {
 
-    /** The address at the 9 position.*/
+    /**
+     * The address at the 9 position.
+     */
     private static final int FIELD_ADDRESS_9 = 9;
-    /** The address at the 11 position.*/
+    /**
+     * The address at the 11 position.
+     */
     private static final int FIELD_ADDRESS_11 = 11;
-    /** The address at the 19 position.*/
+    /**
+     * The address at the 19 position.
+     */
     private static final int FIELD_ADDRESS_19 = 19;
-    /** The symbol represents human*/
+    /**
+     * The symbol represents human.
+     */
     private static final int HUMAN = 0;
-    /** The symbol represents bot*/
+    /**
+     * The symbol represents bot.
+     */
     private static final int BOT = 1;
 
     private BattleModel battleModel;
@@ -260,7 +270,7 @@ final class BattleModelTest {
 
     }
 
-    void changeClicked(Integer entity, Boolean clicked) {
+    void changeClicked(final Integer entity, final Boolean clicked) {
 
         if (clicked) {
             if (entity == HUMAN) {

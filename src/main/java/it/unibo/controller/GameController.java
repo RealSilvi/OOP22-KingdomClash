@@ -183,7 +183,7 @@ public class GameController {
         this.gameGui.setActionListenerButtons(actionListener, SouthPanel.BUTTONSSOUTH.QUIT);
     }
 
-    private void closureOperation(){
+    private void closureOperation() {
         this.baseController.closureOperation();
         this.battleController.closureOperation();
     }
