@@ -8,7 +8,7 @@ import it.unibo.controller.GameController;
 public final class KingdomClash {
 
     /**
-     * Private constructor
+     * Private constructor.
      */
     private KingdomClash() {
     }

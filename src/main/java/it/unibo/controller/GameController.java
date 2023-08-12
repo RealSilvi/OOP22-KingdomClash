@@ -53,15 +53,32 @@ public class GameController {
         this.gameGui.setActionListenerNewGame(actionListener);
     }
 
+    private void setActionListenerLoad() {
+        this.gameGui.setActionListenerLoad(e -> {
+            if (this.gameModel.isSaved()) {
+                this.gameModel.load();
+                loadControllers();
+                this.gameGui.getSoundManager().startMapTheme();
+                this.gameGui.showPanels(GameGui.MAP_NAME);
+            } else {
+                this.gameGui.showLoadOptions();
+            }
+        });
+    }
+
     private void loadGame() {
         this.gameModel.resetSaved();
         this.gameModel.setPlayerName(this.gameGui.getPlayerName());
+        loadControllers();
+        this.gameGui.showNamePanel();
+    }
+
+    private void loadControllers() {
         this.battleController = new BattleControllerImpl(gameModel.getGameData());
         this.baseController = new BaseControllerImpl(gameModel.getGameData());
         this.battleController.setReturnActionListener(toMainPanel);
         this.baseController.setReturnActionListener(toMainPanel);
         this.loadGui();
-        this.gameGui.showNamePanel();
     }
 
     private void loadGui() {
@@ -83,33 +100,26 @@ public class GameController {
         this.setActionListenerSave();
         this.setActionListenerContinue();
         this.setActionListenerQuit();
-        this.gameGui.setActionListenerExit(e -> this.baseController.closureOperation());
+        this.gameGui.setActionListenerExit(e -> this.closureOperation());
 
-    }
-
-    private void setActionListenerLoad() {
-        this.gameGui.setActionListenerLoad(e -> {
-            if (this.gameModel.isSaved()) {
-                this.gameModel.load();
-                this.battleController = new BattleControllerImpl(gameModel.getGameData());
-                this.baseController = new BaseControllerImpl(gameModel.getGameData());
-                this.loadGui();
-                this.gameGui.getSoundManager().startMapTheme();
-                this.gameGui.showPanels(GameGui.MAP_NAME);
-            } else {
-                this.gameGui.showLoadOptions();
-            }
-        });
     }
 
     private ActionListener backActionListener() {
         return e -> {
-            this.gameGui.getSoundManager().startMapTheme();
-            this.gameGui.showPanels(GameGui.MAP_NAME);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.SAVE, true);
-            this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.MENU, true);
-            this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
-            this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
+            if (gameModel.getCurrentLevel() > gameModel.getGameData().getGameConfiguration().getMapConfiguration().getLevels()) {
+                this.gameGui.showPanels(GameGui.END_NAME);
+                this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.MUSIC, false);
+                this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.SAVE, false);
+                this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.MENU, false);
+                this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.QUIT, true);
+            } else {
+                this.gameGui.getSoundManager().startMapTheme();
+                this.gameGui.showPanels(GameGui.MAP_NAME);
+                this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.SAVE, true);
+                this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.MENU, true);
+                this.gameGui.setActivateBattle(gameModel.getCurrentLevel());
+                this.gameGui.setBeatenLevels(gameModel.getCurrentLevel() - 1);
+            }
         };
     }
 
@@ -173,6 +183,10 @@ public class GameController {
         this.gameGui.setActionListenerButtons(actionListener, SouthPanel.BUTTONSSOUTH.QUIT);
     }
 
+    private void closureOperation(){
+        this.baseController.closureOperation();
+        this.battleController.closureOperation();
+    }
 
     private enum PanelsName {
         BATTLE("BATTLE"),
