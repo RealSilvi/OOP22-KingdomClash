@@ -157,6 +157,10 @@ public class GameController {
 
     private void setActionListenerBattle() {
         this.gameGui.setMapBattleActionListener(e -> {
+            this.battleController = new BattleControllerImpl(gameModel.getGameData());
+            this.battleController.setReturnActionListener(toMainPanel);
+            this.gameGui.addPanels(this.battleController.getGuiPanel(), PanelsName.BATTLE.getName());
+
             this.gameGui.getSoundManager().startBattleTheme();
             this.gameGui.showPanels(PanelsName.BATTLE.getName());
             this.gameGui.setButtonsVisibility(SouthPanel.BUTTONSSOUTH.SAVE, false);
@@ -172,7 +176,7 @@ public class GameController {
     }
 
     private void setActionListenerExit() {
-        this.gameGui.setActionListenerExit(e -> this.gameGui.closeGui());
+        this.gameGui.setActionListenerExit(e -> this.closureOperation());
     }
 
     private void setActionListenerQuit() {
@@ -184,8 +188,13 @@ public class GameController {
     }
 
     private void closureOperation() {
-        this.baseController.closureOperation();
-        this.battleController.closureOperation();
+        if (this.baseController != null) {
+            this.baseController.closureOperation();
+        }
+        if (this.battleController != null) {
+            this.battleController.closureOperation();
+        }
+        this.gameGui.closeGui();
     }
 
     private enum PanelsName {
