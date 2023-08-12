@@ -65,6 +65,7 @@ public final class GameGui implements GameGuiInt {
         frame.setSize((int) (DIMENSION_SCREEN.getWidth()), (int) (DIMENSION_SCREEN.getHeight()));
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
+        frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.soundManagerImpl = new SoundManagerImpl();
         this.soundManagerImpl.changeMute();
