@@ -155,8 +155,11 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
         this.cityView.registerTileClickObserver(new TileClickObserver() {
             @Override
             public void tileClicked(final JComponent tile, final Float position) {
+                final Optional<UUID> building = findBuildingbyPosition(position);
+                if (building.isEmpty() && (demolishAction || upgradeAction)) {
+                    return ;
+                }
                 if (selectionActive) {
-                    final Optional<UUID> building = findBuildingbyPosition(position);
                     if (building.isEmpty() && actionCommand.isPresent()) {
                         if (constructionAction) {
                             controller.handleBuildingPlaced(position,
@@ -246,6 +249,7 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
     @Override
     public void setReturnActionListener(final ActionListener returnActionListener) {
         this.mapReturnBtn.addActionListener(returnActionListener);
+        System.out.println("ci passa");
     }
 
     private Optional<UUID> findBuildingbyPosition(final Point2D.Float position) {
