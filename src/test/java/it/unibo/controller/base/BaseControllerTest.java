@@ -11,6 +11,8 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import org.junit.jupiter.api.Assertions;
 
 import it.unibo.model.base.basedata.Building;
@@ -21,6 +23,8 @@ import it.unibo.model.data.TroopType;
 /**
  * Tests for the BaseController logic.
  */
+@SuppressFBWarnings(value = "UwF",
+    justification = "the values declared in this class are all properly initialized by the test platform")
 final class BaseControllerTest {
     private GameData gameDataRef;
     private BaseController baseController;
