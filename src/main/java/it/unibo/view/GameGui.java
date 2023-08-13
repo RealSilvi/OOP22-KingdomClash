@@ -67,7 +67,6 @@ public final class GameGui implements GameGuiInt {
         frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.soundManagerImpl = new SoundManagerImpl();
-        this.soundManagerImpl.changeMute();
 
         this.mapPanel = new MapPanelImpl(gameConfiguration);
         final TextPanelImpl endPanel = new TextPanelImpl(getAllPanel(), gameConfiguration.getPathIconsConfiguration());
