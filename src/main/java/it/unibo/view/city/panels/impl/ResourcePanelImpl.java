@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.controller.base.BaseController;
 import it.unibo.model.base.api.BuildingObserver;
 import it.unibo.model.data.Resource.ResourceType;
@@ -20,11 +21,13 @@ import it.unibo.view.utilities.BattlePanelStyle;
 /**
  * A simple panel class to show available resources to the player.
  */
+@SuppressFBWarnings(value = "EI2", 
+justification = "Intended behaviour")
 public final class ResourcePanelImpl extends InternalElement {
     private static final long serialVersionUID = 123456789L;
     private static final float DEFAULT_FONT_SIZE = 18.0f;
 
-    private final BaseController baseControllerRef;
+    private final transient BaseController baseControllerRef;
     private final Map<ResourceType, JLabel> labelToResource = new EnumMap<>(ResourceType.class);
 
     /**

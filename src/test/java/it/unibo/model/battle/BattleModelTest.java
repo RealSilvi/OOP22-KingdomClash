@@ -120,8 +120,10 @@ final class BattleModelTest {
         final List<Optional<TroopType>> pc = bothOrdered.subList(0, bothOrdered.size() / 2);
         final List<Optional<TroopType>> bc = bothOrdered.subList(bothOrdered.size() / 2, bothOrdered.size());
         final List<Optional<TroopType>> expected = new ArrayList<>();
-        for (final Optional<TroopType> ignored : bothOrdered) {
+        int i = 0;
+        while (i < bothOrdered.size()) {
             expected.add(Optional.empty());
+            i++;
         }
         expected.set(0, Optional.of(TroopType.AXE));
         expected.set(FIELD_ADDRESS_9, Optional.of(TroopType.AXE_DEFENCE));

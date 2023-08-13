@@ -106,7 +106,7 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
                 this.mainpanel.add(structure);
                 structure.setBorder(null);
                 final int coordY = j;
-                if (j == height/2 && i == width/2) {
+                if (j == height / 2 && i == width / 2) {
                     structure.setEnabled(false);
                 }
 
@@ -116,8 +116,6 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
                                 new Point2D.Float(coordX, coordY));
                     }
                 });
-                
-                
             }
             buttonmap.add(i, cols);
         }

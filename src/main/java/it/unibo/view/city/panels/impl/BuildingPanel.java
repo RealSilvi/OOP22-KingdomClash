@@ -22,8 +22,8 @@ import it.unibo.view.utilities.GraphicUtils;
  * A panel that displays in an ordered grid the type of buildings that the
  * player can build.
  */
+@SuppressWarnings("serial")
 public final class BuildingPanel extends InternalElement {
-    private static final long serialVersionUID = 123456789L;
     private static final int ELEMENT_SPACING = 5;
     private static final int INITIAL_IMAGE_DIM = 5;
 

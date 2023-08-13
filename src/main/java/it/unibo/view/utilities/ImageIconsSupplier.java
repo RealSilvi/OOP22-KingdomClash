@@ -27,13 +27,15 @@ public interface ImageIconsSupplier {
      * @param pathToFile the path to the image.
      * @return the image.
      */
-    @SuppressFBWarnings(value = "DCN",
-            justification = "The exception is knowingly catched to handle missing elements")
+
+    @SuppressFBWarnings(value = {"PMD", "DCN"},
+            justification = "The exception is knowingly catched to handle missing elements "
+                    + "so i suppressed AvoidCatchingGenericException and AvoidCatchingNPE.")
     @Nonnull
     static ImageIcon loadImageIcon(final String pathToFile) {
         try {
             return new ImageIcon(ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFile))));
-        } catch (NullPointerException | IOException exception) {
+        } catch (NullPointerException | IOException exception) { //NOPMD
             return new ImageIcon(PLACE_HOLDER_PATH);
         }
     }
@@ -57,11 +59,14 @@ public interface ImageIconsSupplier {
      * @param size       the size required.
      * @return the image.
      */
+    @SuppressFBWarnings(value = {"PMD", "DCN"},
+            justification = "The exception is knowingly catched to handle missing elements "
+                    + "so i suppressed AvoidCatchingGenericException and AvoidCatchingNPE.")
     static ImageIcon getScaledImageIcon(String pathToFile, final Dimension size) {
         try {
             return new ImageIcon(ImageIO.read(Objects.requireNonNull(ImageIconsSupplier.class.getResource(pathToFile))).
                     getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
-        } catch (NullPointerException | IOException exception) {
+        } catch (NullPointerException | IOException exception) { //NOPMD
             return new ImageIcon(loadImage(pathToFile).getScaledInstance(size.width, size.height, Image.SCALE_DEFAULT));
         }
     }
