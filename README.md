@@ -12,7 +12,7 @@ Embark yourself in a challenge where you must conquer and dominate the enemy!
 
 ## Images
 ![MapView](https://i.imgur.com/uwHbb8q.png)
-![BaseView](https://i.imgur.com/t6UDHSk.png)
+![CityView](https://i.imgur.com/VtE9pT8.png)
 ![BattleView](https://i.imgur.com/ANFKh1w.png)
 ## Authors
 - [RealSilvi](https://github.com/RealSilvi)
