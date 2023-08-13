@@ -144,21 +144,19 @@ public class FieldCityPanelImpl extends InternalElement implements FieldCityPane
             tile = this.buttonmap.get((int) xPos).get((int) yPos);
             tile.setIcon(null);
         } else {
-            if (!this.baseController.requestBuildingMap().get(buildingToUpdate).isBeingBuilt()) {
-                type = this.baseController.requestBuildingMap().get(buildingToUpdate).getType();
-                level = this.baseController.requestBuildingMap().get(buildingToUpdate).getLevel();
-                xPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getX();
-                yPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getY();
+            type = this.baseController.requestBuildingMap().get(buildingToUpdate).getType();
+            level = this.baseController.requestBuildingMap().get(buildingToUpdate).getLevel();
+            xPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getX();
+            yPos = this.baseController.requestBuildingMap().get(buildingToUpdate).getStructurePos().getY();
                 this.buildingTilePositions.put(buildingToUpdate,
-                        this.baseController
-                                .requestBuildingMap()
-                                .get(buildingToUpdate).getStructurePos());
-                tile = this.buttonmap.get((int) xPos).get((int) yPos);
-                tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
-                    tile.getWidth(), tile.getHeight())));
-                tile.setDisabledIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
-                    tile.getWidth(), tile.getHeight())));
-            }
+                    this.baseController
+                        .requestBuildingMap()
+                            .get(buildingToUpdate).getStructurePos());
+            tile = this.buttonmap.get((int) xPos).get((int) yPos);
+            tile.setIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
+                tile.getWidth(), tile.getHeight())));
+            tile.setDisabledIcon(new ImageIcon(GraphicUtils.resizeImageWithProportion(this.readImages.get(type).get(level),
+                tile.getWidth(), tile.getHeight())));
         }
     }
 }

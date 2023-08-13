@@ -52,7 +52,6 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
         DIMENSION_BUTTON);
     private static final int DEFAULT_HGAP = 5;
     private final JButton mapReturnBtn;
-    //private final CityPanel cityView;
     private final BaseController basedata;
     private final TroopPopupPanel trooppopup;
     private final List<JComponent> interactionComponents;
@@ -140,7 +139,7 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
             }
         });
 
-        final JButton demolishBtn = new ImageButton("Demolish Button", BACKGROUND_BUTTON, DIMENSION_BUTTON);
+        final JButton demolishBtn = new ImageButton("Demolish Building", BACKGROUND_BUTTON, DIMENSION_BUTTON);
         demolishBtn.setForeground(Color.white);
         demolishBtn.addActionListener(genericBtnAction);
         demolishBtn.addActionListener(new ActionListener() {
@@ -162,7 +161,7 @@ public final class BarPanelImpl extends InternalElement implements BarPanel {
                     if (building.isEmpty() && actionCommand.isPresent()) {
                         if (constructionAction) {
                             controller.handleBuildingPlaced(position,
-                                    BuildingTypes.valueOf(actionCommand.get()), 0, true);
+                                    BuildingTypes.valueOf(actionCommand.get()), 0, false);
                         }
                     } else if (building.isPresent()) {
                         if (upgradeAction) {
